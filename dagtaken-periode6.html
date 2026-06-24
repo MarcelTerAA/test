@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praktijk Dagtaken Periode 6 – Medewerker ICT</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f4f2; color: #1a1a18; min-height: 100vh; padding: 1.5rem 1rem; }
+#app { max-width: 640px; margin: 0 auto; }
+.hero { background: linear-gradient(135deg, #e85c00 0%, #bf4500 100%); padding: 2rem 1.5rem 1.5rem; color: white; border-radius: 12px; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.07); }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; margin-bottom: 1rem; }
+.hero h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.4rem; }
+.hero p { font-size: 14px; opacity: 0.85; line-height: 1.5; }
+.progress-bar { background: rgba(255,255,255,0.2); border-radius: 4px; height: 6px; margin-top: 1rem; overflow: hidden; }
+.progress-fill { height: 100%; background: white; border-radius: 4px; transition: width 0.4s ease; }
+.progress-label { display: flex; justify-content: space-between; font-size: 12px; opacity: 0.8; margin-top: 4px; }
+.tools-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1rem; }
+.tool-link { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #e0dfd8; border-radius: 8px; padding: 8px 10px; font-size: 12px; color: #5f5e5a; text-decoration: none; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+.tool-link:hover { border-color: #e85c00; color: #e85c00; background: #fff5ee; }
+.tool-link i { color: #e85c00; }
+.tool-link .ext { margin-left: auto; opacity: 0.5; font-size: 11px; }
+.days-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+.day-card { background: white; border: 1px solid #e0dfd8; border-radius: 12px; padding: 1rem; cursor: pointer; transition: border-color 0.15s, transform 0.1s; position: relative; }
+.day-card:hover { border-color: #b4b2a9; transform: translateY(-1px); }
+.day-card.done { border-color: #c8e6c9; background: #f9fdf9; }
+.day-card.done::after { content: '\ea5e'; font-family: tabler-icons; position: absolute; top: 10px; right: 10px; color: #4caf50; font-size: 16px; }
+.day-card-portfolio { grid-column: 1 / -1; }
+.day-num { font-size: 11px; font-weight: 500; color: #e85c00; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+.day-title { font-size: 14px; font-weight: 500; color: #1a1a18; margin-bottom: 6px; line-height: 1.3; }
+.day-meta { font-size: 12px; color: #888780; display: flex; align-items: center; gap: 4px; }
+.day-meta i { color: #e85c00; }
+.detail-panel { background: white; border: 1px solid #e0dfd8; border-radius: 12px; overflow: hidden; margin-bottom: 1rem; }
+.detail-header { background: #fff5ee; padding: 1rem 1.25rem; border-bottom: 1px solid #e0dfd8; }
+.detail-header .tag { display: inline-flex; align-items: center; gap: 5px; background: #e85c00; color: white; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+.detail-header h2 { font-size: 17px; font-weight: 500; margin-bottom: 4px; }
+.detail-header p { font-size: 13px; color: #888780; }
+.detail-body { padding: 1.25rem; }
+.section-label { font-size: 11px; font-weight: 500; color: #b4b2a9; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; margin-top: 1rem; }
+.section-label:first-child { margin-top: 0; }
+.info-row { display: flex; gap: 8px; background: #f4f4f2; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 13px; color: #5f5e5a; align-items: flex-start; }
+.info-row i { color: #e85c00; flex-shrink: 0; margin-top: 1px; }
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.checklist li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #1a1a18; line-height: 1.4; }
+.checklist li i { color: #e85c00; flex-shrink: 0; margin-top: 1px; }
+.melding-list { display: flex; flex-direction: column; gap: 8px; }
+.melding-item { background: #f4f4f2; border-radius: 8px; border: 1px solid #e0dfd8; padding: 10px 12px; }
+.melding-item .person { font-size: 12px; font-weight: 500; color: #e85c00; margin-bottom: 2px; }
+.melding-item .vraag { font-size: 13px; color: #1a1a18; line-height: 1.4; }
+.email-item { background: #f4f4f2; border-radius: 8px; border: 1px solid #e0dfd8; padding: 10px 12px; margin-bottom: 8px; }
+.email-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.email-num { font-size: 11px; font-weight: 500; color: white; background: #e85c00; border-radius: 10px; padding: 1px 8px; }
+.email-subject { font-size: 13px; font-weight: 500; color: #1a1a18; }
+.email-from { font-size: 12px; color: #888780; margin-bottom: 4px; }
+.email-body-preview { font-size: 12px; color: #5f5e5a; line-height: 1.5; font-style: italic; }
+.portfolio-steps { display: flex; flex-direction: column; gap: 10px; }
+.portfolio-step { display: flex; gap: 12px; align-items: flex-start; background: #f4f4f2; border-radius: 8px; padding: 10px 12px; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: #e85c00; color: white; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-title { font-size: 13px; font-weight: 500; color: #1a1a18; }
+.step-desc { font-size: 12px; color: #888780; margin-top: 2px; }
+.afronding-block { background: #f4f4f2; border-left: 3px solid #e85c00; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 1rem; }
+.afronding-block .af-title { font-size: 12px; font-weight: 500; color: #e85c00; margin-bottom: 6px; }
+.back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #888780; cursor: pointer; margin-bottom: 1rem; background: none; border: none; padding: 0; transition: color 0.15s; font-family: inherit; }
+.back-btn:hover { color: #e85c00; }
+.done-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; cursor: pointer; margin-top: 1rem; background: #e85c00; color: white; border: none; padding: 8px 16px; border-radius: 8px; transition: background 0.15s; font-family: inherit; }
+.done-btn:hover { background: #bf4500; }
+.done-btn.is-done { background: #4caf50; }
+.done-btn.is-done:hover { background: #388e3c; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="view-overview"></div>
+  <div id="view-detail" style="display:none;"></div>
+</div>
+<script>
+var completed = JSON.parse(localStorage.getItem('p6_done') || '[]');
+
+var tools = [
+  { label: 'SLA', icon: 'ti-file-text', url: 'https://www.stichtingpraktijkleren.nl/fileadmin/portal/ict/examenprojecten/2024_en_verder/ICT_support/Proeftoetsen/B1-K2/Bijlage_1_Service_Level_Agreement.docx' },
+  { label: 'Procedure Meldingen', icon: 'ti-list-check', url: 'https://www.stichtingpraktijkleren.nl/fileadmin/portal/ict/examenprojecten/2024_en_verder/ICT_support/Proeftoetsen/B1-K2/Bijlage_2_Procedures_en_scripts.docx' },
+  { label: 'TOPdesk', icon: 'ti-device-desktop', url: 'https://www.stichtingpraktijkleren.nl/ict/leermiddelen/topdesk-leermiddelen/topdesk/' }
+];
+
+var days = [
+  { id:'p601', num:'P6.01', title:'Servicedesk – Dag 1', subtitle:'Realistische cases', icon:'ti-headset', meldingen:5, type:'balie',
+    intro:'Je werkt als servicedeskmedewerker op een ICT-afdeling. Gedurende je dienst krijg je verschillende meldingen van gebruikers. Analyseer, prioriteer en handel ze correct af.',
+    leerdoelen:['Werken volgens een echte servicedeskprocedure en prioriteiten bepalen','Technische meldingen analyseren en oplossen, inclusief hardware- en softwareproblemen','Duidelijke communicatie met gebruikers over de oplossing','Correcte registratie van meldingen in TOPdesk'],
+    meldingenData:[
+      {person:'Chris Limbach',vraag:'Kan ik een Word-bestand opslaan als .PDF? Hoe doe ik dat?'},
+      {person:'Inge Meijer',vraag:'Hoe verander ik de taalinstellingen op mijn laptop?'},
+      {person:'Benno Richters',vraag:'Ik krijg heel veel e-mails in Outlook. Kan ik instellen dat e-mails van één afzender automatisch in een aparte map terechtkomen?'},
+      {person:'Chris Limbach',vraag:'Ik heb in Excel een formule ingevoerd om bedragen bij elkaar op te tellen, maar er komt 0 of een foutmelding te staan. Wat doe ik verkeerd?'},
+      {person:'Inge Meijer',vraag:'Als ik mijn PowerPoint open, zie ik alleen dia\'s in bewerkmodus. Hoe kan ik de presentatie meteen starten zoals bij een echte presentatie?'}
+    ],
+    afronding:['Registreer alle meldingen correct in TOPdesk','Sla de meldingen als .PDF op in je portfolio-map']
+  },
+  { id:'p602', num:'P6.02', title:'Servicedesk – Dag 2', subtitle:'Drukke start van de werkdag', icon:'ti-phone', meldingen:8, type:'telefoon',
+    intro:'Welkom terug op de servicedesk! Je hebt je eerste dag overleefd en vandaag wordt het drukker. Er zijn 8 nieuwe meldingen binnengekomen via de telefoon.',
+    leerdoelen:['Werken onder tijdsdruk op een realistische servicedesk','Analyseren, prioriteren en verwerken van 8 meldingen volgens SLA en procedures','Correcte registratie in TOPdesk en professionele communicatie met gebruikers'],
+    meldingenData:[
+      {person:'Pieter de Groot',vraag:'De taal van mijn toetsenbord staat niet goed ingesteld. Wat kan ik doen?'},
+      {person:'Camilo van Trijp',vraag:'Als ik een Word-bestand open, wordt het geopend in een ander programma. Hoe stel ik in dat bestanden standaard met Word worden geopend?'},
+      {person:'Jeroen Versloot',vraag:'Ik moet een verslag inleveren met een inhoudsopgave. Kan Word die automatisch voor mij maken en bijwerken?'},
+      {person:'Marcel Offermans',vraag:'Hoe stel ik een standaardprinter in op mijn computer?'},
+      {person:'Michael Kraft',vraag:'In Excel zie ik niet alle tekst in de cellen, een deel valt weg. Hoe kan ik zorgen dat alles zichtbaar wordt?'},
+      {person:'Pieter de Groot',vraag:'Ik ben een paar dagen afwezig. Hoe stel ik in Outlook een automatisch antwoord in?'},
+      {person:'Camilo van Trijp',vraag:'Ik moet een audio-opname maken met mijn telefoon en daarna omzetten in tekst in MS Word. Hoe doe ik dat?'},
+      {person:'Jeroen Versloot',vraag:'Hoe kan ik van meerdere .PDF bestanden, één .PDF-bestand maken?'}
+    ],
+    afronding:['Registreer alle meldingen correct in TOPdesk','Sla de registraties op in je portfolio-map']
+  },
+  { id:'p603', num:'P6.03', title:'Servicedesk – Dag 3', subtitle:'Druk, complex en urgent', icon:'ti-alert-triangle', meldingen:10, type:'balie',
+    intro:'Welkom terug op de servicedesk! Vandaag is het drukker dan ooit. Er komen 10 meldingen binnen, sommige zijn complex en vereisen escalatie naar de tweede lijn.',
+    leerdoelen:['Werken onder hoge werkdruk op een realistische servicedesk','Analyseren, prioriteren en verwerken van 10 meldingen','Correcte registratie in TOPdesk en professionele communicatie','Escaleren en samenwerken met de tweede lijn en specialisten'],
+    meldingenData:[
+      {person:'Martin Beijering',vraag:'Hoe kan ik mijn scherm delen in een online vergadering?'},
+      {person:'Marcel Offermans',vraag:'Hoe kan ik mijn computer beveiligen tegen virussen?'},
+      {person:'Hajo Kootstra',vraag:'Ik heb per ongeluk een bestand verwijderd. Kan ik dat nog terughalen?'},
+      {person:'Berry Dieleman',vraag:'Ik wil adressen uit Excel gebruiken voor brieven in Word. Dit was iets met \'afdruk samenvoegen\'.'},
+      {person:'Leontine Dekker',vraag:'Hoe kan ik in Excel pull-down menu\'s maken?'},
+      {person:'Wilco Kamp',vraag:'Ik heb nu nog Windows 10. Ik wil graag over naar Windows 11. Kan dat?'},
+      {person:'Martin Beijering',vraag:'Ik heb één dia die ik vaker wil gebruiken in mijn presentatie. Hoe kan ik die snel kopiëren?'},
+      {person:'Marcel Offermans',vraag:'In de Verkenner zie ik mijn bestanden alleen als pictogrammen. Hoe kan ik ze als lijst met details bekijken?'},
+      {person:'Hajo Kootstra',vraag:'Hoe kan ik zien hoe snel mijn internetverbinding is?'},
+      {person:'Berry Dieleman',vraag:'Ik wil snel Microsoft Excel kunnen openen vanaf mijn bureaublad. Hoe maak ik een snelkoppeling?'}
+    ],
+    afronding:['Registreer alle meldingen correct in TOPdesk','Sla je registraties op in je portfolio-map']
+  },
+  { id:'p604', num:'P6.04', title:'Servicedesk – Dag 4', subtitle:'E-mail support', icon:'ti-mail', meldingen:10, type:'email',
+    intro:'Vandaag werk je uitsluitend met meldingen die via e-mail zijn binnengekomen. Lees de e-mails zorgvuldig, interpreteer de vragen en reageer formeel en professioneel.',
+    leerdoelen:['Analyseren en interpreteren van klantvragen in e-mails','Formeel en professioneel communiceren per e-mail','Correcte registratie in TOPdesk en escalatie indien nodig'],
+    emails:[
+      {num:1,from:'Hajo Kootstra',subject:'Pagina liggend maken in Word',body:'Ik heb een document in Word waarin één pagina liggend moet zijn en de rest staand. Hoe kan ik dat instellen zonder dat het hele document verandert?'},
+      {num:2,from:'Yvonne van de Pas',subject:'Kolommen maken in Word',body:'Ik wil mijn tekst in Word weergeven in twee kolommen, net als in een nieuwsbrief. Waar kan ik dit instellen?'},
+      {num:3,from:'Schrover',subject:'Rij vastzetten in Excel',body:'In Excel wil ik de bovenste rij vastzetten zodat deze zichtbaar blijft als ik naar beneden scroll.'},
+      {num:4,from:'Benno Richters',subject:'Dia-achtergrond aanpassen in PowerPoint',body:'Ik wil de achtergrondkleur van mijn PowerPoint-dia\'s aanpassen voor één dia of voor alle dia\'s tegelijk.'},
+      {num:5,from:'Berry Dieleman',subject:'Bestandsextensies zichtbaar maken',body:'In Windows zie ik bij bestanden geen extensies zoals .docx of .pdf. Hoe kan ik dit zichtbaar maken?'},
+      {num:6,from:'Naoual Dehak',subject:'Opmerkingen toevoegen in Word',body:'Ik wil in een Word-document opmerkingen plaatsen zonder de tekst zelf aan te passen.'},
+      {num:7,from:'Yvonne van de Pas',subject:'Cellen samenvoegen in Excel',body:'Ik wil meerdere cellen samenvoegen tot één grotere cel in Excel.'},
+      {num:8,from:'Hajo Kootstra',subject:'Recent geopende bestanden terugvinden',body:'Ik ben op zoek naar een document dat ik eerder heb geopend, maar ik weet niet meer waar het is opgeslagen.'},
+      {num:9,from:'Benno Richters',subject:'Afbeelding netjes uitlijnen in Word',body:'Ik heb een afbeelding in mijn Word-document geplaatst, maar de tekst loopt er vreemd omheen.'},
+      {num:10,from:'Berry Dieleman',subject:'Tijd en datum aanpassen in Windows',body:'De tijd en datum op mijn computer kloppen niet. Waar kan ik dit aanpassen in Windows?'}
+    ],
+    afronding:['Stel voor alle e-mails een correcte e-mailreactie op en verwerk die in je TOPdesk registratie','Registreer alle meldingen correct in TOPdesk','Sla de registraties op in je portfolio-map']
+  },
+  { id:'p605', num:'P6.05', title:'School-examenportfolio', subtitle:'Samenvatting & inleveren', icon:'ti-folder', meldingen:null, type:'portfolio',
+    intro:'Bekijk de uitwerkingen van P6.01 t/m P6.04 nog eens goed. Kies de 10 meldingen die jij het beste geregistreerd hebt uit en stel je school-examenportfolio op.',
+    portfolioSteps:[
+      {title:'Voorblad',desc:'Naam, studentnummer, klas, opleiding en eventueel een afbeelding'},
+      {title:'Inhoudsopgave',desc:'Automatisch gegenereerd in Word'},
+      {title:'Korte inleiding',desc:'Waarom schrijf je dit portfolio?'},
+      {title:'STARRT-uitwerkingen',desc:'Uitleg van de 10 meldingen via de STARRT-methode'},
+      {title:'Bijlage',desc:'De 10 TOPdesk registraties als bijlage'}
+    ],
+    afronding:['Kies de 10 meldingen die jij het beste geregistreerd hebt','Pas ze eventueel nog aan en verbeter je registraties','Lever het portfolio in als één .PDF bestand']
+  }
+];
+
+function saveCompleted() {
+  localStorage.setItem('p6_done', JSON.stringify(completed));
+}
+
+function toggleDone(id) {
+  var idx = completed.indexOf(id);
+  if (idx === -1) completed.push(id);
+  else completed.splice(idx, 1);
+  saveCompleted();
+  renderOverview();
+  showDetail(id);
+}
+
+function toolsHtml() {
+  return '<div class="tools-row">' + tools.map(function(t) {
+    return '<a class="tool-link" href="' + t.url + '" target="_blank" rel="noopener"><i class="ti ' + t.icon + '" aria-hidden="true"></i>' + t.label + '<i class="ti ti-external-link ext" aria-hidden="true"></i></a>';
+  }).join('') + '</div>';
+}
+
+function renderOverview() {
+  var pct = Math.round((completed.length / days.length) * 100);
+  var el = document.getElementById('view-overview');
+  el.innerHTML = '<div class="hero"><div class="hero-badge"><i class="ti ti-device-desktop" aria-hidden="true"></i> Medewerker ICT – Niveau 2</div><h1>Praktijk Dagtaken<br>Periode 6</h1><p>Jij bent servicedeskmedewerker. Verwerk de meldingen, registreer ze in TOPdesk en bouw aan je portfolio.</p><div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%"></div></div><div class="progress-label"><span>Voortgang</span><span>'+completed.length+' van '+days.length+' afgerond</span></div></div><div style="margin-bottom:0.75rem;">' + toolsHtml() + '</div><div class="days-grid" id="days-grid"></div>';
+  var grid = document.getElementById('days-grid');
+  days.forEach(function(day) {
+    var done = completed.indexOf(day.id) !== -1;
+    var div = document.createElement('div');
+    div.className = 'day-card' + (day.type === 'portfolio' ? ' day-card-portfolio' : '') + (done ? ' done' : '');
+    div.innerHTML = '<div class="day-num">' + day.num + '</div><div class="day-title">' + day.title + ': ' + day.subtitle + '</div><div class="day-meta"><i class="ti ' + day.icon + '" style="font-size:14px;" aria-hidden="true"></i> ' + (day.meldingen ? day.meldingen + ' meldingen' : 'Portfolio samenstellen') + (day.type==='email'?' · via e-mail':day.type==='telefoon'?' · via telefoon':day.type==='balie'?' · aan de balie':'') + '</div>';
+    div.addEventListener('click', (function(id){ return function(){ showDetail(id); }; })(day.id));
+    grid.appendChild(div);
+  });
+}
+
+function showDetail(id) {
+  var day = days.find(function(d){ return d.id===id; });
+  document.getElementById('view-overview').style.display = 'none';
+  var v = document.getElementById('view-detail');
+  v.style.display = 'block';
+  renderDetail(day, v);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goBack() {
+  document.getElementById('view-detail').style.display = 'none';
+  document.getElementById('view-overview').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderDetail(day, container) {
+  var isDone = completed.indexOf(day.id) !== -1;
+  var bodyHtml = '';
+  if (day.type==='portfolio') {
+    bodyHtml = '<div class="section-label">Jouw taak</div><div class="info-row"><i class="ti ti-info-circle" aria-hidden="true"></i><span>'+day.intro+'</span></div><div class="section-label">Opbouw portfolio</div><div class="portfolio-steps">'+day.portfolioSteps.map(function(s,i){ return '<div class="portfolio-step"><div class="step-num">'+(i+1)+'</div><div><div class="step-title">'+s.title+'</div><div class="step-desc">'+s.desc+'</div></div></div>'; }).join('')+'</div>';
+  } else if (day.type==='email') {
+    bodyHtml = '<div class="section-label">Context</div><div class="info-row"><i class="ti ti-info-circle" aria-hidden="true"></i><span>'+day.intro+'</span></div><div class="section-label">Benodigde documenten</div>'+toolsHtml()+'<div class="section-label">Wat ga je leren?</div><ul class="checklist">'+day.leerdoelen.map(function(l){ return '<li><i class="ti ti-arrow-right" aria-hidden="true"></i>'+l+'</li>'; }).join('')+'</ul><div class="section-label">De 10 e-mailmeldingen</div>'+day.emails.map(function(e){ return '<div class="email-item"><div class="email-header"><span class="email-num">E-mail '+e.num+'</span><span class="email-subject">'+e.subject+'</span></div><div class="email-from"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i> '+e.from+'</div><div class="email-body-preview">"'+e.body+'"</div></div>'; }).join('');
+  } else {
+    bodyHtml = '<div class="section-label">Context</div><div class="info-row"><i class="ti ti-info-circle" aria-hidden="true"></i><span>'+day.intro+'</span></div><div class="section-label">Benodigde documenten</div>'+toolsHtml()+'<div class="section-label">Wat ga je leren?</div><ul class="checklist">'+day.leerdoelen.map(function(l){ return '<li><i class="ti ti-arrow-right" aria-hidden="true"></i>'+l+'</li>'; }).join('')+'</ul><div class="section-label">Binnengekomen meldingen ('+day.meldingen+')</div><div class="melding-list">'+day.meldingenData.map(function(m){ return '<div class="melding-item"><div class="person"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i> '+m.person+'</div><div class="vraag">'+m.vraag+'</div></div>'; }).join('')+'</div>';
+  }
+  var afr = day.afronding.map(function(a){ return '<li><i class="ti ti-check" aria-hidden="true"></i>'+a+'</li>'; }).join('');
+  var doneLabel = isDone ? '<i class="ti ti-check"></i> Afgerond!' : '<i class="ti ti-circle-check"></i> Markeer als afgerond';
+  container.innerHTML = '<button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Terug naar overzicht</button><div class="detail-panel"><div class="detail-header"><div class="tag"><i class="ti '+day.icon+'" aria-hidden="true"></i> '+day.num+'</div><h2>'+day.title+': '+day.subtitle+'</h2><p>'+(day.meldingen?day.meldingen+' meldingen · via '+day.type:'Portfolio samenstellen')+'</p></div><div class="detail-body">'+bodyHtml+'<div class="afronding-block"><div class="af-title"><i class="ti ti-checklist" aria-hidden="true"></i> Afronding</div><ul class="checklist">'+afr+'</ul></div><button class="done-btn'+(isDone?' is-done':'')+'" onclick="toggleDone(\''+day.id+'\')">'+doneLabel+'</button></div></div>';
+}
+
+renderOverview();
+</script>
+</body>
+</html>

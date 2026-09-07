@@ -62,6 +62,7 @@ a:hover{text-decoration:underline}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600}
 .tag-theorie{background:#dbeafe;color:#1e40af}
 .tag-sim{background:var(--groen-licht);color:var(--groen-diep)}
+.tag-groen{background:#d1f0e0;color:#0F6E56}
 .tag-product{background:var(--amber-licht);color:var(--amber-dark)}
 
 .kaart{background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);margin-bottom:0.85rem;overflow:hidden}
@@ -225,8 +226,8 @@ const lesstarters = [
 const weken = [
 {
   titel:"Bijeenkomst 1 — Waarom gaan we naar Málaga?",
-  intro:"Deze reis is méér dan een uitje. In deze bijeenkomst ontdek je waarom de school deze reis organiseert, wat je er kunt leren en welk eerste persoonlijk leerdoel jij meeneemt.",
-  tags:["theorie","simulatie","product"],
+  intro:"Deze reis is méér dan een uitje. In deze bijeenkomst ontdek je waarom de school deze reis organiseert, wat je er kunt leren en welk eerste persoonlijk leerdoel jij meeneemt. De reis is onderdeel van Erasmus+ — daar hoort ook bij dat je nadenkt over duurzaam reizen.",
+  tags:["theorie","simulatie","groen","product"],
   secties:[
     {type:"logboekuitleg"},
     {type:"programma",titel:"Programma van deze bijeenkomst",duur:"75 minuten",rijen:[
@@ -237,7 +238,7 @@ const weken = [
       ["5. Afsluiting — mijn eerste leerdoel","10 min"]
     ]},
     {type:"theorie",titel:"Waarom deze reis? De leerdoelen",icoon:"✈️",bg:"#E6F1FB",
-     uitleg:"Tijdens deze reis leer je niet alleen over Spanje of ICT. Je leert vooral over samenwerken, zelfstandigheid en jezelf. De belangrijkste doelen van de reis zijn:<ul><li>zelfstandiger worden</li><li>leren samenwerken</li><li>omgaan met andere culturen</li><li>communiceren in onbekende situaties</li><li>jezelf ontwikkelen en nieuwe dingen durven</li><li>kennismaken met Spanje</li><li>leren buiten het klaslokaal</li></ul>",
+     uitleg:"Tijdens deze reis leer je niet alleen over Spanje of ICT. Je leert vooral over samenwerken, zelfstandigheid en jezelf. De belangrijkste doelen van de reis zijn:<ul><li>zelfstandiger worden</li><li>leren samenwerken</li><li>omgaan met andere culturen</li><li>communiceren in onbekende situaties</li><li>jezelf ontwikkelen en nieuwe dingen durven</li><li>kennismaken met Spanje</li><li>leren buiten het klaslokaal</li><li>bewust en duurzaam reizen</li></ul>",
      items:[
        {type:"tekst",label:"Wat denk jij dat je in Málaga kunt leren?",vraag:"Denk je dat je andere dingen leert in Spanje dan in een klaslokaal? Schrijf op wat jij denkt te gaan leren en waarom reizen leerzaam kan zijn.",ph:"Ik denk dat ik ga leren om... Reizen is leerzaam omdat..."}
      ]
@@ -254,10 +255,16 @@ const weken = [
        {type:"tekst",label:"Onze aanpak (aantekeningen groepje)",vraag:"Kies één situatie en schrijf op hoe jullie het zouden aanpakken.",ph:"Situatie: ...\nOnze aanpak: ..."}
      ]
     },
-    {type:"theorie",titel:"Carrousel — wat kan deze reis mij opleveren?",icoon:"🎠",bg:"#FAEEDA",
-     uitleg:"In de carrouselopdracht denk je na over vijf onderwerpen. Wat kun je hierover leren in Málaga? Waarom is het belangrijk? Wat lijkt lastig, en wat juist leuk?",
+    {type:"theorie",titel:"Groen op reis — hoe komen we er?",icoon:"🌍",bg:"#E1F5EE",
+     uitleg:"Onze groep vliegt naar Málaga. Een vlucht stoot per persoon ongeveer 20 keer zoveel CO2 uit als dezelfde reis met de trein — maar met de trein ben je meer dan een dag onderweg. Omdat deze reis onderdeel is van Erasmus+, hoort daar ook bij: nadenken over duurzaam reizen. Niet alleen het vervoer, maar ook hoe je je onderweg gedraagt.",
      items:[
-       {type:"checklist",label:"Welke onderwerpen wil jij deze reis aan werken?",items:["Zelfstandigheid — zelf je spullen regelen, op tijd komen, keuzes maken","Samenwerken — taken verdelen, luisteren, elkaar helpen","Spanje &amp; cultuur — andere gewoontes, Spaans spreken, respect voor verschillen","ICT &amp; beroep — samen opdrachten uitvoeren, problemen oplossen, professioneel communiceren","Persoonlijke groei — zelfvertrouwen, nieuwe dingen durven, omgaan met spanning"]},
+       {type:"tekst",label:"Vliegen of niet?",vraag:"Bespreek en schrijf op:\n– Waarom kiezen scholen toch vaak voor het vliegtuig?\n– Wat kun jij zelf doen om de rest van de reis zo groen mogelijk te maken?\n– Zou jij voor een kortere reis wel de trein of de bus nemen?",ph:"Scholen kiezen het vliegtuig omdat...\nOm de reis groener te maken kan ik...\nVoor een kortere reis zou ik..."}
+     ]
+    },
+    {type:"theorie",titel:"Carrousel — wat kan deze reis mij opleveren?",icoon:"🎠",bg:"#FAEEDA",
+     uitleg:"In de carrouselopdracht denk je na over zes onderwerpen. Wat kun je hierover leren in Málaga? Waarom is het belangrijk? Wat lijkt lastig, en wat juist leuk?",
+     items:[
+       {type:"checklist",label:"Welke onderwerpen wil jij deze reis aan werken?",items:["Zelfstandigheid — zelf je spullen regelen, op tijd komen, keuzes maken","Samenwerken — taken verdelen, luisteren, elkaar helpen","Spanje &amp; cultuur — andere gewoontes, Spaans spreken, respect voor verschillen","ICT &amp; beroep — samen opdrachten uitvoeren, problemen oplossen, professioneel communiceren","Persoonlijke groei — zelfvertrouwen, nieuwe dingen durven, omgaan met spanning","Duurzaam reizen — bewust omgaan met vervoer, water, energie en afval onderweg"]},
        {type:"tekst",label:"Mijn belangrijkste onderwerp",vraag:"Kies het onderwerp dat jij het belangrijkst vindt. Wat wil je hierin leren, wat lijkt jou lastig en wat lijkt jou juist leuk?",ph:"Het belangrijkste onderwerp voor mij is... Ik wil leren om... Lastig lijkt me... Leuk lijkt me..."}
      ]
     },
@@ -270,12 +277,12 @@ const weken = [
     {type:"zin",key:"zin_b1",label:"Mijn eerste leerdoel",start:"Maak de zin af:",zin:"Tijdens de reis naar Málaga wil ik leren om…",ph:"Tijdens de reis naar Málaga wil ik leren om..."}
   ],
   dossier:"Mijn eerste persoonlijke leerdoel + reflectie over wat ik wil leren",
-  docentnoot:"Start klassikaal met de binnenkomer via deze webapp en haal enkele antwoorden op. Bereid voor onderdeel 3 vijf flip-overvellen voor met de onderwerpen: zelfstandigheid, samenwerken, Spanje &amp; cultuur, ICT &amp; beroep, persoonlijke groei. Laat groepjes doorschuiven (ongeveer 4 min per onderwerp) en bespreek daarna klassikaal na. Benadruk aan het eind: deze reis is méér dan vakantie."
+  docentnoot:"Start klassikaal met de binnenkomer via deze webapp en haal enkele antwoorden op. Bereid voor onderdeel 3 zes flip-overvellen voor met de onderwerpen: zelfstandigheid, samenwerken, Spanje &amp; cultuur, ICT &amp; beroep, persoonlijke groei, duurzaam reizen. Laat groepjes doorschuiven (ongeveer 4 min per onderwerp) en bespreek daarna klassikaal na. Benadruk aan het eind: deze reis is méér dan vakantie. Het thema 'duurzaam / groen reizen' loopt door alle vijf de bijeenkomsten en sluit aan op de Erasmus+ prioriteit milieu en klimaat — bij 'Vliegen of niet?' mag je eerlijk zijn dat de vlucht zelf meestal niet anders kan; de winst zit in bewustwording, gedrag ter plaatse en (als ICT'er) repareren in plaats van vervangen."
 },
 {
   titel:"Bijeenkomst 2 — Spanje, cultuur & communicatie",
-  intro:"Gewoontes en communicatie verschillen per land. In deze bijeenkomst leer je kenmerken van de Spaanse cultuur kennen, oefen je met communiceren in onbekende situaties en leer je Spaanse survivaltaal.",
-  tags:["theorie","simulatie","product"],
+  intro:"Gewoontes en communicatie verschillen per land. In deze bijeenkomst leer je kenmerken van de Spaanse cultuur kennen, oefen je met communiceren in onbekende situaties en leer je Spaanse survivaltaal. Je leert ook hoe de omgeving van Málaga omgaat met water en zon.",
+  tags:["theorie","simulatie","groen","product"],
   secties:[
     {type:"programma",titel:"Programma van deze bijeenkomst",duur:"90 minuten",rijen:[
       ["1. Binnenkomer — Spanje-quiz","15 min"],
@@ -294,7 +301,9 @@ const weken = [
        {vraag:"Hoe begroeten veel Spanjaarden elkaar onder vrienden?",opties:["Met een buiging","Met twee kussen op de wang","Ze zwaaien alleen"],antwoord:1,uitleg:"Onder vrienden en familie zijn twee kussen (dos besos) normaal; bij zakelijk contact geef je een hand."},
        {vraag:"Hoe warm is het eind oktober vaak overdag in Málaga?",opties:["Rond 5 graden","Rond 12 graden","Rond 21 tot 23 graden"],antwoord:2,uitleg:"Eind oktober is het aan de Costa del Sol vaak nog aangenaam: overdag rond 21 tot 23 graden, 's avonds kouder — neem een trui mee."},
        {vraag:"Welke voetbalclub komt uit Málaga?",opties:["Málaga CF","Real Betis","Sevilla FC"],antwoord:0,uitleg:"Málaga CF speelt in stadion La Rosaleda."},
-       {vraag:"Hoe heet de bekende winkelstraat in het centrum van Málaga?",opties:["Calle Larios","Las Ramblas","Gran Via"],antwoord:0,uitleg:"Calle Marques de Larios is de bekende winkelstraat van Málaga. Las Ramblas ligt in Barcelona."}
+       {vraag:"Hoe heet de bekende winkelstraat in het centrum van Málaga?",opties:["Calle Larios","Las Ramblas","Gran Via"],antwoord:0,uitleg:"Calle Marques de Larios is de bekende winkelstraat van Málaga. Las Ramblas ligt in Barcelona."},
+       {vraag:"Waar kampte de regio rond Málaga de afgelopen jaren mee?",opties:["Te veel regen en overstromingen","Ernstige droogte en watertekort","Een tekort aan zonlicht"],antwoord:1,uitleg:"Andalusie had jarenlang te weinig regen; in 2024 golden er zelfs waterbeperkingen in delen van de provincie Málaga. Douche daarom kort en laat de kraan niet onnodig lopen."},
+       {vraag:"Waarmee wekt Zuid-Spanje veel duurzame energie op?",opties:["Wind op zee","De zon (zonne-energie)","Waterkracht uit de bergen"],antwoord:1,uitleg:"Aan de Costa del Sol schijnt de zon veel. Spanje is een van de koplopers in Europa met zonne-energie; rond Andalusie staan grote zonneparken."}
      ]
     },
     {type:"stellingen",titel:"Cultuurverschillen — wat vind jij?",icoon:"💬",bg:"#E1F5EE",
@@ -305,7 +314,8 @@ const weken = [
        "Stiltes in gesprekken zijn ongemakkelijk.",
        "In andere landen zijn mensen vaak socialer dan in Nederland.",
        "Iedereen communiceert op dezelfde manier.",
-       "Je hoeft niet altijd dezelfde mening te hebben om goed samen te werken."
+       "Je hoeft niet altijd dezelfde mening te hebben om goed samen te werken.",
+       "Op vakantie hoef je minder op water en energie te letten dan thuis."
      ]
     },
     {type:"situaties",titel:"Communicatie in de praktijk",icoon:"🗣️",bg:"#FAEEDA",
@@ -326,7 +336,8 @@ const weken = [
        {titel:"Begroeten",woorden:[["Hola","Hallo"],["Buenos dias","Goedemorgen"],["Buenas tardes","Goedemiddag"],["Adios","Tot ziens"]]},
        {titel:"Beleefdheid",woorden:[["Gracias","Dankjewel"],["Por favor","Alsjeblieft"],["Lo siento","Sorry"],["De nada","Graag gedaan"]]},
        {titel:"Handige vragen",woorden:[["Habla ingles?","Spreekt u Engels?"],["Donde esta...?","Waar is...?"],["Cuanto cuesta?","Hoeveel kost het?"],["No entiendo","Ik begrijp het niet"]]},
-       {titel:"Praktische woorden",woorden:[["Agua","Water"],["Comida","Eten"],["Bano","Toilet"],["La cuenta","De rekening"]]}
+       {titel:"Praktische woorden",woorden:[["Agua","Water"],["Comida","Eten"],["Bano","Toilet"],["La cuenta","De rekening"]]},
+       {titel:"Milieu",woorden:[["Reciclar","Recyclen"],["La basura","Het afval"],["Ahorrar agua","Water besparen"],["El medio ambiente","Het milieu"]]}
      ],
      items:[
        {type:"tekst",label:"Mijn mini-gesprekje",vraag:"Schrijf een kort gesprekje van 4 tot 6 zinnen in het Spaans (met Nederlandse vertaling erachter). Bijvoorbeeld: iets bestellen of de weg vragen.",ph:"- Hola, habla ingles? (Hallo, spreekt u Engels?)\n- ..."}
@@ -340,12 +351,12 @@ const weken = [
     {type:"zin",key:"zin_b2",label:"Afsluiting",start:"Maak de zin af:",zin:"Tijdens de reis wil ik beter leren omgaan met…",ph:"Tijdens de reis wil ik beter leren omgaan met..."}
   ],
   dossier:"Ingevulde stellingen + mini-gesprekje in het Spaans + reflectie",
-  docentnoot:"Draai de quiz klassikaal via het digibord en bespreek elk antwoord kort. Bij de stellingen: laat studenten fysiek een hoek van het lokaal kiezen (eens/oneens/twijfel) of via deze app, en vraag steeds door: 'Waarom denk jij dat? Zou iemand uit Spanje er anders over denken?' Oefen de survivaltaal hardop en laat tweetallen een mini-gesprekje spelen."
+  docentnoot:"Draai de quiz klassikaal via het digibord en bespreek elk antwoord kort. De laatste twee quizvragen (droogte en zonne-energie) en de stelling over water en energie op vakantie horen bij het groene thema — koppel ze aan concreet gedrag tijdens de reis (kort douchen, licht uit). Bij de stellingen: laat studenten fysiek een hoek van het lokaal kiezen (eens/oneens/twijfel) of via deze app, en vraag steeds door: 'Waarom denk jij dat? Zou iemand uit Spanje er anders over denken?' Oefen de survivaltaal hardop en laat tweetallen een mini-gesprekje spelen."
 },
 {
   titel:"Bijeenkomst 3 — Praktische voorbereiding & zelfstandigheid",
-  intro:"Op reis ben je zelf verantwoordelijk voor je spullen, je geld en je afspraken. In deze bijeenkomst bereid je je praktisch voor en oefen je met zelfstandig handelen bij onverwachte situaties.",
-  tags:["theorie","simulatie","product"],
+  intro:"Op reis ben je zelf verantwoordelijk voor je spullen, je geld en je afspraken. In deze bijeenkomst bereid je je praktisch voor, oefen je met zelfstandig handelen bij onverwachte situaties en maak je groene reisafspraken met je groepje.",
+  tags:["theorie","simulatie","groen","product"],
   secties:[
     {type:"programma",titel:"Programma van deze bijeenkomst",duur:"75 minuten",rijen:[
       ["1. Binnenkomer — wat neem jij mee?","10 min"],
@@ -357,7 +368,7 @@ const weken = [
     {type:"keuze",titel:"Wat neem jij mee?",icoon:"🎒",bg:"#E6F1FB",
      uitleg:"Kies per item: noodzakelijk, handig of niet nodig. Denk na: wat gebeurt er als je iets belangrijks vergeet? Wie is er verantwoordelijk voor jouw spullen?",
      opties:["noodzakelijk","handig","niet nodig"],
-     items:["Paspoort / ID-kaart","Oplader telefoon","Powerbank","Zwembroek / badpak","Extra schoenen","Handdoek","Zonnebrand","Koptelefoon / oortjes","Laptop","Medicijnen die je gebruikt","Wereldstekker","Jas of warme trui","Herbruikbare waterfles","Contant geld (kleine coupures)"]
+     items:["Paspoort / ID-kaart","Oplader telefoon","Powerbank","Zwembroek / badpak","Extra schoenen","Handdoek","Zonnebrand","Koptelefoon / oortjes","Laptop","Medicijnen die je gebruikt","Wereldstekker","Jas of warme trui","Herbruikbare waterfles","Eigen boodschappentas (geen plastic tasjes)","Zeep- of shampoobar (geen kleine plastic flesjes)","Contant geld (kleine coupures)"]
     },
     {type:"situaties",titel:"Praktische voorbereiding — herkenbare situaties",icoon:"🧳",bg:"#E1F5EE",
      uitleg:"We bespreken praktische onderwerpen: vliegen, bagage, documenten, veiligheid, geld, gedrag, groepsafspraken, telefoon/internet, op tijd komen en verantwoordelijkheid. Bespreek daarna de situaties hieronder in je groepje.",
@@ -374,7 +385,8 @@ const weken = [
      situaties:[
        {titel:"Iemand is kwijt onderweg",tekst:"Je bent onderweg naar een activiteit en iemand uit je groep is kwijt.",vragen:["Wat doe je eerst?","Met wie neem je contact op?","Hoe blijf je rustig?"]},
        {titel:"Ruzie in het appartement",tekst:"Er is ruzie in het appartement over opruimen of over lawaai.",vragen:["Hoe los je dit op?","Waarom is communiceren belangrijk?","Hoe houd je rekening met elkaar?"]},
-       {titel:"De groep kwijt tijdens een activiteit",tekst:"Je bent tijdens een activiteit ineens de rest van de groep kwijt.",vragen:["Wat doe je?","Welke afspraken helpen hierbij?","Waarom is zelfstandig handelen belangrijk?"]}
+       {titel:"De groep kwijt tijdens een activiteit",tekst:"Je bent tijdens een activiteit ineens de rest van de groep kwijt.",vragen:["Wat doe je?","Welke afspraken helpen hierbij?","Waarom is zelfstandig handelen belangrijk?"]},
+       {titel:"Water besparen",tekst:"Je huisgenoot doucht elke ochtend 20 minuten, terwijl in de regio rond Málaga water schaars is en er soms beperkingen gelden.",vragen:["Hoe spreek je dit aan zonder ruzie te maken?","Welke groene afspraken maak je met je appartementgenoten?","Waarom is water besparen juist hier belangrijk?"]}
      ],
      items:[
        {type:"tekst",label:"Onze aanpak",vraag:"Kies één situatie en schrijf op wat jullie zouden doen — stap voor stap.",ph:"Situatie: ...\nStap 1: ...\nStap 2: ..."}
@@ -384,7 +396,8 @@ const weken = [
      uitleg:"Welke afspraken hebben we nodig om er samen een goede reis van te maken? Vink aan wat jij belangrijk vindt en schrijf jullie eigen afspraken op.",
      items:[
        {type:"checklist",label:"Mogelijke groepsafspraken",items:["Op tijd komen","Respectvol omgaan met elkaar","Samen verantwoordelijkheid nemen","Bereikbaar blijven (telefoon opgeladen)","Appartement netjes houden","Luisteren naar de begeleiding","Op elkaar letten — niemand alleen laten"]},
-       {type:"tekst",label:"Onze groepsafspraken",vraag:"Schrijf 3 tot 5 afspraken op die jullie groepje wil maken voor de reis.",ph:"1. ...\n2. ...\n3. ..."}
+       {type:"checklist",label:"Groene reisafspraken",items:["Korte douches — in Andalusie is water schaars","Licht en airco uit als we het appartement verlaten","Afval scheiden zoals het daar hoort","In de stad lopen of het openbaar vervoer nemen","Eten kopen dat we ook echt opeten — niks weggooien","Herbruikbare fles en tas gebruiken, geen wegwerpplastic"]},
+       {type:"tekst",label:"Onze groepsafspraken",vraag:"Schrijf 3 tot 5 afspraken op die jullie groepje wil maken voor de reis. Neem er minstens één groene afspraak bij.",ph:"1. ...\n2. ...\n3. ..."}
      ]
     },
     {type:"theorie",titel:"Reflectie",icoon:"🪞",bg:"#E6F1FB",uitleg:"",
@@ -394,13 +407,13 @@ const weken = [
     },
     {type:"zin",key:"zin_b3",label:"Afsluiting",start:"Maak de zin af:",zin:"Tijdens deze reis wil ik zelfstandiger worden in…",ph:"Tijdens deze reis wil ik zelfstandiger worden in..."}
   ],
-  dossier:"Paklijst-keuzes + groepsafspraken + aanpak bij onverwachte situaties",
-  docentnoot:"Doe onderdeel 1 klassikaal: laat de spullen een voor een zien en laat studenten kiezen. Onderdeel 3 kun je als mini-escaperoom of estafette opzetten in groepjes van 3 tot 4. De groepsafspraken kun je verzamelen tot een gezamenlijk 'groepscontract' dat je deelt in Teams."
+  dossier:"Paklijst-keuzes + groepsafspraken (incl. groene reisafspraken) + aanpak bij onverwachte situaties",
+  docentnoot:"Doe onderdeel 1 klassikaal: laat de spullen een voor een zien en laat studenten kiezen; sta stil bij de groene items (boodschappentas, zeepbar, waterfles). Onderdeel 3 kun je als mini-escaperoom of estafette opzetten in groepjes van 3 tot 4. De groepsafspraken (inclusief de groene reisafspraken) kun je verzamelen tot een gezamenlijk 'groepscontract' dat je deelt in Teams — dit is bruikbaar bewijsmateriaal voor het Erasmus+ dossier."
 },
 {
   titel:"Bijeenkomst 4 — Samenwerken & beroepshouding internationaal",
-  intro:"Tijdens de reis werk je samen aan opdrachten, soms voor een echte ondernemer. In deze bijeenkomst oefen je met samenwerken, overleggen en professioneel handelen — juist als het spannend of druk wordt.",
-  tags:["theorie","simulatie","product"],
+  intro:"Tijdens de reis werk je samen aan opdrachten, soms voor een echte ondernemer. In deze bijeenkomst oefen je met samenwerken, overleggen en professioneel handelen — juist als het spannend of druk wordt. Je kijkt ook naar duurzame ICT: repareren in plaats van vervangen.",
+  tags:["theorie","simulatie","groen","product"],
   secties:[
     {type:"programma",titel:"Programma van deze bijeenkomst",duur:"90 minuten",rijen:[
       ["1. Binnenkomer — goed en slecht samenwerken","10 min"],
@@ -420,7 +433,8 @@ const weken = [
      situaties:[
        {titel:"Opdracht 1 — Geen internet",tekst:"Een student in Málaga kan geen verbinding maken met de wifi.",vragen:["Welke vragen stel je eerst?","Welke controles voer je uit?","Hoe werk je samen — wie doet wat?"]},
        {titel:"Opdracht 2 — Laptop start niet op",tekst:"Een student raakt in paniek omdat de laptop niet meer opstart.",vragen:["Hoe help je iemand rustig te blijven?","Welke stappen controleer je eerst?","Waarom is goed communiceren belangrijk?"]},
-       {titel:"Opdracht 3 — Bestanden verwijderd",tekst:"Een groepje heeft per ongeluk belangrijke bestanden verwijderd.",vragen:["Hoe los je dit samen op?","Hoe voorkom je dit soort fouten?","Waarom is samenwerken hier belangrijk?"]}
+       {titel:"Opdracht 3 — Bestanden verwijderd",tekst:"Een groepje heeft per ongeluk belangrijke bestanden verwijderd.",vragen:["Hoe los je dit samen op?","Hoe voorkom je dit soort fouten?","Waarom is samenwerken hier belangrijk?"]},
+       {titel:"Opdracht 4 — Vervangen of repareren?",tekst:"Een medereiziger klaagt dat zijn laptop traag is en wil er meteen een nieuwe kopen.",vragen:["Wat kun je eerst controleren of upgraden (SSD, geheugen, opschonen, opnieuw installeren)?","Wat gebeurt er met afgedankte laptops (e-waste)? Wat betekent 'refurbished'?","Waarom is 'eerst repareren' ook een goede beroepshouding voor een ICT'er?"]}
      ],
      items:[
        {type:"tekst",label:"Onze oplossing + pitch",vraag:"Kies één opdracht. Beschrijf jullie oplossing en hoe jullie hebben samengewerkt (wat ging goed, wat was lastig).",ph:"Opdracht: ...\nOnze oplossing: ...\nSamenwerken ging goed omdat... Lastig was..."}
@@ -441,7 +455,7 @@ const weken = [
     {type:"theorie",titel:"Werken voor een ondernemer",icoon:"💼",bg:"#E1F5EE",
      uitleg:"Tijdens de reis ga je mogelijk werken aan een opdracht voor een lokale ondernemer. Oefen alvast met een voorbeeldopdracht: een lokale ondernemer wil meer jongeren naar zijn winkel trekken.",
      items:[
-       {type:"tekst",label:"Ons idee voor de ondernemer",vraag:"Bedenk samen een idee voor de ondernemer. Denk aan: een social-media-idee, een leuke actie, een simpele promotie of een digitaal idee.",ph:"Ons idee: ...\nWaarom trekt dit jongeren: ...\nWat is er voor nodig: ..."}
+       {type:"tekst",label:"Ons idee voor de ondernemer",vraag:"Bedenk samen een idee voor de ondernemer. Denk aan: een social-media-idee, een leuke actie, een simpele promotie of een digitaal idee.\n\nOf kies een groen idee: minder papier, energiezuinige apparatuur, spullen delen of repareren, tweedehands verkopen, of klanten laten zien hoe duurzaam het bedrijf is.",ph:"Ons idee: ...\nWaarom trekt dit jongeren / is dit duurzaam: ...\nWat is er voor nodig: ..."}
      ]
     },
     {type:"theorie",titel:"Reflectie",icoon:"🪞",bg:"#E6F1FB",uitleg:"",
@@ -451,13 +465,13 @@ const weken = [
     },
     {type:"zin",key:"zin_b4",label:"Afsluiting",start:"Maak de zin af:",zin:"Tijdens de reis wil ik beter worden in samenwerken door…",ph:"Tijdens de reis wil ik beter worden in samenwerken door..."}
   ],
-  dossier:"Uitwerking Helpdesk Challenge + creatieve pitch + idee voor de ondernemer + reflectie",
-  docentnoot:"Onderdeel 2 in groepjes van 3 tot 4; observeer wie initiatief neemt, hoe studenten communiceren en omgaan met stress, en of iedereen betrokken wordt. Laat elke groep kort pitchen (oplossing + hoe ze samenwerkten). Onderdeel 4 sluit aan op de echte ondernemersopdracht tijdens de reis."
+  dossier:"Uitwerking Helpdesk Challenge (incl. vervangen of repareren) + creatieve pitch + idee voor de ondernemer + reflectie",
+  docentnoot:"Onderdeel 2 in groepjes van 3 tot 4; observeer wie initiatief neemt, hoe studenten communiceren en omgaan met stress, en of iedereen betrokken wordt. Laat elke groep kort pitchen (oplossing + hoe ze samenwerkten). Opdracht 4 'Vervangen of repareren?' is de groene vakvaardigheid: koppel het aan e-waste, refurbished en 'right to repair' — dit is de sterkste link tussen duurzaamheid en het beroep Medewerker ICT. Onderdeel 4 (ondernemer) sluit aan op de echte ondernemersopdracht tijdens de reis; moedig groepjes aan om voor een duurzaam idee te kiezen."
 },
 {
   titel:"Bijeenkomst 5 — Persoonlijke leerdoelen & voorbereiden op de reis",
-  intro:"Dit is de laatste bijeenkomst. Je kijkt terug op de voorbereiding, maakt je persoonlijke leerdoelen af en vertrekt straks voorbereid naar Málaga.",
-  tags:["theorie","simulatie","product"],
+  intro:"Dit is de laatste bijeenkomst. Je kijkt terug op de voorbereiding, maakt je persoonlijke leerdoelen af (ook een groen leerdoel) en vertrekt straks voorbereid naar Málaga.",
+  tags:["theorie","simulatie","groen","product"],
   secties:[
     {type:"programma",titel:"Programma van deze bijeenkomst",duur:"75 minuten",rijen:[
       ["1. Binnenkomer — waar kijk jij naar uit?","10 min"],
@@ -488,25 +502,26 @@ const weken = [
      ]
     },
     {type:"theorie",titel:"Persoonlijke leerdoelen — verder uitwerken",icoon:"🎯",bg:"#E1F5EE",
-     uitleg:"Gebruik je zinnen hierboven als startpunt. Werk je leerdoelen nu concreter uit. Tijdens de reis leer je niet alleen over Spanje — je leert ook over samenwerken, zelfstandig zijn, communiceren, omgaan met spanning en initiatief nemen.",
+     uitleg:"Gebruik je zinnen hierboven als startpunt. Werk je leerdoelen nu concreter uit. Tijdens de reis leer je niet alleen over Spanje — je leert ook over samenwerken, zelfstandig zijn, communiceren, omgaan met spanning, initiatief nemen en duurzaam reizen en werken.",
      items:[
        {type:"tekst",label:"Leerdoel 1 — nieuwe dingen leren",vraag:"Naar aanleiding van bijeenkomst 1: welke nieuwe dingen wil jij leren tijdens de reis? Wat wil jij over jezelf ontdekken? Waar hoop jij beter in te worden?",ph:"Tijdens de reis naar Málaga wil ik leren om..."},
        {type:"tekst",label:"Leerdoel 2 — omgaan met mensen en cultuur",vraag:"Naar aanleiding van bijeenkomst 2: hoe wil jij omgaan met nieuwe mensen of culturen? Wat vind jij soms lastig in communicatie? Hoe wil je reageren als dingen anders gaan dan je gewend bent?",ph:"Tijdens de reis wil ik beter leren omgaan met..."},
        {type:"tekst",label:"Leerdoel 3 — zelfstandigheid",vraag:"Naar aanleiding van bijeenkomst 3: waar wil jij zelfstandiger in worden? Hoe ga jij verantwoordelijkheid nemen? Wat wil jij zelf meer durven doen?",ph:"Tijdens deze reis wil ik zelfstandiger worden in..."},
-       {type:"tekst",label:"Leerdoel 4 — samenwerken",vraag:"Naar aanleiding van bijeenkomst 4: wat wil jij verbeteren in samenwerken? Hoe zorg jij dat iedereen mee kan doen? Hoe wil jij communiceren in een groep?",ph:"Tijdens de reis wil ik beter worden in samenwerken door..."}
+       {type:"tekst",label:"Leerdoel 4 — samenwerken",vraag:"Naar aanleiding van bijeenkomst 4: wat wil jij verbeteren in samenwerken? Hoe zorg jij dat iedereen mee kan doen? Hoe wil jij communiceren in een groep?",ph:"Tijdens de reis wil ik beter worden in samenwerken door..."},
+       {type:"tekst",label:"Leerdoel 5 — duurzaam reizen en werken",vraag:"Naar aanleiding van het groene thema: hoe wil jij deze reis duurzamer maken? Denk aan water en energie besparen, afval scheiden, minder weggooien, en als ICT'er: repareren in plaats van vervangen.",ph:"Tijdens de reis wil ik duurzamer omgaan met..."}
      ]
     },
     {type:"theorie",titel:"Mijn Málaga-moment",icoon:"✨",bg:"#E6F1FB",
      uitleg:"Stel je voor: het is de laatste avond in Málaga. Je kijkt terug op een mooie week. Beschrijf dat moment alvast — als een soort vooruitblik.",
      items:[
-       {type:"tekst",label:"Mijn Málaga-moment (vooruitblik)",vraag:"Beantwoord vanuit die laatste avond:\n– Waar ben jij trots op?\n– Wat heb jij geleerd?\n– Welke ervaring vergeet jij nooit meer?\n– Wanneer voelde jij jezelf zelfstandig?\n– Wanneer werkte jij goed samen?\n\nJe mag dit ook creatief maken: een korte tekst, een moodboard, een afbeelding of een voice-message.",ph:"Het is de laatste avond in Málaga. Ik ben trots op... Ik heb geleerd... Ik vergeet nooit meer..."}
+       {type:"tekst",label:"Mijn Málaga-moment (vooruitblik)",vraag:"Beantwoord vanuit die laatste avond:\n– Waar ben jij trots op?\n– Wat heb jij geleerd?\n– Welke ervaring vergeet jij nooit meer?\n– Wanneer voelde jij jezelf zelfstandig?\n– Wanneer werkte jij goed samen?\n– Wat heb jij gedaan om de reis groener te maken?\n\nJe mag dit ook creatief maken: een korte tekst, een moodboard, een afbeelding of een voice-message.",ph:"Het is de laatste avond in Málaga. Ik ben trots op... Ik heb geleerd... Ik vergeet nooit meer..."}
      ]
     },
     {type:"zin",key:"zin_b5",label:"Afsluiting",start:"Maak de zin af:",zin:"Tijdens de reis wil ik…",ph:"Tijdens de reis wil ik..."},
     {type:"export"}
   ],
-  dossier:"Compleet reislogboek — persoonlijke leerdoelen + Málaga-moment. Neem dit mee op reis.",
-  docentnoot:"Laat studenten eerst hun eerdere zinnen teruglezen (onderdeel terugblik). Bij onderdeel 3 loop je rond voor korte coachgesprekjes. Sluit positief af: laat enkele studenten hun zin delen en geef een korte vooruitblik op de reis. Boodschap: durf nieuwsgierig te zijn, fouten te maken en nieuwe ervaringen op te doen — juist daarvan leer je het meest."
+  dossier:"Compleet reislogboek — 5 persoonlijke leerdoelen (incl. duurzaam reizen) + Málaga-moment. Neem dit mee op reis.",
+  docentnoot:"Laat studenten eerst hun eerdere zinnen teruglezen (onderdeel terugblik). Bij onderdeel 3 loop je rond voor korte coachgesprekjes; vraag bij leerdoel 5 door naar iets concreets en haalbaars. Sluit positief af: laat enkele studenten hun zin delen en geef een korte vooruitblik op de reis. Boodschap: durf nieuwsgierig te zijn, fouten te maken en nieuwe ervaringen op te doen — juist daarvan leer je het meest. Het volledige reislogboek (met alle groene onderdelen) kan als bewijsmateriaal in het Erasmus+ dossier."
 }
 ];
 
@@ -545,6 +560,7 @@ function renderWeek(idx){
   week.tags.forEach(function(t){
     if(t==='theorie') html += '<span class="tag tag-theorie">📚 Theorie &amp; opdracht</span>';
     if(t==='simulatie') html += '<span class="tag tag-sim">🎭 Situaties &amp; simulatie</span>';
+    if(t==='groen') html += '<span class="tag tag-groen">🌱 Groen / duurzaam</span>';
     if(t==='product') html += '<span class="tag tag-product">📁 Logboekproduct</span>';
   });
   html += '</div>' + week.intro + '</div>';

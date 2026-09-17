@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure basisbegrippen — Ter AA Helmond</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --groen:#1D9E75;
+  --groen-dark:#0F6E56;
+  --groen-diep:#085041;
+  --groen-licht:#E1F5EE;
+  --blauw-licht:#E6F1FB;
+  --blauw-dark:#0C447C;
+  --amber-licht:#FAEEDA;
+  --amber-dark:#633806;
+  --rood-licht:#FBEAEA;
+  --rood-dark:#8A1F1F;
+  --grijs-licht:#F1EFE8;
+  --grijs-mid:#5F5E5A;
+  --tekst:#1a1a1a;
+  --tekst-mid:#555;
+  --tekst-licht:#888;
+  --rand:#e0e0e0;
+  --rand-mid:#ccc;
+  --bg:#f9f9f7;
+  --wit:#fff;
+  --radius:10px;
+  --radius-sm:6px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tekst);min-height:100vh;font-size:15px;line-height:1.6}
+
+.container{max-width:700px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+/* header */
+.site-header{background:var(--groen);color:#fff;padding:1.25rem 1.5rem;border-radius:var(--radius);margin-bottom:1.25rem}
+.site-header h1{font-size:20px;font-weight:600;margin-bottom:2px}
+.site-header p{font-size:13px;opacity:0.85}
+
+/* stappen-voortgang (grote flow) */
+.stappen{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:1.25rem}
+.stap{padding:9px 4px;border-radius:var(--radius-sm);border:1px solid var(--rand);background:var(--wit);text-align:center;font-size:11px;font-weight:600;color:var(--tekst-licht);line-height:1.4}
+.stap .stap-nr{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--grijs-licht);color:var(--tekst-licht);font-size:10px;font-weight:700;margin-bottom:4px}
+.stap.actief{border-color:var(--groen);background:var(--groen-licht);color:var(--groen-diep)}
+.stap.actief .stap-nr{background:var(--groen);color:#fff}
+.stap.klaar{color:var(--groen-diep)}
+.stap.klaar .stap-nr{background:var(--groen);color:#fff}
+
+/* sub-voortgangsbalk (bv. vraag x van y) */
+.subvoortgang-wrap{background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);padding:0.85rem 1.1rem;margin-bottom:1rem}
+.subvoortgang-bar-bg{background:var(--grijs-licht);border-radius:99px;height:8px;overflow:hidden;margin:8px 0 4px}
+.subvoortgang-bar-fill{height:100%;background:var(--groen);border-radius:99px;transition:width 0.3s ease}
+.subvoortgang-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--tekst-licht)}
+
+/* kaarten algemeen */
+.kaart{background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem}
+
+/* intro scherm */
+.intro-kaart{text-align:center;padding:2.5rem 1.75rem}
+.intro-icoon{font-size:44px;margin-bottom:0.75rem}
+.intro-kaart h2{font-size:19px;margin-bottom:0.75rem;color:var(--tekst)}
+.intro-kaart p{font-size:14px;color:var(--tekst-mid);margin-bottom:0.6rem;max-width:480px;margin-left:auto;margin-right:auto}
+.intro-lijst{text-align:left;max-width:420px;margin:1.25rem auto 1.5rem;font-size:13px;color:var(--tekst-mid)}
+.intro-lijst li{margin-bottom:6px;list-style:none;padding-left:22px;position:relative}
+.intro-lijst li::before{content:"✓";position:absolute;left:0;color:var(--groen);font-weight:700}
+
+/* domein-badge */
+.domein-badge{display:inline-flex;align-items:center;gap:5px;background:var(--blauw-licht);color:var(--blauw-dark);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:1rem}
+
+/* vraag */
+.vraag-tekst{font-size:16px;font-weight:600;color:var(--tekst);margin-bottom:1.25rem;line-height:1.55}
+.opties{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.optie{display:block;width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--rand-mid);border-radius:var(--radius-sm);background:var(--wit);cursor:pointer;font-size:14px;font-family:inherit;color:var(--tekst);transition:all 0.14s}
+.optie:hover{border-color:var(--groen);background:var(--groen-licht)}
+.optie.geselecteerd{border-color:var(--groen);background:var(--groen-licht);color:var(--groen-diep);font-weight:600}
+
+/* knoppen */
+.btn-rij{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.btn{padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--rand-mid);background:var(--wit);cursor:pointer;font-size:14px;color:var(--tekst);font-family:inherit;font-weight:600;transition:all 0.14s}
+.btn:hover:not(:disabled){background:#f0f0f0;border-color:#aaa}
+.btn:disabled{opacity:0.4;cursor:not-allowed}
+.btn-groen{background:var(--groen);color:#fff;border-color:var(--groen)}
+.btn-groen:hover:not(:disabled){background:var(--groen-dark)}
+.btn-tekst{background:none;border:none;color:var(--tekst-licht);font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:4px}
+.btn-tekst:hover{color:var(--tekst-mid)}
+
+/* resultaat */
+.resultaat-cijfer{font-size:38px;font-weight:700;color:var(--groen-diep);text-align:center;margin-bottom:4px}
+.resultaat-sub{text-align:center;color:var(--tekst-mid);font-size:13px;margin-bottom:1.5rem}
+.placeholder-blok{background:var(--amber-licht);color:var(--amber-dark);border-radius:var(--radius-sm);padding:1rem 1.1rem;font-size:13px;margin-top:1rem;line-height:1.55}
+
+.domein-resultaat{margin-bottom:1.1rem}
+.domein-resultaat h3{font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--tekst-licht);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.begrip-rij{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border:1px solid var(--rand);border-radius:var(--radius-sm);background:var(--wit);margin-bottom:6px}
+.begrip-naam{font-size:13px;color:var(--tekst);font-weight:500}
+.status-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.status-goed{background:var(--groen-licht);color:var(--groen-diep)}
+.status-leren{background:var(--amber-licht);color:var(--amber-dark)}
+
+.cta-blok{background:var(--groen-licht);border:1px solid #b9e6d4;border-radius:var(--radius);padding:1.1rem 1.25rem;margin-top:1.25rem;text-align:center}
+.cta-blok p{font-size:14px;color:var(--groen-diep);margin-bottom:0.85rem;font-weight:600}
+
+/* leermodule */
+.domein-label{font-size:12px;color:var(--tekst-licht);margin-bottom:2px}
+.begrip-titel{font-size:19px;font-weight:700;color:var(--tekst);margin-bottom:1rem}
+.leer-blok{margin-bottom:1rem}
+.leer-blok-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--groen-diep);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.leer-blok-tekst{font-size:14px;color:var(--tekst-mid);line-height:1.65;background:var(--grijs-licht);border-radius:var(--radius-sm);padding:0.85rem 1rem}
+.leer-blok-tekst.scenario{background:var(--blauw-licht)}
+.controlevraag-kop{font-size:13px;font-weight:700;color:var(--tekst);margin:1.25rem 0 0.85rem;padding-top:1rem;border-top:1px solid var(--rand)}
+.optie.optie-correct{border-color:var(--groen);background:var(--groen-licht);color:var(--groen-diep);font-weight:600}
+.optie.optie-fout{border-color:#d99;background:var(--rood-licht);color:var(--rood-dark)}
+.optie:disabled,.optie.beantwoord{cursor:default}
+.leer-feedback{font-size:13px;padding:0.75rem 1rem;border-radius:var(--radius-sm);margin-bottom:1rem}
+.leer-feedback.goed{background:var(--groen-licht);color:var(--groen-diep)}
+.leer-feedback.fout{background:var(--rood-licht);color:var(--rood-dark)}
+
+footer{text-align:center;padding:1.5rem 1rem 0.5rem;font-size:12px;color:var(--tekst-licht)}
+
+@media(max-width:480px){
+  .stappen{grid-template-columns:repeat(2,1fr)}
+  .stap{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app"></div>
+
+<script>
+/* =====================================================================
+ * DATASTRUCTUUR: 16 Azure/AZ-900 kernbegrippen.
+ * Zie azure-begrippen-data.js (verwijderd) voor toelichting per veld;
+ * hieronder dezelfde structuur, inline zodat de tool één self-contained
+ * bestand blijft. Begrippen toevoegen/aanpassen kan hier, zonder de
+ * rest van de code te wijzigen.
+ * ===================================================================== */
+
+const AZURE_DOMEINEN = [
+  { id: "cloudconcepten", naam: "Cloudconcepten", icoon: "☁️" },
+  { id: "architectuur", naam: "Azure-architectuur", icoon: "🏗️" },
+  { id: "beheer-security", naam: "Beheer & security", icoon: "🔒" },
+];
+
+const AZURE_BEGRIPPEN = [
+  // ===================== DOMEIN 1: CLOUDCONCEPTEN =====================
+  {
+    id: "cloud-computing",
+    domein: "cloudconcepten",
+    naam: "Cloud computing",
+    starttoets: {
+      vraag: "Een collega zegt: \"Die applicatie draait in de cloud.\" Wat betekent dat?",
+      opties: [
+        "De applicatie draait op een server van een extern bedrijf, via internet",
+        "De applicatie draait alleen op de eigen laptop van de gebruiker",
+        "De applicatie werkt alleen als het internet uitvalt",
+        "De applicatie staat op een USB-stick",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "Cloud computing betekent dat je computerkracht, opslag of software gebruikt die op servers van een ander bedrijf staat, ergens in een datacenter. Je gebruikt het via internet, in plaats van dat het op je eigen computer staat.",
+    scenario:
+      "Een gebruiker belt de servicedesk: \"Ik kan al mijn bestanden overal openen, ook thuis. Hoe kan dat?\" Antwoord: die bestanden staan niet op één computer, maar in de cloud. Daarom kan hij erbij vanaf elk apparaat met internet.",
+    controle: {
+      vraag: "Wat is het belangrijkste kenmerk van cloud computing?",
+      opties: [
+        "Je gebruikt servers en opslag via internet, die van een ander bedrijf zijn",
+        "Alles staat verplicht op je eigen laptop",
+        "Het werkt alleen binnen het schoolgebouw",
+        "Er is geen internetverbinding voor nodig",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een medewerker kan vanaf huis, kantoor en zijn telefoon bij dezelfde bestanden. Waar komt dit door?",
+      opties: [
+        "De bestanden staan in de cloud, op internet-servers",
+        "Hij heeft de bestanden drie keer gekopieerd",
+        "Zijn laptop stuurt de bestanden automatisch door",
+        "Dit kan alleen met een vast netwerkkabeltje",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "cloud-modellen",
+    domein: "cloudconcepten",
+    naam: "Public / private / hybrid cloud",
+    starttoets: {
+      vraag: "Een bedrijf gebruikt Microsoft 365 (van Microsoft) én een eigen serverruimte in het gebouw. Hoe noem je zo'n combinatie?",
+      opties: ["Hybrid cloud", "Public cloud", "Private cloud", "Geen cloud"],
+      correct: 0,
+    },
+    uitleg:
+      "Public cloud is van een groot bedrijf zoals Microsoft, en wordt door veel klanten gedeeld. Private cloud is alleen voor één bedrijf, vaak in hun eigen serverruimte. Hybrid cloud is een combinatie van beide.",
+    scenario:
+      "Een collega legt aan een klant uit: \"Onze e-mail draait bij Microsoft (public cloud), maar onze salarisgegevens staan op onze eigen server (private cloud). Samen noemen we dat hybrid cloud.\"",
+    controle: {
+      vraag: "Wat is een hybrid cloud?",
+      opties: [
+        "Een combinatie van public cloud en private cloud",
+        "Een cloud die alleen 's nachts werkt",
+        "Een cloud zonder internetverbinding",
+        "Hetzelfde als een USB-stick",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een ziekenhuis bewaart patiëntgegevens op een eigen server, maar gebruikt Teams (van Microsoft) voor overleg. Hoe heet deze combinatie?",
+      opties: ["Hybrid cloud", "Alleen private cloud", "Alleen public cloud", "On-premises"],
+      correct: 0,
+    },
+  },
+  {
+    id: "iaas-paas-saas",
+    domein: "cloudconcepten",
+    naam: "IaaS / PaaS / SaaS",
+    starttoets: {
+      vraag: "Een school gebruikt Microsoft 365 (kant-en-klare software zoals Word en Outlook, via internet). Wat voor soort clouddienst is dit?",
+      opties: [
+        "SaaS (Software as a Service)",
+        "IaaS (Infrastructure as a Service)",
+        "PaaS (Platform as a Service)",
+        "Geen van deze",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "IaaS geeft je alleen de basis: servers en opslag, die je zelf verder inricht. PaaS geeft je ook een platform om software op te bouwen. SaaS is kant-en-klare software die je direct kan gebruiken, zoals Outlook.",
+    scenario:
+      "Denk aan pizza bestellen: IaaS is een lege keuken huren (jij doet de rest). PaaS is een keuken mét oven en apparatuur (jij maakt de pizza). SaaS is een pizza laten bezorgen (je hoeft niks te doen behalve eten). Outlook en Teams zijn SaaS.",
+    controle: {
+      vraag: "Een gebruiker opent Outlook in de browser en kan direct mailen, zonder iets te installeren. Wat is dit voor dienst?",
+      opties: ["SaaS", "IaaS", "PaaS", "Geen cloud"],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een bedrijf huurt alleen virtuele servers en opslagruimte in de cloud, en installeert daar zelf alles op. Wat voor dienst is dit?",
+      opties: ["IaaS", "SaaS", "PaaS", "Hybrid cloud"],
+      correct: 0,
+    },
+  },
+  {
+    id: "scalability",
+    domein: "cloudconcepten",
+    naam: "Scalability (schaalbaarheid)",
+    starttoets: {
+      vraag: "Een webwinkel krijgt tijdens Black Friday veel meer bezoekers. In de cloud kan de webwinkel automatisch extra servercapaciteit erbij krijgen. Hoe heet dit?",
+      opties: ["Scalability (schaalbaarheid)", "Subscription", "Resource group", "Region"],
+      correct: 0,
+    },
+    uitleg:
+      "Scalability betekent dat je makkelijk meer of minder computerkracht kan gebruiken, afhankelijk van hoeveel je nodig hebt. In de cloud kan dit automatisch, zonder dat iemand nieuwe apparatuur hoeft te kopen.",
+    scenario:
+      "Een collega legt uit: \"Onze webshop draait normaal op 2 servers. Met Black Friday zet Azure er automatisch 8 bij, en daarna weer terug naar 2. Dat is scalability: meegroeien met de drukte.\"",
+    controle: {
+      vraag: "Wat betekent scalability in de cloud?",
+      opties: [
+        "Capaciteit makkelijk op- of afschalen, naar wat je nodig hebt",
+        "Altijd dezelfde hoeveelheid servers gebruiken",
+        "Een wachtwoord regelmatig wijzigen",
+        "Bestanden opslaan in een map",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een systeem heeft in het weekend weinig gebruikers en doordeweeks veel. In de cloud past het systeem zich hierop aan. Welk begrip hoort hierbij?",
+      opties: ["Scalability", "Region", "RBAC", "MFA"],
+      correct: 0,
+    },
+  },
+  {
+    id: "pay-as-you-go",
+    domein: "cloudconcepten",
+    naam: "Pay-as-you-go",
+    starttoets: {
+      vraag: "Een bedrijf betaalt Microsoft Azure elke maand precies voor wat het écht gebruikt aan servers en opslag. Hoe heet dit betaalmodel?",
+      opties: [
+        "Pay-as-you-go",
+        "Subscription (alleen als naam van een abonnement)",
+        "RBAC",
+        "Scalability",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "Pay-as-you-go betekent 'betalen voor wat je gebruikt'. Je betaalt geen vast bedrag vooraf voor apparatuur, maar alleen voor de opslag en rekenkracht die je daadwerkelijk hebt gebruikt.",
+    scenario:
+      "Vergelijk het met stroom thuis: je betaalt niet voor een vast aantal kWh per maand, maar voor wat de meter aangeeft. Zo werkt Azure ook: meer gebruik is meer kosten, minder gebruik is minder kosten.",
+    controle: {
+      vraag: "Wat houdt pay-as-you-go in?",
+      opties: [
+        "Je betaalt alleen voor wat je daadwerkelijk gebruikt",
+        "Je betaalt altijd een vast bedrag, ongeacht gebruik",
+        "De eerste maand is altijd gratis",
+        "Je koopt de servers in één keer",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een klant vraagt: \"Waarom is onze Azure-rekening deze maand hoger?\" Wat is de meest logische reden, gezien het pay-as-you-go-model?",
+      opties: [
+        "Er is deze maand meer capaciteit gebruikt dan normaal",
+        "Microsoft verhoogt zomaar de prijzen zonder reden",
+        "Pay-as-you-go betekent een vast maandbedrag",
+        "De rekening klopt sowieso nooit",
+      ],
+      correct: 0,
+    },
+  },
+
+  // ===================== DOMEIN 2: AZURE-ARCHITECTUUR =====================
+  {
+    id: "region",
+    domein: "architectuur",
+    naam: "Region",
+    starttoets: {
+      vraag: "Een bedrijf kiest ervoor om hun Azure-gegevens op te slaan in \"West Europe\" in plaats van in de VS. Waar kiezen ze eigenlijk voor?",
+      opties: [
+        "Een region: de fysieke locatie van de Microsoft-datacenters",
+        "Een resource group",
+        "Een subscription",
+        "Een virtueel netwerk",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "Een region is een gebied op de wereld waar Microsoft datacenters heeft staan, bijvoorbeeld 'West Europe'. Bedrijven kiezen vaak een region dichtbij, zodat gegevens sneller beschikbaar zijn en om aan wetgeving over dataopslag te voldoen.",
+    scenario:
+      "Een klant vraagt: \"Staan onze bedrijfsgegevens wel in Nederland of Europa?\" Jij kijkt dan naar de gekozen region van hun Azure-omgeving, bijvoorbeeld 'West Europe', om dit te controleren.",
+    controle: {
+      vraag: "Wat is een region in Azure?",
+      opties: [
+        "Een fysiek gebied met Microsoft-datacenters",
+        "Een groep gebruikers met dezelfde rechten",
+        "Een virtuele computer",
+        "Een wachtwoordinstelling",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een Nederlands bedrijf wil dat hun data binnen Europa blijft, vanwege privacyregels. Welk begrip is hierbij belangrijk?",
+      opties: ["Region", "Container", "RBAC", "Tags"],
+      correct: 0,
+    },
+  },
+  {
+    id: "resource-group",
+    domein: "architectuur",
+    naam: "Resource group",
+    starttoets: {
+      vraag: "In Azure staan een virtuele server, een database en opslag allemaal samen in één 'map' georganiseerd. Hoe heet zo'n verzameling bij elkaar horende onderdelen?",
+      opties: ["Resource group", "Subscription", "Region", "Container"],
+      correct: 0,
+    },
+    uitleg:
+      "Een resource group is een soort map waarin je alle Azure-onderdelen bij elkaar zet die bij één project of applicatie horen. Zo kan je ze makkelijk samen beheren, of in één keer verwijderen als het project stopt.",
+    scenario:
+      "Een collega zegt: \"Alle onderdelen van de nieuwe website — de server, de database en de opslag — zetten we in dezelfde resource group. Zo houden we overzicht en kunnen we alles in één keer opruimen.\"",
+    controle: {
+      vraag: "Waarvoor gebruik je een resource group?",
+      opties: [
+        "Om bij elkaar horende Azure-onderdelen samen te organiseren en beheren",
+        "Om een wachtwoord te resetten",
+        "Om een gebruiker in te loggen",
+        "Om een internetverbinding te maken",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een IT'er wil alle onderdelen van één afgerond project in één keer opruimen. Wat is hiervoor het handigst?",
+      opties: [
+        "Alle onderdelen in dezelfde resource group verwijderen",
+        "Elk onderdeel apart, in een andere region, verwijderen",
+        "Een nieuwe subscription aanmaken",
+        "MFA uitschakelen",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "subscription",
+    domein: "architectuur",
+    naam: "Subscription",
+    starttoets: {
+      vraag: "Een bedrijf heeft één \"Azure subscription\" waaronder alle resource groups, kosten en facturatie vallen. Wat is een subscription het beste te vergelijken met?",
+      opties: [
+        "Een soort hoofdaccount waaronder alles wordt afgerekend en beheerd",
+        "Eén virtuele computer",
+        "Eén gebruikersnaam en wachtwoord",
+        "Een opslagmap voor bestanden",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "Een subscription (abonnement) is de laag waarop Microsoft bijhoudt wat een bedrijf gebruikt en wat het kost. Alle resource groups en onderdelen van een bedrijf vallen onder één of meerdere subscriptions.",
+    scenario:
+      "Een klant belt: \"Ik snap niet waarom we twee facturen krijgen.\" Jij ontdekt dat het bedrijf twee aparte subscriptions heeft, bijvoorbeeld één voor productie en één voor testen. Daarom zijn er twee rekeningen.",
+    controle: {
+      vraag: "Waar is een subscription in Azure vooral voor bedoeld?",
+      opties: [
+        "Beheer en facturatie van alle onderliggende Azure-onderdelen",
+        "Het aanmaken van een wachtwoord",
+        "Het opslaan van bestanden",
+        "Het inloggen op een virtuele machine",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een bedrijf wil de kosten van hun testomgeving apart bijhouden van hun productieomgeving. Wat richten ze hiervoor meestal apart in?",
+      opties: [
+        "Een aparte subscription",
+        "Een aparte region",
+        "Een aparte container",
+        "Een ander wachtwoordbeleid",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "virtual-machine",
+    domein: "architectuur",
+    naam: "Virtual machine (VM)",
+    starttoets: {
+      vraag: "Een bedrijf heeft een 'computer' aangemaakt in Azure die eigenlijk software is, draaiend op een server bij Microsoft. Hoe heet dit?",
+      opties: [
+        "Virtual machine (virtuele machine)",
+        "Resource group",
+        "Region",
+        "Storage account",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "Een virtual machine (VM) is een computer die volledig bestaat uit software, draaiend op een fysieke server in een Azure-datacenter. Voor de gebruiker voelt het als een gewone computer, met een eigen besturingssysteem.",
+    scenario:
+      "Een collega moet een oude applicatie testen die alleen op Windows Server werkt. In plaats van een fysieke server te kopen, zet hij snel een virtuele machine in Azure op, test de applicatie, en zet hem daarna weer uit.",
+    controle: {
+      vraag: "Wat is een virtual machine?",
+      opties: [
+        "Een computer die volledig als software draait op een server in de cloud",
+        "Een fysieke laptop van een medewerker",
+        "Een groep gebruikers met dezelfde rechten",
+        "Een opslagplek voor bestanden",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een ontwikkelaar heeft tijdelijk een Windows-server nodig om iets te testen, zonder nieuwe hardware te kopen. Wat is hiervoor een logische oplossing?",
+      opties: [
+        "Een virtual machine opzetten in Azure",
+        "Een nieuwe subscription aanmaken",
+        "MFA inschakelen",
+        "Een resource group verwijderen",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "container",
+    domein: "architectuur",
+    naam: "Container",
+    starttoets: {
+      vraag: "Een ontwikkelaar verpakt een applicatie samen met alles wat nodig is om te draaien, zodat het overal hetzelfde werkt. Hoe heet zo'n verpakking?",
+      opties: ["Container", "Virtual machine", "Resource group", "Region"],
+      correct: 0,
+    },
+    uitleg:
+      "Een container is een lichte 'verpakking' van een applicatie met alles wat nodig is om te draaien. In tegenstelling tot een virtuele machine deelt een container het besturingssysteem met andere containers, waardoor het sneller opstart.",
+    scenario:
+      "Vergelijk het met een verhuisdoos: alles wat de applicatie nodig heeft zit al netjes ingepakt in de container. Of je die container nu op de laptop van de developer draait of op een Azure-server, hij werkt overal hetzelfde.",
+    controle: {
+      vraag: "Wat is een belangrijk voordeel van een container ten opzichte van een virtual machine?",
+      opties: [
+        "Een container start sneller op en is lichter",
+        "Een container heeft altijd meer opslag",
+        "Een container heeft geen internet nodig",
+        "Een container kan niet verplaatst worden",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een developer wil dat een applicatie op elke computer exact hetzelfde werkt, zonder installatieproblemen. Wat gebruikt hij hiervoor vaak?",
+      opties: ["Een container", "Een resource group", "MFA", "Een subscription"],
+      correct: 0,
+    },
+  },
+  {
+    id: "storage",
+    domein: "architectuur",
+    naam: "Storage (blob/file)",
+    starttoets: {
+      vraag: "Een bedrijf slaat grote hoeveelheden foto's en documenten op in Azure, buiten een gewone computer om. Hoe heet deze Azure-dienst?",
+      opties: [
+        "Storage (opslag), bijvoorbeeld blob- of file-opslag",
+        "Virtual machine",
+        "Region",
+        "RBAC",
+      ],
+      correct: 0,
+    },
+    uitleg:
+      "Storage in Azure is opslagruimte in de cloud voor bestanden. Blob-opslag is bedoeld voor losse bestanden zoals foto's, video's en documenten. File-opslag werkt meer als een gedeelde netwerkschijf, met mappen die je kan openen zoals op een gewone computer.",
+    scenario:
+      "Een gebruiker vraagt: \"Waar staan de back-ups van onze klantfoto's precies?\" Antwoord: die staan niet op een lokale server, maar in Azure blob-opslag, veilig in de cloud.",
+    controle: {
+      vraag: "Waarvoor wordt Azure storage gebruikt?",
+      opties: [
+        "Voor het opslaan van bestanden en data in de cloud",
+        "Voor het inloggen van gebruikers",
+        "Voor het toekennen van rechten",
+        "Voor het schalen van servers",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een bedrijf wil duizenden productfoto's veilig bewaren buiten hun eigen kantoor. Wat is hiervoor geschikt?",
+      opties: ["Azure storage (bijvoorbeeld blob-opslag)", "Een virtual machine", "Een subscription", "MFA"],
+      correct: 0,
+    },
+  },
+  {
+    id: "virtueel-netwerk",
+    domein: "architectuur",
+    naam: "Virtueel netwerk",
+    starttoets: {
+      vraag: "Een bedrijf wil dat hun servers in Azure veilig met elkaar kunnen praten, alsof ze op hetzelfde kantoornetwerk staan. Wat richten ze hiervoor in?",
+      opties: ["Een virtueel netwerk", "Een resource group", "Een container", "Een region"],
+      correct: 0,
+    },
+    uitleg:
+      "Een virtueel netwerk is een eigen, afgeschermd netwerk binnen Azure. Hiermee kunnen onderdelen zoals virtuele machines veilig met elkaar en met het internet communiceren, ongeveer zoals een netwerk in een kantoorgebouw.",
+    scenario:
+      "Een collega legt uit: \"Deze twee virtuele servers kunnen alleen met elkaar praten omdat we ze in hetzelfde virtuele netwerk hebben gezet. Zo blijft het verkeer afgeschermd van buitenaf.\"",
+    controle: {
+      vraag: "Waarvoor dient een virtueel netwerk in Azure?",
+      opties: [
+        "Om Azure-onderdelen veilig met elkaar te laten communiceren",
+        "Om bestanden op te slaan",
+        "Om gebruikers in te loggen",
+        "Om facturen te beheren",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een bedrijf wil dat hun servers in de cloud alleen onderling verbinding kunnen maken, afgeschermd van de rest van het internet. Wat regelt dit?",
+      opties: ["Een virtueel netwerk", "Een subscription", "Tags", "Scalability"],
+      correct: 0,
+    },
+  },
+
+  // ===================== DOMEIN 3: BEHEER & SECURITY =====================
+  {
+    id: "entra-id",
+    domein: "beheer-security",
+    naam: "Microsoft Entra ID (login/identiteit)",
+    starttoets: {
+      vraag: "Als een medewerker inlogt bij Microsoft 365 met zijn bedrijfsaccount, welk systeem controleert dan wie hij is?",
+      opties: ["Microsoft Entra ID", "Resource group", "Storage", "Scalability"],
+      correct: 0,
+    },
+    uitleg:
+      "Microsoft Entra ID (voorheen Azure Active Directory) is het systeem dat bijhoudt wie een gebruiker is en regelt het inloggen. Het is te vergelijken met een digitale identiteitskaart voor alle Microsoft- en Azure-diensten van een bedrijf.",
+    scenario:
+      "Een nieuwe medewerker kan nog niet inloggen op zijn laptop. Jij controleert in Microsoft Entra ID of zijn account al is aangemaakt en actief is. Zonder een geldig Entra ID-account kan hij nergens inloggen.",
+    controle: {
+      vraag: "Wat regelt Microsoft Entra ID?",
+      opties: [
+        "Wie een gebruiker is, en of die mag inloggen",
+        "Hoeveel opslag een bedrijf gebruikt",
+        "In welke region servers staan",
+        "Hoe een factuur wordt opgebouwd",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een medewerker krijgt de melding \"Account niet gevonden\" bij het inloggen op Microsoft 365. Waar controleer je dit het eerst?",
+      opties: [
+        "In Microsoft Entra ID, of het account bestaat en actief is",
+        "In de resource group van de webshop",
+        "In de storage-instellingen",
+        "In de facturatiegegevens van de subscription",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "mfa",
+    domein: "beheer-security",
+    naam: "MFA (multifactor-authenticatie)",
+    starttoets: {
+      vraag: "Na het intypen van zijn wachtwoord moet een medewerker ook nog een code bevestigen in een app op zijn telefoon. Hoe heet deze extra beveiligingsstap?",
+      opties: ["MFA (multifactor-authenticatie)", "RBAC", "Scalability", "Region"],
+      correct: 0,
+    },
+    uitleg:
+      "MFA betekent dat je bij het inloggen niet alleen een wachtwoord gebruikt, maar ook een tweede bevestiging, bijvoorbeeld een code op je telefoon. Dit maakt het veel moeilijker voor een onbevoegde om in te loggen, zelfs als het wachtwoord bekend is.",
+    scenario:
+      "Een gebruiker belt: \"Ik moet steeds een code goedkeuren op mijn telefoon voordat ik kan inloggen, is dat normaal?\" Jij legt uit dat dit MFA is, een extra beveiligingslaag die het account beter beschermt.",
+    controle: {
+      vraag: "Wat is het doel van MFA?",
+      opties: [
+        "Een extra controle bij het inloggen, naast het wachtwoord",
+        "Sneller inloggen zonder wachtwoord",
+        "Meer opslagruimte krijgen",
+        "Automatisch servers bijschalen",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een gebruiker is zijn wachtwoord kwijtgeraakt, maar iemand anders probeert toch in te loggen met een geraden wachtwoord. Wat voorkomt dat deze persoon binnenkomt?",
+      opties: [
+        "MFA, doordat er ook een tweede bevestiging nodig is",
+        "Een grotere resource group",
+        "Een nieuwe region",
+        "Meer opslag",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "rbac",
+    domein: "beheer-security",
+    naam: "RBAC (rollen en rechten)",
+    starttoets: {
+      vraag: "Een stagiair mag in Azure alleen bestanden bekijken, maar niets verwijderen, terwijl een systeembeheerder alles mag. Hoe heet dit systeem van rollen en rechten?",
+      opties: ["RBAC (Role-Based Access Control)", "MFA", "Scalability", "Storage"],
+      correct: 0,
+    },
+    uitleg:
+      "RBAC betekent dat mensen rechten krijgen op basis van hun rol, bijvoorbeeld 'lezer' of 'beheerder'. Zo kan iemand alleen doen wat nodig is voor zijn functie, en niet per ongeluk (of expres) iets belangrijks aanpassen of verwijderen.",
+    scenario:
+      "Een nieuwe collega vraagt waarom hij een resource group niet kan verwijderen. Jij legt uit dat hij via RBAC de rol 'lezer' heeft gekregen: hij mag alles bekijken, maar niets aanpassen. Alleen beheerders hebben die rechten.",
+    controle: {
+      vraag: "Wat regelt RBAC?",
+      opties: [
+        "Welke rechten iemand heeft, op basis van zijn rol",
+        "Hoeveel een bedrijf betaalt per maand",
+        "In welk land de data staat",
+        "Hoeveel servers er automatisch bijkomen",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een medewerker klaagt dat hij een virtuele machine niet mag verwijderen, terwijl een collega dat wel mag. Wat is hier waarschijnlijk de reden?",
+      opties: [
+        "Ze hebben via RBAC verschillende rollen/rechten gekregen",
+        "Ze zitten in een andere region",
+        "Er is geen MFA ingesteld",
+        "De subscription is verlopen",
+      ],
+      correct: 0,
+    },
+  },
+  {
+    id: "kosten-tags",
+    domein: "beheer-security",
+    naam: "Kosten & tags",
+    starttoets: {
+      vraag: "Een bedrijf zet labels zoals \"Afdeling: Marketing\" op hun Azure-onderdelen, zodat ze precies weten welke afdeling waarvoor betaalt. Hoe heten deze labels?",
+      opties: ["Tags", "Regions", "Containers", "Rollen"],
+      correct: 0,
+    },
+    uitleg:
+      "Tags zijn labels die je aan Azure-onderdelen kan hangen, bijvoorbeeld met de naam van een project of afdeling. Hiermee kan een bedrijf makkelijk overzicht houden over de kosten: wie gebruikt wat, en wat kost dat.",
+    scenario:
+      "De financiële afdeling wil weten hoeveel de marketingafdeling aan Azure uitgeeft. Omdat alle onderdelen van marketing getagd zijn met \"Afdeling: Marketing\", kan dit snel worden opgezocht in het kostenoverzicht.",
+    controle: {
+      vraag: "Waarvoor gebruik je tags in Azure?",
+      opties: [
+        "Om onderdelen te labelen, bijvoorbeeld voor kostenoverzicht",
+        "Om in te loggen op een account",
+        "Om een virtuele machine te starten",
+        "Om een netwerk te beveiligen",
+      ],
+      correct: 0,
+    },
+    eindcheck: {
+      vraag: "Een manager wil precies zien hoeveel elk project maandelijks aan Azure kost. Wat helpt hierbij het meest?",
+      opties: [
+        "Onderdelen taggen per project, zodat kosten te filteren zijn",
+        "Alle onderdelen in dezelfde region zetten",
+        "MFA verplicht maken",
+        "Alle rechten aan iedereen geven",
+      ],
+      correct: 0,
+    },
+  },
+];
+
+/* =====================================================================
+ * VOORTGANG: opslaan in localStorage, zodat een student kan stoppen
+ * en in een volgende les verdergaat waar hij gebleven was.
+ * ===================================================================== */
+
+const STORAGE_KEY = "azureLeertoolVoortgang_v1";
+
+function nieuweState() {
+  return {
+    fase: "intro", // intro | starttoets | resultaat | leermodule | eindcheck | afgerond
+    starttoetsIndex: 0,
+    starttoetsAntwoorden: {}, // { begripId: true/false (goed beantwoord) }
+    leermoduleIndex: 0,
+    leermoduleVoortgang: {}, // { begripId: true (afgerond) }
+    eindcheckIndex: 0,
+    eindcheckAntwoorden: {}, // { begripId: true/false }
+  };
+}
+
+function laadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return nieuweState();
+    const opgeslagen = JSON.parse(raw);
+    return Object.assign(nieuweState(), opgeslagen);
+  } catch (e) {
+    return nieuweState();
+  }
+}
+
+function bewaarState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    /* localStorage niet beschikbaar (bv. privémodus) - voortgang gaat dan niet mee naar volgende les */
+  }
+}
+
+let state = laadState();
+
+function gemisteBegrippen() {
+  return AZURE_BEGRIPPEN.filter((b) => state.starttoetsAntwoorden[b.id] === false);
+}
+
+/* =====================================================================
+ * HULPFUNCTIES
+ * ===================================================================== */
+
+function shuffle(array) {
+  const kopie = array.slice();
+  for (let i = kopie.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [kopie[i], kopie[j]] = [kopie[j], kopie[i]];
+  }
+  return kopie;
+}
+
+function domeinNaam(domeinId) {
+  const d = AZURE_DOMEINEN.find((x) => x.id === domeinId);
+  return d ? d.naam : "";
+}
+
+function escapeHtml(tekst) {
+  const div = document.createElement("div");
+  div.textContent = tekst;
+  return div.innerHTML;
+}
+
+/* =====================================================================
+ * RENDER: stappen-voortgangsbalk (bovenaan, altijd zichtbaar)
+ * ===================================================================== */
+
+function renderStappenBalk() {
+  const stappenDef = [
+    { key: "starttoets", label: "Starttoets" },
+    { key: "resultaat", label: "Resultaten" },
+    { key: "leermodule", label: "Leermodule" },
+    { key: "eindcheck", label: "Eindcheck" },
+  ];
+  const volgordeIndex = { intro: 0, starttoets: 0, resultaat: 1, leermodule: 2, eindcheck: 3, afgerond: 3 };
+  const huidigeIndex = volgordeIndex[state.fase] ?? 0;
+
+  const html = stappenDef
+    .map((s, i) => {
+      let cls = "stap";
+      if (i < huidigeIndex) cls += " klaar";
+      else if (i === huidigeIndex) cls += " actief";
+      return `<div class="${cls}"><span class="stap-nr">${i + 1}</span><br>${s.label}</div>`;
+    })
+    .join("");
+
+  return `<div class="stappen">${html}</div>`;
+}
+
+/* =====================================================================
+ * SCHERM: INTRO
+ * ===================================================================== */
+
+function renderIntro() {
+  return `
+    <div class="kaart intro-kaart">
+      <div class="intro-icoon">☁️</div>
+      <h2>Azure basisbegrippen</h2>
+      <p>Deze tool leert je 16 begrippen die je op de servicedesk kan tegenkomen tijdens je stage.</p>
+      <ul class="intro-lijst">
+        <li>Eerst een korte starttoets: 16 vragen, geen tijdsdruk, geen cijfer.</li>
+        <li>Je ziet daarna welke begrippen je al kent en welke nog niet.</li>
+        <li>De begrippen die je nog niet kent, leer je in de leermodule.</li>
+        <li>Aan het einde een korte eindcheck van de begrippen die je moest leren.</li>
+        <li>Je voortgang wordt bewaard. Je kan gerust stoppen en later verdergaan.</li>
+      </ul>
+      <div class="btn-rij" style="justify-content:center">
+        <button class="btn btn-groen" id="btn-start-toets">Start de starttoets →</button>
+      </div>
+    </div>
+  `;
+}
+
+/* =====================================================================
+ * SCHERM: STARTTOETS
+ * ===================================================================== */
+
+let huidigeOptieVolgorde = null; // geshuffelde opties voor de huidige vraag, zodat een re-render niet opnieuw schudt
+
+function renderStarttoets() {
+  const totaal = AZURE_BEGRIPPEN.length;
+  const index = state.starttoetsIndex;
+  const begrip = AZURE_BEGRIPPEN[index];
+  const percentage = Math.round((index / totaal) * 100);
+
+  if (!huidigeOptieVolgorde || huidigeOptieVolgorde.begripId !== begrip.id) {
+    const optiesMetCorrect = begrip.starttoets.opties.map((tekst, i) => ({
+      tekst,
+      correct: i === begrip.starttoets.correct,
+    }));
+    huidigeOptieVolgorde = { begripId: begrip.id, opties: shuffle(optiesMetCorrect) };
+  }
+
+  const optiesHtml = huidigeOptieVolgorde.opties
+    .map(
+      (optie, i) => `
+      <button class="optie" data-index="${i}">${escapeHtml(optie.tekst)}</button>
+    `
+    )
+    .join("");
+
+  return `
+    <div class="subvoortgang-wrap">
+      <div class="subvoortgang-labels">
+        <span>Starttoets</span>
+        <span>Vraag ${index + 1} van ${totaal}</span>
+      </div>
+      <div class="subvoortgang-bar-bg"><div class="subvoortgang-bar-fill" style="width:${percentage}%"></div></div>
+    </div>
+    <div class="kaart">
+      <div class="domein-badge">${domeinNaam(begrip.domein)}</div>
+      <div class="vraag-tekst">${escapeHtml(begrip.starttoets.vraag)}</div>
+      <div class="opties">${optiesHtml}</div>
+      <div class="btn-rij">
+        <button class="btn btn-groen" id="btn-volgende-vraag" disabled>Volgende →</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelStarttoetsEvents() {
+  const optieKnoppen = document.querySelectorAll(".optie");
+  const volgendeKnop = document.getElementById("btn-volgende-vraag");
+  let gekozenIndex = null;
+
+  optieKnoppen.forEach((knop) => {
+    knop.addEventListener("click", () => {
+      gekozenIndex = parseInt(knop.dataset.index, 10);
+      optieKnoppen.forEach((k) => k.classList.remove("geselecteerd"));
+      knop.classList.add("geselecteerd");
+      volgendeKnop.disabled = false;
+    });
+  });
+
+  volgendeKnop.addEventListener("click", () => {
+    const begrip = AZURE_BEGRIPPEN[state.starttoetsIndex];
+    const gekozenOptie = huidigeOptieVolgorde.opties[gekozenIndex];
+    state.starttoetsAntwoorden[begrip.id] = !!gekozenOptie.correct;
+    huidigeOptieVolgorde = null;
+
+    if (state.starttoetsIndex < AZURE_BEGRIPPEN.length - 1) {
+      state.starttoetsIndex += 1;
+    } else {
+      state.fase = "resultaat";
+    }
+    bewaarState();
+    render();
+  });
+}
+
+/* =====================================================================
+ * SCHERM: RESULTAATOVERZICHT
+ * Toont per begrip goed/nog niet gekend, gegroepeerd per domein.
+ * "Nog niet gekend"-begrippen worden gemarkeerd voor de leermodule.
+ * ===================================================================== */
+
+function renderResultaat() {
+  const totaal = AZURE_BEGRIPPEN.length;
+  const goed = Object.values(state.starttoetsAntwoorden).filter((v) => v === true).length;
+  const gemist = gemisteBegrippen();
+
+  const domeinenHtml = AZURE_DOMEINEN.map((domein) => {
+    const begrippenInDomein = AZURE_BEGRIPPEN.filter((b) => b.domein === domein.id);
+    const rijenHtml = begrippenInDomein
+      .map((b) => {
+        const isGoed = state.starttoetsAntwoorden[b.id] === true;
+        return `
+          <div class="begrip-rij">
+            <span class="begrip-naam">${escapeHtml(b.naam)}</span>
+            <span class="status-pill ${isGoed ? "status-goed" : "status-leren"}">
+              ${isGoed ? "✓ Al bekend" : "Nog leren"}
+            </span>
+          </div>
+        `;
+      })
+      .join("");
+    return `
+      <div class="domein-resultaat">
+        <h3>${domein.icoon} ${escapeHtml(domein.naam)}</h3>
+        ${rijenHtml}
+      </div>
+    `;
+  }).join("");
+
+  const ctaHtml =
+    gemist.length > 0
+      ? `
+        <div class="cta-blok">
+          <p>${gemist.length} begrip(pen) ga je nu leren in de leermodule.</p>
+          <button class="btn btn-groen" id="btn-naar-leermodule">Ga naar de leermodule →</button>
+        </div>
+      `
+      : `
+        <div class="cta-blok">
+          <p>Je kende alle 16 begrippen al! Een leermodule is niet nodig.</p>
+          <button class="btn btn-groen" id="btn-afronden">Afronden</button>
+        </div>
+      `;
+
+  return `
+    <div class="kaart">
+      <div class="resultaat-cijfer">${goed} / ${totaal}</div>
+      <div class="resultaat-sub">begrippen al bekend — geen cijfer, puur diagnostisch</div>
+      ${domeinenHtml}
+      ${ctaHtml}
+      <div class="btn-rij" style="margin-top:1rem">
+        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelResultaatEvents() {
+  const naarLeermoduleKnop = document.getElementById("btn-naar-leermodule");
+  if (naarLeermoduleKnop) {
+    naarLeermoduleKnop.addEventListener("click", () => {
+      state.fase = "leermodule";
+      bewaarState();
+      render();
+    });
+  }
+
+  const afrondenKnop = document.getElementById("btn-afronden");
+  if (afrondenKnop) {
+    afrondenKnop.addEventListener("click", () => {
+      state.fase = "afgerond";
+      bewaarState();
+      render();
+    });
+  }
+
+  const resetKnop = document.getElementById("btn-reset");
+  if (resetKnop) {
+    resetKnop.addEventListener("click", () => {
+      if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
+        state = nieuweState();
+        bewaarState();
+        render();
+      }
+    });
+  }
+}
+
+/* =====================================================================
+ * SCHERM: LEERMODULE
+ * Toont alleen de gemiste begrippen, gegroepeerd per domein (de volgorde
+ * in AZURE_BEGRIPPEN is al per domein gegroepeerd, dus filteren volstaat).
+ * Per begrip: uitleg, servicedesk-scenario en een controlevraag.
+ * ===================================================================== */
+
+let huidigeLeerOptieVolgorde = null; // { begripId, opties } voor de huidige controlevraag
+let leerAntwoordGegeven = false;
+
+function uniekeDomeinenVolgorde(begrippenLijst) {
+  const gezien = [];
+  begrippenLijst.forEach((b) => {
+    if (!gezien.includes(b.domein)) gezien.push(b.domein);
+  });
+  return gezien;
+}
+
+function renderLeermodule() {
+  const gemist = gemisteBegrippen();
+
+  if (gemist.length === 0) {
+    // defensief: kan niet via de normale flow gebeuren, maar voorkomt een vastgelopen scherm
+    state.fase = "afgerond";
+    bewaarState();
+    return renderAfgerond();
+  }
+
+  const index = Math.min(state.leermoduleIndex, gemist.length - 1);
+  const begrip = gemist[index];
+  const domeinenInGemist = uniekeDomeinenVolgorde(gemist);
+  const domeinPositie = domeinenInGemist.indexOf(begrip.domein) + 1;
+
+  if (!huidigeLeerOptieVolgorde || huidigeLeerOptieVolgorde.begripId !== begrip.id) {
+    const optiesMetCorrect = begrip.controle.opties.map((tekst, i) => ({
+      tekst,
+      correct: i === begrip.controle.correct,
+    }));
+    huidigeLeerOptieVolgorde = { begripId: begrip.id, opties: shuffle(optiesMetCorrect) };
+    leerAntwoordGegeven = false;
+  }
+
+  const optiesHtml = huidigeLeerOptieVolgorde.opties
+    .map((optie, i) => `<button class="optie" data-index="${i}">${escapeHtml(optie.tekst)}</button>`)
+    .join("");
+
+  const isLaatsteBegrip = index === gemist.length - 1;
+
+  return `
+    <div class="subvoortgang-wrap">
+      <div class="subvoortgang-labels">
+        <span>Domein ${domeinPositie} van ${domeinenInGemist.length}: ${escapeHtml(domeinNaam(begrip.domein))}</span>
+        <span>Begrip ${index + 1} van ${gemist.length}</span>
+      </div>
+      <div class="subvoortgang-bar-bg"><div class="subvoortgang-bar-fill" style="width:${Math.round((index / gemist.length) * 100)}%"></div></div>
+    </div>
+    <div class="kaart">
+      <div class="domein-label">${domeinNaam(begrip.domein)}</div>
+      <div class="begrip-titel">${escapeHtml(begrip.naam)}</div>
+
+      <div class="leer-blok">
+        <div class="leer-blok-label">📖 Uitleg</div>
+        <div class="leer-blok-tekst">${escapeHtml(begrip.uitleg)}</div>
+      </div>
+
+      <div class="leer-blok">
+        <div class="leer-blok-label">🖥️ Op de servicedesk</div>
+        <div class="leer-blok-tekst scenario">${escapeHtml(begrip.scenario)}</div>
+      </div>
+
+      <div class="controlevraag-kop">Even checken: ${escapeHtml(begrip.controle.vraag)}</div>
+      <div class="opties" id="leer-opties">${optiesHtml}</div>
+      <div id="leer-feedback"></div>
+
+      <div class="btn-rij">
+        <button class="btn btn-groen" id="btn-volgend-begrip" disabled>${isLaatsteBegrip ? "Naar de eindcheck →" : "Volgend begrip →"}</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelLeermoduleEvents() {
+  const volgendeKnop = document.getElementById("btn-volgend-begrip");
+  if (!volgendeKnop) {
+    // renderLeermodule viel terug op de stub-markup (gemist.length === 0)
+    koppelStubEvents();
+    return;
+  }
+
+  const gemist = gemisteBegrippen();
+  const index = Math.min(state.leermoduleIndex, gemist.length - 1);
+  const begrip = gemist[index];
+  const optieKnoppen = document.querySelectorAll("#leer-opties .optie");
+  const feedbackDiv = document.getElementById("leer-feedback");
+
+  optieKnoppen.forEach((knop) => {
+    knop.addEventListener("click", () => {
+      if (leerAntwoordGegeven) return;
+      leerAntwoordGegeven = true;
+      const gekozenIndex = parseInt(knop.dataset.index, 10);
+      const gekozenOptie = huidigeLeerOptieVolgorde.opties[gekozenIndex];
+
+      optieKnoppen.forEach((k, i) => {
+        k.classList.add("beantwoord");
+        if (huidigeLeerOptieVolgorde.opties[i].correct) k.classList.add("optie-correct");
+        else if (i === gekozenIndex) k.classList.add("optie-fout");
+      });
+
+      feedbackDiv.innerHTML = gekozenOptie.correct
+        ? `<div class="leer-feedback goed">Goed zo! Dit begrip zit er nu in.</div>`
+        : `<div class="leer-feedback fout">Niet helemaal — het juiste antwoord is hierboven groen gemarkeerd. Lees de uitleg gerust nog eens.</div>`;
+
+      state.leermoduleVoortgang[begrip.id] = true;
+      bewaarState();
+      volgendeKnop.disabled = false;
+    });
+  });
+
+  volgendeKnop.addEventListener("click", () => {
+    huidigeLeerOptieVolgorde = null;
+    leerAntwoordGegeven = false;
+    if (index < gemist.length - 1) {
+      state.leermoduleIndex += 1;
+    } else {
+      state.fase = "eindcheck";
+    }
+    bewaarState();
+    render();
+  });
+}
+
+/* =====================================================================
+ * SCHERM: EINDCHECK
+ * Herhaalt alleen de begrippen die bij de starttoets gemist zijn, met
+ * een andere vraagvorm dan de starttoets (begrip.eindcheck). Zelfde
+ * opzet als de starttoets: geen tijdsdruk, geen directe feedback per
+ * vraag — het resultaat zie je pas aan het eind.
+ * ===================================================================== */
+
+let huidigeEindcheckOptieVolgorde = null;
+
+function renderEindcheck() {
+  const gemist = gemisteBegrippen();
+
+  if (gemist.length === 0) {
+    state.fase = "afgerond";
+    bewaarState();
+    return renderAfgerond();
+  }
+
+  const index = Math.min(state.eindcheckIndex, gemist.length - 1);
+  const begrip = gemist[index];
+  const percentage = Math.round((index / gemist.length) * 100);
+
+  if (!huidigeEindcheckOptieVolgorde || huidigeEindcheckOptieVolgorde.begripId !== begrip.id) {
+    const optiesMetCorrect = begrip.eindcheck.opties.map((tekst, i) => ({
+      tekst,
+      correct: i === begrip.eindcheck.correct,
+    }));
+    huidigeEindcheckOptieVolgorde = { begripId: begrip.id, opties: shuffle(optiesMetCorrect) };
+  }
+
+  const optiesHtml = huidigeEindcheckOptieVolgorde.opties
+    .map((optie, i) => `<button class="optie" data-index="${i}">${escapeHtml(optie.tekst)}</button>`)
+    .join("");
+
+  return `
+    <div class="subvoortgang-wrap">
+      <div class="subvoortgang-labels">
+        <span>Eindcheck</span>
+        <span>Vraag ${index + 1} van ${gemist.length}</span>
+      </div>
+      <div class="subvoortgang-bar-bg"><div class="subvoortgang-bar-fill" style="width:${percentage}%"></div></div>
+    </div>
+    <div class="kaart">
+      <div class="domein-badge">${domeinNaam(begrip.domein)}</div>
+      <div class="vraag-tekst">${escapeHtml(begrip.eindcheck.vraag)}</div>
+      <div class="opties">${optiesHtml}</div>
+      <div class="btn-rij">
+        <button class="btn btn-groen" id="btn-volgende-eindcheck" disabled>${index === gemist.length - 1 ? "Bekijk resultaat →" : "Volgende →"}</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelEindcheckEvents() {
+  const optieKnoppen = document.querySelectorAll(".optie");
+  const volgendeKnop = document.getElementById("btn-volgende-eindcheck");
+  if (!volgendeKnop) return; // gemist.length === 0, al doorgestuurd naar afgerond
+  let gekozenIndex = null;
+
+  optieKnoppen.forEach((knop) => {
+    knop.addEventListener("click", () => {
+      gekozenIndex = parseInt(knop.dataset.index, 10);
+      optieKnoppen.forEach((k) => k.classList.remove("geselecteerd"));
+      knop.classList.add("geselecteerd");
+      volgendeKnop.disabled = false;
+    });
+  });
+
+  volgendeKnop.addEventListener("click", () => {
+    const gemist = gemisteBegrippen();
+    const begrip = gemist[Math.min(state.eindcheckIndex, gemist.length - 1)];
+    const gekozenOptie = huidigeEindcheckOptieVolgorde.opties[gekozenIndex];
+    state.eindcheckAntwoorden[begrip.id] = !!gekozenOptie.correct;
+    huidigeEindcheckOptieVolgorde = null;
+
+    if (state.eindcheckIndex < gemist.length - 1) {
+      state.eindcheckIndex += 1;
+    } else {
+      state.fase = "afgerond";
+    }
+    bewaarState();
+    render();
+  });
+}
+
+/* =====================================================================
+ * SCHERM: AFGEROND
+ * Als er een eindcheck is gedaan: laat per begrip zien of het is blijven
+ * hangen. Als de starttoets al alles goed had: eenvoudige felicitatie.
+ * ===================================================================== */
+
+function renderAfgerond() {
+  const eindcheckGedaan = Object.keys(state.eindcheckAntwoorden).length > 0;
+
+  if (!eindcheckGedaan) {
+    return `
+      <div class="kaart intro-kaart">
+        <div class="intro-icoon">🎉</div>
+        <h2>Goed gedaan!</h2>
+        <p>Je kende bij de starttoets alle 16 begrippen al. Je herkent ze nu als je ze op de servicedesk voorbij hoort komen.</p>
+        <div class="btn-rij" style="justify-content:center;margin-top:1rem">
+          <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+        </div>
+      </div>
+    `;
+  }
+
+  const begrippenMetEindcheck = AZURE_BEGRIPPEN.filter((b) => b.id in state.eindcheckAntwoorden);
+  const goedGebleven = begrippenMetEindcheck.filter((b) => state.eindcheckAntwoorden[b.id] === true).length;
+
+  const rijenHtml = begrippenMetEindcheck
+    .map((b) => {
+      const blijvend = state.eindcheckAntwoorden[b.id] === true;
+      return `
+        <div class="begrip-rij">
+          <span class="begrip-naam">${escapeHtml(b.naam)}</span>
+          <span class="status-pill ${blijvend ? "status-goed" : "status-leren"}">
+            ${blijvend ? "✓ Blijft hangen" : "Nog even oefenen"}
+          </span>
+        </div>
+      `;
+    })
+    .join("");
+
+  return `
+    <div class="kaart">
+      <div class="resultaat-cijfer">${goedGebleven} / ${begrippenMetEindcheck.length}</div>
+      <div class="resultaat-sub">geleerde begrippen die bij de eindcheck blijven hangen</div>
+      ${rijenHtml}
+      <div class="cta-blok">
+        <p>${goedGebleven === begrippenMetEindcheck.length ? "Alle geleerde begrippen blijven hangen. Goed gedaan!" : "Kijk de begrippen met 'Nog even oefenen' gerust nog eens na."}</p>
+      </div>
+      <div class="btn-rij" style="margin-top:1rem">
+        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelStubEvents() {
+  const terugKnop = document.getElementById("btn-terug-resultaat");
+  if (terugKnop) {
+    terugKnop.addEventListener("click", () => {
+      state.fase = "resultaat";
+      bewaarState();
+      render();
+    });
+  }
+  const resetKnop = document.getElementById("btn-reset");
+  if (resetKnop) {
+    resetKnop.addEventListener("click", () => {
+      if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
+        state = nieuweState();
+        bewaarState();
+        render();
+      }
+    });
+  }
+}
+
+/* =====================================================================
+ * HOOFDRENDER
+ * ===================================================================== */
+
+function render() {
+  const app = document.getElementById("app");
+  let inhoud = "";
+
+  inhoud += `
+    <div class="site-header">
+      <h1>Azure basisbegrippen</h1>
+      <p>Voorbereiding op je ICT-stage — herken de begrippen op de servicedesk</p>
+    </div>
+  `;
+
+  if (state.fase !== "intro") {
+    inhoud += renderStappenBalk();
+  }
+
+  if (state.fase === "intro") {
+    inhoud += renderIntro();
+  } else if (state.fase === "starttoets") {
+    inhoud += renderStarttoets();
+  } else if (state.fase === "resultaat") {
+    inhoud += renderResultaat();
+  } else if (state.fase === "leermodule") {
+    inhoud += renderLeermodule();
+  } else if (state.fase === "eindcheck") {
+    inhoud += renderEindcheck();
+  } else if (state.fase === "afgerond") {
+    inhoud += renderAfgerond();
+  }
+
+  inhoud += `<footer>Ter AA Helmond — Medewerker ICT niveau 2</footer>`;
+
+  app.innerHTML = inhoud;
+
+  if (state.fase === "intro") {
+    document.getElementById("btn-start-toets").addEventListener("click", () => {
+      state.fase = "starttoets";
+      bewaarState();
+      render();
+    });
+  } else if (state.fase === "starttoets") {
+    koppelStarttoetsEvents();
+  } else if (state.fase === "resultaat") {
+    koppelResultaatEvents();
+  } else if (state.fase === "leermodule") {
+    koppelLeermoduleEvents();
+  } else if (state.fase === "eindcheck") {
+    koppelEindcheckEvents();
+  } else if (state.fase === "afgerond") {
+    koppelStubEvents();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1001,9 +1001,9 @@ function renderLeermodule() {
 
   if (gemist.length === 0) {
     // defensief: kan niet via de normale flow gebeuren, maar voorkomt een vastgelopen scherm
-    state.fase = "eindcheck";
+    state.fase = "afgerond";
     bewaarState();
-    return renderVolgendeStapStub("De eindcheck", "stap 5/5");
+    return renderAfgerond();
   }
 
   const index = Math.min(state.leermoduleIndex, gemist.length - 1);
@@ -1110,34 +1110,139 @@ function koppelLeermoduleEvents() {
 }
 
 /* =====================================================================
- * SCHERMEN: EINDCHECK / AFGEROND
- * Volgen inhoudelijk in de volgende stap. Tijdelijk scherm voor eindcheck
- * zodat de flow vanaf de leermodule al werkt en getest kan worden.
+ * SCHERM: EINDCHECK
+ * Herhaalt alleen de begrippen die bij de starttoets gemist zijn, met
+ * een andere vraagvorm dan de starttoets (begrip.eindcheck). Zelfde
+ * opzet als de starttoets: geen tijdsdruk, geen directe feedback per
+ * vraag — het resultaat zie je pas aan het eind.
  * ===================================================================== */
 
-function renderVolgendeStapStub(titel, stapLabel) {
+let huidigeEindcheckOptieVolgorde = null;
+
+function renderEindcheck() {
   const gemist = gemisteBegrippen();
+
+  if (gemist.length === 0) {
+    state.fase = "afgerond";
+    bewaarState();
+    return renderAfgerond();
+  }
+
+  const index = Math.min(state.eindcheckIndex, gemist.length - 1);
+  const begrip = gemist[index];
+  const percentage = Math.round((index / gemist.length) * 100);
+
+  if (!huidigeEindcheckOptieVolgorde || huidigeEindcheckOptieVolgorde.begripId !== begrip.id) {
+    const optiesMetCorrect = begrip.eindcheck.opties.map((tekst, i) => ({
+      tekst,
+      correct: i === begrip.eindcheck.correct,
+    }));
+    huidigeEindcheckOptieVolgorde = { begripId: begrip.id, opties: shuffle(optiesMetCorrect) };
+  }
+
+  const optiesHtml = huidigeEindcheckOptieVolgorde.opties
+    .map((optie, i) => `<button class="optie" data-index="${i}">${escapeHtml(optie.tekst)}</button>`)
+    .join("");
+
   return `
-    <div class="kaart">
-      <div class="placeholder-blok">
-        <strong>${escapeHtml(titel)}</strong> volgt in ${escapeHtml(stapLabel)}.
-        <br>Begrippen die hierin aan bod komen: ${gemist.map((b) => escapeHtml(b.naam)).join(", ") || "geen"}
+    <div class="subvoortgang-wrap">
+      <div class="subvoortgang-labels">
+        <span>Eindcheck</span>
+        <span>Vraag ${index + 1} van ${gemist.length}</span>
       </div>
-      <div class="btn-rij" style="margin-top:1rem">
-        <button class="btn-tekst" id="btn-terug-resultaat">← Terug naar resultaatoverzicht</button>
-        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+      <div class="subvoortgang-bar-bg"><div class="subvoortgang-bar-fill" style="width:${percentage}%"></div></div>
+    </div>
+    <div class="kaart">
+      <div class="domein-badge">${domeinNaam(begrip.domein)}</div>
+      <div class="vraag-tekst">${escapeHtml(begrip.eindcheck.vraag)}</div>
+      <div class="opties">${optiesHtml}</div>
+      <div class="btn-rij">
+        <button class="btn btn-groen" id="btn-volgende-eindcheck" disabled>${index === gemist.length - 1 ? "Bekijk resultaat →" : "Volgende →"}</button>
       </div>
     </div>
   `;
 }
 
+function koppelEindcheckEvents() {
+  const optieKnoppen = document.querySelectorAll(".optie");
+  const volgendeKnop = document.getElementById("btn-volgende-eindcheck");
+  if (!volgendeKnop) return; // gemist.length === 0, al doorgestuurd naar afgerond
+  let gekozenIndex = null;
+
+  optieKnoppen.forEach((knop) => {
+    knop.addEventListener("click", () => {
+      gekozenIndex = parseInt(knop.dataset.index, 10);
+      optieKnoppen.forEach((k) => k.classList.remove("geselecteerd"));
+      knop.classList.add("geselecteerd");
+      volgendeKnop.disabled = false;
+    });
+  });
+
+  volgendeKnop.addEventListener("click", () => {
+    const gemist = gemisteBegrippen();
+    const begrip = gemist[Math.min(state.eindcheckIndex, gemist.length - 1)];
+    const gekozenOptie = huidigeEindcheckOptieVolgorde.opties[gekozenIndex];
+    state.eindcheckAntwoorden[begrip.id] = !!gekozenOptie.correct;
+    huidigeEindcheckOptieVolgorde = null;
+
+    if (state.eindcheckIndex < gemist.length - 1) {
+      state.eindcheckIndex += 1;
+    } else {
+      state.fase = "afgerond";
+    }
+    bewaarState();
+    render();
+  });
+}
+
+/* =====================================================================
+ * SCHERM: AFGEROND
+ * Als er een eindcheck is gedaan: laat per begrip zien of het is blijven
+ * hangen. Als de starttoets al alles goed had: eenvoudige felicitatie.
+ * ===================================================================== */
+
 function renderAfgerond() {
+  const eindcheckGedaan = Object.keys(state.eindcheckAntwoorden).length > 0;
+
+  if (!eindcheckGedaan) {
+    return `
+      <div class="kaart intro-kaart">
+        <div class="intro-icoon">🎉</div>
+        <h2>Goed gedaan!</h2>
+        <p>Je kende bij de starttoets alle 16 begrippen al. Je herkent ze nu als je ze op de servicedesk voorbij hoort komen.</p>
+        <div class="btn-rij" style="justify-content:center;margin-top:1rem">
+          <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+        </div>
+      </div>
+    `;
+  }
+
+  const begrippenMetEindcheck = AZURE_BEGRIPPEN.filter((b) => b.id in state.eindcheckAntwoorden);
+  const goedGebleven = begrippenMetEindcheck.filter((b) => state.eindcheckAntwoorden[b.id] === true).length;
+
+  const rijenHtml = begrippenMetEindcheck
+    .map((b) => {
+      const blijvend = state.eindcheckAntwoorden[b.id] === true;
+      return `
+        <div class="begrip-rij">
+          <span class="begrip-naam">${escapeHtml(b.naam)}</span>
+          <span class="status-pill ${blijvend ? "status-goed" : "status-leren"}">
+            ${blijvend ? "✓ Blijft hangen" : "Nog even oefenen"}
+          </span>
+        </div>
+      `;
+    })
+    .join("");
+
   return `
-    <div class="kaart intro-kaart">
-      <div class="intro-icoon">🎉</div>
-      <h2>Goed gedaan!</h2>
-      <p>Je hebt alle Azure-basisbegrippen doorlopen. Je herkent ze nu als je ze op de servicedesk voorbij hoort komen.</p>
-      <div class="btn-rij" style="justify-content:center;margin-top:1rem">
+    <div class="kaart">
+      <div class="resultaat-cijfer">${goedGebleven} / ${begrippenMetEindcheck.length}</div>
+      <div class="resultaat-sub">geleerde begrippen die bij de eindcheck blijven hangen</div>
+      ${rijenHtml}
+      <div class="cta-blok">
+        <p>${goedGebleven === begrippenMetEindcheck.length ? "Alle geleerde begrippen blijven hangen. Goed gedaan!" : "Kijk de begrippen met 'Nog even oefenen' gerust nog eens na."}</p>
+      </div>
+      <div class="btn-rij" style="margin-top:1rem">
         <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
       </div>
     </div>
@@ -1193,7 +1298,7 @@ function render() {
   } else if (state.fase === "leermodule") {
     inhoud += renderLeermodule();
   } else if (state.fase === "eindcheck") {
-    inhoud += renderVolgendeStapStub("De eindcheck", "stap 5/5");
+    inhoud += renderEindcheck();
   } else if (state.fase === "afgerond") {
     inhoud += renderAfgerond();
   }
@@ -1215,7 +1320,7 @@ function render() {
   } else if (state.fase === "leermodule") {
     koppelLeermoduleEvents();
   } else if (state.fase === "eindcheck") {
-    koppelStubEvents();
+    koppelEindcheckEvents();
   } else if (state.fase === "afgerond") {
     koppelStubEvents();
   }

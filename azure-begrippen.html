@@ -101,6 +101,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .cta-blok{background:var(--groen-licht);border:1px solid #b9e6d4;border-radius:var(--radius);padding:1.1rem 1.25rem;margin-top:1.25rem;text-align:center}
 .cta-blok p{font-size:14px;color:var(--groen-diep);margin-bottom:0.85rem;font-weight:600}
 
+/* leermodule */
+.domein-label{font-size:12px;color:var(--tekst-licht);margin-bottom:2px}
+.begrip-titel{font-size:19px;font-weight:700;color:var(--tekst);margin-bottom:1rem}
+.leer-blok{margin-bottom:1rem}
+.leer-blok-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--groen-diep);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.leer-blok-tekst{font-size:14px;color:var(--tekst-mid);line-height:1.65;background:var(--grijs-licht);border-radius:var(--radius-sm);padding:0.85rem 1rem}
+.leer-blok-tekst.scenario{background:var(--blauw-licht)}
+.controlevraag-kop{font-size:13px;font-weight:700;color:var(--tekst);margin:1.25rem 0 0.85rem;padding-top:1rem;border-top:1px solid var(--rand)}
+.optie.optie-correct{border-color:var(--groen);background:var(--groen-licht);color:var(--groen-diep);font-weight:600}
+.optie.optie-fout{border-color:#d99;background:var(--rood-licht);color:var(--rood-dark)}
+.optie:disabled,.optie.beantwoord{cursor:default}
+.leer-feedback{font-size:13px;padding:0.75rem 1rem;border-radius:var(--radius-sm);margin-bottom:1rem}
+.leer-feedback.goed{background:var(--groen-licht);color:var(--groen-diep)}
+.leer-feedback.fout{background:var(--rood-licht);color:var(--rood-dark)}
+
 footer{text-align:center;padding:1.5rem 1rem 0.5rem;font-size:12px;color:var(--tekst-licht)}
 
 @media(max-width:480px){
@@ -687,6 +702,7 @@ function nieuweState() {
     fase: "intro", // intro | starttoets | resultaat | leermodule | eindcheck | afgerond
     starttoetsIndex: 0,
     starttoetsAntwoorden: {}, // { begripId: true/false (goed beantwoord) }
+    leermoduleIndex: 0,
     leermoduleVoortgang: {}, // { begripId: true (afgerond) }
     eindcheckIndex: 0,
     eindcheckAntwoorden: {}, // { begripId: true/false }
@@ -963,9 +979,140 @@ function koppelResultaatEvents() {
 }
 
 /* =====================================================================
- * SCHERMEN: LEERMODULE / EINDCHECK / AFGEROND
- * Volgen inhoudelijk in de volgende stappen. Tijdelijke schermen zodat
- * de flow vanaf het resultaatoverzicht al werkt en getest kan worden.
+ * SCHERM: LEERMODULE
+ * Toont alleen de gemiste begrippen, gegroepeerd per domein (de volgorde
+ * in AZURE_BEGRIPPEN is al per domein gegroepeerd, dus filteren volstaat).
+ * Per begrip: uitleg, servicedesk-scenario en een controlevraag.
+ * ===================================================================== */
+
+let huidigeLeerOptieVolgorde = null; // { begripId, opties } voor de huidige controlevraag
+let leerAntwoordGegeven = false;
+
+function uniekeDomeinenVolgorde(begrippenLijst) {
+  const gezien = [];
+  begrippenLijst.forEach((b) => {
+    if (!gezien.includes(b.domein)) gezien.push(b.domein);
+  });
+  return gezien;
+}
+
+function renderLeermodule() {
+  const gemist = gemisteBegrippen();
+
+  if (gemist.length === 0) {
+    // defensief: kan niet via de normale flow gebeuren, maar voorkomt een vastgelopen scherm
+    state.fase = "eindcheck";
+    bewaarState();
+    return renderVolgendeStapStub("De eindcheck", "stap 5/5");
+  }
+
+  const index = Math.min(state.leermoduleIndex, gemist.length - 1);
+  const begrip = gemist[index];
+  const domeinenInGemist = uniekeDomeinenVolgorde(gemist);
+  const domeinPositie = domeinenInGemist.indexOf(begrip.domein) + 1;
+
+  if (!huidigeLeerOptieVolgorde || huidigeLeerOptieVolgorde.begripId !== begrip.id) {
+    const optiesMetCorrect = begrip.controle.opties.map((tekst, i) => ({
+      tekst,
+      correct: i === begrip.controle.correct,
+    }));
+    huidigeLeerOptieVolgorde = { begripId: begrip.id, opties: shuffle(optiesMetCorrect) };
+    leerAntwoordGegeven = false;
+  }
+
+  const optiesHtml = huidigeLeerOptieVolgorde.opties
+    .map((optie, i) => `<button class="optie" data-index="${i}">${escapeHtml(optie.tekst)}</button>`)
+    .join("");
+
+  const isLaatsteBegrip = index === gemist.length - 1;
+
+  return `
+    <div class="subvoortgang-wrap">
+      <div class="subvoortgang-labels">
+        <span>Domein ${domeinPositie} van ${domeinenInGemist.length}: ${escapeHtml(domeinNaam(begrip.domein))}</span>
+        <span>Begrip ${index + 1} van ${gemist.length}</span>
+      </div>
+      <div class="subvoortgang-bar-bg"><div class="subvoortgang-bar-fill" style="width:${Math.round((index / gemist.length) * 100)}%"></div></div>
+    </div>
+    <div class="kaart">
+      <div class="domein-label">${domeinNaam(begrip.domein)}</div>
+      <div class="begrip-titel">${escapeHtml(begrip.naam)}</div>
+
+      <div class="leer-blok">
+        <div class="leer-blok-label">📖 Uitleg</div>
+        <div class="leer-blok-tekst">${escapeHtml(begrip.uitleg)}</div>
+      </div>
+
+      <div class="leer-blok">
+        <div class="leer-blok-label">🖥️ Op de servicedesk</div>
+        <div class="leer-blok-tekst scenario">${escapeHtml(begrip.scenario)}</div>
+      </div>
+
+      <div class="controlevraag-kop">Even checken: ${escapeHtml(begrip.controle.vraag)}</div>
+      <div class="opties" id="leer-opties">${optiesHtml}</div>
+      <div id="leer-feedback"></div>
+
+      <div class="btn-rij">
+        <button class="btn btn-groen" id="btn-volgend-begrip" disabled>${isLaatsteBegrip ? "Naar de eindcheck →" : "Volgend begrip →"}</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelLeermoduleEvents() {
+  const volgendeKnop = document.getElementById("btn-volgend-begrip");
+  if (!volgendeKnop) {
+    // renderLeermodule viel terug op de stub-markup (gemist.length === 0)
+    koppelStubEvents();
+    return;
+  }
+
+  const gemist = gemisteBegrippen();
+  const index = Math.min(state.leermoduleIndex, gemist.length - 1);
+  const begrip = gemist[index];
+  const optieKnoppen = document.querySelectorAll("#leer-opties .optie");
+  const feedbackDiv = document.getElementById("leer-feedback");
+
+  optieKnoppen.forEach((knop) => {
+    knop.addEventListener("click", () => {
+      if (leerAntwoordGegeven) return;
+      leerAntwoordGegeven = true;
+      const gekozenIndex = parseInt(knop.dataset.index, 10);
+      const gekozenOptie = huidigeLeerOptieVolgorde.opties[gekozenIndex];
+
+      optieKnoppen.forEach((k, i) => {
+        k.classList.add("beantwoord");
+        if (huidigeLeerOptieVolgorde.opties[i].correct) k.classList.add("optie-correct");
+        else if (i === gekozenIndex) k.classList.add("optie-fout");
+      });
+
+      feedbackDiv.innerHTML = gekozenOptie.correct
+        ? `<div class="leer-feedback goed">Goed zo! Dit begrip zit er nu in.</div>`
+        : `<div class="leer-feedback fout">Niet helemaal — het juiste antwoord is hierboven groen gemarkeerd. Lees de uitleg gerust nog eens.</div>`;
+
+      state.leermoduleVoortgang[begrip.id] = true;
+      bewaarState();
+      volgendeKnop.disabled = false;
+    });
+  });
+
+  volgendeKnop.addEventListener("click", () => {
+    huidigeLeerOptieVolgorde = null;
+    leerAntwoordGegeven = false;
+    if (index < gemist.length - 1) {
+      state.leermoduleIndex += 1;
+    } else {
+      state.fase = "eindcheck";
+    }
+    bewaarState();
+    render();
+  });
+}
+
+/* =====================================================================
+ * SCHERMEN: EINDCHECK / AFGEROND
+ * Volgen inhoudelijk in de volgende stap. Tijdelijk scherm voor eindcheck
+ * zodat de flow vanaf de leermodule al werkt en getest kan worden.
  * ===================================================================== */
 
 function renderVolgendeStapStub(titel, stapLabel) {
@@ -1044,7 +1191,7 @@ function render() {
   } else if (state.fase === "resultaat") {
     inhoud += renderResultaat();
   } else if (state.fase === "leermodule") {
-    inhoud += renderVolgendeStapStub("De leermodule", "stap 4/5");
+    inhoud += renderLeermodule();
   } else if (state.fase === "eindcheck") {
     inhoud += renderVolgendeStapStub("De eindcheck", "stap 5/5");
   } else if (state.fase === "afgerond") {
@@ -1065,7 +1212,9 @@ function render() {
     koppelStarttoetsEvents();
   } else if (state.fase === "resultaat") {
     koppelResultaatEvents();
-  } else if (state.fase === "leermodule" || state.fase === "eindcheck") {
+  } else if (state.fase === "leermodule") {
+    koppelLeermoduleEvents();
+  } else if (state.fase === "eindcheck") {
     koppelStubEvents();
   } else if (state.fase === "afgerond") {
     koppelStubEvents();

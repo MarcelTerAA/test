@@ -1,19 +1,115 @@
-/*
- * Datastructuur: 16 Azure/AZ-900 kernbegrippen voor de leertool.
- * Doelgroep: MBO niveau 2, Medewerker ICT (crebo 25999).
- * Doel: begrippen HERKENNEN op de stage-servicedesk, niet examineren.
- *
- * Per begrip:
- *  - id, domein, naam
- *  - starttoets:  { vraag, opties[4], correct (index) }   -> diagnostisch, geen cijfer
- *  - uitleg:      2-3 korte zinnen, geen jargon
- *  - scenario:    herkenbare servicedesk-situatie die het begrip illustreert
- *  - controle:    { vraag, opties[4], correct }            -> checkvraagje in leermodule
- *  - eindcheck:   { vraag, opties[4], correct }             -> andere vraagvorm dan starttoets
- *
- * Zelf begrippen toevoegen/aanpassen kan door dit bestand aan te passen,
- * zonder de rest van de tool te wijzigen.
- */
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure basisbegrippen — Ter AA Helmond</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --groen:#1D9E75;
+  --groen-dark:#0F6E56;
+  --groen-diep:#085041;
+  --groen-licht:#E1F5EE;
+  --blauw-licht:#E6F1FB;
+  --blauw-dark:#0C447C;
+  --amber-licht:#FAEEDA;
+  --amber-dark:#633806;
+  --rood-licht:#FBEAEA;
+  --rood-dark:#8A1F1F;
+  --grijs-licht:#F1EFE8;
+  --grijs-mid:#5F5E5A;
+  --tekst:#1a1a1a;
+  --tekst-mid:#555;
+  --tekst-licht:#888;
+  --rand:#e0e0e0;
+  --rand-mid:#ccc;
+  --bg:#f9f9f7;
+  --wit:#fff;
+  --radius:10px;
+  --radius-sm:6px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tekst);min-height:100vh;font-size:15px;line-height:1.6}
+
+.container{max-width:700px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+/* header */
+.site-header{background:var(--groen);color:#fff;padding:1.25rem 1.5rem;border-radius:var(--radius);margin-bottom:1.25rem}
+.site-header h1{font-size:20px;font-weight:600;margin-bottom:2px}
+.site-header p{font-size:13px;opacity:0.85}
+
+/* stappen-voortgang (grote flow) */
+.stappen{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:1.25rem}
+.stap{padding:9px 4px;border-radius:var(--radius-sm);border:1px solid var(--rand);background:var(--wit);text-align:center;font-size:11px;font-weight:600;color:var(--tekst-licht);line-height:1.4}
+.stap .stap-nr{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--grijs-licht);color:var(--tekst-licht);font-size:10px;font-weight:700;margin-bottom:4px}
+.stap.actief{border-color:var(--groen);background:var(--groen-licht);color:var(--groen-diep)}
+.stap.actief .stap-nr{background:var(--groen);color:#fff}
+.stap.klaar{color:var(--groen-diep)}
+.stap.klaar .stap-nr{background:var(--groen);color:#fff}
+
+/* sub-voortgangsbalk (bv. vraag x van y) */
+.subvoortgang-wrap{background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);padding:0.85rem 1.1rem;margin-bottom:1rem}
+.subvoortgang-bar-bg{background:var(--grijs-licht);border-radius:99px;height:8px;overflow:hidden;margin:8px 0 4px}
+.subvoortgang-bar-fill{height:100%;background:var(--groen);border-radius:99px;transition:width 0.3s ease}
+.subvoortgang-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--tekst-licht)}
+
+/* kaarten algemeen */
+.kaart{background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem}
+
+/* intro scherm */
+.intro-kaart{text-align:center;padding:2.5rem 1.75rem}
+.intro-icoon{font-size:44px;margin-bottom:0.75rem}
+.intro-kaart h2{font-size:19px;margin-bottom:0.75rem;color:var(--tekst)}
+.intro-kaart p{font-size:14px;color:var(--tekst-mid);margin-bottom:0.6rem;max-width:480px;margin-left:auto;margin-right:auto}
+.intro-lijst{text-align:left;max-width:420px;margin:1.25rem auto 1.5rem;font-size:13px;color:var(--tekst-mid)}
+.intro-lijst li{margin-bottom:6px;list-style:none;padding-left:22px;position:relative}
+.intro-lijst li::before{content:"✓";position:absolute;left:0;color:var(--groen);font-weight:700}
+
+/* domein-badge */
+.domein-badge{display:inline-flex;align-items:center;gap:5px;background:var(--blauw-licht);color:var(--blauw-dark);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:1rem}
+
+/* vraag */
+.vraag-tekst{font-size:16px;font-weight:600;color:var(--tekst);margin-bottom:1.25rem;line-height:1.55}
+.opties{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.optie{display:block;width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--rand-mid);border-radius:var(--radius-sm);background:var(--wit);cursor:pointer;font-size:14px;font-family:inherit;color:var(--tekst);transition:all 0.14s}
+.optie:hover{border-color:var(--groen);background:var(--groen-licht)}
+.optie.geselecteerd{border-color:var(--groen);background:var(--groen-licht);color:var(--groen-diep);font-weight:600}
+
+/* knoppen */
+.btn-rij{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.btn{padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--rand-mid);background:var(--wit);cursor:pointer;font-size:14px;color:var(--tekst);font-family:inherit;font-weight:600;transition:all 0.14s}
+.btn:hover:not(:disabled){background:#f0f0f0;border-color:#aaa}
+.btn:disabled{opacity:0.4;cursor:not-allowed}
+.btn-groen{background:var(--groen);color:#fff;border-color:var(--groen)}
+.btn-groen:hover:not(:disabled){background:var(--groen-dark)}
+.btn-tekst{background:none;border:none;color:var(--tekst-licht);font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:4px}
+.btn-tekst:hover{color:var(--tekst-mid)}
+
+/* resultaat stub */
+.resultaat-cijfer{font-size:38px;font-weight:700;color:var(--groen-diep);text-align:center;margin-bottom:4px}
+.resultaat-sub{text-align:center;color:var(--tekst-mid);font-size:13px;margin-bottom:1.5rem}
+.placeholder-blok{background:var(--amber-licht);color:var(--amber-dark);border-radius:var(--radius-sm);padding:1rem 1.1rem;font-size:13px;margin-top:1rem;line-height:1.55}
+
+footer{text-align:center;padding:1.5rem 1rem 0.5rem;font-size:12px;color:var(--tekst-licht)}
+
+@media(max-width:480px){
+  .stappen{grid-template-columns:repeat(2,1fr)}
+  .stap{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app"></div>
+
+<script>
+/* =====================================================================
+ * DATASTRUCTUUR: 16 Azure/AZ-900 kernbegrippen.
+ * Zie azure-begrippen-data.js (verwijderd) voor toelichting per veld;
+ * hieronder dezelfde structuur, inline zodat de tool één self-contained
+ * bestand blijft. Begrippen toevoegen/aanpassen kan hier, zonder de
+ * rest van de code te wijzigen.
+ * ===================================================================== */
 
 const AZURE_DOMEINEN = [
   { id: "cloudconcepten", naam: "Cloudconcepten", icoon: "☁️" },
@@ -68,12 +164,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Public / private / hybrid cloud",
     starttoets: {
       vraag: "Een bedrijf gebruikt Microsoft 365 (van Microsoft) én een eigen serverruimte in het gebouw. Hoe noem je zo'n combinatie?",
-      opties: [
-        "Hybrid cloud",
-        "Public cloud",
-        "Private cloud",
-        "Geen cloud",
-      ],
+      opties: ["Hybrid cloud", "Public cloud", "Private cloud", "Geen cloud"],
       correct: 0,
     },
     uitleg:
@@ -92,12 +183,7 @@ const AZURE_BEGRIPPEN = [
     },
     eindcheck: {
       vraag: "Een ziekenhuis bewaart patiëntgegevens op een eigen server, maar gebruikt Teams (van Microsoft) voor overleg. Hoe heet deze combinatie?",
-      opties: [
-        "Hybrid cloud",
-        "Alleen private cloud",
-        "Alleen public cloud",
-        "On-premises",
-      ],
+      opties: ["Hybrid cloud", "Alleen private cloud", "Alleen public cloud", "On-premises"],
       correct: 0,
     },
   },
@@ -136,12 +222,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Scalability (schaalbaarheid)",
     starttoets: {
       vraag: "Een webwinkel krijgt tijdens Black Friday veel meer bezoekers. In de cloud kan de webwinkel automatisch extra servercapaciteit erbij krijgen. Hoe heet dit?",
-      opties: [
-        "Scalability (schaalbaarheid)",
-        "Subscription",
-        "Resource group",
-        "Region",
-      ],
+      opties: ["Scalability (schaalbaarheid)", "Subscription", "Resource group", "Region"],
       correct: 0,
     },
     uitleg:
@@ -245,12 +326,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Resource group",
     starttoets: {
       vraag: "In Azure staan een virtuele server, een database en opslag allemaal samen in één 'map' georganiseerd. Hoe heet zo'n verzameling bij elkaar horende onderdelen?",
-      opties: [
-        "Resource group",
-        "Subscription",
-        "Region",
-        "Container",
-      ],
+      opties: ["Resource group", "Subscription", "Region", "Container"],
       correct: 0,
     },
     uitleg:
@@ -362,12 +438,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Container",
     starttoets: {
       vraag: "Een ontwikkelaar verpakt een applicatie samen met alles wat nodig is om te draaien, zodat het overal hetzelfde werkt. Hoe heet zo'n verpakking?",
-      opties: [
-        "Container",
-        "Virtual machine",
-        "Resource group",
-        "Region",
-      ],
+      opties: ["Container", "Virtual machine", "Resource group", "Region"],
       correct: 0,
     },
     uitleg:
@@ -420,12 +491,7 @@ const AZURE_BEGRIPPEN = [
     },
     eindcheck: {
       vraag: "Een bedrijf wil duizenden productfoto's veilig bewaren buiten hun eigen kantoor. Wat is hiervoor geschikt?",
-      opties: [
-        "Azure storage (bijvoorbeeld blob-opslag)",
-        "Een virtual machine",
-        "Een subscription",
-        "MFA",
-      ],
+      opties: ["Azure storage (bijvoorbeeld blob-opslag)", "Een virtual machine", "Een subscription", "MFA"],
       correct: 0,
     },
   },
@@ -435,12 +501,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Virtueel netwerk",
     starttoets: {
       vraag: "Een bedrijf wil dat hun servers in Azure veilig met elkaar kunnen praten, alsof ze op hetzelfde kantoornetwerk staan. Wat richten ze hiervoor in?",
-      opties: [
-        "Een virtueel netwerk",
-        "Een resource group",
-        "Een container",
-        "Een region",
-      ],
+      opties: ["Een virtueel netwerk", "Een resource group", "Een container", "Een region"],
       correct: 0,
     },
     uitleg:
@@ -471,12 +532,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Microsoft Entra ID (login/identiteit)",
     starttoets: {
       vraag: "Als een medewerker inlogt bij Microsoft 365 met zijn bedrijfsaccount, welk systeem controleert dan wie hij is?",
-      opties: [
-        "Microsoft Entra ID",
-        "Resource group",
-        "Storage",
-        "Scalability",
-      ],
+      opties: ["Microsoft Entra ID", "Resource group", "Storage", "Scalability"],
       correct: 0,
     },
     uitleg:
@@ -510,12 +566,7 @@ const AZURE_BEGRIPPEN = [
     naam: "MFA (multifactor-authenticatie)",
     starttoets: {
       vraag: "Na het intypen van zijn wachtwoord moet een medewerker ook nog een code bevestigen in een app op zijn telefoon. Hoe heet deze extra beveiligingsstap?",
-      opties: [
-        "MFA (multifactor-authenticatie)",
-        "RBAC",
-        "Scalability",
-        "Region",
-      ],
+      opties: ["MFA (multifactor-authenticatie)", "RBAC", "Scalability", "Region"],
       correct: 0,
     },
     uitleg:
@@ -549,12 +600,7 @@ const AZURE_BEGRIPPEN = [
     naam: "RBAC (rollen en rechten)",
     starttoets: {
       vraag: "Een stagiair mag in Azure alleen bestanden bekijken, maar niets verwijderen, terwijl een systeembeheerder alles mag. Hoe heet dit systeem van rollen en rechten?",
-      opties: [
-        "RBAC (Role-Based Access Control)",
-        "MFA",
-        "Scalability",
-        "Storage",
-      ],
+      opties: ["RBAC (Role-Based Access Control)", "MFA", "Scalability", "Storage"],
       correct: 0,
     },
     uitleg:
@@ -588,12 +634,7 @@ const AZURE_BEGRIPPEN = [
     naam: "Kosten & tags",
     starttoets: {
       vraag: "Een bedrijf zet labels zoals \"Afdeling: Marketing\" op hun Azure-onderdelen, zodat ze precies weten welke afdeling waarvoor betaalt. Hoe heten deze labels?",
-      opties: [
-        "Tags",
-        "Regions",
-        "Containers",
-        "Rollen",
-      ],
+      opties: ["Tags", "Regions", "Containers", "Rollen"],
       correct: 0,
     },
     uitleg:
@@ -622,3 +663,287 @@ const AZURE_BEGRIPPEN = [
     },
   },
 ];
+
+/* =====================================================================
+ * VOORTGANG: opslaan in localStorage, zodat een student kan stoppen
+ * en in een volgende les verdergaat waar hij gebleven was.
+ * ===================================================================== */
+
+const STORAGE_KEY = "azureLeertoolVoortgang_v1";
+
+function nieuweState() {
+  return {
+    fase: "intro", // intro | starttoets | resultaat | leermodule | eindcheck | afgerond
+    starttoetsIndex: 0,
+    starttoetsAntwoorden: {}, // { begripId: true/false (goed beantwoord) }
+    leermoduleVoortgang: {}, // { begripId: true (afgerond) }
+    eindcheckIndex: 0,
+    eindcheckAntwoorden: {}, // { begripId: true/false }
+  };
+}
+
+function laadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return nieuweState();
+    const opgeslagen = JSON.parse(raw);
+    return Object.assign(nieuweState(), opgeslagen);
+  } catch (e) {
+    return nieuweState();
+  }
+}
+
+function bewaarState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    /* localStorage niet beschikbaar (bv. privémodus) - voortgang gaat dan niet mee naar volgende les */
+  }
+}
+
+let state = laadState();
+
+function gemisteBegrippen() {
+  return AZURE_BEGRIPPEN.filter((b) => state.starttoetsAntwoorden[b.id] === false);
+}
+
+/* =====================================================================
+ * HULPFUNCTIES
+ * ===================================================================== */
+
+function shuffle(array) {
+  const kopie = array.slice();
+  for (let i = kopie.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [kopie[i], kopie[j]] = [kopie[j], kopie[i]];
+  }
+  return kopie;
+}
+
+function domeinNaam(domeinId) {
+  const d = AZURE_DOMEINEN.find((x) => x.id === domeinId);
+  return d ? d.naam : "";
+}
+
+function escapeHtml(tekst) {
+  const div = document.createElement("div");
+  div.textContent = tekst;
+  return div.innerHTML;
+}
+
+/* =====================================================================
+ * RENDER: stappen-voortgangsbalk (bovenaan, altijd zichtbaar)
+ * ===================================================================== */
+
+function renderStappenBalk() {
+  const stappenDef = [
+    { key: "starttoets", label: "Starttoets" },
+    { key: "resultaat", label: "Resultaten" },
+    { key: "leermodule", label: "Leermodule" },
+    { key: "eindcheck", label: "Eindcheck" },
+  ];
+  const volgordeIndex = { intro: 0, starttoets: 0, resultaat: 1, leermodule: 2, eindcheck: 3, afgerond: 3 };
+  const huidigeIndex = volgordeIndex[state.fase] ?? 0;
+
+  const html = stappenDef
+    .map((s, i) => {
+      let cls = "stap";
+      if (i < huidigeIndex) cls += " klaar";
+      else if (i === huidigeIndex) cls += " actief";
+      return `<div class="${cls}"><span class="stap-nr">${i + 1}</span><br>${s.label}</div>`;
+    })
+    .join("");
+
+  return `<div class="stappen">${html}</div>`;
+}
+
+/* =====================================================================
+ * SCHERM: INTRO
+ * ===================================================================== */
+
+function renderIntro() {
+  return `
+    <div class="kaart intro-kaart">
+      <div class="intro-icoon">☁️</div>
+      <h2>Azure basisbegrippen</h2>
+      <p>Deze tool leert je 16 begrippen die je op de servicedesk kan tegenkomen tijdens je stage.</p>
+      <ul class="intro-lijst">
+        <li>Eerst een korte starttoets: 16 vragen, geen tijdsdruk, geen cijfer.</li>
+        <li>Je ziet daarna welke begrippen je al kent en welke nog niet.</li>
+        <li>De begrippen die je nog niet kent, leer je in de leermodule.</li>
+        <li>Aan het einde een korte eindcheck van de begrippen die je moest leren.</li>
+        <li>Je voortgang wordt bewaard. Je kan gerust stoppen en later verdergaan.</li>
+      </ul>
+      <div class="btn-rij" style="justify-content:center">
+        <button class="btn btn-groen" id="btn-start-toets">Start de starttoets →</button>
+      </div>
+    </div>
+  `;
+}
+
+/* =====================================================================
+ * SCHERM: STARTTOETS
+ * ===================================================================== */
+
+let huidigeOptieVolgorde = null; // geshuffelde opties voor de huidige vraag, zodat een re-render niet opnieuw schudt
+
+function renderStarttoets() {
+  const totaal = AZURE_BEGRIPPEN.length;
+  const index = state.starttoetsIndex;
+  const begrip = AZURE_BEGRIPPEN[index];
+  const percentage = Math.round((index / totaal) * 100);
+
+  if (!huidigeOptieVolgorde || huidigeOptieVolgorde.begripId !== begrip.id) {
+    const optiesMetCorrect = begrip.starttoets.opties.map((tekst, i) => ({
+      tekst,
+      correct: i === begrip.starttoets.correct,
+    }));
+    huidigeOptieVolgorde = { begripId: begrip.id, opties: shuffle(optiesMetCorrect) };
+  }
+
+  const optiesHtml = huidigeOptieVolgorde.opties
+    .map(
+      (optie, i) => `
+      <button class="optie" data-index="${i}">${escapeHtml(optie.tekst)}</button>
+    `
+    )
+    .join("");
+
+  return `
+    <div class="subvoortgang-wrap">
+      <div class="subvoortgang-labels">
+        <span>Starttoets</span>
+        <span>Vraag ${index + 1} van ${totaal}</span>
+      </div>
+      <div class="subvoortgang-bar-bg"><div class="subvoortgang-bar-fill" style="width:${percentage}%"></div></div>
+    </div>
+    <div class="kaart">
+      <div class="domein-badge">${domeinNaam(begrip.domein)}</div>
+      <div class="vraag-tekst">${escapeHtml(begrip.starttoets.vraag)}</div>
+      <div class="opties">${optiesHtml}</div>
+      <div class="btn-rij">
+        <button class="btn btn-groen" id="btn-volgende-vraag" disabled>Volgende →</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelStarttoetsEvents() {
+  const optieKnoppen = document.querySelectorAll(".optie");
+  const volgendeKnop = document.getElementById("btn-volgende-vraag");
+  let gekozenIndex = null;
+
+  optieKnoppen.forEach((knop) => {
+    knop.addEventListener("click", () => {
+      gekozenIndex = parseInt(knop.dataset.index, 10);
+      optieKnoppen.forEach((k) => k.classList.remove("geselecteerd"));
+      knop.classList.add("geselecteerd");
+      volgendeKnop.disabled = false;
+    });
+  });
+
+  volgendeKnop.addEventListener("click", () => {
+    const begrip = AZURE_BEGRIPPEN[state.starttoetsIndex];
+    const gekozenOptie = huidigeOptieVolgorde.opties[gekozenIndex];
+    state.starttoetsAntwoorden[begrip.id] = !!gekozenOptie.correct;
+    huidigeOptieVolgorde = null;
+
+    if (state.starttoetsIndex < AZURE_BEGRIPPEN.length - 1) {
+      state.starttoetsIndex += 1;
+    } else {
+      state.fase = "resultaat";
+    }
+    bewaarState();
+    render();
+  });
+}
+
+/* =====================================================================
+ * SCHERM: RESULTAAT (tijdelijke samenvatting — volgt uitgebreid in stap 3)
+ * ===================================================================== */
+
+function renderResultaatStub() {
+  const totaal = AZURE_BEGRIPPEN.length;
+  const goed = Object.values(state.starttoetsAntwoorden).filter((v) => v === true).length;
+  const gemist = gemisteBegrippen();
+
+  return `
+    <div class="kaart">
+      <div class="resultaat-cijfer">${goed} / ${totaal}</div>
+      <div class="resultaat-sub">begrippen al bekend — geen cijfer, puur diagnostisch</div>
+      <div class="placeholder-blok">
+        Stap 3 (resultaatoverzicht per begrip + leermodule) volgt hierna.
+        Voor nu: ${gemist.length} begrip(pen) zijn gemarkeerd voor de leermodule:
+        <br>${gemist.map((b) => escapeHtml(b.naam)).join(", ") || "geen — alles al bekend!"}
+      </div>
+      <div class="btn-rij" style="margin-top:1.25rem">
+        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelResultaatEvents() {
+  const resetKnop = document.getElementById("btn-reset");
+  if (resetKnop) {
+    resetKnop.addEventListener("click", () => {
+      if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
+        state = nieuweState();
+        bewaarState();
+        render();
+      }
+    });
+  }
+}
+
+/* =====================================================================
+ * HOOFDRENDER
+ * ===================================================================== */
+
+function render() {
+  const app = document.getElementById("app");
+  let inhoud = "";
+
+  inhoud += `
+    <div class="site-header">
+      <h1>Azure basisbegrippen</h1>
+      <p>Voorbereiding op je ICT-stage — herken de begrippen op de servicedesk</p>
+    </div>
+  `;
+
+  if (state.fase !== "intro") {
+    inhoud += renderStappenBalk();
+  }
+
+  if (state.fase === "intro") {
+    inhoud += renderIntro();
+  } else if (state.fase === "starttoets") {
+    inhoud += renderStarttoets();
+  } else if (state.fase === "resultaat") {
+    inhoud += renderResultaatStub();
+  } else {
+    // leermodule / eindcheck / afgerond volgen in latere stappen
+    inhoud += renderResultaatStub();
+  }
+
+  inhoud += `<footer>Ter AA Helmond — Medewerker ICT niveau 2</footer>`;
+
+  app.innerHTML = inhoud;
+
+  if (state.fase === "intro") {
+    document.getElementById("btn-start-toets").addEventListener("click", () => {
+      state.fase = "starttoets";
+      bewaarState();
+      render();
+    });
+  } else if (state.fase === "starttoets") {
+    koppelStarttoetsEvents();
+  } else {
+    koppelResultaatEvents();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

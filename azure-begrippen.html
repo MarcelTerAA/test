@@ -85,10 +85,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-tekst{background:none;border:none;color:var(--tekst-licht);font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:4px}
 .btn-tekst:hover{color:var(--tekst-mid)}
 
-/* resultaat stub */
+/* resultaat */
 .resultaat-cijfer{font-size:38px;font-weight:700;color:var(--groen-diep);text-align:center;margin-bottom:4px}
 .resultaat-sub{text-align:center;color:var(--tekst-mid);font-size:13px;margin-bottom:1.5rem}
 .placeholder-blok{background:var(--amber-licht);color:var(--amber-dark);border-radius:var(--radius-sm);padding:1rem 1.1rem;font-size:13px;margin-top:1rem;line-height:1.55}
+
+.domein-resultaat{margin-bottom:1.1rem}
+.domein-resultaat h3{font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--tekst-licht);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.begrip-rij{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border:1px solid var(--rand);border-radius:var(--radius-sm);background:var(--wit);margin-bottom:6px}
+.begrip-naam{font-size:13px;color:var(--tekst);font-weight:500}
+.status-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.status-goed{background:var(--groen-licht);color:var(--groen-diep)}
+.status-leren{background:var(--amber-licht);color:var(--amber-dark)}
+
+.cta-blok{background:var(--groen-licht);border:1px solid #b9e6d4;border-radius:var(--radius);padding:1.1rem 1.25rem;margin-top:1.25rem;text-align:center}
+.cta-blok p{font-size:14px;color:var(--groen-diep);margin-bottom:0.85rem;font-weight:600}
 
 footer{text-align:center;padding:1.5rem 1rem 0.5rem;font-size:12px;color:var(--tekst-licht)}
 
@@ -859,24 +870,61 @@ function koppelStarttoetsEvents() {
 }
 
 /* =====================================================================
- * SCHERM: RESULTAAT (tijdelijke samenvatting — volgt uitgebreid in stap 3)
+ * SCHERM: RESULTAATOVERZICHT
+ * Toont per begrip goed/nog niet gekend, gegroepeerd per domein.
+ * "Nog niet gekend"-begrippen worden gemarkeerd voor de leermodule.
  * ===================================================================== */
 
-function renderResultaatStub() {
+function renderResultaat() {
   const totaal = AZURE_BEGRIPPEN.length;
   const goed = Object.values(state.starttoetsAntwoorden).filter((v) => v === true).length;
   const gemist = gemisteBegrippen();
+
+  const domeinenHtml = AZURE_DOMEINEN.map((domein) => {
+    const begrippenInDomein = AZURE_BEGRIPPEN.filter((b) => b.domein === domein.id);
+    const rijenHtml = begrippenInDomein
+      .map((b) => {
+        const isGoed = state.starttoetsAntwoorden[b.id] === true;
+        return `
+          <div class="begrip-rij">
+            <span class="begrip-naam">${escapeHtml(b.naam)}</span>
+            <span class="status-pill ${isGoed ? "status-goed" : "status-leren"}">
+              ${isGoed ? "✓ Al bekend" : "Nog leren"}
+            </span>
+          </div>
+        `;
+      })
+      .join("");
+    return `
+      <div class="domein-resultaat">
+        <h3>${domein.icoon} ${escapeHtml(domein.naam)}</h3>
+        ${rijenHtml}
+      </div>
+    `;
+  }).join("");
+
+  const ctaHtml =
+    gemist.length > 0
+      ? `
+        <div class="cta-blok">
+          <p>${gemist.length} begrip(pen) ga je nu leren in de leermodule.</p>
+          <button class="btn btn-groen" id="btn-naar-leermodule">Ga naar de leermodule →</button>
+        </div>
+      `
+      : `
+        <div class="cta-blok">
+          <p>Je kende alle 16 begrippen al! Een leermodule is niet nodig.</p>
+          <button class="btn btn-groen" id="btn-afronden">Afronden</button>
+        </div>
+      `;
 
   return `
     <div class="kaart">
       <div class="resultaat-cijfer">${goed} / ${totaal}</div>
       <div class="resultaat-sub">begrippen al bekend — geen cijfer, puur diagnostisch</div>
-      <div class="placeholder-blok">
-        Stap 3 (resultaatoverzicht per begrip + leermodule) volgt hierna.
-        Voor nu: ${gemist.length} begrip(pen) zijn gemarkeerd voor de leermodule:
-        <br>${gemist.map((b) => escapeHtml(b.naam)).join(", ") || "geen — alles al bekend!"}
-      </div>
-      <div class="btn-rij" style="margin-top:1.25rem">
+      ${domeinenHtml}
+      ${ctaHtml}
+      <div class="btn-rij" style="margin-top:1rem">
         <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
       </div>
     </div>
@@ -884,6 +932,80 @@ function renderResultaatStub() {
 }
 
 function koppelResultaatEvents() {
+  const naarLeermoduleKnop = document.getElementById("btn-naar-leermodule");
+  if (naarLeermoduleKnop) {
+    naarLeermoduleKnop.addEventListener("click", () => {
+      state.fase = "leermodule";
+      bewaarState();
+      render();
+    });
+  }
+
+  const afrondenKnop = document.getElementById("btn-afronden");
+  if (afrondenKnop) {
+    afrondenKnop.addEventListener("click", () => {
+      state.fase = "afgerond";
+      bewaarState();
+      render();
+    });
+  }
+
+  const resetKnop = document.getElementById("btn-reset");
+  if (resetKnop) {
+    resetKnop.addEventListener("click", () => {
+      if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
+        state = nieuweState();
+        bewaarState();
+        render();
+      }
+    });
+  }
+}
+
+/* =====================================================================
+ * SCHERMEN: LEERMODULE / EINDCHECK / AFGEROND
+ * Volgen inhoudelijk in de volgende stappen. Tijdelijke schermen zodat
+ * de flow vanaf het resultaatoverzicht al werkt en getest kan worden.
+ * ===================================================================== */
+
+function renderVolgendeStapStub(titel, stapLabel) {
+  const gemist = gemisteBegrippen();
+  return `
+    <div class="kaart">
+      <div class="placeholder-blok">
+        <strong>${escapeHtml(titel)}</strong> volgt in ${escapeHtml(stapLabel)}.
+        <br>Begrippen die hierin aan bod komen: ${gemist.map((b) => escapeHtml(b.naam)).join(", ") || "geen"}
+      </div>
+      <div class="btn-rij" style="margin-top:1rem">
+        <button class="btn-tekst" id="btn-terug-resultaat">← Terug naar resultaatoverzicht</button>
+        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderAfgerond() {
+  return `
+    <div class="kaart intro-kaart">
+      <div class="intro-icoon">🎉</div>
+      <h2>Goed gedaan!</h2>
+      <p>Je hebt alle Azure-basisbegrippen doorlopen. Je herkent ze nu als je ze op de servicedesk voorbij hoort komen.</p>
+      <div class="btn-rij" style="justify-content:center;margin-top:1rem">
+        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
+      </div>
+    </div>
+  `;
+}
+
+function koppelStubEvents() {
+  const terugKnop = document.getElementById("btn-terug-resultaat");
+  if (terugKnop) {
+    terugKnop.addEventListener("click", () => {
+      state.fase = "resultaat";
+      bewaarState();
+      render();
+    });
+  }
   const resetKnop = document.getElementById("btn-reset");
   if (resetKnop) {
     resetKnop.addEventListener("click", () => {
@@ -920,10 +1042,13 @@ function render() {
   } else if (state.fase === "starttoets") {
     inhoud += renderStarttoets();
   } else if (state.fase === "resultaat") {
-    inhoud += renderResultaatStub();
-  } else {
-    // leermodule / eindcheck / afgerond volgen in latere stappen
-    inhoud += renderResultaatStub();
+    inhoud += renderResultaat();
+  } else if (state.fase === "leermodule") {
+    inhoud += renderVolgendeStapStub("De leermodule", "stap 4/5");
+  } else if (state.fase === "eindcheck") {
+    inhoud += renderVolgendeStapStub("De eindcheck", "stap 5/5");
+  } else if (state.fase === "afgerond") {
+    inhoud += renderAfgerond();
   }
 
   inhoud += `<footer>Ter AA Helmond — Medewerker ICT niveau 2</footer>`;
@@ -938,8 +1063,12 @@ function render() {
     });
   } else if (state.fase === "starttoets") {
     koppelStarttoetsEvents();
-  } else {
+  } else if (state.fase === "resultaat") {
     koppelResultaatEvents();
+  } else if (state.fase === "leermodule" || state.fase === "eindcheck") {
+    koppelStubEvents();
+  } else if (state.fase === "afgerond") {
+    koppelStubEvents();
   }
 }
 

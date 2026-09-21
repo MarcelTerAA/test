@@ -84,6 +84,9 @@
 
     /* memory / sets bord */
     .bord{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:.75rem}
+    .bord.v4{grid-template-columns:repeat(4,1fr)}
+    .bord.v4 .mk{height:165px}
+    @media(max-width:640px){.bord.v4{grid-template-columns:repeat(2,1fr)}}
     .mk{perspective:700px;background:none;border:0;padding:0;height:172px;position:relative;text-align:inherit}
     .mk-in{position:absolute;inset:0;transition:transform .4s;transform-style:preserve-3d}
     .mk.open .mk-in,.mk.vast .mk-in{transform:rotateY(180deg)}
@@ -423,7 +426,7 @@ SCHERMEN.over=function(){
     <h2>Speluitleg</h2>
     <p>Het spel volgt de handleiding <em>Kaartspel IoT – Handleiding en spelvarianten</em> (Stichting Praktijkleren, juni 2018): 8 spelvarianten, kaarten in vijf kleuren.</p>
     <ul style="margin-top:.4rem">
-      <li><b>Memory / Memo-Tri</b>: wie twee (of drie) bij elkaar horende kaarten omdraait, mag nog een keer. Wie het eerst <em>alle</em> kaarten in één beurt correct omdraait, wint. Wil je klassiek spelen (wie de meeste setjes heeft)? Dat kies je in het beginscherm.</li>
+      <li><b>Memory / Memo-Tri</b>: wie twee (of drie) bij elkaar horende kaarten omdraait, mag nog een keer. Bij een fout draaien de kaarten na 3 seconden vanzelf terug. Standaard heeft het veld maximaal 4 × 4 kaarten met steeds andere protocollen en wint wie de meeste setjes heeft. De <em>uitdaging</em> uit de handleiding (wie het eerst <em>alle</em> kaarten in één beurt correct omdraait) kies je in het beginscherm.</li>
       <li><b>Sets</b>: 3 minuten kijken (of 1 minuut voor de <em>professional</em>), dan gaan de kaarten om. Wie de meeste complete sets maakt, wint. Na een fout is de volgende speler aan de beurt.</li>
       <li><b>Kennisquiz</b>: goed antwoord = 1 punt. Speel je in groepjes, dan kun je bij een fout een punt laten aftrekken.</li>
       <li><b>Bereik</b> en <b>State of the art</b>: op volgorde zetten, met tijd. Elke fout kost 5 seconden straftijd. De tijden worden alleen op dit apparaat bewaard.</li>
@@ -457,9 +460,12 @@ function memorySetup(aantal){
       <div class="veld"><span class="lbl">Kleuren (kaartsoorten) – kies 2 t/m 5</span>
         <div class="keuzes" id="kl">${CATS.map(c=>`<label class="keuze ${pre.includes(c)?'aan':''}"><input type="checkbox" value="${c}" ${pre.includes(c)?'checked':''}> <span class="kleurchip" style="background:var(--k-${c})">${KLEURNAAM[c]}</span> ${CATLABEL[c]}</label>`).join('')}</div>
         <span class="klein" id="klnaam"></span></div>
+      <div class="veld"><span class="lbl">Speelveld</span>
+        <div class="keuzes"><label class="keuze aan"><input type="radio" name="veld" value="4x4" checked> Klein: maximaal 4 × 4 kaarten (elke keer andere protocollen)</label>
+        <label class="keuze"><input type="radio" name="veld" value="alles"> Groot: alle protocollen</label></div></div>
       <div class="veld"><span class="lbl">Wie wint?</span>
-        <div class="keuzes"><label class="keuze aan"><input type="radio" name="regel" value="handleiding" checked> Zoals de handleiding: wie het eerst alles in één beurt vindt</label>
-        <label class="keuze"><input type="radio" name="regel" value="klassiek"> Klassiek: wie de meeste setjes heeft</label></div></div>
+        <div class="keuzes"><label class="keuze aan"><input type="radio" name="regel" value="klassiek" checked> Wie de meeste setjes heeft (gevonden setjes blijven liggen)</label>
+        <label class="keuze"><input type="radio" name="regel" value="handleiding"> Uitdaging: wie het eerst alles in één beurt vindt (na een fout gaan de setjes van die beurt terug)</label></div></div>
       <div class="veld"><label class="keuze" style="width:fit-content"><input type="checkbox" id="kleurrug"> Kleur zichtbaar op de achterkant (makkelijker)</label></div>
       <p class="melding" id="fmel" hidden></p>
       <div class="knoprij"><button class="knop" id="start">Start het spel</button></div></div>`;
@@ -469,16 +475,22 @@ function memorySetup(aantal){
     const upd=()=>{
       const c=$$('#kl input:checked').length;
       $$('#kl .keuze',root).forEach(l=>l.classList.toggle('aan',l.firstElementChild.checked));
-      $$('input[name=regel]',root).forEach(r=>r.parentElement.classList.toggle('aan',r.checked));
-      $('#klnaam').textContent=c>=2?`${c} kaarten per setje = ${naam[c]}, ${actief().length*c} kaarten in totaal`:'';
+      $$('input[name=regel],input[name=veld]',root).forEach(r=>r.parentElement.classList.toggle('aan',r.checked));
+      const per=c>=2?aantalSetjes(c,$('input[name=veld]:checked',root).value==='alles'):0;
+      $('#klnaam').textContent=c>=2?`${c} kaarten per setje = ${naam[c]}; ${per} setjes = ${per*c} kaarten op tafel`:'';
     };
-    $$('#kl input,input[name=regel]',root).forEach(i=>i.addEventListener('change',upd));upd();
+    $$('#kl input,input[name=regel],input[name=veld]',root).forEach(i=>i.addEventListener('change',upd));upd();
     $('#start').onclick=()=>{
       const cats=CATS.filter(c=>$(`#kl input[value=${c}]`).checked);
       if(cats.length<2||cats.length>5){const m=$('#fmel');m.hidden=false;m.className='melding slecht';m.textContent='Kies 2 tot en met 5 kleuren.';return}
-      memorySpel({cats,spelers:leesSpelers(root),regel:$('input[name=regel]:checked').value,kleurrug:$('#kleurrug').checked,titel:naam[cats.length]});
+      memorySpel({cats,spelers:leesSpelers(root),regel:$('input[name=regel]:checked').value,groot:$('input[name=veld]:checked').value==='alles',kleurrug:$('#kleurrug').checked,titel:naam[cats.length]});
     };
   };
+}
+/* Klein veld = maximaal 16 kaarten (4 x 4): 8 setjes bij 2 kleuren, 5 bij 3, 4 bij 4, 3 bij 5 */
+function aantalSetjes(kleuren,groot){
+  const alle=actief().length;
+  return groot?alle:Math.min(alle,Math.floor(16/kleuren));
 }
 SCHERMEN.memory2=memorySetup(2);
 SCHERMEN.memory3=memorySetup(3);
@@ -487,17 +499,18 @@ function memorySpel(cfg){
   ruim();
   const n=cfg.cats.length, strikt=cfg.regel==='handleiding';
   let kaarten=[];
-  actief().forEach(p=>cfg.cats.forEach(c=>kaarten.push({pid:p.id,cat:c,open:false,vast:false})));
+  const gekozen=shuffle(actief()).slice(0,aantalSetjes(n,cfg.groot));
+  gekozen.forEach(p=>cfg.cats.forEach(c=>kaarten.push({pid:p.id,cat:c,open:false,vast:false})));
   kaarten=shuffle(kaarten);
-  const totaalSets=actief().length;
+  const totaalSets=gekozen.length;
   const sp=cfg.spelers.map(naam=>({naam,sets:0,beste:0}));
-  let beurt=0,geopend=[],beurtSets=0,locked=false,klaar=false,beurtNr=1;
+  let beurt=0,geopend=[],beurtSets=0,locked=false,klaar=false,beurtNr=1,terugId=0;
 
   app.innerHTML=topbalk(cfg.titel)+`
     <div class="scorebalk" id="sb"></div>
     <div class="melding" id="mm" role="status"></div>
-    <div class="knoprij" style="margin:0 0 .5rem"><button class="knop" id="volgende" hidden>Draai terug en geef door</button></div>
-    <div class="bord ${cfg.kleurrug?'kleurrug':''}" id="bord">${kaarten.map((k,i)=>`<button class="mk" data-i="${i}" aria-label="Kaart ${i+1}"><span class="mk-in"><span class="mk-rug c-${k.cat}">IoT</span><span class="mk-face">${kaartHTML(P(k.pid),k.cat)}</span></span></button>`).join('')}</div>
+    <div class="knoprij" style="margin:0 0 .5rem"><button class="knop grijs" id="volgende" hidden>Nu terugdraaien</button></div>
+    <div class="bord ${cfg.kleurrug?'kleurrug':''} ${cfg.groot?'':'v4'}" id="bord">${kaarten.map((k,i)=>`<button class="mk" data-i="${i}" aria-label="Kaart ${i+1}"><span class="mk-in"><span class="mk-rug c-${k.cat}">IoT</span><span class="mk-face">${kaartHTML(P(k.pid),k.cat)}</span></span></button>`).join('')}</div>
     <div class="knoprij"><button class="knop grijs" data-ga="menu">Stoppen</button></div>`;
   const mm=$('#mm'),volg=$('#volgende');
   const zet=(t,k)=>{mm.textContent=t;mm.className='melding '+(k||'')};
@@ -524,10 +537,14 @@ function memorySpel(cfg){
     const eerste=kaarten[geopend[0]];
     if(k.pid!==eerste.pid){
       locked=true;toon();
-      zet(`Niet bij elkaar (${P(eerste.pid).naam} en ${P(k.pid).naam}). Onthoud de plaatsen!${strikt&&beurtSets>0?` Je had ${beurtSets} setje${beurtSets>1?'s':''}, die gaan terug.`:''}`,'slecht');
       const volgende=(beurt+1)%sp.length;
-      volg.textContent=`Draai terug – ${sp[volgende].naam} is aan de beurt`;volg.hidden=false;volg.focus();
+      zet(`Niet bij elkaar (${P(eerste.pid).naam} en ${P(k.pid).naam}). Onthoud de plaatsen!${strikt&&beurtSets>0?` Je had ${beurtSets} setje${beurtSets>1?'s':''}, die gaan terug.`:''} Daarna is ${sp.length>1?sp[volgende].naam:'jouw nieuwe beurt'} aan de beurt.`,'slecht');
       $$('.mk')[i].classList.add('fout');
+      let s=3;
+      volg.hidden=false;volg.textContent=`Nu terugdraaien (${s})`;
+      const id=setInterval(()=>{s--;if(s<=0)terug();else volg.textContent=`Nu terugdraaien (${s})`},1000);
+      reg(()=>clearInterval(id));
+      terugId=id;
       return;
     }
     if(geopend.length===n){
@@ -549,13 +566,16 @@ function memorySpel(cfg){
       toon();zet(`Goed, dit hoort bij ${P(k.pid).naam}. Zoek de volgende (nog ${n-geopend.length}).`,'goed');
     }
   });
-  volg.onclick=()=>{
+  function terug(){
+    clearInterval(terugId);
+    if(!locked)return;
     kaarten.forEach(k=>{k.open=false;if(strikt)k.vast=false});
     $$('.mk').forEach(el=>el.classList.remove('fout'));
     geopend=[];beurtSets=0;locked=false;volg.hidden=true;
     beurt=(beurt+1)%sp.length;beurtNr++;
     begin();
-  };
+  }
+  volg.onclick=terug;
   begin();
 }
 function aantalNaarSchermMemory(cfg){return cfg.cats.length===2?'memory2':'memory3'}
@@ -596,11 +616,11 @@ function setsSpel(namen,kijk){
   /* fase 2: spelen */
   function speel(){
     ruim();
-    let beurt=0,gekozen=null,locked=false,foutIdx=-1,klaar=false,goed=0;
+    let beurt=0,gekozen=null,locked=false,foutIdx=-1,klaar=false,goed=0,terugId=0;
     app.innerHTML=topbalk('Sets')+`
       <div class="scorebalk" id="sb"></div>
       <div class="melding" id="mm" role="status"></div>
-      <div class="knoprij" style="margin:0 0 .5rem"><button class="knop" id="volgende" hidden>Draai terug en geef door</button></div>
+      <div class="knoprij" style="margin:0 0 .5rem"><button class="knop grijs" id="volgende" hidden>Nu terugdraaien</button></div>
       <div class="bord" id="bord">${bordHTML()}</div>
       <div class="knoprij"><button class="knop grijs" data-ga="menu">Stoppen</button></div>`;
     const mm=$('#mm'),volg=$('#volgende');
@@ -650,16 +670,22 @@ function setsSpel(namen,kijk){
         } else { zet(`Goed! Nog ${4-al} kaart${4-al>1?'en':''} bij ${P(gekozen).naam}.`,'goed');toon(); }
       } else {
         locked=true;foutIdx=i;toon();
-        zet(`Dat is een kaart van ${P(k.pid).naam}, niet van ${P(gekozen).naam}. Onthoud de plek!`,'slecht');
         const v=(beurt+1)%sp.length;
-        volg.textContent=`Draai terug – ${sp[v].naam} is aan de beurt`;volg.hidden=false;volg.focus();
+        zet(`Dat is een kaart van ${P(k.pid).naam}, niet van ${P(gekozen).naam}. Onthoud de plek! Daarna is ${sp.length>1?sp[v].naam:'jouw nieuwe beurt'} aan de beurt.`,'slecht');
+        let s=3;
+        volg.hidden=false;volg.textContent=`Nu terugdraaien (${s})`;
+        terugId=setInterval(()=>{s--;if(s<=0)terug();else volg.textContent=`Nu terugdraaien (${s})`},1000);
+        reg(()=>clearInterval(terugId));
       }
     });
-    volg.onclick=()=>{
+    function terug(){
+      clearInterval(terugId);
+      if(!locked)return;
       kaarten.forEach(k=>{k.open=false});
       locked=false;foutIdx=-1;gekozen=null;volg.hidden=true;
       beurt=(beurt+1)%sp.length;start();
-    };
+    }
+    volg.onclick=terug;
     start();
   }
 };

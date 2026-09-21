@@ -366,7 +366,6 @@ SCHERMEN.menu=function(){
   <div class="tools-grid">
     ${[
       ['memory2','🃏','Memory','Basis','','Draai kaarten om en zoek de bijbehorende paren (bijvoorbeeld logo en toepassing). Lukt het in één beurt?'],
-      ['memory3','🔺','Memo-Tri','Gevorderd','gev','Drie bij elkaar horende kaarten zoeken. Kies zelf de kleuren, ook een Memo-Kwartet of Kwintet kan.'],
       ['sets','🗂️','Sets','Gevorderd','gev','Bestudeer alle kaarten, draai ze om en maak van elke naam een complete set van vijf.'],
       ['quiz','❓','Kennisquiz','Basis','','Bij elk logo een vraag over omschrijving, toepassing of bereik. Goed = punt.'],
       ['bereik','📏','Van klein naar groot bereik','Basis','','Zet de bereikkaarten op volgorde en koppel daarna elk logo aan het juiste bereik.'],
@@ -426,7 +425,7 @@ SCHERMEN.over=function(){
     <h2>Speluitleg</h2>
     <p>Het spel volgt de handleiding <em>Kaartspel IoT – Handleiding en spelvarianten</em> (Stichting Praktijkleren, juni 2018): 8 spelvarianten, kaarten in vijf kleuren.</p>
     <ul style="margin-top:.4rem">
-      <li><b>Memory / Memo-Tri</b>: wie twee (of drie) bij elkaar horende kaarten omdraait, mag nog een keer. Bij een fout draaien de kaarten na 3 seconden vanzelf terug. Standaard heeft het veld maximaal 4 × 4 kaarten met steeds andere protocollen en wint wie de meeste setjes heeft. De <em>uitdaging</em> uit de handleiding (wie het eerst <em>alle</em> kaarten in één beurt correct omdraait) kies je in het beginscherm.</li>
+      <li><b>Memory</b>: wie twee bij elkaar horende kaarten omdraait, mag nog een keer. Je kiest zelf welke twee kleuren je speelt (bijvoorbeeld logo en toepassing). Bij een fout draaien de kaarten na 3 seconden vanzelf terug. Standaard heeft het veld maximaal 4 × 4 kaarten met steeds andere protocollen en wint wie de meeste setjes heeft. De <em>uitdaging</em> uit de handleiding (wie het eerst <em>alle</em> kaarten in één beurt correct omdraait) kies je in het beginscherm.</li>
       <li><b>Sets</b>: 3 minuten kijken (of 1 minuut voor de <em>professional</em>), dan gaan de kaarten om. Wie de meeste complete sets maakt, wint. Na een fout is de volgende speler aan de beurt.</li>
       <li><b>Kennisquiz</b>: goed antwoord = 1 punt. Speel je in groepjes, dan kun je bij een fout een punt laten aftrekken.</li>
       <li><b>Bereik</b> en <b>State of the art</b>: op volgorde zetten, met tijd. Elke fout kost 5 seconden straftijd. De tijden worden alleen op dit apparaat bewaard.</li>
@@ -448,16 +447,15 @@ SCHERMEN.over=function(){
   </div>`;
 };
 
-/* ---- MEMORY (2 t/m 5 kleuren) ---- */
-function memorySetup(aantal){
-  return function(){
+/* ---- MEMORY (paren van 2 kleuren) ---- */
+function memorySetup(){
+  {
     if(!checkAantal())return;
-    const pre={2:['logo','toepassing'],3:['naam','bereik','omschrijving']}[aantal];
-    const titel=aantal===2?'Memory':'Memo-Tri';
-    app.innerHTML=topbalk(titel,aantal===2?'Basis':'Gevorderd',aantal===2?'':'gev')+`<div class="paneel" id="setup">
-      <p>${aantal===2?'Alle kaarten liggen afgedekt op tafel. Wie twee bij elkaar horende kaarten omdraait, mag nog een keer.':'Drie bij elkaar horende kaarten zoeken. Wie ze allemaal vindt, mag nog een keer.'}</p>
+    const pre=['logo','toepassing'];
+    app.innerHTML=topbalk('Memory','Basis')+`<div class="paneel" id="setup">
+      <p>Alle kaarten liggen afgedekt op tafel. Wie twee bij elkaar horende kaarten omdraait, mag nog een keer.</p>
       ${spelersHTML(4,1)}
-      <div class="veld"><span class="lbl">Kleuren (kaartsoorten) – kies 2 t/m 5</span>
+      <div class="veld"><span class="lbl">Kleuren (kaartsoorten) – kies precies 2</span>
         <div class="keuzes" id="kl">${CATS.map(c=>`<label class="keuze ${pre.includes(c)?'aan':''}"><input type="checkbox" value="${c}" ${pre.includes(c)?'checked':''}> <span class="kleurchip" style="background:var(--k-${c})">${KLEURNAAM[c]}</span> ${CATLABEL[c]}</label>`).join('')}</div>
         <span class="klein" id="klnaam"></span></div>
       <div class="veld"><span class="lbl">Speelveld</span>
@@ -471,29 +469,27 @@ function memorySetup(aantal){
       <div class="knoprij"><button class="knop" id="start">Start het spel</button></div></div>`;
     const root=$('#setup');
     spelersKoppel(root);
-    const naam={2:'Memory',3:'Memo-Tri',4:'Memo-Kwartet',5:'Memo-Kwintet'};
     const upd=()=>{
       const c=$$('#kl input:checked').length;
       $$('#kl .keuze',root).forEach(l=>l.classList.toggle('aan',l.firstElementChild.checked));
       $$('input[name=regel],input[name=veld]',root).forEach(r=>r.parentElement.classList.toggle('aan',r.checked));
-      const per=c>=2?aantalSetjes(c,$('input[name=veld]:checked',root).value==='alles'):0;
-      $('#klnaam').textContent=c>=2?`${c} kaarten per setje = ${naam[c]}; ${per} setjes = ${per*c} kaarten op tafel`:'';
+      const per=aantalSetjes(2,$('input[name=veld]:checked',root).value==='alles');
+      $('#klnaam').textContent=c===2?`${per} setjes = ${per*2} kaarten op tafel`:`Je hebt ${c} kleur${c===1?'':'en'} gekozen; kies er precies 2.`;
     };
     $$('#kl input,input[name=regel],input[name=veld]',root).forEach(i=>i.addEventListener('change',upd));upd();
     $('#start').onclick=()=>{
       const cats=CATS.filter(c=>$(`#kl input[value=${c}]`).checked);
-      if(cats.length<2||cats.length>5){const m=$('#fmel');m.hidden=false;m.className='melding slecht';m.textContent='Kies 2 tot en met 5 kleuren.';return}
-      memorySpel({cats,spelers:leesSpelers(root),regel:$('input[name=regel]:checked').value,groot:$('input[name=veld]:checked').value==='alles',kleurrug:$('#kleurrug').checked,titel:naam[cats.length]});
+      if(cats.length!==2){const m=$('#fmel');m.hidden=false;m.className='melding slecht';m.textContent='Kies precies 2 kleuren.';return}
+      memorySpel({cats,spelers:leesSpelers(root),regel:$('input[name=regel]:checked').value,groot:$('input[name=veld]:checked').value==='alles',kleurrug:$('#kleurrug').checked,titel:'Memory'});
     };
-  };
+  }
 }
-/* Klein veld = maximaal 16 kaarten (4 x 4): 8 setjes bij 2 kleuren, 5 bij 3, 4 bij 4, 3 bij 5 */
+/* Klein veld = maximaal 16 kaarten (4 x 4) = 8 setjes van 2 kaarten */
 function aantalSetjes(kleuren,groot){
   const alle=actief().length;
   return groot?alle:Math.min(alle,Math.floor(16/kleuren));
 }
-SCHERMEN.memory2=memorySetup(2);
-SCHERMEN.memory3=memorySetup(3);
+SCHERMEN.memory2=memorySetup;
 
 function memorySpel(cfg){
   ruim();
@@ -578,7 +574,7 @@ function memorySpel(cfg){
   volg.onclick=terug;
   begin();
 }
-function aantalNaarSchermMemory(cfg){return cfg.cats.length===2?'memory2':'memory3'}
+function aantalNaarSchermMemory(){return 'memory2'}
 
 /* ---- SETS ---- */
 SCHERMEN.sets=function(){
@@ -860,9 +856,10 @@ SCHERMEN.thuis=function(){
 };
 
 /* ---- COMPETITIE ---- */
-const COLS=['Memory','Memo-Tri','Sets','Kennisquiz','Bereik','State of the art','IoT thuis','Extra'];
+const COLS=['Memory','Sets','Kennisquiz','Bereik','State of the art','IoT thuis','Extra'];
 SCHERMEN.competitie=function(){
   let d=LS.get('comp',{groepen:[{naam:'Groep 1',s:[]},{naam:'Groep 2',s:[]}]});
+  if(d.v!==2){d.groepen.forEach(g=>g.s.splice(1,1));d.v=2;LS.set('comp',d)}  /* kolom Memo-Tri is vervallen */
   const totaal=g=>g.s.reduce((a,b)=>a+(+b||0),0);
   function teken(){
     const rang=d.groepen.map(totaal);const max=Math.max(...rang);

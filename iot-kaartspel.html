@@ -10,14 +10,14 @@
       --groen:#1D9E75;--groen-dark:#0F6E56;--groen-diep:#085041;--groen-licht:#E1F5EE;
       --grijs-licht:#F1EFE8;--tekst:#1a1a1a;--tekst-mid:#555;--tekst-licht:#888;
       --rand:#e0e0e0;--bg:#f9f9f7;--wit:#fff;--radius:10px;--radius-sm:6px;
-      --k-naam:#ffffff;--k-logo:#ec008c;--k-omschrijving:#41ad49;--k-toepassing:#fff200;--k-bereik:#00aeef;
+      --k-logo:#ec008c;--k-omschrijving:#41ad49;--k-toepassing:#fff200;--k-bereik:#00aeef;
       --fout:#c0392b;--fout-licht:#fdecea;
     }
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tekst);min-height:100vh;font-size:15px;line-height:1.6}
     .container{max-width:760px;margin:0 auto;padding:1.5rem 1rem 4rem}
     a{color:var(--groen-dark)}
     button{font:inherit;cursor:pointer}
-    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #f5a623;outline-offset:2px}
+    button:focus-visible{outline:3px solid #f5a623;outline-offset:2px}
 
     /* header */
     .site-header{background:var(--groen);color:#fff;padding:1.25rem 1.5rem;border-radius:var(--radius);margin-bottom:1.5rem;display:flex;gap:16px;align-items:center;justify-content:space-between}
@@ -31,26 +31,17 @@
     .welkom{background:linear-gradient(160deg,#e8f7f1,#d4f0e4);border:2px solid #8fcfb5;border-radius:var(--radius);padding:1.75rem 1.5rem;margin-bottom:1.5rem;text-align:center}
     .welkom h2{font-size:24px;font-weight:700;color:var(--groen-diep);margin-bottom:.5rem}
     .welkom p{font-size:14.5px;color:var(--tekst-mid);max-width:560px;margin:0 auto;line-height:1.7}
-    .sectie-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tekst-licht);margin:0 0 .75rem}
     .paneel{background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
-    .paneel h2{font-size:19px;color:var(--groen-diep);margin-bottom:.4rem}
-    .paneel h3{font-size:15px;margin:1rem 0 .35rem}
-    .paneel p,.paneel li{font-size:14px;color:var(--tekst-mid)}
-    .paneel ul{padding-left:1.2rem}
+    .paneel p{font-size:14px;color:var(--tekst-mid)}
     .klein{font-size:12.5px;color:var(--tekst-licht)}
     .knop{background:var(--groen);color:#fff;border:0;border-radius:var(--radius-sm);padding:.65rem 1.25rem;font-weight:700;font-size:15px;min-height:44px}
     .knop:hover{background:var(--groen-dark)}
-    .knop.licht{background:var(--groen-licht);color:var(--groen-diep)}
-    .knop.licht:hover{background:#c9ecdf}
     .knop.grijs{background:var(--grijs-licht);color:var(--tekst)}
     .knop:disabled{opacity:.45;cursor:not-allowed}
     .knoprij{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 0;align-items:center}
     .topbalk{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
     .terug{background:none;border:0;color:var(--groen-dark);font-weight:700;font-size:14px;padding:.4rem 0;min-height:44px}
     .terug:hover{text-decoration:underline}
-    .badge{display:inline-block;background:var(--groen-licht);color:var(--groen-diep);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:3px 8px;border-radius:99px}
-    .badge.gev{background:#fff3cd;color:#7a5b00}
-    .badge.div{background:#e8e8f6;color:#33338a}
 
     /* menu */
     .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
@@ -60,64 +51,30 @@
     .tool-kaart h3{font-size:16px;font-weight:700}
     .tool-kaart p{font-size:13px;color:var(--tekst-mid);line-height:1.5;flex:1}
     .tool-link-label{font-size:12px;font-weight:700;color:var(--groen)}
-    .kleurenrij{display:flex;gap:6px;flex-wrap:wrap;margin:.5rem 0 0}
-    .kleurchip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;border:1.5px solid #222;color:#111}
-
-    /* formulier */
-    .veld{display:flex;flex-direction:column;gap:4px;margin:.75rem 0}
-    .veld label,.veld .lbl{font-size:13px;font-weight:700}
-    input[type=text],select,textarea{font:inherit;padding:.5rem .7rem;border:1.5px solid var(--rand);border-radius:var(--radius-sm);background:#fff;width:100%}
-    textarea{min-height:90px;resize:vertical}
-    .rij{display:flex;gap:.5rem;flex-wrap:wrap}
-    .rij input[type=text]{flex:1 1 130px;min-width:0}
-    .keuzes{display:flex;flex-wrap:wrap;gap:.5rem}
-    .keuze{display:flex;align-items:center;gap:.4rem;border:1.5px solid var(--rand);border-radius:var(--radius-sm);padding:.4rem .7rem;background:#fff;font-size:14px;min-height:44px}
-    .keuze input{width:18px;height:18px;accent-color:var(--groen)}
-    .keuze.aan{border-color:var(--groen);background:var(--groen-licht)}
 
     /* kaarten */
     .kaart{border:2px solid #222;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:12.5px;line-height:1.35;color:#111;min-height:100%;overflow-wrap:anywhere}
     .kaart img{max-width:100%;max-height:96px;object-fit:contain;display:block}
-    .kaart strong{font-size:20px}
-    .k-naam{background:var(--k-naam)}.k-logo{background:var(--k-logo)}.k-omschrijving{background:var(--k-omschrijving)}
+    .k-logo{background:var(--k-logo)}.k-omschrijving{background:var(--k-omschrijving)}
     .k-toepassing{background:var(--k-toepassing)}.k-bereik{background:var(--k-bereik)}
 
-    /* memory / sets bord */
-    .bord{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:.75rem}
-    .bord.v4{grid-template-columns:repeat(4,1fr)}
-    .bord.v4 .mk{height:165px}
-    @media(max-width:640px){.bord.v4{grid-template-columns:repeat(2,1fr)}}
-    .mk{perspective:700px;background:none;border:0;padding:0;height:172px;position:relative;text-align:inherit}
+    /* memory bord */
+    .bord{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:.75rem}
+    .bord .mk{height:165px}
+    .mk{perspective:700px;background:none;border:0;padding:0;position:relative;text-align:inherit}
     .mk-in{position:absolute;inset:0;transition:transform .4s;transform-style:preserve-3d}
     .mk.open .mk-in,.mk.vast .mk-in{transform:rotateY(180deg)}
     .mk-face,.mk-rug{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:8px}
     .mk-face{transform:rotateY(180deg)}
     .mk-face .kaart{height:100%}
     .mk-rug{background:repeating-linear-gradient(45deg,#0F6E56,#0F6E56 10px,#1D9E75 10px,#1D9E75 20px);border:2px solid #085041;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px;letter-spacing:.05em}
-    .mk-rug.k-naam{border-bottom:8px solid var(--k-naam)}
-    .kleurrug .mk-rug.c-logo{border-bottom:10px solid var(--k-logo)}
-    .kleurrug .mk-rug.c-omschrijving{border-bottom:10px solid var(--k-omschrijving)}
-    .kleurrug .mk-rug.c-toepassing{border-bottom:10px solid var(--k-toepassing)}
-    .kleurrug .mk-rug.c-bereik{border-bottom:10px solid var(--k-bereik)}
-    .kleurrug .mk-rug.c-naam{border-bottom:10px solid #fff}
     .mk.vast .mk-face .kaart{box-shadow:0 0 0 3px var(--groen)}
     .mk.fout .mk-face .kaart{box-shadow:0 0 0 3px var(--fout)}
-    .mk:disabled{cursor:default}
-    .mk.kijk .mk-in{transform:rotateY(180deg)}
-    .anker .mk-in{transform:rotateY(180deg)}
-    .anker.gekozen .mk-face .kaart{box-shadow:0 0 0 4px #f5a623}
-    .anker.klaar .mk-face .kaart{opacity:.55}
     @media(prefers-reduced-motion:reduce){.mk-in{transition:none}}
 
-    /* scorebalk */
-    .scorebalk{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:.5rem}
-    .speler{border:2px solid var(--rand);border-radius:99px;padding:.25rem .8rem;font-size:13px;background:#fff;display:flex;gap:.5rem;align-items:center}
-    .speler.aan{border-color:var(--sp,#1D9E75);background:var(--groen-licht);font-weight:700}
-    .speler .dot{width:10px;height:10px;border-radius:50%;background:var(--sp,#1D9E75)}
     .melding{min-height:2.6rem;padding:.55rem .9rem;border-radius:var(--radius-sm);background:var(--grijs-licht);font-size:14px;margin:.4rem 0}
     .melding.goed{background:var(--groen-licht);color:var(--groen-diep)}
     .melding.slecht{background:var(--fout-licht);color:var(--fout)}
-    .grote-tijd{font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;color:var(--groen-diep)}
 
     /* quiz */
     .vraagblok{display:grid;grid-template-columns:170px 1fr;gap:1rem;align-items:stretch;margin:.75rem 0}
@@ -130,66 +87,18 @@
     .optie:disabled{cursor:default}
     .vraagtekst{font-weight:700;margin-bottom:.4rem}
 
-    /* ordenen */
-    .orden{list-style:none;display:grid;gap:8px;margin:.75rem 0}
-    .orden-item{display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:stretch;border:2px solid transparent;border-radius:10px;padding:2px}
-    .orden-item.gekozen{border-color:#f5a623;background:#fff8e6}
-    .orden-item.ok{border-color:#0b7a3b}
-    .orden-item.nok{border-color:var(--fout);background:var(--fout-licht)}
-    .nr{display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--tekst-licht)}
-    .orden-item .kaart{cursor:pointer;min-height:70px}
-    .pijlen{display:flex;flex-direction:column;gap:4px;justify-content:center}
-    .pijl{width:44px;height:44px;border:1.5px solid var(--rand);background:#fff;border-radius:8px;font-size:16px}
-    .pijl:hover{background:var(--groen-licht)}
-    .koppelrij{display:grid;grid-template-columns:34px 1fr 96px;gap:8px;align-items:stretch;margin-bottom:8px;width:100%;text-align:left;background:none;border:2px solid transparent;border-radius:10px;padding:2px}
-    .koppelrij:hover:not(:disabled){border-color:var(--groen)}
-    .koppelrij.goed{border-color:#0b7a3b;cursor:default}
-    .koppelrij.fout{border-color:var(--fout);background:var(--fout-licht)}
-    .slot{border:2px dashed #aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#aaa;font-weight:800;background:#fff;padding:2px}
-    .slot img{max-width:100%;max-height:60px;object-fit:contain}
-    .huidig-logo{width:170px;margin:.5rem auto}
-    .huidig-logo .kaart{min-height:110px}
-    .uitslag{width:100%;border-collapse:collapse;font-size:13.5px;margin:.5rem 0}
-    .uitslag th,.uitslag td{border-bottom:1px solid var(--rand);padding:.4rem .5rem;text-align:left;vertical-align:top}
-    .uitslag th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--tekst-licht)}
     .winnaar{background:linear-gradient(160deg,#fff8e1,#ffefb0);border:2px solid #f5c542;border-radius:var(--radius);padding:1.25rem;text-align:center;margin:1rem 0}
     .winnaar h3{font-size:22px;color:#7a5b00}
 
-    /* kaartenbak */
-    details.set{background:#fff;border:1px solid var(--rand);border-radius:var(--radius);margin-bottom:.6rem;overflow:hidden}
-    details.set summary{padding:.7rem 1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.6rem;min-height:44px}
-    details.set .setrij{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:.5rem .75rem .9rem}
-    details.set .setrij .kaart{min-height:120px;font-size:11.5px}
-    details.set .setrij .kaart strong{font-size:16px}
-    .mini-logo{height:26px;width:auto;max-width:60px;object-fit:contain;background:#fff;border-radius:4px}
-    .status{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px}
-    .st-ok{background:var(--groen-licht);color:var(--groen-diep)}
-    .st-twijfel{background:#fff3cd;color:#7a5b00}
-    .st-weg{background:var(--fout-licht);color:var(--fout)}
-
-    /* thuis + competitie */
-    .thuisrij{display:grid;grid-template-columns:90px 1fr;gap:.75rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--rand)}
-    .thuisrij .kaart{min-height:64px;padding:4px}
-    .thuisrij .kaart img{max-height:52px}
-    .tabelwrap{overflow-x:auto}
-    .comp{border-collapse:collapse;font-size:13px;min-width:640px;width:100%}
-    .comp th,.comp td{border:1px solid var(--rand);padding:.3rem .4rem;text-align:center}
-    .comp th{background:var(--grijs-licht);font-size:11px}
-    .comp input[type=number]{width:54px;padding:.3rem;border:1px solid var(--rand);border-radius:4px;text-align:center;font:inherit}
-    .comp input[type=text]{min-width:110px}
-    .comp tr.eerste td{background:#fff8e1;font-weight:700}
-
-    @media(max-width:400px){.mk{height:210px}.mk .kaart{font-size:11.5px;padding:6px}}
     footer{text-align:center;padding:2rem 1rem 0;font-size:12px;color:var(--tekst-licht)}
     @media(max-width:560px){
       .tools-grid{grid-template-columns:1fr}
       .site-header{flex-direction:column;text-align:center}
       .vraagblok{grid-template-columns:1fr}
       .vraagblok .kaart{min-height:110px}
-      details.set .setrij{grid-template-columns:1fr 1fr}
       .bord{grid-template-columns:repeat(2,1fr)}
-      .koppelrij{grid-template-columns:26px 1fr 72px}
     }
+    @media(max-width:400px){.bord .mk{height:210px}.bord .kaart{font-size:11.5px;padding:6px}}
   </style>
 </head>
 <body>
@@ -214,55 +123,24 @@
 
 <script>
 /* ============ DATA ============ */
+/* 11 actuele communicatieprotocollen (RF is na een relevantiecheck weggelaten) */
 const LOGOS = {"4g": "data:image/jpeg;base64,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", "5g": "data:image/jpeg;base64,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", "nbiot": "data:image/jpeg;base64,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", "lora": "data:image/jpeg;base64,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", "zigbee": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABgAGADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiqWpX39nWEt19nuLgxjIht4y8jn0UetAEtzdQWVtJcXU0cMMa7nkkYKqj1JNec33xUl1O6ew8FaLPrM6nDXLKUgT/H8dtZE3hzxd8QtYNz4ntZdP0WFt0OmrKBv/3sH06sfwAr0Cw0GbT7NLS0htrW3T7sUfAH5CsZTlfRHXGlTgryabOJbw38RtfO/V/FkOlxt/ywsAcr+K4/9CNMb4M2lxzqHijVrpj94sw5/MmvRP7MvO88f5Gnf2Xc/wDPwv8A3zSs3ui1Vt8MrfI84HwV06Dmx8R6pbt6gj+mKB4Q+IOhfvNE8Z/blXpBfZOfb5tw/UV6R/Zdx/z8L/3zTTpd11Fwn4g0rNdB+2vvK/qjgbX4paroFwln440CWy3HC3tspeJvfHP6E/SvSdN1Sx1iyjvdOuorm2k+7JG2R/8AWPtWXd6NcXVrJbzpb3MMgw8UgyrD3BFeSa3pOr/DPUzrnhxpYrJm/wBKsZCWjx/VffqvrT9o4/EL2FOr8GjPfKWuZ8HeMtO8Z6V9rsz5dxHhbi2c/PE39Qex710tbJ3OKUXF2ZDdXMNlaTXVxIscMKF5HboqgZJrxa8+PFzJcumm6JEIt5Eck8xywzwSoHH51o/HHxK1ppVr4et3Ilvf3txg9IlPA/4E3/oJrxGFOnFY1JtaI9rK8vjX96oj39/iBqTAYFuh74Qn+Zqu3jfVm/5ewv0jWvMrfW90SiQ7XAwfQ1P/AGqv98fnXE51O576yiitoI9APi/VGOft8n4AD+lNPirUj/zEJv8AvquB/tVf74/Oj+1l/vj86m8+5f8AZdP+Vfcd7/wlOo/8/wDP/wB910fhe41nWZ/Oe9mWyjPzMcfOf7o4/OuF8H6HdeKr043R6fE376bHU/3V9/5V7baWsNlbR21vGscMYwqr0Arpo05P3pPQ8LNJ0KH7qCXN6bf8EsVR1TTbbVtPmsrqMPFKhU+2RV6s/VtWs9F02a/vpligiGWJ7+wHc+1djtbU8GHNzLk3Pl+yv9T+HvjOWS2Y+fZzNDNHnCzIDyD7Ecj04NfT+iaxaa9o1rqlk+63uE3r6r6g+4OR+FfL3i3Vl8Q+JL7VUg8hbhwVjzkgBQoz78V3fwO8Stb6ndeG7hz5VwDcWwPZx99R9Rz/AMBNYUp62PczLBy9mqrVnbU474j6o2sfEPVpS2Ugl+zRj0EfH/oW4/jWDEvFR3M5u9SurknJmnkkz/vMTU8Y6VjN3dz38rpKNNInUYFOpKWsj30tBcV1PgzwZd+LL7o0WnxN++nx/wCOr/tfypfBngu78WX38UOnxt+/nx1/2V9T/KvoLTdNtdIsIbKyhWG3iG1VX/PNbUqTlq9j57Oc5WGXsaL9/wDL/ghpunWmk2EVlZQrFbxDCqo/zzV2iqOqapaaPp817fTLFBEMsxP6D1PtXZokfDe9Un3bDVNUs9H0+W+vZhFBEMsxP6D1NfPHjLxhd+LNRLtuisYz+4gz0/2m9W/lTvGXjG88WahubdFYxH9xb56f7TerfyrmPauOrV5nZbH3OT5MsNH2tb43+H/BKsi0/RdSbRPEenampx9muEduf4c4YfkTRIOtZ9wMq30NTE3zGmpQaZLJCba9ngPWKVkI+jEVZjNavj3TW0j4gazbFcK9w06e6yfN/U/lWRGeBTkrMzyyopU0y0Oldb4K8FXXiu93Nuh06Jv30+OSf7q+/wDKk8D+Crnxbfb23RabEf302OWP91ff+VfQenafa6XYxWdnCsNvEuERRwKdKlzavYyzjOlh17Gi/f8Ay/4Iadp9rpVjFZ2cKw28S7VRR0q5RVLUtStdJsJr29mWK3iXczMf8812aJHxHvVJd2xNU1Sz0fT5b6+mWK3iGWYn9B6mvnrxj4xu/Feobm3RWMR/cQZ6f7Terfyo8ZeMbvxZqG4lorGJv3Fvn/x5v9r+Vcz2rjq1XJ2Wx91k2TLDL21b4/y/4IlJS0h4FYn0LIZDVC4OFP0q5Iabp1g+r61ZadGMtdTpFx7nn9M1cdzxcwqKMG2eu/HTw4zJY+JIEz5f+jXRHZSco355H4ivLfD1tBqOu6fY3MjRw3FwkTsvUBiBX1dqmm2ur6Zcadex+ZbXMZjkX2P9a+VfEnh++8G+IpNOuC26NhJbTjjzEz8rj39fQg10VYa3PmsqxbUXSvZ9D6q03TrXSrCGysYVht4l2oi9v/r1drifAXj6x8V6bFFLKkOrRoBPATjef7y+oP6V23bIreLTWh41aE4TanuVb69t9Os5bu6lWKCJdzux4UV89+NvGlz4r1Dam6LToW/cwn+L/ab3/lXovj7w54s8UXK21o1rHpcZBWMykNI3q3y/kK4ZvhL4qHSG1P0n/wDrVzVnOXupaH0mSU8FQXtq1Rc3TXb/AIJw9Ga7cfCbxWesFsPrOP8ACpV+EPig9fsK/Wc//E1jyT7H0jzXBL/l4vvODqN2r0lPgxr7j95e2Ef/AAJz/wCy1ch+B1y5/wBI16JB/sW5P82FNUp9jmq53g0tJ/mePyvXo3wT8OtqPiSbXJk/0fT1KREjrKwx+i5/76FdRD8DdEEqpea1eSOwztj2Rk/oa9F8PeHtP8MaRFpemxstvGScscszHklj3Nb06TTuz5rMs0hXi40zWrmvGXg6w8Z6QbO7/dzoS1vcKMtE39Qe4710tFdFrngxk4u6PkXXdA1fwhrH2PUYmhlU7oZ4ydsg/vI3+SK1bL4jeK7SNY4tcuSo4HmbZP8A0IGvpTWNF03X7B7HVLSK6t3/AIXHQ+oPUH3FeM+JfgdfWzvP4bu1uYuotblgrr7B+h/HFc8qbXwnu4bMqUko10n6mNH8WvFygA6hE/u1un+FWl+MPipRzJZn6wf/AF64XUtE1nRJCmp6Xd2pBxukiO0/RhwazhcA/wAQ596ybmup60I4GavyL7keln4w+Kf79mP+2P8A9eq7/Fzxa2dt9An+7Av9RXnhuAP4sfjVuw07U9XlEenafdXbE/8ALGJmH59KE59xzjgIK/IvuOnufid4umBDa3KoP9yNF/ktUbXWPGPirUo9OtNT1S7uJTxGlwwUD1bBwo9zXVeHPgnrWosk2uTpptv1MUZEkx/9lX9fpXtPh3wtpHhax+yaVaJCD9+Q8vIfVm71rGEnuzyMVjsPHSjFX9DF8B+A4fCNmZ7mX7Xq86/v7liWx/sJnkL/AD/l2tJS1ulZaHhyk5u7P//Z", "zwave": "data:image/jpeg;base64,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", "wifi": "data:image/png;base64,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", "sigfox": "data:image/jpeg;base64,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", "nfc": "data:image/jpeg;base64,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", "bluetooth": "data:image/png;base64,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", "rfid": "data:image/png;base64,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"};
 
-const CATS = ['naam','logo','omschrijving','toepassing','bereik'];
-const KLEURNAAM = {naam:'wit',logo:'magenta',omschrijving:'groen',toepassing:'geel',bereik:'blauw'};
-const CATLABEL = {naam:'Naam',logo:'Logo',omschrijving:'Omschrijving',toepassing:'Toepassing',bereik:'Bereik'};
-const SPELERKLEUR = ['#1D9E75','#e0692a','#3b6fd4','#b0459f'];
-
-/* bereikM = sorteerwaarde in meters; jaar = indicatief introductiejaar */
 const PROT = [
- {id:'4g',naam:'4G',omschrijving:'4e generatie mobiele netwerken',toepassing:'smartphone',bereik:'één antenne max. 40 km',bereikM:40000,jaar:2009,jaarUitleg:'eerste commerciële LTE-netwerken eind 2009'},
- {id:'5g',naam:'5G',omschrijving:'5e generatie mobiele netwerken',toepassing:'smartphone (in de praktijk 3 tot 6 x sneller dan 4G)',bereik:'schatting is per antenne 70 km',bereikM:70000,jaar:2019,jaarUitleg:'eerste commerciële 5G-netwerken in 2019'},
- {id:'nbiot',naam:'NB-IoT',omschrijving:'Low Power Wide Area-techniek die op een efficiëntere manier dingen met internet verbindt (via het mobiele netwerk). De connectie is zó sterk dat het signaal met gemak door dikke muren of zelfs dijken heen kan.',toepassing:'geschikt voor industrieel gebruik, o.a. slimme meters en sensoren',bereik:'goede dekking, zelfs onder de grond of in gebouwen',bereikM:10000,bereikSchatting:'± 10 km per antenne (schatting)',jaar:2016,jaarUitleg:'standaard in 3GPP Release 13 (2016)'},
- {id:'lora',naam:'LoRa',omschrijving:'Speciaal ontwikkeld om kleine hoeveelheden informatie uit te wisselen tussen objecten en systemen voor draadloos LAN.',toepassing:'The Things Network',bereik:'15 km',bereikM:15000,jaar:2015,jaarUitleg:'LoRaWAN-standaard in 2015'},
- {id:'zigbee',naam:'Zigbee',omschrijving:'Bedoeld als aanvulling op Bluetooth en wifi. Wordt gebruikt om sensorgegevens door te sturen en voor besturing (controle en monitoring).',toepassing:'domotica',bereik:'max. 70 meter',bereikM:70,jaar:2004,jaarUitleg:'eerste Zigbee-specificatie in 2004'},
- {id:'zwave',naam:'Zwave',omschrijving:'Apparaten van verschillende merken of soorten met elkaar laten communiceren.',toepassing:'domotica (o.a. dimmers, schakelaars, beveiliging etc) - inmiddels meer dan 4500 apparaten verkrijgbaar',bereik:'40 meter',bereikM:40,jaar:2001,jaarUitleg:'eerste Z-Wave-chips rond 2001'},
- {id:'wifi',naam:'wifi',omschrijving:'draadloos LAN',toepassing:'grote data-overdracht (zoals video) met een beperkt bereik',bereik:'standaard tot 50 meter en met versterkers tot 1 km',bereikM:50,jaar:1997,jaarUitleg:'eerste IEEE 802.11-standaard in 1997'},
- {id:'sigfox',naam:'Sigfox',omschrijving:'L(ow)P(ower)WAN',toepassing:'kleine berichtjes met tussenpozen, minder geschikt voor besturingen',bereik:'landelijk dekkend netwerk',bereikM:40000,bereikSchatting:'± 40 km per antenne op het platteland (schatting)',jaar:2012,jaarUitleg:'eerste netwerk in Frankrijk in 2012'},
- {id:'nfc',naam:'NFC',omschrijving:'Near Field Communication, frequentie tot 13,56 MHz.',toepassing:'mobiel betalen en data-uitwisseling mobiele telefoons',bereik:'max. 5 cm',bereikM:0.05,jaar:2004,jaarUitleg:'NFC Forum opgericht in 2004'},
- {id:'bluetooth',naam:'Bluetooth',omschrijving:'Werkt d.m.v. profielen. Doel: draden vervangen van randapparaten.',toepassing:'draadloze verbinding randapparatuur, zoals toetsenbord, muis en smartphone',bereik:'tot 100 meter',bereikM:100,jaar:1999,jaarUitleg:'Bluetooth 1.0 in 1999'},
- {id:'rfid',naam:'RFID',omschrijving:'Radio-frequency identification, technologie om van afstand informatie op te slaan. Oorsprong: spionagenetwerk van Rusland. Werkt tegenwoordig vaak samen met NFC.',toepassing:'automatisch openen van bijvoorbeeld een ov-poort of ski-poort',bereik:'van 0,01 (i.c.m. NFC) tot 150 meter',bereikM:150,jaar:1945,jaarUitleg:'oorsprong in 1945 (afluisterapparaat voor de Sovjet-Unie)'}
+ {id:'4g',naam:'4G',omschrijving:'4e generatie mobiele netwerken',toepassing:'smartphone',bereik:'één antenne max. 40 km'},
+ {id:'5g',naam:'5G',omschrijving:'5e generatie mobiele netwerken',toepassing:'smartphone (in de praktijk 3 tot 6 x sneller dan 4G)',bereik:'schatting is per antenne 70 km'},
+ {id:'nbiot',naam:'NB-IoT',omschrijving:'Low Power Wide Area-techniek die op een efficiëntere manier dingen met internet verbindt (via het mobiele netwerk). De connectie is zó sterk dat het signaal met gemak door dikke muren of zelfs dijken heen kan.',toepassing:'geschikt voor industrieel gebruik, o.a. slimme meters en sensoren',bereik:'goede dekking, zelfs onder de grond of in gebouwen'},
+ {id:'lora',naam:'LoRa',omschrijving:'Speciaal ontwikkeld om kleine hoeveelheden informatie uit te wisselen tussen objecten en systemen voor draadloos LAN.',toepassing:'The Things Network',bereik:'15 km'},
+ {id:'zigbee',naam:'Zigbee',omschrijving:'Bedoeld als aanvulling op Bluetooth en wifi. Wordt gebruikt om sensorgegevens door te sturen en voor besturing (controle en monitoring).',toepassing:'domotica',bereik:'max. 70 meter'},
+ {id:'zwave',naam:'Zwave',omschrijving:'Apparaten van verschillende merken of soorten met elkaar laten communiceren.',toepassing:'domotica (o.a. dimmers, schakelaars, beveiliging etc) - inmiddels meer dan 4500 apparaten verkrijgbaar',bereik:'40 meter'},
+ {id:'wifi',naam:'wifi',omschrijving:'draadloos LAN',toepassing:'grote data-overdracht (zoals video) met een beperkt bereik',bereik:'standaard tot 50 meter en met versterkers tot 1 km'},
+ {id:'sigfox',naam:'Sigfox',omschrijving:'L(ow)P(ower)WAN',toepassing:'kleine berichtjes met tussenpozen, minder geschikt voor besturingen',bereik:'landelijk dekkend netwerk'},
+ {id:'nfc',naam:'NFC',omschrijving:'Near Field Communication, frequentie tot 13,56 MHz.',toepassing:'mobiel betalen en data-uitwisseling mobiele telefoons',bereik:'max. 5 cm'},
+ {id:'bluetooth',naam:'Bluetooth',omschrijving:'Werkt d.m.v. profielen. Doel: draden vervangen van randapparaten.',toepassing:'draadloze verbinding randapparatuur, zoals toetsenbord, muis en smartphone',bereik:'tot 100 meter'},
+ {id:'rfid',naam:'RFID',omschrijving:'Radio-frequency identification, technologie om van afstand informatie op te slaan. Oorsprong: spionagenetwerk van Rusland. Werkt tegenwoordig vaak samen met NFC.',toepassing:'automatisch openen van bijvoorbeeld een ov-poort of ski-poort',bereik:'van 0,01 (i.c.m. NFC) tot 150 meter'}
 ];
-/* Alleen bij deze paren is de toepassing (bijna) hetzelfde: nooit samen als antwoordopties */
+/* Alleen bij deze paren is de toepassing (bijna) hetzelfde: nooit samen als antwoordopties in de quiz */
 const DUBBEL = {'4g':['5g'],'5g':['4g'],'zigbee':['zwave'],'zwave':['zigbee']};
-
-/* Relevantiecheck (september 2026) */
-const CHECK = [
- ['4G','ok','Basis van mobiel internet. 3G is al (bijna) uit de lucht, 2G volgt (Vodafone eind 2026, KPN 1 dec 2027); 4G blijft.'],
- ['5G','ok','In Nederland volop uitgerold. De kaart zei “verwachting 100 x sneller”: dat is achterhaald, in de praktijk 3 tot 6 x. Aangepast.'],
- ['NB-IoT','ok','KPN, Vodafone en Odido bieden het aan en het wordt juist belangrijker door het verdwijnen van 2G/3G. De kaart noemde het “supersnel”; het is juist een netwerk voor kleine hoeveelheden data. Aangepast.'],
- ['LoRa','ok','Actief: KPN LoRa en het community-netwerk The Things Network.'],
- ['Zigbee','ok','Nog breed gebruikt in slimme woningen, nu naast Matter/Thread.'],
- ['Zwave','ok','Actief; Z-Wave Long Range groeit. Aantal apparaten op de kaart (1200) was verouderd: nu meer dan 4500 gecertificeerde producten. Aangepast.'],
- ['wifi','ok','Onveranderd relevant.'],
- ['RF','weg','Weggelaten: geen eigen protocol maar een verzamelnaam voor radiotechniek. Ook wifi, Bluetooth en Zigbee werken op 2,4 GHz, en de kaart was vaag (“erg beperkt” bereik).'],
- ['Sigfox','twijfel','Twijfelgeval, wel opgenomen: het netwerk draait nog (in Nederland via Hyrde/VolkerWessels), maar Sigfox ging in 2022 failliet, werd overgenomen door UnaBiz en die vroeg in september 2025 gerechtelijke reorganisatie aan in Frankrijk. Een mooi voorbeeld dat techniek kan verdwijnen. Uit te zetten bij Instellingen.'],
- ['NFC','ok','Actief (mobiel betalen). Frequentie op de kaart was 13,65 MHz; dit moet 13,56 MHz zijn. Aangepast.'],
- ['Bluetooth','ok','Actief, inmiddels versie 6.'],
- ['RFID','ok','Actief (ov-chipkaart, toegangspassen, logistiek).']
-];
-const BRONNEN = [
- ['Sigfox/UnaBiz – gerechtelijke reorganisatie (sept 2025)','https://www.rcrwireless.com/20250909/internet-of-things/sigfox-unabiz-court'],
- ['Sigfox Nederland (Hyrde)','https://www.sigfox.nl/en/'],
- ['KPN LoRa','https://www.kpn.com/zakelijk/internet-of-things/lora-netwerk'],
- ['Vodafone NB-IoT','https://www.vodafone.nl/zakelijk/internet-of-things/nb-iot'],
- ['Odido: 2G en 3G verdwijnen','https://www.odido.nl/business-blog/connectiviteit/2g-3g-iot-verdwijnen/'],
- ['Matter, Zigbee en Z-Wave in 2026','https://matter-smarthome.de/en/development/the-matter-standard-in-2026-a-status-review/'],
- ['Opensignal Nederland (maart 2026)','https://insights.opensignal.com/reports/2026/03/netherlands/mobile-network-experience'],
- ['NFC Forum roadmap (feb 2026)','https://nfc-forum.org/news/2026-02-nfc-forum-publishes-its-latest-technology-roadmap/']
-];
 
 /* ============ HULPFUNCTIES ============ */
 const $ = (s,el=document)=>el.querySelector(s);
@@ -270,461 +148,140 @@ const $$ = (s,el=document)=>Array.from(el.querySelectorAll(s));
 const app = $('#app');
 const esc = s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-const LS={
-  get(k,d){try{const v=localStorage.getItem('iotkaartspel:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
-  set(k,v){try{localStorage.setItem('iotkaartspel:'+k,JSON.stringify(v))}catch(e){}}
-};
 let opruim=[];
 const reg=f=>opruim.push(f);
 function ruim(){opruim.forEach(f=>{try{f()}catch(e){}});opruim=[]}
-function fmt(ms){const s=ms/1000;const m=Math.floor(s/60);return m+':'+(s-m*60).toFixed(1).padStart(4,'0')}
-function maakTimer(el){
-  const t0=performance.now();
-  const id=setInterval(()=>{el.textContent=fmt(performance.now()-t0)},200);
-  reg(()=>clearInterval(id));
-  return {stop(){clearInterval(id);return performance.now()-t0}};
-}
-const instel = LS.get('instel',{uit:[]});
-const actief = ()=>PROT.filter(p=>!instel.uit.includes(p.id));
 const P = id=>PROT.find(p=>p.id===id);
 
 function kaartHTML(p,cat){
   let inhoud;
-  if(cat==='naam') inhoud=`<strong>${esc(p.naam)}</strong>`;
-  else if(cat==='logo') inhoud=`<img alt="Logo" src="${LOGOS[p.id]}">`;
+  if(cat==='logo') inhoud=`<img alt="Logo" src="${LOGOS[p.id]}">`;
   else inhoud=esc(p[cat]);
   return `<div class="kaart k-${cat}">${inhoud}</div>`;
 }
-function ga(scherm,arg){
+function ga(scherm){
   ruim();
-  SCHERMEN[scherm](arg);
+  SCHERMEN[scherm]();
   window.scrollTo(0,0);
 }
-function topbalk(titel,badge,badgeKlasse){
-  return `<div class="topbalk"><button class="terug" data-ga="menu">← Spelmenu</button><span>${badge?`<span class="badge ${badgeKlasse||''}">${esc(badge)}</span>`:''}</span></div>${titel?`<h2 style="font-size:22px;color:var(--groen-diep);margin-bottom:.5rem">${esc(titel)}</h2>`:''}`;
+function topbalk(titel){
+  return `<div class="topbalk"><button class="terug" data-ga="menu">← Spelmenu</button></div>${titel?`<h2 style="font-size:22px;color:var(--groen-diep);margin-bottom:.5rem">${esc(titel)}</h2>`:''}`;
 }
 app.addEventListener('click',e=>{
   const b=e.target.closest('[data-ga]');
-  if(b){ga(b.dataset.ga,b.dataset.arg)}
+  if(b){ga(b.dataset.ga)}
 });
-
-/* spelers-formulier */
-function spelersHTML(max=4,start=1,label='Spelers'){
-  return `<div class="veld"><span class="lbl">${label}</span>
-   <div class="keuzes" id="aantal">${Array.from({length:max},(_,i)=>`<label class="keuze ${i+1===start?'aan':''}"><input type="radio" name="aantal" value="${i+1}" ${i+1===start?'checked':''}> ${i+1}</label>`).join('')}</div>
-   <div class="rij" id="namen">${Array.from({length:max},(_,i)=>`<input type="text" maxlength="20" placeholder="Naam speler ${i+1}" value="" data-n="${i}" ${i>=start?'hidden':''}>`).join('')}</div></div>`;
-}
-function spelersKoppel(root){
-  const upd=()=>{
-    const n=+$('input[name=aantal]:checked',root).value;
-    $$('#aantal .keuze',root).forEach(l=>l.classList.toggle('aan',l.firstElementChild.checked));
-    $$('#namen input',root).forEach((inp,i)=>inp.hidden=i>=n);
-  };
-  $$('input[name=aantal]',root).forEach(r=>r.addEventListener('change',upd));
-}
-function leesSpelers(root){
-  const n=+$('input[name=aantal]:checked',root).value;
-  return $$('#namen input',root).slice(0,n).map((inp,i)=>inp.value.trim()||(n===1?'Speler':'Speler '+(i+1)));
-}
-function scorebalkHTML(sp,beurt,veld){
-  return sp.map((s,i)=>`<div class="speler ${i===beurt?'aan':''}" style="--sp:${SPELERKLEUR[i]}"><span class="dot"></span>${esc(s.naam)}<b>${s[veld]}</b></div>`).join('');
-}
-function checkAantal(){
-  const n=actief().length;
-  if(n<4){ app.innerHTML=topbalk('Te weinig protocollen')+`<div class="paneel"><p>Er zijn maar ${n} protocollen aangevinkt. Kies er minstens 4 bij <b>Instellingen</b>.</p><div class="knoprij"><button class="knop" data-ga="instellingen">Naar instellingen</button></div></div>`;return false}
-  return true;
-}
-function topLijst(sleutel){
-  const l=LS.get('tijden:'+sleutel,[]);
-  if(!l.length)return '<p class="klein">Nog geen tijden op dit apparaat.</p>';
-  return `<table class="uitslag"><tr><th>#</th><th>Naam</th><th>Tijd</th><th>Fouten</th><th>Score</th></tr>${l.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.naam)}</td><td>${fmt(r.tijd)}</td><td>${r.fouten}</td><td><b>${fmt(r.score)}</b></td></tr>`).join('')}</table>`;
-}
-function bewaarTijd(sleutel,naam,tijd,fouten){
-  const l=LS.get('tijden:'+sleutel,[]);
-  const score=tijd+fouten*5000;
-  l.push({naam,tijd,fouten,score});
-  l.sort((a,b)=>a.score-b.score);
-  LS.set('tijden:'+sleutel,l.slice(0,5));
-  return score;
-}
 
 /* ============ SCHERMEN ============ */
 const SCHERMEN={};
 
 /* ---- MENU ---- */
 SCHERMEN.menu=function(){
-  const n=actief().length;
   app.innerHTML=`
   <div class="welkom">
     <h2>Ken jij de IoT-protocollen?</h2>
-    <p>Elk protocol heeft vijf kaarten. Speel memory, maak sets, beantwoord quizvragen of zet protocollen op volgorde. Alleen of met 2 tot 4 spelers op één scherm. Nu ${n} protocollen in het spel.</p>
-    <div class="kleurenrij" style="justify-content:center">
-      ${CATS.map(c=>`<span class="kleurchip" style="background:var(--k-${c})">${CATLABEL[c]} · ${KLEURNAAM[c]}</span>`).join('')}
-    </div>
+    <p>Twee spellen om de communicatieprotocollen van het Internet of Things te leren kennen. Je speelt alleen, in je eigen tempo.</p>
   </div>
-  <div class="sectie-label">Spelvarianten</div>
   <div class="tools-grid">
-    ${[
-      ['memory2','🃏','Memory','Basis','','Draai kaarten om en zoek de bijbehorende paren (bijvoorbeeld logo en toepassing). Lukt het in één beurt?'],
-      ['sets','🗂️','Sets','Gevorderd','gev','Bestudeer alle kaarten, draai ze om en maak van elke naam een complete set van vijf.'],
-      ['quiz','❓','Kennisquiz','Basis','','Bij elk logo een vraag over omschrijving, toepassing of bereik. Goed = punt.'],
-      ['bereik','📏','Van klein naar groot bereik','Basis','','Zet de bereikkaarten op volgorde en koppel daarna elk logo aan het juiste bereik.'],
-      ['sota','⏱️','State of the art','Basis','','Zet de logo\'s op volgorde van meest recent naar minst recent. Wie is het snelst?'],
-      ['thuis','🏠','IoT thuis','Basis','','Zoek thuis op welke protocollen jouw apparaten gebruiken en bespreek het in de klas.'],
-      ['competitie','🏆','Competitie','Divers','div','Scorebord voor de groepen: punten per spelvariant en een totaalstand.']
-    ].map(([id,ic,t,b,k,d])=>`<button class="tool-kaart" data-ga="${id}"><div class="tool-icoon">${ic}</div><div><span class="badge ${k}">${b}</span></div><h3>${t}</h3><p>${d}</p><div class="tool-link-label">Starten →</div></button>`).join('')}
-  </div>
-  <div class="sectie-label">Meer</div>
-  <div class="tools-grid">
-    <button class="tool-kaart" data-ga="kaarten"><div class="tool-icoon">📚</div><h3>Alle kaarten bekijken</h3><p>Leer de sets eerst uit je hoofd voordat je gaat spelen.</p><div class="tool-link-label">Openen →</div></button>
-    <button class="tool-kaart" data-ga="over"><div class="tool-icoon">🔎</div><h3>Over dit spel</h3><p>Welke protocollen zijn nog relevant? Wat is er aangepast t.o.v. de papieren kaarten, en bronnen.</p><div class="tool-link-label">Lezen →</div></button>
-    <button class="tool-kaart" data-ga="instellingen"><div class="tool-icoon">⚙️</div><h3>Instellingen</h3><p>Kies welke protocollen meedoen in het spel.</p><div class="tool-link-label">Openen →</div></button>
+    <button class="tool-kaart" data-ga="memory"><div class="tool-icoon">🃏</div><h3>Memory</h3><p>Draai kaarten om en zoek bij elk logo de juiste toepassing.</p><div class="tool-link-label">Starten →</div></button>
+    <button class="tool-kaart" data-ga="quiz"><div class="tool-icoon">❓</div><h3>Kennisquiz</h3><p>Beantwoord bij elk logo een vraag over omschrijving, toepassing of bereik.</p><div class="tool-link-label">Starten →</div></button>
   </div>`;
 };
 
-/* ---- INSTELLINGEN ---- */
-SCHERMEN.instellingen=function(){
-  app.innerHTML=topbalk('Instellingen')+`<div class="paneel">
-    <h2>Welke protocollen doen mee?</h2>
-    <p>Minstens 4. Standaard doen alle ${PROT.length} actuele protocollen mee.</p>
-    <div class="keuzes" style="margin-top:.75rem">${PROT.map(p=>`<label class="keuze ${instel.uit.includes(p.id)?'':'aan'}"><input type="checkbox" data-id="${p.id}" ${instel.uit.includes(p.id)?'':'checked'}> ${esc(p.naam)}</label>`).join('')}</div>
-    <p class="klein" id="instmel" style="margin-top:.6rem"></p>
-    <div class="knoprij"><button class="knop grijs" id="resetInst">Alles aan</button></div>
-    <p class="klein" style="margin-top:1rem">Sigfox is een twijfelgeval, zie <a href="#" data-ga="over">Over dit spel</a>.</p>
-  </div>`;
-  const opslaan=()=>{
-    const uit=$$('input[data-id]').filter(i=>!i.checked).map(i=>i.dataset.id);
-    if(PROT.length-uit.length<4){$('#instmel').textContent='Kies minstens 4 protocollen.';return false}
-    $('#instmel').textContent='';
-    instel.uit=uit;LS.set('instel',instel);
-    $$('.keuze').forEach(l=>l.classList.toggle('aan',l.firstElementChild.checked));
-    return true;
-  };
-  $$('input[data-id]').forEach(i=>i.addEventListener('change',()=>{if(!opslaan())i.checked=true}));
-  $('#resetInst').onclick=()=>{$$('input[data-id]').forEach(i=>i.checked=true);opslaan()};
+/* ---- MEMORY (klassiek, solo, logo + toepassing) ---- */
+SCHERMEN.memory=function(){
+  app.innerHTML=topbalk('Memory')+`<div class="paneel" id="setup">
+    <p>Alle kaarten liggen afgedekt op tafel. Draai twee kaarten om: hoort het logo bij de toepassing? Dan mag je nog een keer. Zo niet, dan draaien ze na een paar seconden vanzelf terug.</p>
+    <p class="klein">Elk spel krijg je 8 van de 11 protocollen willekeurig op het bord (16 kaarten).</p>
+    <div class="knoprij"><button class="knop" id="start">Start het spel</button></div></div>`;
+  $('#start').onclick=memorySpel;
 };
-
-/* ---- KAARTEN BEKIJKEN ---- */
-SCHERMEN.kaarten=function(){
-  app.innerHTML=topbalk('Alle kaarten')+`<p class="klein" style="margin-bottom:.75rem">Elke set heeft vijf kaarten: ${CATS.map(c=>KLEURNAAM[c]+' = '+CATLABEL[c].toLowerCase()).join(', ')}.</p>`+
-  actief().map((p,i)=>`<details class="set" ${i===0?'open':''}><summary><img class="mini-logo" alt="" src="${LOGOS[p.id]}"> ${esc(p.naam)}</summary><div class="setrij">${CATS.map(c=>kaartHTML(p,c)).join('')}</div></details>`).join('');
-};
-
-/* ---- OVER ---- */
-SCHERMEN.over=function(){
-  const st={ok:['st-ok','Actueel'],twijfel:['st-twijfel','Twijfelgeval'],weg:['st-weg','Weggelaten']};
-  app.innerHTML=topbalk('Over dit spel')+`
-  <div class="paneel">
-    <h2>Relevantiecheck (september 2026)</h2>
-    <p>De papieren kaarten zijn van 2018. Van elk van de 12 protocollen is gecontroleerd of het nog relevant is. Resultaat: ${PROT.length} protocollen in het spel, 1 weggelaten.</p>
-    <table class="uitslag" style="margin-top:.5rem"><tr><th>Protocol</th><th>Status</th><th>Toelichting</th></tr>
-    ${CHECK.map(([n,s,t])=>`<tr><td><b>${esc(n)}</b></td><td><span class="status ${st[s][0]}">${st[s][1]}</span></td><td>${esc(t)}</td></tr>`).join('')}
-    </table>
-  </div>
-  <div class="paneel">
-    <h2>Speluitleg</h2>
-    <p>Het spel volgt de handleiding <em>Kaartspel IoT – Handleiding en spelvarianten</em> (Stichting Praktijkleren, juni 2018): 8 spelvarianten, kaarten in vijf kleuren.</p>
-    <ul style="margin-top:.4rem">
-      <li><b>Memory</b>: wie twee bij elkaar horende kaarten omdraait, mag nog een keer. Je kiest zelf welke twee kleuren je speelt (bijvoorbeeld logo en toepassing). Bij een fout draaien de kaarten na 3 seconden vanzelf terug. Standaard heeft het veld maximaal 4 × 4 kaarten met steeds andere protocollen en wint wie de meeste setjes heeft. De <em>uitdaging</em> uit de handleiding (wie het eerst <em>alle</em> kaarten in één beurt correct omdraait) kies je in het beginscherm.</li>
-      <li><b>Sets</b>: 3 minuten kijken (of 1 minuut voor de <em>professional</em>), dan gaan de kaarten om. Wie de meeste complete sets maakt, wint. Na een fout is de volgende speler aan de beurt.</li>
-      <li><b>Kennisquiz</b>: goed antwoord = 1 punt. Speel je in groepjes, dan kun je bij een fout een punt laten aftrekken.</li>
-      <li><b>Bereik</b> en <b>State of the art</b>: op volgorde zetten, met tijd. Elke fout kost 5 seconden straftijd. De tijden worden alleen op dit apparaat bewaard.</li>
-    </ul>
-  </div>
-  <div class="paneel">
-    <h2>Aangepast t.o.v. de papieren kaarten</h2>
-    <ul>
-      <li>De kaarten van <b>RF</b> zijn weggelaten (zie hierboven).</li>
-      <li>Tekst van <b>5G</b>, <b>NB-IoT</b>, <b>Zwave</b> en <b>NFC</b> bijgewerkt of gecorrigeerd.</li>
-      <li>Bij <b>RFID</b> stond het bereik zonder eenheid ("0,01"); dat is meter.</li>
-      <li>Voor de bereik-opdracht heeft NB-IoT en Sigfox geen afstand op de kaart. Daar is een <b>schatting</b> gebruikt (na afloop zichtbaar).</li>
-      <li>Voor <em>State of the art</em> zijn <b>indicatieve introductiejaren</b> toegevoegd. Bij gelijke jaren (NFC en Zigbee, 2004) mag de volgorde wisselen.</li>
-    </ul>
-  </div>
-  <div class="paneel">
-    <h2>Bronnen</h2>
-    <ul>${BRONNEN.map(([t,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join('')}</ul>
-  </div>`;
-};
-
-/* ---- MEMORY (paren van 2 kleuren) ---- */
-function memorySetup(){
-  {
-    if(!checkAantal())return;
-    const pre=['logo','toepassing'];
-    app.innerHTML=topbalk('Memory','Basis')+`<div class="paneel" id="setup">
-      <p>Alle kaarten liggen afgedekt op tafel. Wie twee bij elkaar horende kaarten omdraait, mag nog een keer.</p>
-      ${spelersHTML(4,1)}
-      <div class="veld"><span class="lbl">Kleuren (kaartsoorten) – kies precies 2</span>
-        <div class="keuzes" id="kl">${CATS.map(c=>`<label class="keuze ${pre.includes(c)?'aan':''}"><input type="checkbox" value="${c}" ${pre.includes(c)?'checked':''}> <span class="kleurchip" style="background:var(--k-${c})">${KLEURNAAM[c]}</span> ${CATLABEL[c]}</label>`).join('')}</div>
-        <span class="klein" id="klnaam"></span></div>
-      <div class="veld"><span class="lbl">Speelveld</span>
-        <div class="keuzes"><label class="keuze aan"><input type="radio" name="veld" value="4x4" checked> Klein: maximaal 4 × 4 kaarten (elke keer andere protocollen)</label>
-        <label class="keuze"><input type="radio" name="veld" value="alles"> Groot: alle protocollen</label></div></div>
-      <div class="veld"><span class="lbl">Wie wint?</span>
-        <div class="keuzes"><label class="keuze aan"><input type="radio" name="regel" value="klassiek" checked> Wie de meeste setjes heeft (gevonden setjes blijven liggen)</label>
-        <label class="keuze"><input type="radio" name="regel" value="handleiding"> Uitdaging: wie het eerst alles in één beurt vindt (na een fout gaan de setjes van die beurt terug)</label></div></div>
-      <div class="veld"><label class="keuze" style="width:fit-content"><input type="checkbox" id="kleurrug"> Kleur zichtbaar op de achterkant (makkelijker)</label></div>
-      <p class="melding" id="fmel" hidden></p>
-      <div class="knoprij"><button class="knop" id="start">Start het spel</button></div></div>`;
-    const root=$('#setup');
-    spelersKoppel(root);
-    const upd=()=>{
-      const c=$$('#kl input:checked').length;
-      $$('#kl .keuze',root).forEach(l=>l.classList.toggle('aan',l.firstElementChild.checked));
-      $$('input[name=regel],input[name=veld]',root).forEach(r=>r.parentElement.classList.toggle('aan',r.checked));
-      const per=aantalSetjes(2,$('input[name=veld]:checked',root).value==='alles');
-      $('#klnaam').textContent=c===2?`${per} setjes = ${per*2} kaarten op tafel`:`Je hebt ${c} kleur${c===1?'':'en'} gekozen; kies er precies 2.`;
-    };
-    $$('#kl input,input[name=regel],input[name=veld]',root).forEach(i=>i.addEventListener('change',upd));upd();
-    $('#start').onclick=()=>{
-      const cats=CATS.filter(c=>$(`#kl input[value=${c}]`).checked);
-      if(cats.length!==2){const m=$('#fmel');m.hidden=false;m.className='melding slecht';m.textContent='Kies precies 2 kleuren.';return}
-      memorySpel({cats,spelers:leesSpelers(root),regel:$('input[name=regel]:checked').value,groot:$('input[name=veld]:checked').value==='alles',kleurrug:$('#kleurrug').checked,titel:'Memory'});
-    };
-  }
-}
-/* Klein veld = maximaal 16 kaarten (4 x 4) = 8 setjes van 2 kaarten */
-function aantalSetjes(kleuren,groot){
-  const alle=actief().length;
-  return groot?alle:Math.min(alle,Math.floor(16/kleuren));
-}
-SCHERMEN.memory2=memorySetup;
-
-function memorySpel(cfg){
+function memorySpel(){
   ruim();
-  const n=cfg.cats.length, strikt=cfg.regel==='handleiding';
+  const gekozen=shuffle(PROT).slice(0,8);
   let kaarten=[];
-  const gekozen=shuffle(actief()).slice(0,aantalSetjes(n,cfg.groot));
-  gekozen.forEach(p=>cfg.cats.forEach(c=>kaarten.push({pid:p.id,cat:c,open:false,vast:false})));
+  gekozen.forEach(p=>['logo','toepassing'].forEach(c=>kaarten.push({pid:p.id,cat:c,open:false,vast:false})));
   kaarten=shuffle(kaarten);
-  const totaalSets=gekozen.length;
-  const sp=cfg.spelers.map(naam=>({naam,sets:0,beste:0}));
-  let beurt=0,geopend=[],beurtSets=0,locked=false,klaar=false,beurtNr=1,terugId=0;
+  const totaal=gekozen.length;
+  let geopend=[],locked=false,gevonden=0,fouten=0,klaar=false,terugId=0;
 
-  app.innerHTML=topbalk(cfg.titel)+`
-    <div class="scorebalk" id="sb"></div>
-    <div class="melding" id="mm" role="status"></div>
+  app.innerHTML=topbalk('Memory')+`
+    <p class="klein" id="stand">Setjes gevonden: 0 van ${totaal} &nbsp;·&nbsp; Fouten: 0</p>
+    <div class="melding" id="mm" role="status">Draai twee kaarten om die bij elkaar horen.</div>
     <div class="knoprij" style="margin:0 0 .5rem"><button class="knop grijs" id="volgende" hidden>Nu terugdraaien</button></div>
-    <div class="bord ${cfg.kleurrug?'kleurrug':''} ${cfg.groot?'':'v4'}" id="bord">${kaarten.map((k,i)=>`<button class="mk" data-i="${i}" aria-label="Kaart ${i+1}"><span class="mk-in"><span class="mk-rug c-${k.cat}">IoT</span><span class="mk-face">${kaartHTML(P(k.pid),k.cat)}</span></span></button>`).join('')}</div>
+    <div class="bord" id="bord">${kaarten.map((k,i)=>`<button class="mk" data-i="${i}" aria-label="Kaart ${i+1}"><span class="mk-in"><span class="mk-rug">IoT</span><span class="mk-face">${kaartHTML(P(k.pid),k.cat)}</span></span></button>`).join('')}</div>
     <div class="knoprij"><button class="knop grijs" data-ga="menu">Stoppen</button></div>`;
-  const mm=$('#mm'),volg=$('#volgende');
+  const mm=$('#mm'),volg=$('#volgende'),stand=$('#stand');
   const zet=(t,k)=>{mm.textContent=t;mm.className='melding '+(k||'')};
-  function sb(){
-    const veld=strikt?'beste':'sets';
-    $('#sb').innerHTML=sp.map((s,i)=>`<div class="speler ${i===beurt?'aan':''}" style="--sp:${SPELERKLEUR[i]}"><span class="dot"></span>${esc(s.naam)}<b title="${strikt?'beste beurt (setjes achter elkaar)':'setjes'}">${s[veld]}</b></div>`).join('');
+  function toon(){
+    $$('.mk').forEach((el,i)=>{const k=kaarten[i];el.classList.toggle('open',k.open);el.classList.toggle('vast',k.vast);el.disabled=locked||klaar||k.vast});
+    stand.textContent=`Setjes gevonden: ${gevonden} van ${totaal} · Fouten: ${fouten}`;
   }
-  function toon(){ $$('.mk').forEach((el,i)=>{const k=kaarten[i];el.classList.toggle('open',k.open);el.classList.toggle('vast',k.vast);el.disabled=locked||klaar||k.vast}); sb(); }
-  function begin(){
-    zet(`${sp[beurt].naam}, jij bent aan de beurt.${strikt?` Vind alle ${totaalSets} setjes in één beurt!`:''}`);
-    toon();
-  }
-  function eindig(winnaars,tekst){
+  function eindig(){
     klaar=true;toon();
-    const w=$('#bord');
-    w.insertAdjacentHTML('beforebegin',`<div class="winnaar"><h3>🏆 ${winnaars.map(esc).join(' en ')}</h3><p>${tekst}</p><div class="knoprij" style="justify-content:center"><button class="knop" data-ga="${aantalNaarSchermMemory(cfg)}">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div></div>`);
+    $('#bord').insertAdjacentHTML('beforebegin',`<div class="winnaar"><h3>🎉 Goed gedaan!</h3><p>Alle ${totaal} setjes gevonden, met ${fouten} fout${fouten===1?'':'en'}.</p><div class="knoprij" style="justify-content:center"><button class="knop" data-ga="memory">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div></div>`);
     zet('Het spel is afgelopen.','goed');
     $('.winnaar').scrollIntoView({behavior:'smooth',block:'center'});
   }
   $('#bord').addEventListener('click',e=>{
     const el=e.target.closest('.mk');if(!el||locked||klaar)return;
     const i=+el.dataset.i,k=kaarten[i];if(k.open||k.vast)return;
-    k.open=true;geopend.push(i);
-    const eerste=kaarten[geopend[0]];
-    if(k.pid!==eerste.pid){
-      locked=true;toon();
-      const volgende=(beurt+1)%sp.length;
-      zet(`Niet bij elkaar (${P(eerste.pid).naam} en ${P(k.pid).naam}). Onthoud de plaatsen!${strikt&&beurtSets>0?` Je had ${beurtSets} setje${beurtSets>1?'s':''}, die gaan terug.`:''} Daarna is ${sp.length>1?sp[volgende].naam:'jouw nieuwe beurt'} aan de beurt.`,'slecht');
-      $$('.mk')[i].classList.add('fout');
+    k.open=true;geopend.push(i);toon();
+    if(geopend.length<2){zet(`Dit is ${P(k.pid).naam}. Zoek de bijbehorende kaart.`,'');return}
+    const [i1,i2]=geopend,k1=kaarten[i1];
+    if(k.pid!==k1.pid){
+      fouten++;locked=true;toon();
+      zet(`Niet bij elkaar (${P(k1.pid).naam} en ${P(k.pid).naam}). Onthoud de plaatsen — ze draaien zo vanzelf terug.`,'slecht');
+      $$('.mk')[i1].classList.add('fout');$$('.mk')[i2].classList.add('fout');
       let s=3;
       volg.hidden=false;volg.textContent=`Nu terugdraaien (${s})`;
       const id=setInterval(()=>{s--;if(s<=0)terug();else volg.textContent=`Nu terugdraaien (${s})`},1000);
-      reg(()=>clearInterval(id));
-      terugId=id;
+      reg(()=>clearInterval(id));terugId=id;
       return;
     }
-    if(geopend.length===n){
-      geopend.forEach(j=>{kaarten[j].vast=true;kaarten[j].open=false});
-      geopend=[];beurtSets++;
-      sp[beurt].sets++;sp[beurt].beste=Math.max(sp[beurt].beste,beurtSets);
-      const gevonden=kaarten.filter(x=>x.vast).length/n;
-      toon();
-      if(gevonden===totaalSets){
-        if(strikt){eindig([sp[beurt].naam],`${esc(sp[beurt].naam)} vond alle ${totaalSets} setjes in één beurt (beurt ${beurtNr}).`)}
-        else{
-          const max=Math.max(...sp.map(s=>s.sets));
-          eindig(sp.filter(s=>s.sets===max).map(s=>s.naam),`Met ${max} setje${max>1?'s':''}. `+sp.map(s=>`${esc(s.naam)}: ${s.sets}`).join(' · '));
-        }
-        return;
-      }
-      zet(`Goed! Setje ${P(kaarten[i].pid).naam}. ${strikt?`Deze beurt: ${beurtSets} van ${totaalSets}. `:''}Je mag nog een keer.`,'goed');
-    } else {
-      toon();zet(`Goed, dit hoort bij ${P(k.pid).naam}. Zoek de volgende (nog ${n-geopend.length}).`,'goed');
-    }
+    kaarten[i1].vast=true;kaarten[i1].open=false;
+    kaarten[i2].vast=true;kaarten[i2].open=false;
+    geopend=[];gevonden++;toon();
+    if(gevonden===totaal){eindig();return}
+    zet(`Goed! Setje ${P(k.pid).naam} gevonden (${gevonden}/${totaal}).`,'goed');
   });
   function terug(){
     clearInterval(terugId);
     if(!locked)return;
-    kaarten.forEach(k=>{k.open=false;if(strikt)k.vast=false});
+    kaarten.forEach(kk=>{if(!kk.vast)kk.open=false});
     $$('.mk').forEach(el=>el.classList.remove('fout'));
-    geopend=[];beurtSets=0;locked=false;volg.hidden=true;
-    beurt=(beurt+1)%sp.length;beurtNr++;
-    begin();
+    geopend=[];locked=false;volg.hidden=true;
+    zet('Draai twee kaarten om die bij elkaar horen.','');
+    toon();
   }
   volg.onclick=terug;
-  begin();
+  toon();
 }
-function aantalNaarSchermMemory(){return 'memory2'}
 
-/* ---- SETS ---- */
-SCHERMEN.sets=function(){
-  if(!checkAantal())return;
-  app.innerHTML=topbalk('Sets','Gevorderd','gev')+`<div class="paneel" id="setup">
-    <p>Alle ${actief().length*5} kaarten liggen open. Bestudeer ze goed en onthoud waar ze liggen. Daarna gaan de kaarten om (alleen de namen blijven open). Maak van elke naam een complete set van vijf kaarten.</p>
-    ${spelersHTML(4,2,'Spelers / groepjes')}
-    <div class="veld"><span class="lbl">Kijktijd</span>
-      <div class="keuzes"><label class="keuze aan"><input type="radio" name="tijd" value="180" checked> 3 minuten</label>
-      <label class="keuze"><input type="radio" name="tijd" value="60"> 1 minuut (voor de professional)</label></div></div>
-    <div class="knoprij"><button class="knop" id="start">Start</button></div></div>`;
-  const root=$('#setup');spelersKoppel(root);
-  $$('input[name=tijd]',root).forEach(r=>r.addEventListener('change',()=>$$('input[name=tijd]',root).forEach(x=>x.parentElement.classList.toggle('aan',x.checked))));
-  $('#start').onclick=()=>setsSpel(leesSpelers(root),+$('input[name=tijd]:checked',root).value);
-};
-function setsSpel(namen,kijk){
-  ruim();
-  let kaarten=[];
-  actief().forEach(p=>CATS.forEach(c=>kaarten.push({pid:p.id,cat:c,open:false,vast:false,door:-1})));
-  kaarten=shuffle(kaarten);
-  const totaal=actief().length;
-  const sp=namen.map(naam=>({naam,sets:0}));
-  const bordHTML=()=>kaarten.map((k,i)=>`<button class="mk ${k.cat==='naam'?'anker':''}" data-i="${i}" aria-label="Kaart ${i+1}"><span class="mk-in"><span class="mk-rug c-${k.cat}">IoT</span><span class="mk-face">${kaartHTML(P(k.pid),k.cat)}</span></span></button>`).join('');
-
-  /* fase 1: kijken */
-  app.innerHTML=topbalk('Sets: kijken')+`<div class="paneel"><p>Onthoud zo veel mogelijk. Tijd over: <span class="grote-tijd" id="cd"></span></p><div class="knoprij" style="margin-top:.4rem"><button class="knop" id="klaar">Klaar, draai de kaarten om</button></div></div><div class="bord kijk" id="bord">${bordHTML()}</div>`;
-  $$('.mk').forEach(m=>{m.classList.add('kijk');m.disabled=true});
-  let rest=kijk;const cd=$('#cd');
-  const fmtCd=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
-  cd.textContent=fmtCd(rest);
-  const id=setInterval(()=>{rest--;cd.textContent=fmtCd(Math.max(rest,0));if(rest<=0){clearInterval(id);speel()}},1000);
-  reg(()=>clearInterval(id));
-  $('#klaar').onclick=()=>{clearInterval(id);speel()};
-
-  /* fase 2: spelen */
-  function speel(){
-    ruim();
-    let beurt=0,gekozen=null,locked=false,foutIdx=-1,klaar=false,goed=0,terugId=0;
-    app.innerHTML=topbalk('Sets')+`
-      <div class="scorebalk" id="sb"></div>
-      <div class="melding" id="mm" role="status"></div>
-      <div class="knoprij" style="margin:0 0 .5rem"><button class="knop grijs" id="volgende" hidden>Nu terugdraaien</button></div>
-      <div class="bord" id="bord">${bordHTML()}</div>
-      <div class="knoprij"><button class="knop grijs" data-ga="menu">Stoppen</button></div>`;
-    const mm=$('#mm'),volg=$('#volgende');
-    const zet=(t,k)=>{mm.textContent=t;mm.className='melding '+(k||'')};
-    const els=$$('.mk');
-    function toon(){
-      els.forEach((el,i)=>{
-        const k=kaarten[i];
-        el.classList.toggle('open',k.open);el.classList.toggle('vast',k.vast);
-        if(k.cat==='naam'){
-          const klaarSet=kaarten.filter(x=>x.pid===k.pid&&x.vast).length===4;
-          el.classList.toggle('gekozen',gekozen===k.pid);
-          el.classList.toggle('klaar',klaarSet);
-          el.disabled=locked||klaar||klaarSet;
-        } else el.disabled=locked||klaar||k.vast||gekozen===null;
-        el.classList.toggle('fout',i===foutIdx);
-      });
-      $('#sb').innerHTML=scorebalkHTML(sp,beurt,'sets').replace(/<b>/g,'<b title="complete sets">');
-    }
-    function start(){
-      zet(`${sp[beurt].naam}: kies een naam (open kaart) en zoek de vier bijbehorende kaarten.`);toon();
-    }
-    $('#bord').addEventListener('click',e=>{
-      const el=e.target.closest('.mk');if(!el||locked||klaar)return;
-      const i=+el.dataset.i,k=kaarten[i];
-      if(k.cat==='naam'){
-        gekozen=k.pid;
-        const al=kaarten.filter(x=>x.pid===k.pid&&x.vast).length;
-        zet(`${sp[beurt].naam}: zoek de kaarten bij ${P(k.pid).naam} (nog ${4-al}).`);toon();return;
-      }
-      if(gekozen===null||k.vast)return;
-      k.open=true;
-      if(k.pid===gekozen){
-        k.open=false;k.vast=true;
-        const al=kaarten.filter(x=>x.pid===gekozen&&x.vast).length;
-        if(al===4){
-          sp[beurt].sets++;goed++;
-          const naam=P(gekozen).naam;gekozen=null;
-          toon();
-          if(goed===totaal){
-            klaar=true;toon();
-            const max=Math.max(...sp.map(s=>s.sets));
-            $('#bord').insertAdjacentHTML('beforebegin',`<div class="winnaar"><h3>🏆 ${sp.filter(s=>s.sets===max).map(s=>esc(s.naam)).join(' en ')}</h3><p>Met ${max} complete set${max>1?'s':''}. ${sp.map(s=>esc(s.naam)+': '+s.sets).join(' · ')}</p><div class="knoprij" style="justify-content:center"><button class="knop" data-ga="sets">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div></div>`);
-            zet('Alle sets zijn gemaakt!','goed');return;
-          }
-          zet(`Set ${naam} compleet! Punt voor ${sp[beurt].naam}. Kies de volgende naam.`,'goed');
-        } else { zet(`Goed! Nog ${4-al} kaart${4-al>1?'en':''} bij ${P(gekozen).naam}.`,'goed');toon(); }
-      } else {
-        locked=true;foutIdx=i;toon();
-        const v=(beurt+1)%sp.length;
-        zet(`Dat is een kaart van ${P(k.pid).naam}, niet van ${P(gekozen).naam}. Onthoud de plek! Daarna is ${sp.length>1?sp[v].naam:'jouw nieuwe beurt'} aan de beurt.`,'slecht');
-        let s=3;
-        volg.hidden=false;volg.textContent=`Nu terugdraaien (${s})`;
-        terugId=setInterval(()=>{s--;if(s<=0)terug();else volg.textContent=`Nu terugdraaien (${s})`},1000);
-        reg(()=>clearInterval(terugId));
-      }
-    });
-    function terug(){
-      clearInterval(terugId);
-      if(!locked)return;
-      kaarten.forEach(k=>{k.open=false});
-      locked=false;foutIdx=-1;gekozen=null;volg.hidden=true;
-      beurt=(beurt+1)%sp.length;start();
-    }
-    volg.onclick=terug;
-    start();
-  }
-};
-
-/* ---- KENNISQUIZ ---- */
+/* ---- KENNISQUIZ (solo, 11 vragen, 1 ronde) ---- */
 SCHERMEN.quiz=function(){
-  if(!checkAantal())return;
-  app.innerHTML=topbalk('Kennisquiz','Basis')+`<div class="paneel" id="setup">
-    <p>Je ziet een logo en krijgt een vraag over omschrijving, toepassing of bereik. Een goed antwoord levert een punt op. Alleen spelen of om de beurt in groepjes.</p>
-    ${spelersHTML(4,1,'Spelers / groepjes')}
-    <div class="veld"><span class="lbl">Aantal rondes</span>
-      <div class="keuzes"><label class="keuze aan"><input type="radio" name="ronde" value="1" checked> Elk protocol 1 keer</label><label class="keuze"><input type="radio" name="ronde" value="2"> Elk protocol 2 keer</label></div></div>
-    <div class="veld"><label class="keuze" style="width:fit-content"><input type="checkbox" id="min"> Fout antwoord = 1 punt eraf</label></div>
+  app.innerHTML=topbalk('Kennisquiz')+`<div class="paneel" id="setup">
+    <p>Je ziet steeds een logo en krijgt een vraag over de omschrijving, de toepassing of het bereik van dat protocol. Er zijn 11 vragen, één per protocol.</p>
     <div class="knoprij"><button class="knop" id="start">Start de quiz</button></div></div>`;
-  const root=$('#setup');spelersKoppel(root);
-  $$('input[name=ronde],#min',root).forEach(r=>r.addEventListener('change',()=>{$$('.keuze',root).forEach(l=>{if(l.parentElement.id!=='aantal')l.classList.toggle('aan',l.firstElementChild.checked)})}));
-  $('#start').onclick=()=>quizSpel(leesSpelers(root),+$('input[name=ronde]:checked',root).value,$('#min').checked);
+  $('#start').onclick=quizSpel;
 };
-function quizVragen(rondes){
-  const vragen=[];const types=['omschrijving','toepassing','bereik'];
-  for(let r=0;r<rondes;r++){
-    const perProt=shuffle(actief());
-    perProt.forEach((p,i)=>{
-      const gebruikt=vragen.filter(v=>v.p.id===p.id).map(v=>v.cat);
-      const cat=shuffle(types.filter(t=>!gebruikt.includes(t)))[0]||shuffle(types)[0];
-      const tegen=shuffle(actief().filter(q=>q.id!==p.id&&q[cat]!==p[cat]&&!(cat==='toepassing'&&(DUBBEL[p.id]||[]).includes(q.id))));
-      const opties=shuffle([p,...tegen.slice(0,3)]);
-      vragen.push({p,cat,opties});
-    });
-  }
-  return vragen;
-}
 const VRAAG={omschrijving:'Welke omschrijving hoort bij dit protocol?',toepassing:'Wat is de toepassing van dit protocol?',bereik:'Wat is het bereik van dit protocol?'};
-function quizSpel(namen,rondes,min){
+function quizVragen(){
+  const types=['omschrijving','toepassing','bereik'];
+  return shuffle(PROT).map(p=>{
+    const cat=shuffle(types)[0];
+    const tegen=shuffle(PROT.filter(q=>q.id!==p.id&&q[cat]!==p[cat]&&!(cat==='toepassing'&&(DUBBEL[p.id]||[]).includes(q.id))));
+    return {p,cat,opties:shuffle([p,...tegen.slice(0,3)])};
+  });
+}
+function quizSpel(){
   ruim();
-  const vragen=quizVragen(rondes);
-  const sp=namen.map(naam=>({naam,punten:0}));
-  let q=0;
+  const vragen=quizVragen();
+  let q=0,punten=0;
   function vraag(){
-    const v=vragen[q],beurt=q%sp.length;
+    const v=vragen[q];
     app.innerHTML=topbalk('Kennisquiz')+`
-      <div class="scorebalk">${scorebalkHTML(sp,beurt,'punten')}</div>
-      <p class="klein">Vraag ${q+1} van ${vragen.length}${sp.length>1?` · ${esc(sp[beurt].naam)} is aan de beurt`:''}</p>
+      <p class="klein">Vraag ${q+1} van ${vragen.length} · Score: ${punten}</p>
       <div class="vraagblok"><div>${kaartHTML(v.p,'logo')}</div>
       <div><p class="vraagtekst">${VRAAG[v.cat]}</p><div class="opties">${v.opties.map((o,i)=>`<button class="optie k-${v.cat}" data-i="${i}">${esc(o[v.cat])}</button>`).join('')}</div></div></div>
       <div id="uitleg"></div>`;
@@ -732,152 +289,21 @@ function quizSpel(namen,rondes,min){
       const gekozen=v.opties[+b.dataset.i],goed=gekozen.id===v.p.id;
       $$('.optie').forEach((x,i)=>{x.disabled=true;if(v.opties[i].id===v.p.id)x.classList.add('goed')});
       if(!goed)b.classList.add('fout');
-      if(goed)sp[beurt].punten++;else if(min)sp[beurt].punten--;
+      if(goed)punten++;
       const laatste=q===vragen.length-1;
-      $('#uitleg').innerHTML=`<div class="melding ${goed?'goed':'slecht'}">${goed?'Goed! +1 punt.':(min?'Helaas, −1 punt.':'Helaas.')} Dit is <b>${esc(v.p.naam)}</b>.</div>
-        <div class="setrij" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin:.5rem 0">${['omschrijving','toepassing','bereik'].map(c=>kaartHTML(v.p,c)).join('')}</div>
+      $('#uitleg').innerHTML=`<div class="melding ${goed?'goed':'slecht'}">${goed?'Goed!':'Helaas.'} Dit is <b>${esc(v.p.naam)}</b>.</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin:.5rem 0">${['omschrijving','toepassing','bereik'].map(c=>kaartHTML(v.p,c)).join('')}</div>
         <div class="knoprij"><button class="knop" id="door">${laatste?'Bekijk de uitslag':'Volgende vraag'}</button></div>`;
-      $('#sb')&&0;
       $('#door').focus();
       $('#door').onclick=()=>{q++;if(q<vragen.length)vraag();else eind()};
-      $('.scorebalk').innerHTML=scorebalkHTML(sp,beurt,'punten');
     });
   }
   function eind(){
-    const max=Math.max(...sp.map(s=>s.punten));
-    app.innerHTML=topbalk('Kennisquiz: uitslag')+`<div class="winnaar"><h3>🏆 ${sp.filter(s=>s.punten===max).map(s=>esc(s.naam)).join(' en ')}</h3><p>${max} punt${Math.abs(max)!==1?'en':''} van ${sp.length===1?vragen.length:'de '+vragen.length+' vragen'}.</p></div>
-      <table class="uitslag"><tr><th>Speler</th><th>Punten</th></tr>${sp.slice().sort((a,b)=>b.punten-a.punten).map(s=>`<tr><td>${esc(s.naam)}</td><td><b>${s.punten}</b></td></tr>`).join('')}</table>
-      <div class="knoprij"><button class="knop" data-ga="quiz">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div>`;
+    app.innerHTML=topbalk('Kennisquiz')+`<div class="winnaar"><h3>🎉 Klaar!</h3><p>Je score: ${punten} van de ${vragen.length}.</p></div>
+      <div class="knoprij" style="justify-content:center"><button class="knop" data-ga="quiz">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div>`;
   }
   vraag();
 }
-
-/* ---- ORDENEN: bereik + state of the art ---- */
-const ORDEN={
-  bereik:{sleutel:'bereik',titel:'Van klein naar groot bereik',cat:'bereik',waarde:p=>p.bereikM,vraag:'Zet de bereikkaarten op volgorde: van dichtbij (boven) naar ver weg (onder). Kaarten zonder afstand (NB-IoT, Sigfox): schat de reikwijdte per antenne.',fase2:true,
-    uitslagKop:['Bereik','Schatting'],uitslagRij:p=>[p.bereik,p.bereikSchatting||'']},
-  sota:{sleutel:'sota',titel:'State of the art',cat:'logo',waarde:p=>-p.jaar,vraag:'Zet de logo\'s op volgorde van meest recent (boven) naar minst recent protocol (onder). Bij gelijke jaren maakt de volgorde niet uit.',fase2:false,
-    uitslagKop:['Jaar (indicatief)','Toelichting'],uitslagRij:p=>[String(p.jaar),p.jaarUitleg]}
-};
-SCHERMEN.bereik=()=>ordenStart('bereik');
-SCHERMEN.sota=()=>ordenStart('sota');
-function ordenStart(soort){
-  if(!checkAantal())return;
-  const o=ORDEN[soort];
-  app.innerHTML=topbalk(o.titel,'Basis')+`<div class="paneel" id="setup"><p>${o.vraag}</p>
-    <p class="klein" style="margin-top:.4rem">Tik op een kaart en daarna op een andere kaart om ze te wisselen, of gebruik de pijltjes.${o.fase2?' Daarna koppel je elk logo aan het juiste bereik.':''} Je tijd loopt mee; elke fout kost 5 seconden.</p>
-    <div class="veld"><label for="nm">Jouw naam</label><input type="text" id="nm" maxlength="20" placeholder="Naam"></div>
-    <div class="knoprij"><button class="knop" id="start">Start</button></div>
-    <h3 style="margin-top:1.25rem">Beste tijden op dit apparaat</h3>${topLijst(o.sleutel)}
-    <p class="klein">Vergelijk je tijd met die van klasgenoten: de snelste groep wint (zie Competitie).</p></div>`;
-  $('#start').onclick=()=>ordenSpel(soort,$('#nm').value.trim()||'Speler');
-}
-function gesorteerd(lijst,w){const v=lijst.map(w).sort((a,b)=>a-b);return lijst.map((p,i)=>w(p)===v[i])}
-function ordenSpel(soort,naam){
-  ruim();
-  const o=ORDEN[soort];
-  let lijst=shuffle(actief());
-  let guard=0;while(gesorteerd(lijst,o.waarde).every(Boolean)&&guard++<20)lijst=shuffle(lijst);
-  let gekozen=-1,fouten=0,fase=1;
-  app.innerHTML=topbalk(o.titel)+`<div class="knoprij" style="margin:0 0 .5rem"><span class="grote-tijd" id="tijd">0:00.0</span><span class="klein" id="foutteller"></span></div><div id="veld"></div>`;
-  const timer=maakTimer($('#tijd'));
-  const tel=()=>$('#foutteller').textContent=`Fouten: ${fouten} (+${fouten*5} s)`;tel();
-
-  function tekenOrden(mark){
-    $('#veld').innerHTML=`<p class="vraagtekst">${fase===1?o.vraag:''}</p><ol class="orden">${lijst.map((p,i)=>`<li class="orden-item ${gekozen===i?'gekozen':''} ${mark?(mark[i]?'ok':'nok'):''}" data-i="${i}"><span class="nr">${i+1}</span><div data-kaart>${kaartHTML(p,o.cat)}</div><div class="pijlen"><button class="pijl" data-d="-1" aria-label="Omhoog" ${i===0?'disabled':''}>▲</button><button class="pijl" data-d="1" aria-label="Omlaag" ${i===lijst.length-1?'disabled':''}>▼</button></div></li>`).join('')}</ol>
-      <div class="knoprij"><button class="knop" id="check">Controleer volgorde</button></div><div class="melding" id="mm" role="status" hidden></div>`;
-    $$('.orden-item').forEach(li=>{
-      const i=+li.dataset.i;
-      $('[data-kaart]',li).onclick=()=>{
-        if(gekozen===-1)gekozen=i;
-        else if(gekozen===i)gekozen=-1;
-        else{[lijst[gekozen],lijst[i]]=[lijst[i],lijst[gekozen]];gekozen=-1}
-        tekenOrden();
-      };
-      $$('.pijl',li).forEach(b=>b.onclick=()=>{const d=+b.dataset.d;[lijst[i],lijst[i+d]]=[lijst[i+d],lijst[i]];gekozen=-1;tekenOrden();$$('.orden-item')[i+d].querySelector(`[data-d="${d}"]`)?.focus()});
-    });
-    $('#check').onclick=()=>{
-      const ok=gesorteerd(lijst,o.waarde);gekozen=-1;
-      if(ok.every(Boolean)){
-        if(o.fase2){lijst=lijst.slice();koppel()}else finish();
-      } else {
-        fouten++;tel();tekenOrden(ok);
-        const m=$('#mm');m.hidden=false;m.className='melding slecht';
-        m.textContent=`${ok.filter(x=>!x).length} van de ${lijst.length} kaarten staan nog niet op de goede plek (rood). +5 seconden.`;
-      }
-    };
-  }
-  function koppel(){
-    fase=2;
-    const stapel=shuffle(lijst);let s=0;const gedaan={};
-    const teken=()=>{
-      const p=stapel[s];
-      $('#veld').innerHTML=`<div class="melding goed">Volgorde klopt! Nu de logo's: tik op het bereik dat bij dit logo hoort (${s+1} van ${stapel.length}).</div>
-        <div class="huidig-logo">${kaartHTML(p,'logo')}</div>
-        <div>${lijst.map((q,i)=>`<button class="koppelrij ${gedaan[q.id]?'goed':''}" data-id="${q.id}" ${gedaan[q.id]?'disabled':''}><span class="nr">${i+1}</span>${kaartHTML(q,'bereik')}<span class="slot">${gedaan[q.id]?`<img alt="Logo" src="${LOGOS[q.id]}">`:'?'}</span></button>`).join('')}</div>`;
-      $$('.koppelrij').forEach(b=>b.onclick=()=>{
-        if(b.dataset.id===p.id){gedaan[p.id]=true;s++;if(s>=stapel.length){finish()}else teken()}
-        else{fouten++;tel();b.classList.add('fout');setTimeout(()=>b.classList.remove('fout'),700)}
-      });
-    };
-    teken();
-  }
-  function finish(){
-    const tijd=timer.stop();
-    const score=bewaarTijd(o.sleutel,naam,tijd,fouten);
-    $('#veld').innerHTML=`<div class="winnaar"><h3>✅ ${esc(naam)}: ${fmt(score)}</h3><p>Tijd ${fmt(tijd)} + ${fouten} fout${fouten===1?'':'en'} × 5 s</p></div>
-      <table class="uitslag"><tr><th>Protocol</th><th>${o.uitslagKop[0]}</th><th>${o.uitslagKop[1]}</th></tr>${lijst.map(p=>{const r=o.uitslagRij(p);return `<tr><td><b>${esc(p.naam)}</b></td><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`}).join('')}</table>
-      <h3 style="margin:1rem 0 .3rem">Beste tijden op dit apparaat</h3>${topLijst(o.sleutel)}
-      <div class="knoprij"><button class="knop" data-ga="${soort}">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div>`;
-    $('#foutteller').textContent=`Fouten: ${fouten}`;
-  }
-  tekenOrden();
-}
-
-/* ---- IOT THUIS ---- */
-SCHERMEN.thuis=function(){
-  const d=LS.get('thuis',{naam:'',gev:{},opm:''});
-  app.innerHTML=topbalk('IoT thuis','Basis')+`<div class="paneel">
-    <p>Zoek thuis op welke protocollen jouw apparaten gebruiken. Kijk op de verpakking en in de instellingen (wifi, Bluetooth, NFC), of zoek het typenummer op internet. Bespreek de uitkomst daarna in de groep.</p>
-    <div class="veld"><label for="tn">Naam</label><input type="text" id="tn" maxlength="30" value="${esc(d.naam)}"></div>
-    ${actief().map(p=>{const g=d.gev[p.id]||{};return `<div class="thuisrij"><div>${kaartHTML(p,'logo')}</div><div><label class="keuze" style="width:fit-content"><input type="checkbox" data-id="${p.id}" ${g.ja?'checked':''}> <b>${esc(p.naam)}</b> gevonden</label><input type="text" data-app="${p.id}" placeholder="Welk apparaat of welke dienst?" value="${esc(g.app||'')}" style="margin-top:.35rem"></div></div>`}).join('')}
-    <div class="veld"><label for="op">Wat viel je op?</label><textarea id="op">${esc(d.opm)}</textarea></div>
-    <div class="knoprij"><button class="knop" id="kop">Kopieer overzicht</button><button class="knop licht" id="dl">Download als .txt</button></div>
-    <p class="klein" id="thmel" style="margin-top:.5rem"></p></div>`;
-  const opslaan=()=>{
-    d.naam=$('#tn').value;d.opm=$('#op').value;
-    actief().forEach(p=>{d.gev[p.id]={ja:$(`[data-id="${p.id}"]`).checked,app:$(`[data-app="${p.id}"]`).value}});
-    LS.set('thuis',d);
-  };
-  $$('.paneel input,.paneel textarea').forEach(e=>e.addEventListener('input',opslaan));
-  const tekst=()=>{opslaan();return `IoT thuis${d.naam?' – '+d.naam:''}\n\n`+actief().map(p=>`${d.gev[p.id]?.ja?'[x]':'[ ]'} ${p.naam}${d.gev[p.id]?.app?': '+d.gev[p.id].app:''}`).join('\n')+`\n\nWat viel me op:\n${d.opm}\n`};
-  $('#kop').onclick=async()=>{try{await navigator.clipboard.writeText(tekst());$('#thmel').textContent='Gekopieerd.'}catch(e){$('#thmel').textContent='Kopiëren lukt niet, gebruik de download.'}};
-  $('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([tekst()],{type:'text/plain;charset=utf-8'}));a.download='iot-thuis.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
-};
-
-/* ---- COMPETITIE ---- */
-const COLS=['Memory','Sets','Kennisquiz','Bereik','State of the art','IoT thuis','Extra'];
-SCHERMEN.competitie=function(){
-  let d=LS.get('comp',{groepen:[{naam:'Groep 1',s:[]},{naam:'Groep 2',s:[]}]});
-  if(d.v!==2){d.groepen.forEach(g=>g.s.splice(1,1));d.v=2;LS.set('comp',d)}  /* kolom Memo-Tri is vervallen */
-  const totaal=g=>g.s.reduce((a,b)=>a+(+b||0),0);
-  function teken(){
-    const rang=d.groepen.map(totaal);const max=Math.max(...rang);
-    app.innerHTML=topbalk('Competitie','Divers','div')+`<div class="paneel">
-      <p>Speel de spelvarianten met alle groepen en geef punten per variant (bijvoorbeeld 3-2-1 voor de eerste drie plaatsen). De groep met de meeste punten is de schoolwinnaar.</p>
-      <div class="tabelwrap" style="margin-top:.75rem"><table class="comp"><tr><th>Groep</th>${COLS.map(c=>`<th>${c}</th>`).join('')}<th>Totaal</th><th></th></tr>
-      ${d.groepen.map((g,gi)=>`<tr class="${max>0&&totaal(g)===max?'eerste':''}"><td><input type="text" data-g="${gi}" value="${esc(g.naam)}" maxlength="24" aria-label="Groepsnaam"></td>${COLS.map((c,ci)=>`<td><input type="number" step="1" data-g="${gi}" data-c="${ci}" value="${g.s[ci]??''}" aria-label="${esc(g.naam)} ${c}"></td>`).join('')}<td><b>${totaal(g)}</b></td><td><button class="pijl" data-del="${gi}" aria-label="Verwijder groep" style="width:36px;height:36px">✕</button></td></tr>`).join('')}
-      </table></div>
-      <div class="knoprij"><button class="knop licht" id="plus">+ Groep toevoegen</button><button class="knop grijs" id="wis">Scores wissen</button></div>
-      <p class="klein" style="margin-top:.6rem">Het scorebord wordt bewaard in deze browser.</p></div>`;
-    $$('input[data-c]').forEach(i=>i.onchange=()=>{d.groepen[+i.dataset.g].s[+i.dataset.c]=i.value===''?'':+i.value;LS.set('comp',d);teken()});
-    $$('input[type=text][data-g]').forEach(i=>i.onchange=()=>{d.groepen[+i.dataset.g].naam=i.value;LS.set('comp',d)});
-    $$('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Deze groep verwijderen?')){d.groepen.splice(+b.dataset.del,1);LS.set('comp',d);teken()}});
-    $('#plus').onclick=()=>{d.groepen.push({naam:'Groep '+(d.groepen.length+1),s:[]});LS.set('comp',d);teken()};
-    $('#wis').onclick=()=>{if(confirm('Alle scores wissen?')){d.groepen.forEach(g=>g.s=[]);LS.set('comp',d);teken()}};
-  }
-  teken();
-};
 
 ga('menu');
 </script>

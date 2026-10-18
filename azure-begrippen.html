@@ -34,9 +34,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .container{max-width:700px;margin:0 auto;padding:1.5rem 1rem 4rem}
 
 /* header */
-.site-header{background:var(--groen);color:#fff;padding:1.25rem 1.5rem;border-radius:var(--radius);margin-bottom:1.25rem}
+.site-header{background:var(--groen);color:#fff;padding:1.25rem 1.5rem;border-radius:var(--radius);margin-bottom:1.25rem;display:flex;gap:16px;align-items:center;justify-content:space-between}
 .site-header h1{font-size:20px;font-weight:600;margin-bottom:2px}
 .site-header p{font-size:13px;opacity:0.85}
+.site-header-reset{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:var(--radius-sm);padding:8px 14px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background 0.14s}
+.site-header-reset:hover{background:rgba(255,255,255,0.28)}
+
+@media(max-width:480px){
+  .site-header{flex-direction:column;align-items:stretch;text-align:center}
+}
 
 /* stappen-voortgang (grote flow) */
 .stappen{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:1.25rem}
@@ -940,9 +946,6 @@ function renderResultaat() {
       <div class="resultaat-sub">begrippen al bekend — geen cijfer, puur diagnostisch</div>
       ${domeinenHtml}
       ${ctaHtml}
-      <div class="btn-rij" style="margin-top:1rem">
-        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
-      </div>
     </div>
   `;
 }
@@ -966,16 +969,6 @@ function koppelResultaatEvents() {
     });
   }
 
-  const resetKnop = document.getElementById("btn-reset");
-  if (resetKnop) {
-    resetKnop.addEventListener("click", () => {
-      if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
-        state = nieuweState();
-        bewaarState();
-        render();
-      }
-    });
-  }
 }
 
 /* =====================================================================
@@ -1062,8 +1055,7 @@ function renderLeermodule() {
 function koppelLeermoduleEvents() {
   const volgendeKnop = document.getElementById("btn-volgend-begrip");
   if (!volgendeKnop) {
-    // renderLeermodule viel terug op de stub-markup (gemist.length === 0)
-    koppelStubEvents();
+    // renderLeermodule viel terug op het afgerond-scherm (gemist.length === 0)
     return;
   }
 
@@ -1210,9 +1202,6 @@ function renderAfgerond() {
         <div class="intro-icoon">🎉</div>
         <h2>Goed gedaan!</h2>
         <p>Je kende bij de starttoets alle 16 begrippen al. Je herkent ze nu als je ze op de servicedesk voorbij hoort komen.</p>
-        <div class="btn-rij" style="justify-content:center;margin-top:1rem">
-          <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
-        </div>
       </div>
     `;
   }
@@ -1242,32 +1231,8 @@ function renderAfgerond() {
       <div class="cta-blok">
         <p>${goedGebleven === begrippenMetEindcheck.length ? "Alle geleerde begrippen blijven hangen. Goed gedaan!" : "Kijk de begrippen met 'Nog even oefenen' gerust nog eens na."}</p>
       </div>
-      <div class="btn-rij" style="margin-top:1rem">
-        <button class="btn-tekst" id="btn-reset">Voortgang wissen en opnieuw beginnen</button>
-      </div>
     </div>
   `;
-}
-
-function koppelStubEvents() {
-  const terugKnop = document.getElementById("btn-terug-resultaat");
-  if (terugKnop) {
-    terugKnop.addEventListener("click", () => {
-      state.fase = "resultaat";
-      bewaarState();
-      render();
-    });
-  }
-  const resetKnop = document.getElementById("btn-reset");
-  if (resetKnop) {
-    resetKnop.addEventListener("click", () => {
-      if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
-        state = nieuweState();
-        bewaarState();
-        render();
-      }
-    });
-  }
 }
 
 /* =====================================================================
@@ -1280,8 +1245,11 @@ function render() {
 
   inhoud += `
     <div class="site-header">
-      <h1>Azure basisbegrippen</h1>
-      <p>Voorbereiding op je ICT-stage — herken de begrippen op de servicedesk</p>
+      <div>
+        <h1>Azure basisbegrippen</h1>
+        <p>Ter AA Helmond &middot; Medewerker ICT niveau 2 &middot; herken de begrippen op de servicedesk</p>
+      </div>
+      <button class="site-header-reset" id="btn-reset-header">↺ Opnieuw beginnen</button>
     </div>
   `;
 
@@ -1307,6 +1275,14 @@ function render() {
 
   app.innerHTML = inhoud;
 
+  document.getElementById("btn-reset-header").addEventListener("click", () => {
+    if (confirm("Weet je zeker dat je opnieuw wil beginnen? Je voortgang wordt gewist.")) {
+      state = nieuweState();
+      bewaarState();
+      render();
+    }
+  });
+
   if (state.fase === "intro") {
     document.getElementById("btn-start-toets").addEventListener("click", () => {
       state.fase = "starttoets";
@@ -1321,8 +1297,6 @@ function render() {
     koppelLeermoduleEvents();
   } else if (state.fase === "eindcheck") {
     koppelEindcheckEvents();
-  } else if (state.fase === "afgerond") {
-    koppelStubEvents();
   }
 }
 

@@ -309,6 +309,28 @@ details.leerdoelen ul{margin-top:8px}
 @keyframes geluid{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
 @keyframes valtIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
 @keyframes vallen{to{transform:translateY(105vh) rotate(540deg)}}
+/* opnieuw beginnen */
+.opnieuw-link{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--tekst-licht);font-size:13px;cursor:pointer;text-decoration:underline;padding:4px 6px;margin-top:6px}
+.opnieuw-link:hover{color:var(--rood)}
+.opnieuw-rij{text-align:center;margin-top:14px}
+.reset-laag{position:fixed;inset:0;z-index:70;background:rgba(15,25,35,.6);display:flex;align-items:flex-start;justify-content:center;padding:6vh 14px;overflow-y:auto}
+.reset-laag[hidden]{display:none}
+.reset-kaart{background:#fff;border-radius:14px;max-width:520px;width:100%;box-shadow:0 18px 44px rgba(0,0,0,.35);overflow:hidden;animation:ballonIn .2s ease both}
+.reset-kop{background:var(--groen-diep);color:#fff;padding:11px 16px;display:flex;align-items:center;gap:8px}
+.reset-kop h2{font-size:17px;font-weight:600;flex:1;outline:none}
+.reset-kop button{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px}
+.reset-body{padding:14px 16px 16px;font-size:14px}
+.reset-body>p{color:var(--tekst-mid);margin-bottom:10px}
+.reset-optie{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--rand);border-radius:10px;padding:9px 11px;margin-bottom:7px;cursor:pointer}
+.reset-optie:has(input:checked){border-color:var(--groen);background:var(--groen-licht)}
+.reset-optie input{margin-top:4px;accent-color:var(--groen);width:17px;height:17px;flex-shrink:0}
+.reset-optie b{display:block;font-size:14px}
+.reset-optie small{color:var(--tekst-mid);font-size:12.5px}
+.reset-optie.alles{border-color:#efc2bd}
+.reset-optie.alles:has(input:checked){border-color:var(--rood);background:#fdecea}
+.knop.gevaar{background:var(--rood);border-color:var(--rood);color:#fff}
+.knop.gevaar:hover{background:#a82e25}
+.reset-waarschuwing{background:#fdecea;color:#8a2219;border-left:4px solid var(--rood);border-radius:8px;padding:9px 12px;margin-bottom:10px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
 @media(max-width:640px){
@@ -553,7 +575,7 @@ function renderOverview(){
       (n?'<span class="mini" style="display:block"><i style="width:'+Math.round(a/n*100)+'%"></i></span>':'')+'</span>'+
       (done?'<i class="ti ti-circle-check-filled klaar-vink" aria-label="Afgerond"></i>':'')+'</button>';
   });
-  document.getElementById('view-overview').innerHTML=h+'</div>';
+  document.getElementById('view-overview').innerHTML=h+'</div><div class="opnieuw-rij"><button class="opnieuw-link" data-reset="open"><i class="ti ti-refresh" aria-hidden="true"></i> Opnieuw beginnen…</button></div>';
 }
 
 /* ---------- detail ---------- */
@@ -585,7 +607,7 @@ function renderDetail(day,el){
   }
   var afr=day.afronding.map(function(a){return '<li><i class="ti ti-check" aria-hidden="true"></i>'+a+'</li>';}).join('');
   var label=isDone?'<i class="ti ti-check" aria-hidden="true"></i> Afgerond!':'<i class="ti ti-circle-check" aria-hidden="true"></i> Markeer als afgerond';
-  el.innerHTML='<button class="back-btn" data-act="terug"><i class="ti ti-arrow-left" aria-hidden="true"></i> Terug naar overzicht</button><div class="detail-panel"><div class="detail-header"><div class="tag"><i class="ti '+KANAAL[day.type].icoon+'" aria-hidden="true"></i> '+day.num+'</div><h2>'+day.title+': '+day.subtitle+'</h2><p>'+(day.meldingen?day.meldingen+' meldingen · '+KANAAL[day.type].label:'Portfolio samenstellen')+'</p></div><div class="detail-body">'+body+'<div class="afronding-block"><div class="af-title"><i class="ti ti-checklist" aria-hidden="true"></i> Afronding</div><ul class="checklist">'+afr+'</ul></div><button class="done-btn'+(isDone?' is-done':'')+'" data-act="afgerond">'+label+'</button></div></div>';
+  el.innerHTML='<button class="back-btn" data-act="terug"><i class="ti ti-arrow-left" aria-hidden="true"></i> Terug naar overzicht</button><div class="detail-panel"><div class="detail-header"><div class="tag"><i class="ti '+KANAAL[day.type].icoon+'" aria-hidden="true"></i> '+day.num+'</div><h2>'+day.title+': '+day.subtitle+'</h2><p>'+(day.meldingen?day.meldingen+' meldingen · '+KANAAL[day.type].label:'Portfolio samenstellen')+'</p></div><div class="detail-body">'+body+'<div class="afronding-block"><div class="af-title"><i class="ti ti-checklist" aria-hidden="true"></i> Afronding</div><ul class="checklist">'+afr+'</ul></div><button class="done-btn'+(isDone?' is-done':'')+'" data-act="afgerond">'+label+'</button>'+(day.type==='portfolio'?'':'<div><button class="opnieuw-link" data-reset="open" data-dag="'+day.id+'"><i class="ti ti-refresh" aria-hidden="true"></i> Deze dag opnieuw beginnen…</button></div>')+'</div></div>';
   el.dataset.dag=day.id;
   if(day.type!=='portfolio'){
     if(day.type==='telefoon' && s(day.id).cur===-1 && !allesAf(day)){ var nx=volgende(day); s(day.id).cur=nx; s(day.id).fase='belt'; }
@@ -857,6 +879,72 @@ document.addEventListener('click',function(e){
     if(!voor && allesAf(day)) confetti();
   }
 });
+
+/* ---------- opnieuw beginnen ----------
+   Wist alleen gegevens van deze pagina (p6_done en p6_registraties), per dag of alles. */
+var resetTerug=null;
+function resetLaag(){
+  var l=document.getElementById('reset-laag');
+  if(!l){ l=document.createElement('div'); l.id='reset-laag'; l.className='reset-laag'; l.hidden=true; document.body.appendChild(l);
+    l.addEventListener('click',function(e){ if(e.target===l) sluitReset(); }); }
+  return l;
+}
+function resetKaart(titel, inhoud){
+  var l=resetLaag();
+  if(l.hidden) resetTerug=document.activeElement;
+  l.innerHTML='<div class="reset-kaart" role="dialog" aria-modal="true" aria-labelledby="reset-titel"><div class="reset-kop"><h2 id="reset-titel" tabindex="-1">'+titel+'</h2><button data-reset="sluit" aria-label="Sluiten">✕</button></div><div class="reset-body">'+inhoud+'</div></div>';
+  l.hidden=false;
+  (l.querySelector('[data-autofocus]')||document.getElementById('reset-titel')).focus();
+}
+function dagStatus(day){
+  var n=items(day).length, a=aantalAf(day), r=reg[day.id]||{}, antw=r.antwoord?Object.keys(r.antwoord).length:0;
+  var delen=[a+' van '+n+' geregistreerd'];
+  if(antw) delen.push(antw+' e-mailantwoord'+(antw===1?'':'en'));
+  if(completed.indexOf(day.id)!==-1) delen.push('afgerond');
+  return delen.join(' · ');
+}
+function toonReset(dagId){
+  var opties=days.filter(function(d){ return d.type!=='portfolio'; }).map(function(d){
+    return '<label class="reset-optie"><input type="radio" name="resetkeuze" value="'+d.id+'"'+(d.id===dagId?' checked data-autofocus':'')+'><span><b>'+d.num+' · '+d.title+'</b><small>'+dagStatus(d)+'</small></span></label>';
+  }).join('');
+  resetKaart('<i class="ti ti-refresh" aria-hidden="true"></i> Opnieuw beginnen',
+    '<p>Kies wat je opnieuw wilt doen. Je registraties in TOPdesk zelf worden niet aangeraakt, alleen de voortgang op deze pagina.</p>'+opties+
+    '<label class="reset-optie alles"><input type="radio" name="resetkeuze" value="alles"'+(dagId?'':' checked data-autofocus')+'><span><b>Alles opnieuw</b><small>Alle dagen: stempels, e-mailantwoorden, gelezen e-mails en “afgerond”-vinkjes, ook die van P6.05.</small></span></label>'+
+    '<div class="acties" style="margin-top:12px"><button class="knop gevaar" data-reset="verder">Wissen…</button><button class="knop" data-reset="sluit">Annuleren</button></div>');
+}
+function resetNaam(keuze){ if(keuze==='alles') return 'alle dagen'; var d=zoekDag(keuze); return d.num+' ('+d.title+')'; }
+function toonResetBevestig(keuze){
+  var antw=0;
+  (keuze==='alles'?days:[zoekDag(keuze)]).forEach(function(d){ var r=reg[d.id]; if(r&&r.antwoord) antw+=Object.keys(r.antwoord).length; });
+  resetKaart('<i class="ti ti-alert-triangle" aria-hidden="true"></i> Weet je het zeker?',
+    '<div class="reset-waarschuwing"><b>Je wist de voortgang van '+resetNaam(keuze)+'.</b><br>Dit kan niet ongedaan worden gemaakt.'+(antw?' Ook '+antw+' geschreven e-mailantwoord'+(antw===1?' verdwijnt. Staat het':'en verdwijnen. Staan ze')+' al in TOPdesk? Dan ben je niets kwijt.':'')+'</div>'+
+    '<div class="acties"><button class="knop gevaar" data-reset="wis" data-keuze="'+keuze+'">Ja, wissen</button><button class="knop" data-reset="terug" data-keuze="'+keuze+'" data-autofocus>Nee, terug</button></div>');
+}
+function sluitReset(){
+  var l=document.getElementById('reset-laag'); if(!l||l.hidden) return;
+  l.hidden=true; l.innerHTML='';
+  if(resetTerug && document.body.contains(resetTerug)) resetTerug.focus({preventScroll:true});
+}
+function voerResetUit(keuze){
+  if(keuze==='alles'){ completed=[]; reg={}; ui={}; }
+  else { delete reg[keuze]; delete ui[keuze]; completed=completed.filter(function(x){ return x!==keuze; }); }
+  bewaar('p6_done',completed); bewaar('p6_registraties',reg);
+  sluitReset(); stopTimers();
+  var detail=document.getElementById('view-detail');
+  if(!detail.hidden && detail.dataset.dag && (keuze==='alles'||detail.dataset.dag===keuze)) renderDetail(zoekDag(detail.dataset.dag),detail);
+  renderOverview();
+  toast(keuze==='alles'?'Alles is gewist. Je kunt opnieuw beginnen.':resetNaam(keuze)+' is gewist. Je kunt opnieuw beginnen.');
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-reset]'); if(!b) return;
+  var r=b.dataset.reset;
+  if(r==='open'){ toonReset(b.dataset.dag||''); return; }
+  if(r==='sluit'){ sluitReset(); return; }
+  if(r==='verder'){ var k=document.querySelector('input[name="resetkeuze"]:checked'); if(k) toonResetBevestig(k.value); return; }
+  if(r==='terug'){ toonReset(b.dataset.keuze==='alles'?'':b.dataset.keuze); return; }
+  if(r==='wis'){ voerResetUit(b.dataset.keuze); return; }
+});
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') sluitReset(); });
 
 renderOverview();
 </script>

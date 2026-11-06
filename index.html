@@ -45,6 +45,7 @@
     .tool-kaart:hover{border-color:var(--groen);box-shadow:0 6px 20px rgba(29,158,117,0.16);transform:translateY(-3px);text-decoration:none}
     .tool-icoon{width:44px;height:44px;border-radius:var(--radius-sm);background:var(--groen-licht);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:0.25rem}
     .tool-badge{display:inline-flex;align-items:center;gap:4px;background:var(--groen-licht);color:var(--groen-diep);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:3px 8px;border-radius:99px;width:fit-content}
+.tool-kaart-breed{grid-column:1 / -1}
     .tool-kaart h3{font-size:16px;font-weight:700;color:var(--tekst)}
     .tool-kaart p{font-size:13px;color:var(--tekst-mid);line-height:1.55;flex:1}
     .tool-link-label{font-size:12px;font-weight:600;color:var(--groen);display:flex;align-items:center;gap:4px;margin-top:auto}
@@ -75,11 +76,19 @@
 
   <div class="welkom">
     <h2>Welkom!</h2>
-    <p>Hier vind je de digitale leermiddelen voor de opleiding Medewerker ICT. Klik op de tool hieronder om te beginnen.</p>
+    <p>Hier vind je de digitale leermiddelen voor de opleiding Medewerker ICT. Klik op een van de tools hieronder om te beginnen.</p>
   </div>
 
-  <div class="sectie-label">Beschikbare tool</div>
-  <div class="tools-grid" style="grid-template-columns:1fr">
+  <div class="sectie-label">Beschikbare tools</div>
+  <div class="tools-grid">
+
+    <a class="tool-kaart" href="voorbereiding-stage.html">
+      <div class="tool-icoon">🎒</div>
+      <div class="tool-badge">7 weken</div>
+      <h3>Op weg naar je ICT-stage</h3>
+      <p>Bereid je stap voor stap voor op je BPV-stage. Met theorie, rollenspel, een CV-bouwer en portfoliochecklist.</p>
+      <div class="tool-link-label">Openen →</div>
+    </a>
 
     <a class="tool-kaart" href="dagtaken-periode6.html">
       <div class="tool-icoon">🖥️</div>
@@ -87,6 +96,14 @@
       <h3>Praktijk Dagtaken Periode 6</h3>
       <p>Oefen als servicedeskmedewerker met realistische meldingen, e-mails en portfolioopdrachten uit de praktijk.</p>
       <div class="tool-link-label">Openen →</div>
+    </a>
+
+    <a class="tool-kaart tool-kaart-breed" href="https://rig-academy-ter-aa.chatgpt-werk-1869.chatgpt.site/" target="_blank" rel="noopener">
+      <div class="tool-icoon">🎮</div>
+      <div class="tool-badge">Game · hardware</div>
+      <h3>RIG Game</h3>
+      <p>Leer je pc van binnen kennen. Verken hardware, train je kennis en bouw je eigen rig. De game opent in een nieuw tabblad.</p>
+      <div class="tool-link-label">Spelen ↗</div>
     </a>
 
   </div>

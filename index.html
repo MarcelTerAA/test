@@ -392,7 +392,7 @@ function renderMissies(){
 
 /* ---------- speler: groet + avatar ---------- */
 function speler(){ return lees('quest_speler', null); }
-function voornaam(n){ return String(n||'').trim().split(/\s+/)[0] || ''; }
+function voornaam(n){ return String(n||'').trim(); }  /* game-naam: helemaal tonen */
 
 function renderSpeler(){
   var S = speler(), heeft = !!(S && (S.naam || S.av));
@@ -424,8 +424,8 @@ function tekenMaker(){
   document.getElementById('maker-body').innerHTML =
     '<div class="editor"><div class="editor-pre"><div class="pre-av" id="pre-av">' + avatarSvg(av) + '</div><b id="pre-naam">' + esc(W.naam || 'Nieuwe speler') + '</b>' +
       '<small>' + (kl ? kl.emoji + ' ' + kl.naam : 'Wat voor ICT’er ben jij? Dat ontdek je met de personage-test in Quest: Stageplek.') + '</small></div><div>' +
-    '<div class="veld"><span>Je naam</span><input id="naamveld" maxlength="40" value="' + esc(W.naam) + '" placeholder="Voornaam Achternaam" autocomplete="off">' +
-      '<div class="hint">Je voornaam gebruiken we voor de groet. Je volledige naam komt op je Quest-certificaat.</div></div>' +
+    '<div class="veld"><span>Je game-naam</span><input id="naamveld" maxlength="20" value="' + esc(W.naam) + '" placeholder="Bijv. PixelPro of ByteBoss" autocomplete="off" spellcheck="false">' +
+      '<div class="hint">🔒 Gebruik <b>niet</b> je echte naam, maar een nickname. Die zie je in de groet en in Quest: Stageplek.</div></div>' +
     '<div class="veld"><span>Huid</span>' + stalen('huid', HUID) + '</div>' +
     '<div class="veld"><span>Kapsel</span><div class="stalen">' + HAARSTIJL.map(function(n, i){ return '<button class="stijl" data-veld="haar" data-v="' + i + '" aria-pressed="' + ((av.haar||0) === i) + '">' + n + '</button>'; }).join('') + '</div></div>' +
     '<div class="veld"><span>Haarkleur</span>' + stalen('haarkleur', HAARKLEUR) + '</div>' +

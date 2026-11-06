@@ -993,7 +993,7 @@ function certBlokHtml(){
 function certHtml(){
   var kl=KLASSEN[S.klasse], dat=new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});
   return '<div class="cert"><img src="'+LOGO+'" alt="Ter AA Helmond"><h3>Certificaat</h3><p>Quest: Stageplek · Op weg naar je ICT-stage</p><div class="c-av">'+avatarSvg(S.av)+'</div>'+
-    '<div class="c-naam">'+esc(S.naam||'[vul je naam in bij Personage]')+'</div><p>heeft alle 7 levels van de stagevoorbereiding voltooid en is <b>klaar voor de stage</b>.</p>'+
+    '<div class="c-naam">'+esc(S.naam||'[kies een game-naam bij Personage]')+'</div><p>heeft alle 7 levels van de stagevoorbereiding voltooid en is <b>klaar voor de stage</b>.</p>'+
     '<div class="c-stats"><span>'+(kl?kl.emoji+' '+kl.naam:'ICT’er')+'</span><span>Level '+(spelerLevel(totaalXP())+1)+' · '+TITELS[spelerLevel(totaalXP())]+'</span><span>'+totaalXP()+' XP</span><span>🏅 '+verdiendeBadges().length+' badges</span><span>🎒 '+RUGZAK.length+'/'+RUGZAK.length+' dossierproducten</span></div>'+
     '<div class="c-datum">Medewerker ICT niveau 2 · Ter AA Helmond · '+dat+'</div></div>';
 }
@@ -1037,7 +1037,7 @@ function editorHtml(){
   function stalen(veld, lijst){ return '<div class="stalen">'+lijst.map(function(c,i){ return '<button class="staal" style="background:'+c+'" data-a="av" data-veld="'+veld+'" data-v="'+i+'" aria-pressed="'+((av[veld]||0)===i)+'" aria-label="'+veld+' '+(i+1)+'"></button>'; }).join('')+'</div>'; }
   function aanuit(veld, label){ return '<button class="stijl-knop" data-a="av" data-veld="'+veld+'" data-v="toggle" aria-pressed="'+!!av[veld]+'">'+label+'</button>'; }
   return '<div class="editor"><div class="editor-pre">'+avatarSvg(av)+'<b>'+esc(S.naam||'Nieuwe speler')+'</b><small>'+(kl?kl.emoji+' '+kl.naam:'Nog geen klasse')+'</small></div><div>'+
-    '<div class="veld-groep"><span>Je naam (alleen voor je certificaat)</span><input class="naamveld" id="naamveld" maxlength="40" value="'+esc(S.naam)+'" placeholder="Voornaam Achternaam"></div>'+
+    '<div class="veld-groep"><span>Je game-naam (geen echte naam)</span><input class="naamveld" id="naamveld" maxlength="20" value="'+esc(S.naam)+'" placeholder="Bijv. PixelPro of ByteBoss" spellcheck="false"></div>'+
     '<div class="veld-groep"><span>Huid</span>'+stalen('huid',HUID)+'</div>'+
     '<div class="veld-groep"><span>Kapsel</span><div class="stalen">'+HAARSTIJL.map(function(n,i){ return '<button class="stijl-knop" data-a="av" data-veld="haar" data-v="'+i+'" aria-pressed="'+((av.haar||0)===i)+'">'+n+'</button>'; }).join('')+'</div></div>'+
     '<div class="veld-groep"><span>Haarkleur</span>'+stalen('haarkleur',HAARKLEUR)+'</div>'+
@@ -1179,7 +1179,7 @@ document.addEventListener('click', function(e){
    Minigames
    =================================================================== */
 var GAMES_PER_WEEK = [['quiz'],['swipe'],['cvblik','tom'],['bellen','mail'],['baas'],['dilemma'],['eindquiz']];
-function spelerNaam(){ return S.naam ? S.naam.split(' ')[0] : '[jouw naam]'; }
+function spelerNaam(){ return '[jouw naam]'; }  /* in rollenspellen noem je je echte naam hardop; de game-naam hoort daar niet */
 function vul(t){ return t.replace(/\{naam\}/g, esc(spelerNaam())); }
 
 function startGame(id){ stopTimer(); A={id:id, fase:'start'}; tekenGame(); }

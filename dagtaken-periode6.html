@@ -197,7 +197,7 @@ details.leerdoelen ul{margin-top:8px}
 .teller{background:#fff;color:var(--mail-donker);font-size:11px;font-weight:700;border-radius:99px;padding:0 8px;min-width:22px;text-align:center}
 .teller.leeg{background:rgba(255,255,255,.25);color:#fff}
 .mail-titel .rechts{margin-left:auto;font-weight:400;font-size:12px;opacity:.9}
-.mail-delen{display:grid;grid-template-columns:254px 1fr;height:470px}
+.mail-delen{display:grid;grid-template-columns:254px 1fr;height:590px}
 .mail-lijst{border-right:1px solid var(--rand);overflow-y:auto;background:#faf9fd;position:relative}
 .mail-rij{width:100%;display:flex;gap:9px;align-items:flex-start;text-align:left;background:none;border:none;border-bottom:1px solid #eeecf4;border-left:3px solid transparent;padding:8px 10px 8px 8px;cursor:pointer;position:relative}
 .mail-rij.valt-in{animation:valtIn .35s ease both}
@@ -253,6 +253,46 @@ details.leerdoelen ul{margin-top:8px}
 .done-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;margin-top:1rem;background:var(--groen-dark);color:#fff;border:none;padding:8px 16px;border-radius:var(--radius-sm)}
 .done-btn:hover{background:var(--groen-diep)}
 .done-btn.is-done{background:#2e7d32}
+
+/* telefoon: stappen en instructies */
+.stappen{list-style:none;display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.stappen li{flex:1;min-width:128px;display:flex;align-items:center;gap:7px;background:var(--grijs-licht);border-radius:99px;padding:5px 11px 5px 5px;font-size:12px;color:var(--tekst-licht);font-weight:600;line-height:1.25}
+.stap-nr{width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid var(--rand-mid);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.stappen li.nu{background:var(--tel);color:#fff}
+.stappen li.nu .stap-nr{color:var(--tel);border-color:#fff}
+.stappen li.klaar{background:var(--groen-licht);color:var(--groen-diep)}
+.stappen li.klaar .stap-nr{background:var(--groen);border-color:var(--groen);color:#fff}
+.wat-nu{background:#fff;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.45;border-left:4px solid var(--tel)}
+.wat-nu>b{display:flex;gap:6px;align-items:center;color:var(--tel-donker);margin-bottom:4px}
+.wat-nu ol{padding-left:20px}
+.wat-nu li+li{margin-top:3px}
+.wat-nu li.belangrijk{font-weight:600;color:var(--tel-donker)}
+.toestel-tip{font-size:11px;color:#9db8cf;margin-top:7px;line-height:1.3}
+.ronde.neer.na-even{animation:lokRood 1.4s ease-in-out 12s infinite}
+@keyframes lokRood{50%{box-shadow:0 0 0 7px rgba(200,55,45,.4)}}
+
+/* e-mail: antwoord schrijven */
+.opsteller{border:1px solid var(--mail);border-radius:10px;padding:10px;background:#fbfaff;margin-bottom:10px}
+.opst-kop{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;color:var(--tekst-mid);margin-bottom:7px}
+.opst-kop b{color:var(--tekst)}
+#antwoordveld{width:100%;min-height:200px;resize:vertical;font:inherit;font-size:14px;line-height:1.5;padding:9px 11px;border:1px solid var(--rand-mid);border-radius:7px;background:#fff;color:var(--tekst)}
+#antwoordveld:focus{outline:2px solid var(--mail);outline-offset:0;border-color:var(--mail)}
+.opst-melding:empty{display:none}
+.opst-melding{font-size:12.5px;color:var(--rood);margin-top:6px;font-weight:600;display:flex;gap:5px}
+.opst-acties{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.opst-uitleg{font-size:11.5px;color:var(--tekst-licht);flex-basis:100%;line-height:1.35}
+.knop.mail-knop{background:var(--mail);border-color:var(--mail);color:#fff}
+.knop.mail-knop:hover{background:var(--mail-donker);border-color:var(--mail-donker)}
+.verzonden{border:1px solid #cfc5ee;background:var(--mail-licht);border-radius:10px;padding:10px 12px;margin-bottom:10px}
+.verzonden.net{animation:ballonIn .3s ease both}
+.verz-kop{font-size:12px;font-weight:700;color:var(--mail-donker);display:flex;gap:5px;align-items:center;margin-bottom:4px}
+.verz-tekst{white-space:pre-wrap;font:inherit;font-size:13.5px;line-height:1.5;margin:0}
+.labels{display:flex;gap:4px;flex-wrap:wrap}
+.label-antw{color:var(--mail-donker);background:var(--mail-licht)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#1f1a33;color:#fff;padding:10px 16px;border-radius:10px;font-size:13.5px;line-height:1.4;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;width:max-content;max-width:calc(100vw - 32px);display:flex;gap:8px;align-items:center}
+.toast.toon{opacity:1;transform:translate(-50%,0)}
+.toast i{font-size:20px;color:#7dffcb}
+@media(max-width:640px){.stappen li{min-width:calc(50% - 3px)}}
 
 /* animaties */
 @keyframes wiebel{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
@@ -419,7 +459,7 @@ function items(day){
   if (day.emails) return day.emails.map(function(e){ return {person:e.from, onderwerp:e.subject, vraag:e.body}; });
   return (day.meldingenData||[]).map(function(m){ return {person:m.person, vraag:m.vraag}; });
 }
-function s(id){ return ui[id] || (ui[id]={cur:-1, fase:'', lijst:false, duur:{}, gelezen:false}); }
+function s(id){ return ui[id] || (ui[id]={cur:-1, fase:'', lijst:false, duur:{}, gelezen:false, schrijft:-1, netVerzonden:-1}); }
 function r(id){ return reg[id] || (reg[id]={af:[], gelezen:[]}); }
 function isAf(id,i){ return r(id).af.indexOf(i)!==-1; }
 function aantalAf(day){ return reg[day.id] ? reg[day.id].af.length : 0; }
@@ -432,28 +472,47 @@ function volgende(day){
   return -1;
 }
 
+/* Man (m) of vrouw (v) per naam, voor het poppetje. Namen die hier niet in staan
+   (of waarbij je het niet weet) krijgen een neutraal poppetje. Pas gerust aan. */
+var GESLACHT = {
+  'Benno Richters':'m', 'Berry Dieleman':'m', 'Camilo van Trijp':'m', 'Hajo Kootstra':'m',
+  'Jeroen Versloot':'m', 'Marcel Offermans':'m', 'Martin Beijering':'m', 'Michael Kraft':'m',
+  'Pieter de Groot':'m', 'Wilco Kamp':'m',
+  'Inge Meijer':'v', 'Leontine Dekker':'v', 'Naoual Dehak':'v', 'Yvonne van de Pas':'v'
+  /* 'Chris Limbach' en 'Schrover': niet af te leiden uit de naam, dus neutraal */
+};
+
 /* Zelfde naam geeft altijd hetzelfde poppetje, ook als iemand later terugkomt. */
 function avatar(naam){
   var h=0; for(var i=0;i<naam.length;i++) h=(h*31+naam.charCodeAt(i))>>>0;
-  var huid=['#F6D3B3','#E8B48C','#C98F62','#9A6540','#6E4529'][h%5];
-  var haar=['#2B2118','#5A3A20','#8F5A2B','#C9A05A','#7B7B7B','#111111','#A63F2B'][(h>>>3)%7];
-  var shirt=['#2F6DA8','#1D9E75','#C8553D','#6A4FB6','#D69A1E','#37474F','#B2467E'][(h>>>6)%7];
-  var stijl=(h>>>9)%6, bril=((h>>>12)%3)===0;
+  var g=GESLACHT[naam]||'x';
+  function kies(lijst,zout){ var x=Math.imul(h^zout,2654435761)>>>0; x^=x>>>15; x=Math.imul(x,2246822519)>>>0; x=(x^(x>>>13))>>>0; return lijst[x%lijst.length]; }
+  var huid=kies(['#F6D3B3','#E8B48C','#C98F62','#9A6540','#6E4529'],11);
+  var haar=kies(['#2B2118','#5A3A20','#8F5A2B','#C9A05A','#7B7B7B','#111111','#A63F2B'],23);
+  var shirt=kies(['#2F6DA8','#1D9E75','#C8553D','#6A4FB6','#D69A1E','#37474F','#B2467E'],37);
+  var stijl=kies({m:[0,1,4,5],v:[2,3,6,7],x:[0,1,4]}[g],41), bril=kies([1,0,0],53)===1;
+  var baard=g==='m' && (stijl===5 || kies([1,0,0],67)===1);
+  var oorbel=g==='v' && kies([1,0],79)===1;
   var achter='', voor='';
   if(stijl===0) voor='<path d="M33 54C30 22 90 22 87 54 80 41 72 37 60 37 48 37 40 41 33 54Z" fill="'+haar+'"/>';
   if(stijl===1) voor='<path d="M33 58C26 18 94 18 87 58 85 45 79 38 71 36 61 45 45 45 38 45 36 49 34 53 33 58Z" fill="'+haar+'"/>';
   if(stijl===2){ achter='<path d="M29 56C25 14 95 14 91 56L95 98C87 104 79 100 79 92L41 92C41 100 33 104 25 98Z" fill="'+haar+'"/>'; voor='<path d="M34 52C34 26 86 26 86 52 78 42 66 40 60 36 54 42 42 42 34 52Z" fill="'+haar+'"/>'; }
   if(stijl===3){ achter='<circle cx="60" cy="19" r="12" fill="'+haar+'"/>'; voor='<path d="M33 54C30 22 90 22 87 54 78 40 42 40 33 54Z" fill="'+haar+'"/>'; }
   if(stijl===4){ var kr=[[36,42],[42,32],[52,27],[63,26],[74,29],[82,37],[86,47],[34,51]]; voor=kr.map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="9" fill="'+haar+'"/>';}).join(''); }
-  if(stijl===5) voor='<path d="M35 46C40 26 80 26 85 46 74 38 46 38 35 46Z" fill="'+haar+'"/><path d="M36 64C38 92 82 92 84 64 78 74 70 72 60 72 50 72 42 74 36 64Z" fill="'+haar+'"/>';
+  if(stijl===5) voor='<path d="M35 46C40 26 80 26 85 46 74 38 46 38 35 46Z" fill="'+haar+'"/>';
+  if(stijl===6){ achter='<path d="M29 58C25 16 95 16 91 58L93 84C86 89 80 86 79 80L41 80C40 86 34 89 27 84Z" fill="'+haar+'"/>'; voor='<path d="M33 54C33 24 87 24 87 54 80 44 66 42 58 37 52 44 40 46 33 54Z" fill="'+haar+'"/>'; }
+  if(stijl===7){ achter='<path d="M82 32C104 34 108 72 94 92 97 70 93 52 82 44Z" fill="'+haar+'"/>'; voor='<path d="M33 54C30 22 90 22 87 54 82 42 70 36 56 38 46 40 38 46 33 54Z" fill="'+haar+'"/>'; }
   var ogen='<circle class="oog" cx="50" cy="57" r="3.2" fill="#222"/><circle class="oog" cx="70" cy="57" r="3.2" fill="#222"/>';
+  if(g==='v') ogen+='<path d="M45.5 53.5l-3-2.2M74.5 53.5l3-2.2" stroke="#222" stroke-width="1.6" stroke-linecap="round"/>';
   var glas=bril?'<g fill="none" stroke="#333" stroke-width="2"><circle cx="50" cy="57" r="8"/><circle cx="70" cy="57" r="8"/><path d="M58 57h4"/></g>':'';
+  var baardHtml=baard?'<path d="M36 62C37 94 83 94 84 62 79 73 71 76 60 76 49 76 41 73 36 62Z" fill="'+haar+'"/>':'';
+  var mond='<path d="M50 70Q60 79 70 70" fill="none" stroke="'+(baard?'#f3d6c6':g==='v'?'#b0413e':'#7a3b2c')+'" stroke-width="2.6" stroke-linecap="round"/>';
+  var oren='<circle cx="34" cy="59" r="5" fill="'+huid+'"/><circle cx="86" cy="59" r="5" fill="'+huid+'"/>'+
+    (oorbel?'<circle cx="34" cy="67" r="2.7" fill="#E8B923"/><circle cx="86" cy="67" r="2.7" fill="#E8B923"/>':'');
   return '<svg class="avatar" viewBox="0 0 120 140" aria-hidden="true">'+achter+
     '<path d="M16 140C16 104 38 94 60 94S104 104 104 140Z" fill="'+shirt+'"/>'+
-    '<rect x="52" y="78" width="16" height="22" rx="7" fill="'+huid+'"/>'+
-    '<circle cx="34" cy="59" r="5" fill="'+huid+'"/><circle cx="86" cy="59" r="5" fill="'+huid+'"/>'+
-    '<ellipse cx="60" cy="56" rx="26" ry="29" fill="'+huid+'"/>'+ogen+glas+
-    '<path d="M50 70Q60 79 70 70" fill="none" stroke="#7a3b2c" stroke-width="2.6" stroke-linecap="round"/>'+voor+'</svg>';
+    '<rect x="52" y="78" width="16" height="22" rx="7" fill="'+huid+'"/>'+oren+
+    '<ellipse cx="60" cy="56" rx="26" ry="29" fill="'+huid+'"/>'+ogen+glas+baardHtml+mond+voor+'</svg>';
 }
 
 function stempel(id,i){
@@ -557,6 +616,15 @@ function renderSim(day,opt){
     belTimer=setInterval(function(){ var t=document.getElementById('beltijd'); if(t) t.textContent=duur(Date.now()-s(day.id).start); },1000);
   }
   if(opt.focus){ var f=el.querySelector('[data-focus]'); if(f) f.focus({preventScroll:true}); }
+  if(opt.schrijf){
+    var veld=document.getElementById('antwoordveld');
+    if(veld){
+      var a=antwoord(day.id,s(day.id).cur), pos=veld.value.length;
+      if(a && a.tekst===antwoordSjabloon(items(day)[s(day.id).cur].person)) pos=veld.value.indexOf(',\n\n')+3;
+      veld.focus({preventScroll:true}); veld.setSelectionRange(pos,pos);
+      veld.scrollIntoView({block:'nearest',behavior:rustig?'auto':'smooth'});
+    }
+  }
   heeftGestempeld=null;
 }
 function duur(ms){ var t=Math.floor(ms/1000); return tweecijfers(Math.floor(t/60))+':'+tweecijfers(t%60); }
@@ -586,6 +654,15 @@ function balieHtml(day,opt){
 }
 
 /* telefoon */
+function stappenHtml(day){
+  var st=s(day.id), cur=st.cur;
+  var nu = cur<0 ? 4 : st.fase==='belt' ? 0 : st.fase==='gesprek' ? 1 : (isAf(day.id,cur) ? 4 : 3);
+  var namen=['Opnemen','Luisteren en noteren','Ophangen','Registreren in TOPdesk'];
+  return '<ol class="stappen" aria-label="Stappen van een telefoongesprek">'+namen.map(function(n,k){
+    var c=k<nu?'klaar':k===nu?'nu':'';
+    return '<li class="'+c+'"'+(k===nu?' aria-current="step"':'')+'><span class="stap-nr">'+(k<nu?'<i class="ti ti-check" aria-hidden="true"></i>':(k+1))+'</span>'+n+'</li>';
+  }).join('')+'</ol>';
+}
 function telefoonHtml(day,opt){
   var st=s(day.id), lijst=items(day), n=lijst.length, cur=st.cur, fase=st.fase;
   var wacht=lijst.filter(function(x,i){return i!==cur && !isAf(day.id,i);}).length;
@@ -594,17 +671,25 @@ function telefoonHtml(day,opt){
     toestel='<div class="toestel"><div class="toestel-status">Lijn 1 · vrij</div><div class="toestel-av"><div class="av-rond" style="display:flex;align-items:center;justify-content:center;font-size:42px;color:#2f77b5"><i class="ti ti-phone-check" aria-hidden="true"></i></div></div><div class="toestel-naam">Geen gesprekken</div></div>';
     rechts='<div class="gesprek"><div class="hint"><i class="ti ti-mood-smile-beam" aria-hidden="true"></i>De telefoon is even stil: alle gesprekken zijn geregistreerd.</div></div>';
   } else {
-    var it=lijst[cur];
+    var it=lijst[cur], naam=esc(it.person);
     if(fase==='belt'){
-      toestel='<div class="toestel belt"><div class="toestel-status"><i class="ti ti-phone-incoming" aria-hidden="true"></i> Inkomend gesprek · lijn 1</div><div class="toestel-av"><span class="golf"></span><span class="golf b"></span><span class="golf c"></span><div class="av-rond">'+avatar(it.person)+'</div></div><div class="toestel-naam">'+esc(it.person)+'</div><div class="toestel-sub">'+(wacht?wacht+' in de wacht':'laatste beller')+'</div><div class="toestel-duw"><button class="ronde op" data-act="opnemen" data-focus="1"><i class="ti ti-phone" aria-hidden="true"></i> Opnemen</button></div></div>';
-      rechts='<div class="gesprek"><div class="hint"><i class="ti ti-phone-call" aria-hidden="true"></i><span>De telefoon gaat! Neem op en open het gesprek zoals het script in <b>Procedure Meldingen</b> het voorschrijft.</span></div></div>';
+      toestel='<div class="toestel belt"><div class="toestel-status"><i class="ti ti-phone-incoming" aria-hidden="true"></i> Inkomend gesprek · lijn 1</div><div class="toestel-av"><span class="golf"></span><span class="golf b"></span><span class="golf c"></span><div class="av-rond">'+avatar(it.person)+'</div></div><div class="toestel-naam">'+naam+'</div><div class="toestel-sub">'+(wacht?wacht+' in de wacht':'laatste beller')+'</div><div class="toestel-duw"><button class="ronde op" data-act="opnemen" data-focus="1"><i class="ti ti-phone" aria-hidden="true"></i> Opnemen</button></div></div>';
+      rechts='<div class="gesprek"><div class="wat-nu"><b><i class="ti ti-phone-call" aria-hidden="true"></i> De telefoon gaat!</b><ol><li class="belangrijk">Klik op <b>Opnemen</b>.</li><li>Begin het gesprek met de openingszin uit het script in <b>Procedure Meldingen</b>.</li><li>Daarna hoor je wat '+naam+' wil vragen.</li></ol></div></div>';
     } else if(fase==='gesprek'){
-      toestel='<div class="toestel"><div class="toestel-status">In gesprek · lijn 1</div><div class="toestel-av"><div class="av-rond">'+avatar(it.person)+'</div></div><div class="toestel-naam">'+esc(it.person)+'</div><div class="timer" id="beltijd">'+duur(Date.now()-st.start)+'</div><div class="geluid" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="toestel-duw"><button class="ronde neer" data-act="ophangen" data-focus="1"><i class="ti ti-phone-off" aria-hidden="true"></i> Ophangen</button></div></div>';
-      rechts='<div class="gesprek">'+ballon(day,cur,opt.nieuw)+'<div class="hint"><i class="ti ti-ear" aria-hidden="true"></i>Luister goed en vraag door. Welke gegevens heb je nodig voor je registratie?</div></div>';
+      toestel='<div class="toestel"><div class="toestel-status">In gesprek · lijn 1</div><div class="toestel-av"><div class="av-rond">'+avatar(it.person)+'</div></div><div class="toestel-naam">'+naam+'</div><div class="timer" id="beltijd">'+duur(Date.now()-st.start)+'</div><div class="geluid" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="toestel-duw"><button class="ronde neer na-even" data-act="ophangen" data-focus="1"><i class="ti ti-phone-off" aria-hidden="true"></i> Ophangen</button><div class="toestel-tip">Pas klikken als je alles hebt genoteerd</div></div></div>';
+      rechts='<div class="gesprek"><div class="hint" style="background:none;padding:0 2px"><i class="ti ti-volume" aria-hidden="true"></i>'+naam+' zegt:</div>'+ballon(day,cur,opt.nieuw)+
+        '<div class="wat-nu"><b><i class="ti ti-list-numbers" aria-hidden="true"></i> Je bent nu in gesprek. Wat doe je?</b><ol>'+
+        '<li>Lees goed wat '+naam+' vraagt (de tekstballon hierboven).</li>'+
+        '<li>Noteer de vraag en de gegevens die je nodig hebt voor je TOPdesk-melding. Mis je iets? Bedenk welke vraag je zou stellen.</li>'+
+        '<li>Vertel wat er nu gaat gebeuren en sluit het gesprek vriendelijk af.</li>'+
+        '<li class="belangrijk">Heb je alles? Klik dan op de rode knop <b>Ophangen</b>.</li></ol></div></div>';
     } else {
-      var volg=volgende(day);
-      toestel='<div class="toestel"><div class="toestel-status">Gesprek beëindigd</div><div class="toestel-av"><div class="av-rond" style="opacity:.75">'+avatar(it.person)+'</div></div><div class="toestel-naam">'+esc(it.person)+'</div><div class="toestel-sub">'+(st.duur[cur]?'Duur '+st.duur[cur]:'Nawerk')+'</div><div class="toestel-duw">'+(volg>=0?'<button class="ronde door" data-act="volgende"><i class="ti ti-phone-next" aria-hidden="true"></i> Volgende gesprek</button>':'')+'</div></div>';
-      rechts='<div class="gesprek">'+ballon(day,cur,false)+'<div class="hint"><i class="ti ti-pencil" aria-hidden="true"></i>Nawerk: leg deze melding vast in TOPdesk en los de vraag op.</div><div class="acties">'+stempelKnop(day.id,cur)+'</div></div>';
+      var volg=volgende(day), af=isAf(day.id,cur);
+      toestel='<div class="toestel"><div class="toestel-status">Gesprek beëindigd</div><div class="toestel-av"><div class="av-rond" style="opacity:.75">'+avatar(it.person)+'</div></div><div class="toestel-naam">'+naam+'</div><div class="toestel-sub">'+(st.duur[cur]?'Duur '+st.duur[cur]:'Nawerk')+'</div><div class="toestel-duw">'+(volg>=0?'<button class="ronde door" data-act="volgende"'+(af?' data-focus="1"':'')+'><i class="ti ti-phone-next" aria-hidden="true"></i> Volgende gesprek</button>':'')+'</div></div>';
+      rechts='<div class="gesprek">'+ballon(day,cur,false)+
+        (af?'<div class="wat-nu" style="border-left-color:var(--groen)"><b style="color:var(--groen-diep)"><i class="ti ti-circle-check" aria-hidden="true"></i> Klaar met dit gesprek</b>'+(volg>=0?'Klik op <b>Volgende gesprek</b> om de volgende beller aan te nemen.':'Alle gesprekken zijn afgehandeld.')+'</div>'
+            :'<div class="wat-nu"><b><i class="ti ti-pencil" aria-hidden="true"></i> Opgehangen. Nu het nawerk:</b><ol><li>Registreer de melding van '+naam+' in TOPdesk en zoek de oplossing uit.</li><li class="belangrijk">Klaar? Klik op de groene knop hieronder.</li><li>Neem daarna het volgende gesprek aan.</li></ol></div>')+
+        '<div class="acties">'+stempelKnop(day.id,cur)+'</div></div>';
     }
   }
   var rijen=lijst.map(function(x,i){
@@ -612,30 +697,48 @@ function telefoonHtml(day,opt){
     var status=af?'<span class="log-status af"><i class="ti ti-check" aria-hidden="true"></i> Geregistreerd</span>':nu?'<span class="log-status nu"><i class="ti ti-phone" aria-hidden="true"></i> '+(fase==='belt'?'Belt nu':fase==='gesprek'?'In gesprek':'Nawerk')+'</span>':'<span class="log-status"><i class="ti ti-clock" aria-hidden="true"></i> In de wacht</span>';
     return '<button class="log-rij" data-act="kies" data-i="'+i+'"'+(nu?' aria-current="true"':'')+'><span class="av-rond">'+avatar(x.person)+'</span><span>'+esc(x.person)+'</span><time>'+tijd(day,i)+'</time>'+status+'</button>';
   }).join('');
-  return '<div class="tel-wrap">'+toestel+rechts+'</div><div class="log"><div class="log-kop">Gesprekken vandaag · '+aantalAf(day)+' van '+n+' geregistreerd</div>'+rijen+'</div>'+eindeHtml(day);
+  return stappenHtml(day)+'<div class="tel-wrap">'+toestel+rechts+'</div><div class="log"><div class="log-kop">Gesprekken vandaag · '+aantalAf(day)+' van '+n+' geregistreerd</div>'+rijen+'</div>'+eindeHtml(day);
 }
 
 /* e-mail */
+function antwoord(id,i){ var a=r(id).antwoord||(r(id).antwoord={}); return a[i]; }
+function antwoordSjabloon(naam){ return 'Beste '+naam+',\n\n\n\nMet vriendelijke groet,\n\n[Jouw naam]\nServicedesk'; }
 function mailHtml(day,opt){
   var st=s(day.id), lijst=items(day), cur=st.cur, vers=st.gelezen==='vers';
   var ongelezen=lijst.filter(function(x,i){return !isGelezen(day.id,i);}).length;
+  var beantwoord=lijst.filter(function(x,i){var a=antwoord(day.id,i); return a&&a.verzonden;}).length;
   var rijen=lijst.map(function(x,i){
-    var nieuw=!isGelezen(day.id,i), af=isAf(day.id,i);
-    return '<button class="mail-rij'+(nieuw?' ongelezen':'')+(vers?' valt-in':'')+'" style="'+(vers?'animation-delay:'+(i*55)+'ms':'')+'" data-act="kies" data-i="'+i+'"'+(i===cur?' aria-current="true"':'')+'>'+(nieuw?'<span class="ongelezen-stip" aria-label="Ongelezen"></span>':'')+'<span class="av-rond">'+avatar(x.person)+'</span><span class="mail-tekst"><span class="mail-boven"><span>'+esc(x.person)+'</span><time>'+tijd(day,i)+'</time></span><span class="mail-ond" style="display:block">'+esc(x.onderwerp)+'</span><span class="mail-voor" style="display:block">'+esc(x.vraag)+'</span>'+(af?'<span class="label-af"><i class="ti ti-check" aria-hidden="true"></i> Geregistreerd</span>':'')+'</span></button>';
+    var nieuw=!isGelezen(day.id,i), af=isAf(day.id,i), a=antwoord(day.id,i), labels='';
+    if(a&&a.verzonden) labels+='<span class="label-af label-antw"><i class="ti ti-arrow-back-up" aria-hidden="true"></i> Beantwoord</span>';
+    else if(a&&a.tekst) labels+='<span class="label-af label-antw"><i class="ti ti-pencil" aria-hidden="true"></i> Concept</span>';
+    if(af) labels+='<span class="label-af"><i class="ti ti-check" aria-hidden="true"></i> Geregistreerd</span>';
+    return '<button class="mail-rij'+(nieuw?' ongelezen':'')+(vers?' valt-in':'')+'" style="'+(vers?'animation-delay:'+(i*55)+'ms':'')+'" data-act="kies" data-i="'+i+'"'+(i===cur?' aria-current="true"':'')+'>'+(nieuw?'<span class="ongelezen-stip" aria-label="Ongelezen"></span>':'')+'<span class="av-rond">'+avatar(x.person)+'</span><span class="mail-tekst"><span class="mail-boven"><span>'+esc(x.person)+'</span><time>'+tijd(day,i)+'</time></span><span class="mail-ond" style="display:block">'+esc(x.onderwerp)+'</span><span class="mail-voor" style="display:block">'+esc(x.vraag)+'</span>'+(labels?'<span class="labels">'+labels+'</span>':'')+'</span></button>';
   }).join('');
   if(vers) st.gelezen=true;
   var lezer;
   if(cur<0){
     lezer='<div style="margin:auto;text-align:center;color:var(--tekst-licht);font-size:14px"><i class="ti ti-mail-opened" style="font-size:44px;color:var(--mail);display:block" aria-hidden="true"></i>Er staan '+ongelezen+' nieuwe e-mails voor je klaar.<br>Klik een e-mail aan om hem te lezen.</div>';
   } else {
-    var it=lijst[cur], volg=volgende(day);
+    var it=lijst[cur], volg=volgende(day), a=antwoord(day.id,cur), schrijft=st.schrijft===cur, antw='';
+    if(schrijft){
+      antw='<div class="opsteller"><div class="opst-kop"><span><b>Aan:</b> '+esc(it.person)+'</span><span><b>Onderwerp:</b> RE: '+esc(it.onderwerp)+'</span></div>'+
+        '<textarea id="antwoordveld" data-i="'+cur+'" aria-label="Jouw antwoord aan '+esc(it.person)+'" spellcheck="true">'+esc(a.tekst)+'</textarea>'+
+        '<div id="opst-melding" class="opst-melding" role="alert"></div>'+
+        '<div class="opst-acties"><button class="knop mail-knop" data-act="versturen" data-i="'+cur+'"><i class="ti ti-send" aria-hidden="true"></i> Versturen</button><button class="knop" data-act="sluitopsteller"><i class="ti ti-device-floppy" aria-hidden="true"></i> Concept bewaren</button>'+
+        '<span class="opst-uitleg"><i class="ti ti-clipboard" aria-hidden="true"></i> Versturen kopieert je antwoord naar het klembord (er wordt niets echt verstuurd). Plak het daarna met <b>Ctrl+V</b> in je TOPdesk-registratie.</span></div></div>';
+    } else if(a && a.verzonden){
+      antw='<div class="verzonden'+(st.netVerzonden===cur?' net':'')+'"><div class="verz-kop"><i class="ti ti-send" aria-hidden="true"></i> Jouw antwoord · verzonden om '+a.tijd+'</div><pre class="verz-tekst">'+esc(a.tekst)+'</pre>'+
+        '<div class="opst-acties"><button class="knop" data-act="kopieer" data-i="'+cur+'"><i class="ti ti-copy" aria-hidden="true"></i> Opnieuw kopiëren</button><button class="knop" data-act="beantwoord" data-i="'+cur+'"><i class="ti ti-pencil" aria-hidden="true"></i> Aanpassen</button></div></div>';
+    }
+    st.netVerzonden=-1;
+    var antwKnop=(schrijft||(a&&a.verzonden))?'':'<button class="knop mail-knop" data-act="beantwoord" data-i="'+cur+'"><i class="ti ti-arrow-back-up" aria-hidden="true"></i> '+(a&&a.tekst?'Verder met concept':'Beantwoorden')+'</button>';
     lezer='<button class="knop mail-terug" data-act="naarlijst"><i class="ti ti-arrow-left" aria-hidden="true"></i> Postvak</button>'+
       '<div class="lezer-nr">E-mail '+(cur+1)+' van '+lijst.length+'</div><h3>'+esc(it.onderwerp)+'</h3>'+
       '<div class="lezer-van"><span class="av-rond">'+avatar(it.person)+'</span><div><strong>'+esc(it.person)+'</strong><br>Aan: Servicedesk · vandaag '+tijd(day,cur)+'</div></div>'+
-      '<div class="brief"><p>Beste servicedesk,</p><p>'+esc(it.vraag)+'</p><p>Met vriendelijke groet,<br>'+esc(it.person)+'</p>'+(isAf(day.id,cur)?stempel(day.id,cur):'')+'</div>'+
-      '<div class="acties"><div class="lezer-hint"><i class="ti ti-pencil" aria-hidden="true"></i>Schrijf een formeel antwoord en verwerk het in je TOPdesk-registratie.</div>'+stempelKnop(day.id,cur)+(volg>=0?'<button class="knop" data-act="volgende">Volgende e-mail <i class="ti ti-arrow-right" aria-hidden="true"></i></button>':'')+'</div>';
+      '<div class="brief"><p>Beste servicedesk,</p><p>'+esc(it.vraag)+'</p><p>Met vriendelijke groet,<br>'+esc(it.person)+'</p>'+(isAf(day.id,cur)?stempel(day.id,cur):'')+'</div>'+antw+
+      '<div class="acties"><div class="lezer-hint"><i class="ti ti-pencil" aria-hidden="true"></i>Beantwoord de e-mail formeel, plak je antwoord in TOPdesk en registreer de melding.</div>'+antwKnop+stempelKnop(day.id,cur)+(volg>=0?'<button class="knop" data-act="volgende">Volgende e-mail <i class="ti ti-arrow-right" aria-hidden="true"></i></button>':'')+'</div>';
   }
-  return '<div class="mailvenster'+(cur>=0?' leest':'')+'"><div class="mail-titel"><i class="ti ti-inbox" aria-hidden="true"></i> Postvak IN <span class="teller'+(ongelezen?'':' leeg')+'">'+ongelezen+'</span><span class="rechts">'+aantalAf(day)+' van '+lijst.length+' geregistreerd</span></div><div class="mail-delen"><div class="mail-lijst">'+rijen+'</div><div class="lezer'+(opt.nieuw?' nieuw':'')+'">'+lezer+'</div></div></div>'+eindeHtml(day);
+  return '<div class="mailvenster'+(cur>=0?' leest':'')+'"><div class="mail-titel"><i class="ti ti-inbox" aria-hidden="true"></i> Postvak IN <span class="teller'+(ongelezen?'':' leeg')+'">'+ongelezen+'</span><span class="rechts">'+beantwoord+' beantwoord · '+aantalAf(day)+' van '+lijst.length+' geregistreerd</span></div><div class="mail-delen"><div class="mail-lijst">'+rijen+'</div><div class="lezer'+(opt.nieuw?' nieuw':'')+'">'+lezer+'</div></div></div>'+eindeHtml(day);
 }
 
 /* lijst: alle meldingen in één oogopslag, ook handig om te printen */
@@ -645,6 +748,60 @@ function lijstHtml(day){
     return '<div class="lijst-kaart'+(af?' af':'')+'"><span class="av-rond">'+avatar(x.person)+'</span><div class="lijst-tekst"><b>'+(i+1)+'. '+esc(x.person)+'</b>'+(x.onderwerp?'<em>'+esc(x.onderwerp)+'</em>':'')+esc(x.vraag)+'</div><button class="knop'+(af?' is-gestempeld':'')+'" data-act="stempel" data-i="'+i+'" aria-label="Melding '+(i+1)+(af?' geregistreerd, ongedaan maken':' markeren als geregistreerd')+'"><i class="ti '+(af?'ti-check':'ti-rubber-stamp')+'" aria-hidden="true"></i> '+(af?'Geregistreerd':'Geregistreerd?')+'</button></div>';
   }).join('')+eindeHtml(day);
 }
+
+/* ---------- e-mail beantwoorden ---------- */
+var bewaarTimer=null, toastTimer=null;
+function toast(tekst){
+  var t=document.getElementById('toast');
+  if(!t){ t=document.createElement('div'); t.id='toast'; t.className='toast'; t.setAttribute('role','status'); document.body.appendChild(t); }
+  t.innerHTML='<i class="ti ti-clipboard-check" aria-hidden="true"></i><span>'+tekst+'</span>';
+  t.classList.add('toon'); clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ t.classList.remove('toon'); },4200);
+}
+function kopieerOud(tekst){
+  var actief=document.activeElement, ta=document.createElement('textarea');
+  ta.value=tekst; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.left='-9999px';
+  document.body.appendChild(ta); ta.select();
+  var ok=false; try { ok=document.execCommand('copy'); } catch(e){}
+  ta.remove(); if(actief && actief.focus) actief.focus({preventScroll:true});
+  return ok;
+}
+function kopieer(tekst){
+  return new Promise(function(klaar){
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(tekst).then(function(){ klaar(true); }, function(){ klaar(kopieerOud(tekst)); });
+    } else klaar(kopieerOud(tekst));
+  });
+}
+function nuTijd(){ var d=new Date(); return tweecijfers(d.getHours())+':'+tweecijfers(d.getMinutes()); }
+function verstuur(day,i){
+  var a=antwoord(day.id,i), m=document.getElementById('opst-melding'), veld=document.getElementById('antwoordveld');
+  if(veld) a.tekst=veld.value;
+  var tekst=a.tekst.trim();
+  function fout(t){ m.innerHTML='<i class="ti ti-alert-circle" aria-hidden="true"></i><span>'+t+'</span>'; if(veld) veld.focus(); }
+  var kern=tekst.split('\n').filter(function(l){ l=l.trim(); return l && !/^beste\b/i.test(l) && !/^met vriendelijke groet/i.test(l) && l.toLowerCase()!=='servicedesk'; }).join(' ');
+  if(kern.length<45) return fout('Je antwoord is nog leeg of erg kort. Leg de oplossing stap voor stap uit.');
+  if(tekst.indexOf('[Jouw naam]')!==-1) return fout('Vervang [Jouw naam] nog door je eigen naam.');
+  kopieer(tekst).then(function(ok){
+    if(!ok){ if(veld){ veld.focus(); veld.select(); } return fout('Kopiëren lukte niet automatisch. De tekst is nu geselecteerd: kopieer hem met Ctrl+C.'); }
+    a.tekst=tekst; a.verzonden=true; a.tijd=nuTijd(); bewaar('p6_registraties',reg);
+    var st=s(day.id); st.schrijft=-1; st.netVerzonden=i;
+    renderSim(day,{focus:true});
+    toast('Verzonden! Je antwoord staat op het klembord. Plak het met Ctrl+V in TOPdesk.');
+  });
+}
+document.addEventListener('input',function(e){
+  if(e.target.id!=='antwoordveld') return;
+  var day=zoekDag(document.getElementById('view-detail').dataset.dag), a=antwoord(day.id,parseInt(e.target.dataset.i,10));
+  a.tekst=e.target.value;
+  var m=document.getElementById('opst-melding'); if(m) m.innerHTML='';
+  clearTimeout(bewaarTimer); bewaarTimer=setTimeout(function(){ bewaar('p6_registraties',reg); },400);
+});
+document.addEventListener('keydown',function(e){
+  if(e.target.id==='antwoordveld' && e.key==='Enter' && (e.ctrlKey||e.metaKey)){
+    e.preventDefault(); verstuur(zoekDag(document.getElementById('view-detail').dataset.dag), parseInt(e.target.dataset.i,10));
+  }
+});
 
 /* ---------- acties ---------- */
 function confetti(){
@@ -658,7 +815,7 @@ function confetti(){
   })(i); }
 }
 function kies(day,i,nieuw){
-  var st=s(day.id); st.cur=i;
+  var st=s(day.id); st.cur=i; st.schrijft=-1;
   if(day.type==='telefoon') st.fase=isAf(day.id,i)||st.duur[i]?'nawerk':'belt';
   if(day.type==='email' && !isGelezen(day.id,i)){ r(day.id).gelezen.push(i); bewaar('p6_registraties',reg); }
   renderSim(day,{nieuw:nieuw});
@@ -677,10 +834,21 @@ document.addEventListener('click',function(e){
   var st=s(day.id);
   if(act==='weergave'){ st.lijst=b.dataset.w==='lijst'; renderDetail(day,wrap); return; }
   if(act==='kies'){ kies(day,i,i!==st.cur); return; }
-  if(act==='naarlijst'){ st.cur=-1; renderSim(day,{}); return; }
+  if(act==='naarlijst'){ st.cur=-1; st.schrijft=-1; renderSim(day,{}); return; }
   if(act==='volgende'){ var v=volgende(day); if(v>=0) kies(day,v,true); else { st.cur=-1; renderSim(day,{}); } return; }
   if(act==='opnemen'){ st.fase='gesprek'; st.start=Date.now(); renderSim(day,{nieuw:true,focus:true}); return; }
   if(act==='ophangen'){ st.duur[st.cur]=duur(Date.now()-st.start); st.fase='nawerk'; renderSim(day,{focus:true}); return; }
+  if(act==='beantwoord'){
+    var lijstA=r(day.id).antwoord||(r(day.id).antwoord={});
+    if(!lijstA[i]) lijstA[i]={tekst:antwoordSjabloon(items(day)[i].person), verzonden:false};
+    st.schrijft=i; bewaar('p6_registraties',reg); renderSim(day,{schrijf:true}); return;
+  }
+  if(act==='sluitopsteller'){ st.schrijft=-1; bewaar('p6_registraties',reg); renderSim(day,{focus:true}); return; }
+  if(act==='versturen'){ verstuur(day,i); return; }
+  if(act==='kopieer'){
+    kopieer(antwoord(day.id,i).tekst).then(function(ok){ toast(ok?'Gekopieerd! Plak je antwoord met Ctrl+V in TOPdesk.':'Kopiëren lukte niet: selecteer de tekst en druk op Ctrl+C.'); });
+    return;
+  }
   if(act==='stempel'){
     var lijst=r(day.id).af, p=lijst.indexOf(i), voor=allesAf(day);
     if(p===-1){ lijst.push(i); heeftGestempeld=day.id+':'+i; } else lijst.splice(p,1);

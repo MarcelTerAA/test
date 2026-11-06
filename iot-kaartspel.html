@@ -218,7 +218,7 @@ function memorySpel(){
     stand.textContent=`Setjes gevonden: ${gevonden} van ${totaal} · Fouten: ${fouten}`;
   }
   function eindig(){
-    klaar=true;toon();
+    klaar=true;toon();try{localStorage.setItem('iot_memory','1')}catch(e){}
     $('#bord').insertAdjacentHTML('beforebegin',`<div class="winnaar"><h3>🎉 Goed gedaan!</h3><p>Alle ${totaal} setjes gevonden, met ${fouten} fout${fouten===1?'':'en'}.</p><div class="knoprij" style="justify-content:center"><button class="knop" data-ga="memory">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div></div>`);
     zet('Het spel is afgelopen.','goed');
     $('.winnaar').scrollIntoView({behavior:'smooth',block:'center'});
@@ -298,7 +298,7 @@ function quizSpel(){
       $('#door').onclick=()=>{q++;if(q<vragen.length)vraag();else eind()};
     });
   }
-  function eind(){
+  function eind(){try{const o=JSON.parse(localStorage.getItem('iot_quiz')||'null');if(!o||punten>=o.beste)localStorage.setItem('iot_quiz',JSON.stringify({beste:punten,max:vragen.length}))}catch(e){}
     app.innerHTML=topbalk('Kennisquiz')+`<div class="winnaar"><h3>🎉 Klaar!</h3><p>Je score: ${punten} van de ${vragen.length}.</p></div>
       <div class="knoprij" style="justify-content:center"><button class="knop" data-ga="quiz">Nog een keer</button><button class="knop grijs" data-ga="menu">Spelmenu</button></div>`;
   }

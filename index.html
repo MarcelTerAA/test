@@ -82,22 +82,14 @@
     .cta .pijl{transition:transform .18s}
     .kaart:hover .cta .pijl{transform:translateX(4px)}
 
-    /* RIG: donkere game-tegel, sluit aan bij de game zelf */
-    .kaart.rig{grid-column:1 / -1;background:linear-gradient(120deg,#101313 0%,#1a201e 60%,#22301f 100%);border-color:#2b322f;color:#f1f4ef;
-      --accent:#d2fa69;--accent-zacht:rgba(210,250,105,.12);--accent-tekst:#d2fa69}
-    .kaart.rig p,.kaart.rig .voortgang-tekst{color:#b9c4bc}
-    .kaart.rig .voortgang-tekst b{color:#fff}
-    .kaart.rig .soort{color:#8d9890}
-    .kaart.rig .balk{background:#2a312e}
-    .kaart.rig .status{background:#2a312e;color:#d7dfd9}
-    .kaart.rig .status.nieuw{background:#d2fa69;color:#101313}
-    .kaart.rig .status.bezig{background:rgba(210,250,105,.15);color:#d2fa69}
-    .kaart.rig .status.klaar{background:#d2fa69;color:#101313}
+    /* RIG: witte tegel zoals de rest, met het limoengroen van de game als accent */
+    .kaart.rig{grid-column:1 / -1;--accent:#b5e83a;--accent-zacht:#f1fad9;--accent-tekst:#4f6b00}
+    .kaart.rig .balk i{background:linear-gradient(90deg,#9fd12b,#d2fa69)}
     .rig-binnen{display:grid;grid-template-columns:1fr auto;gap:1.25rem;align-items:center}
     .rig-binnen .links{display:flex;flex-direction:column;gap:.55rem;min-width:0}
     .rig-chips{display:flex;flex-direction:column;gap:.45rem}
-    .rig-chip{display:flex;align-items:center;gap:.5rem;font-size:12.5px;font-weight:600;color:#c9d3cc;background:#1f2523;border:1px solid #2f3633;border-radius:10px;padding:.4rem .7rem;white-space:nowrap}
-    .rig-chip.af{color:#101313;background:#d2fa69;border-color:#d2fa69}
+    .rig-chip{display:flex;align-items:center;gap:.5rem;font-size:12.5px;font-weight:600;color:var(--tekst-mid);background:#f7f9f8;border:1px solid var(--rand);border-radius:10px;padding:.4rem .7rem;white-space:nowrap}
+    .rig-chip.af{color:#2c3b0a;background:#e4f8a8;border-color:#c5e86a}
 
     /* ---------- tip + footer ---------- */
     .tip{display:flex;gap:.9rem;align-items:flex-start;background:var(--wit);border:1px dashed #b9cfc6;border-radius:var(--radius);padding:1rem 1.2rem;margin-top:1.75rem;font-size:13.5px;color:var(--tekst-mid)}

@@ -434,14 +434,19 @@ const LEVELS=[
   kd:['B1-K1-W1 t/m W3 — hardware, software en netwerk samen','Doorstroom naar niveau 3'],
   echt:'<b>Green Pi Machine</b> is een verdiepingscursus (niet verplicht): je werkt met Raspberry Pi, Linux, Python, cloud en Internet of Things. Handig als je daarna wilt doorstromen naar niveau 3.',
   profiel:'maker', run:lvlPi},
- {id:'bootup', mijl:true, nr:'🎓', periode:'Periode 5', cursus:'BootUp', titel:'Praktijkexamen B1-K1 + voorbereiding op je stage'},
- {id:'first', nr:'5', periode:'Periode 6', cursus:'FirstLine', em:'😤', titel:'De boze klant',
+ {id:'bootup', nr:'5', periode:'Periode 5', cursus:'BootUp', em:'🎓', titel:'Praktijkexamen B1-K1',
+  opdrachtgever:'<b>Een klein kantoor</b> (SOHO) dat een nieuw netwerk nodig heeft. Een examinator kijkt mee.',
+  opdracht:'Stel de wifi-router veilig in, maak een netwerktekening, regel de back-up en bereid je voor op je stage.',
+  kd:['B1-K1-W1 Maakt devices gebruiksklaar','B1-K1-W2 Installeert en configureert software','B1-K1-W3 Monteert en configureert netwerkonderdelen'],
+  echt:'In <b>BootUp</b> oefen je met dagtaken en oefenexamens: devices klaarmaken, Windows en Linux installeren, beveiliging en back-up, een wifi-router en SOHO-netwerk instellen, netwerktekeningen maken en kabels (ook glasvezel). Aan het eind doe je het <b>praktijkexamen B1-K1</b>. Met "Bagage voor je stage" bereid je je ook voor op solliciteren en op verantwoord AI-gebruik.',
+  profiel:'netwerker', run:lvlBoot},
+ {id:'first', nr:'6', periode:'Periode 6', cursus:'FirstLine', em:'😤', titel:'De boze klant',
   opdrachtgever:'<b>Meneer De Vries</b> belt de servicedesk. Hij is boos en heeft over een uur een presentatie.',
   opdracht:'Houd de klant rustig, los zijn probleem op en weet wanneer je moet overleggen met je leidinggevende.',
   kd:['B1-K2-W1 Handelt ICT-meldingen af','B1-K2-W2 Overlegt en stemt af met derden'],
   echt:'<b>FirstLine</b> is de generale repetitie voor het examen B1-K2: vijf dagen echte servicedesk draaien, professioneel mailen en bellen, en leren omgaan met boze klanten.',
   profiel:'helper', run:lvlFirst},
- {id:'bpv', nr:'6', periode:'Periode 7 + 8', cursus:'BPV (stage)', em:'🏢', titel:'Een dag op stage',
+ {id:'bpv', nr:'7', periode:'Periode 7 + 8', cursus:'BPV (stage)', em:'🏢', titel:'Een dag op stage',
   opdrachtgever:'<b>Je stagebedrijf</b>. Je praktijkopleider geeft je vandaag een paar klussen.',
   opdracht:'Doorloop een stagedag van 08:30 tot 16:30 en laat zien dat je een echte collega bent.',
   kd:['B1-K1 Installeert en onderhoudt','B1-K2 Handelt ICT-meldingen af'],
@@ -882,6 +887,80 @@ async function lvlFirst(st){
   st.innerHTML=`<div class="bellen">${kop()}<div class="chat"><div class="bub zij">${blij>=70?'Dankjewel, echt top geholpen! Ik ga mijn presentatie geven.':blij>=40?'Oké, het werkt weer. Bedankt.':'Hmpf. Het werkt, maar ik ben er niet blij mee.'}</div></div>
     <div class="fb goed"><img src="${IMG.kop}" alt=""><div><span class="k">Ticket afgesloten ✓</span>Klant-o-meter eindstand: <b>${blij}%</b>. In de opleiding oefen je dit met rollenspellen en echte servicedeskdagen.</div></div></div>`;
   await knopWacht(st);
+}
+
+/* ---------- BootUp: praktijkexamen B1-K1 ---------- */
+async function lvlBoot(st){
+  await kiesMeer(st,{stap:'Examenopdracht 1 van 4 · Wifi-router instellen', meter:'netjes',
+    voor:noor('Dit is je <b>praktijkexamen B1-K1</b>! Een klein kantoor krijgt een nieuwe wifi-router. De examinator kijkt mee 👀. Geen stress, je hebt dit vaak geoefend.'),
+    vraag:'Welke instellingen zet je op de router?',
+    opties:[
+      {t:'🔐 Beveiliging op WPA3 (of WPA2)',ok:true},
+      {t:'🔑 Het standaard beheerderswachtwoord vervangen',ok:true},
+      {t:'💪 Een sterk, lang wifi-wachtwoord',ok:true},
+      {t:'🔓 Wifi zonder wachtwoord, lekker makkelijk voor iedereen',ok:false,fb:'Zonder wachtwoord kan iedereen op straat op het kantoornetwerk.'},
+      {t:'📛 Netwerknaam "Kantoor-wachtwoord-is-1234"',ok:false,fb:'Zet nooit iets geheims in de netwerknaam, die ziet iedereen.'},
+      {t:'🙈 Beheerder "admin" met wachtwoord "admin" laten staan',ok:false,fb:'Standaard-inloggegevens staan gewoon op internet. Altijd wijzigen!'},
+    ],fbGoed:'Veilig ingesteld! De examinator zet een vinkje bij <b>"beveiligingsinstellingen volgens opdracht"</b>.'});
+  await netwerkTekening(st);
+  await kies(st,{stap:'Examenopdracht 3 van 4 · Back-up', meter:'vak',
+    voor:noor('Het kantoor wil hun bestanden nooit kwijtraken. Wat stel je in?'),
+    vraag:'Welke back-up is het veiligst?',
+    opties:[
+      {t:'💾☁️ Elke dag automatisch een back-up naar een externe schijf én naar de cloud',ok:true,fb:'Top! Meerdere kopieën op verschillende plekken. Gaat er één kapot, dan heb je de ander nog.'},
+      {t:'📁 Een mapje "backup" op dezelfde laptop',ok:false,fb:'Als die laptop crasht of gestolen wordt, ben je de back-up ook kwijt.'},
+      {t:'🤞 Geen back-up, een nieuwe laptop gaat jaren mee',ok:false,fb:'Ook nieuwe apparaten gaan kapot, of krijgen een virus. Altijd een back-up!'},
+    ]});
+  await kies(st,{stap:'Opdracht 4 van 4 · Bagage voor je stage', meter:'netjes',
+    voor:noor('🎉 <b>Examen gehaald!</b> Nog één ding in BootUp: voorbereiden op je stage. Je schrijft een sollicitatiemail aan een stagebedrijf.'),
+    vraag:'Je wilt AI (zoals ChatGPT) gebruiken voor je mail. Wat is verstandig?',
+    opties:[
+      {t:'🤖✍️ AI helpt je met de tekst, maar jij leest alles na, past het aan en zet er geen privégegevens van anderen in',ok:true,fb:'Precies: AI is een hulpmiddel, jij blijft verantwoordelijk. Dat heet <b>verantwoord AI-gebruik</b>, en dat leer je in BootUp.'},
+      {t:'📨 AI de hele mail laten schrijven en meteen versturen zonder te lezen',ok:false,fb:'Dan kan er van alles in staan wat niet klopt, of wat helemaal niet bij jou past. Altijd zelf controleren!'},
+      {t:'📋 De klantenlijst van je bijbaan in de AI plakken, "voor de ervaring"',ok:false,fb:'Gegevens van anderen deel je nooit met een AI-tool. Dat is een privacy-lek.'},
+    ]});
+}
+
+function netwerkTekening(st){
+  return new Promise(res=>{
+    const T={glas:{n:'Glasvezel',k:'#C5F76A',d:''},utp:{n:'UTP-kabel',k:'#55E5E2',d:''},wifi:{n:'Wifi',k:'#FF943F',d:'6 6'}};
+    const D=[
+      {id:'inet',n:'Internet (provider)',ic:'🌍',x:70,y:45,ok:['glas'],hint:'Snel internet komt via <b>glasvezel</b> van de provider binnen.'},
+      {id:'pc',n:'Desktop-pc',ic:'🖥️',x:330,y:45,ok:['utp'],hint:'Een vaste pc sluit je aan met een <b>UTP-kabel</b>: stabiel en snel.'},
+      {id:'laptop',n:'Laptop',ic:'💻',x:70,y:195,ok:['wifi'],hint:'Een laptop wil je overal mee naartoe nemen, dus <b>wifi</b>.'},
+      {id:'printer',n:'Netwerkprinter',ic:'🖨️',x:330,y:195,ok:['utp','wifi'],hint:'Een printer kan met een kabel of via wifi.'},
+    ];
+    const keus={};
+    st.innerHTML=`<div class="stap">Examenopdracht 2 van 4 · Netwerktekening</div>
+      ${noor('Maak de <b>netwerktekening</b>: kies voor elk apparaat hoe het met de router verbonden wordt.')}
+      <svg viewBox="0 0 400 240" style="width:100%;max-width:520px;display:block;margin:0 auto 10px;background:#0b1626;border:1px solid var(--rand);border-radius:14px">
+        <g id="lijnen"></g>
+        <rect x="160" y="98" width="80" height="44" rx="10" fill="#12294a" stroke="#55E5E2" stroke-width="2"/>
+        <text x="200" y="125" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Outfit,sans-serif">📡 Router</text>
+        ${D.map(d=>`<text x="${d.x}" y="${d.y+6}" text-anchor="middle" font-size="30">${d.ic}</text><text x="${d.x}" y="${d.y+28}" text-anchor="middle" fill="#a9bdd3" font-size="11" font-family="Outfit,sans-serif">${d.n}</text>`).join('')}
+      </svg>
+      <div style="display:grid;gap:8px">${D.map(d=>`<div class="rij" style="background:var(--navy2);border-radius:12px;padding:8px 12px"><b style="min-width:150px">${d.ic} ${d.n}</b><span class="ruimte"></span>
+        ${Object.keys(T).map(t=>`<button class="knop klein cyaan" data-d="${d.id}" data-t="${t}" style="padding:.4em .8em;font-size:.85rem">${T[t].n}</button>`).join('')}</div>`).join('')}</div>
+      <div class="verder"><button class="knop klein" id="check" disabled>Controleren ✓</button></div><div class="na"></div>`;
+    const teken=(toonGoed)=>{
+      st.querySelector('#lijnen').innerHTML=D.map(d=>{ const t=toonGoed?(d.ok.includes(keus[d.id])?keus[d.id]:d.ok[0]):keus[d.id];
+        return t?`<line x1="${d.x}" y1="${d.y}" x2="200" y2="120" stroke="${T[t].k}" stroke-width="4" stroke-dasharray="${T[t].d}" stroke-linecap="round"/>`
+                :`<line x1="${d.x}" y1="${d.y}" x2="200" y2="120" stroke="#33475f" stroke-width="2" stroke-dasharray="2 6"/>`; }).join('');
+    };
+    teken(false);
+    st.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{
+      keus[b.dataset.d]=b.dataset.t; snd.klik();
+      st.querySelectorAll(`[data-d="${b.dataset.d}"]`).forEach(x=>{const aan=x===b; x.style.background=aan?'var(--cyan)':''; x.style.color=aan?'#002b2a':'';});
+      teken(false); st.querySelector('#check').disabled=Object.keys(keus).length<D.length;
+    });
+    st.querySelector('#check').onclick=()=>{
+      st.querySelectorAll('[data-d]').forEach(b=>b.disabled=true); st.querySelector('#check').parentElement.remove();
+      const fout=D.filter(d=>!d.ok.includes(keus[d.id])); const goed=D.length-fout.length;
+      punt('vak',goed/D.length,2); (fout.length?snd.fout:snd.goed)(); teken(true);
+      st.querySelector('.na').innerHTML=`<div class="fb ${fout.length?'fout':'goed'}"><img src="${IMG.kop}" alt=""><div><span class="k">${fout.length?`${goed} van de ${D.length} goed`:'Netwerk werkt!'}</span>${fout.length?fout.map(d=>d.hint).join(' ')+' Ik heb de tekening voor je verbeterd.':'Alles is goed aangesloten. Een duidelijke netwerktekening hoort bij het <b>documenteren</b> van je werk.'}</div></div>`;
+      knopWacht(st.querySelector('.na')).then(res);
+    };
+  });
 }
 
 /* ---------- BPV: stagedag ---------- */

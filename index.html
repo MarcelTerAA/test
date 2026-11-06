@@ -46,6 +46,16 @@
     .tool-icoon{width:44px;height:44px;border-radius:var(--radius-sm);background:var(--groen-licht);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:0.25rem}
     .tool-badge{display:inline-flex;align-items:center;gap:4px;background:var(--groen-licht);color:var(--groen-diep);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:3px 8px;border-radius:99px;width:fit-content}
 .tool-kaart-breed{grid-column:1 / -1}
+    /* tegel met twee links: de hele tegel opent de app, het beheerlinkje ligt erboven */
+    .tool-kaart-dubbel{position:relative;cursor:pointer}
+    .tool-kaart-dubbel .hoofdlink{color:inherit;text-decoration:none}
+    .tool-kaart-dubbel .hoofdlink::after{content:'';position:absolute;inset:0;border-radius:var(--radius)}
+    .tool-kaart-dubbel:focus-within{border-color:var(--groen)}
+    .tool-kaart-dubbel .hoofdlink:focus-visible{outline:none}
+    .tool-kaart-dubbel .hoofdlink:focus-visible::after{outline:3px solid #1b6fd0;outline-offset:2px}
+    .tool-links-rij{justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .beheerlink{position:relative;z-index:1;font-size:12px;font-weight:600;color:var(--tekst-mid);background:var(--grijs-licht,#F1EFE8);border:1px solid var(--rand);border-radius:99px;padding:3px 10px;text-decoration:none}
+    .beheerlink:hover{color:var(--groen-diep);border-color:var(--groen);text-decoration:none}
     .tool-kaart h3{font-size:16px;font-weight:700;color:var(--tekst)}
     .tool-kaart p{font-size:13px;color:var(--tekst-mid);line-height:1.55;flex:1}
     .tool-link-label{font-size:12px;font-weight:600;color:var(--groen);display:flex;align-items:center;gap:4px;margin-top:auto}
@@ -106,13 +116,13 @@
       <div class="tool-link-label">Openen →</div>
     </a>
 
-    <a class="tool-kaart" href="veeg-en-deel.html">
+    <div class="tool-kaart tool-kaart-dubbel">
       <div class="tool-icoon">💬</div>
       <div class="tool-badge">Samen in de klas</div>
-      <h3>Veeg &amp; Deel</h3>
+      <h3><a class="hoofdlink" href="veeg-en-deel.html">Veeg &amp; Deel</a></h3>
       <p>Beantwoord anoniem de vraag van je docent en veeg daarna door elkaars antwoorden: naar rechts als je het een goed idee vindt, naar links als het niets voor je is.</p>
-      <div class="tool-link-label">Openen →</div>
-    </a>
+      <div class="tool-link-label tool-links-rij"><span>Openen →</span><a class="beheerlink" href="veeg-en-deel.html#beheer">🔒 Beheer (docent)</a></div>
+    </div>
 
     <a class="tool-kaart tool-kaart-breed" href="https://rig-academy-ter-aa.chatgpt-werk-1869.chatgpt.site/" target="_blank" rel="noopener">
       <div class="tool-icoon">🎮</div>

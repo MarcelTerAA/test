@@ -361,6 +361,13 @@ details.docent p{margin-top:6px}
 .toast.weg{animation:toastUit .3s ease both}
 .snipper{position:fixed;top:-12px;width:9px;height:14px;z-index:70;pointer-events:none;animation:vallen linear forwards}
 .print-cert{display:none}
+.opnieuw-link{display:block;margin:16px auto 0;background:none;border:none;color:var(--tekst-licht);font-size:13px;cursor:pointer;text-decoration:underline;padding:4px 8px}
+.opnieuw-link:hover{color:var(--rood)}
+.reset-keuze{border:2px solid var(--rand);border-radius:14px;background:#fff;padding:12px 14px;margin-bottom:10px}
+.reset-keuze h3{font-size:17px;margin-bottom:2px}
+.reset-keuze p{font-size:13.5px;color:var(--tekst-mid)}
+.knop.gevaar{background:var(--rood);border-color:#9b2a22;color:#fff;box-shadow:0 3px 0 #7d211b}
+.knop.gevaar:hover{background:#b02f26}
 
 @keyframes puls{0%,100%{box-shadow:0 5px 0 rgba(0,0,0,.12),0 0 0 0 color-mix(in srgb,var(--k) 55%,transparent)}50%{box-shadow:0 5px 0 rgba(0,0,0,.12),0 0 0 12px transparent}}
 @keyframes popIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
@@ -878,7 +885,7 @@ function renderKaart(){
     '<div><span>🎒</span><span><b>Rugzak</b>: dit is je stage-dossier. Verzamel alle 13 producten</span></div>'+
     '</div><p style="margin-top:8px;font-size:13px;color:var(--tekst-licht)">💾 Alles wordt automatisch bewaard in deze browser op jouw laptop. Er gaat niets naar internet en er is geen ranglijst.</p></details>';
   h+='<section class="wereld" style="height:'+H+'px" aria-label="Spelkaart met 7 levels"><svg class="pad" viewBox="0 0 100 '+H+'" preserveAspectRatio="none" aria-hidden="true"><path d="'+d+'" fill="none" stroke="#c9d3e2" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke"/><path d="'+d+'" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>'+knopen+'</section>';
-  h+='<div class="kaart-acties"><button class="knop" data-a="rugzak"><span>🎒</span>Rugzak</button><button class="knop" data-a="badges"><span>🏅</span>Badges</button><button class="knop" data-a="personage"><span>🧑‍💻</span>Personage</button><button class="knop" data-a="export"><span>📥</span>Alles exporteren</button></div>';
+  h+='<div class="kaart-acties"><button class="knop" data-a="rugzak"><span>🎒</span>Rugzak</button><button class="knop" data-a="badges"><span>🏅</span>Badges</button><button class="knop" data-a="personage"><span>🧑‍💻</span>Personage</button><button class="knop" data-a="export"><span>📥</span>Alles exporteren</button></div><button class="opnieuw-link" data-a="opnieuw">↺ Opnieuw beginnen…</button>';
   document.getElementById('app').innerHTML=h;
 }
 
@@ -1036,7 +1043,39 @@ function editorHtml(){
     '<div class="veld-groep"><span>Haarkleur</span>'+stalen('haarkleur',HAARKLEUR)+'</div>'+
     '<div class="veld-groep"><span>Shirt</span>'+stalen('shirt',SHIRT)+'</div>'+
     '<div class="veld-groep"><span>Extra’s</span><div class="stalen">'+aanuit('bril','👓 Bril')+aanuit('baard','🧔 Baard')+aanuit('oorbel','✨ Oorbellen')+'</div></div>'+
-    '<div class="acties"><button class="knop primair" data-a="sluit">✓ Klaar</button>'+(S.klasse?'<button class="knop" data-a="game" data-id="quiz">↻ Test opnieuw doen</button>':'<button class="knop goud" data-a="game" data-id="quiz">🧬 Doe de personage-test</button>')+'</div></div></div>';
+    '<div class="acties"><button class="knop primair" data-a="sluit">✓ Klaar</button><button class="knop" data-a="opnieuw">↺ Opnieuw beginnen</button>'+(S.klasse?'<button class="knop" data-a="game" data-id="quiz">↻ Test opnieuw doen</button>':'<button class="knop goud" data-a="game" data-id="quiz">🧬 Doe de personage-test</button>')+'</div></div></div>';
+}
+/* ---------- opnieuw beginnen ----------
+   Wist alleen gegevens van deze quest. Andere pagina's (zoals de dagtaken: p6_*) blijven staan. */
+function questSleutels(alles){
+  var k=[], cv=cvVelden.map(function(v){ return v.id; });
+  try { for(var i=0;i<localStorage.length;i++){ var s=localStorage.key(i);
+    if(/^quest_/.test(s) || (alles && (/^w\d+_s\d+_i\d+(_\d+)?$/.test(s) || cv.indexOf(s)!==-1))) k.push(s); } } catch(e){}
+  return k;
+}
+function toonOpnieuw(){
+  stopTimer(); A=null;
+  openArena('↺ Opnieuw beginnen',
+    '<p style="margin-bottom:12px;color:var(--tekst-mid)">Kies wat je wilt wissen. Dit geldt alleen voor deze quest in deze browser. Je gegevens bij andere tools (zoals Praktijk Dagtaken) blijven staan.</p>'+
+    '<div class="reset-keuze"><h3>🎮 Alleen de game opnieuw</h3><p>Wist je personage, je naam, scores van de minigames, badges en afgevinkte rollenspellen. <b>Je antwoorden, checklists en cv blijven staan</b> en tellen meteen weer mee voor je XP.</p><div class="acties"><button class="knop" data-a="wis" data-soort="game">Alleen de game wissen…</button></div></div>'+
+    '<div class="reset-keuze" style="border-color:#efc2bd"><h3>🧹 Alles wissen</h3><p>Wist ook <b>al je antwoorden, checklists en je cv</b>. Je begint helemaal opnieuw, als nieuwe speler. Tip: exporteer eerst je stage-dossier, dan heb je een kopie.</p><div class="acties"><button class="knop" data-a="export">📥 Eerst exporteren</button><button class="knop gevaar" data-a="wis" data-soort="alles">Alles wissen…</button></div></div>'+
+    '<div class="acties"><button class="knop" data-a="sluit">Annuleren</button></div>');
+}
+function toonWisBevestig(soort){
+  var n=questSleutels(soort==='alles').length;
+  openArena('⚠️ Weet je het zeker?',
+    '<div class="fb fout" style="margin-top:0"><b>'+(soort==='alles'?'Alles wissen: ook je antwoorden en cv.':'Alleen de game wissen: je antwoorden blijven staan.')+'</b>Dit kan niet ongedaan worden gemaakt ('+n+' opgeslagen onderdelen).</div>'+
+    '<div class="acties"><button class="knop gevaar" data-a="wisbevestig" data-soort="'+soort+'">Ja, wissen en opnieuw beginnen</button><button class="knop" data-a="opnieuw" data-focus>Nee, terug</button></div>');
+  var f=document.querySelector('#arena-body [data-focus]'); if(f) f.focus({preventScroll:true});
+}
+function wisQuest(soort){
+  questSleutels(soort==='alles').forEach(function(k){ try { localStorage.removeItem(k); } catch(e){} });
+  S={naam:'', klasse:'', av:{huid:1,haar:0,haarkleur:1,shirt:0,bril:false,baard:false,oorbel:false}, quiz:null};
+  G={}; INST={geenTijd:false};
+  sluitArenaStil();
+  if(location.hash!=='#kaart') history.replaceState(null,'','#kaart');
+  renderView(); checkVoortgang(); window.scrollTo(0,0);
+  toast('↺', 'Opnieuw begonnen', soort==='alles'?'Alles is gewist. Veel plezier, nieuwe speler!':'De game is gewist. Je antwoorden staan er nog.');
 }
 function toonEditor(){ stopTimer(); A=null; openArena('🧑‍💻 Jouw personage', editorHtml()); }
 function toonGroot(w){ stopTimer(); A=null;
@@ -1107,6 +1146,9 @@ document.addEventListener('click', function(e){
   if(a==='rugzak'){ toonRugzak(); return; }
   if(a==='badges'){ toonBadges(); return; }
   if(a==='personage'){ toonEditor(); return; }
+  if(a==='opnieuw'){ toonOpnieuw(); return; }
+  if(a==='wis'){ toonWisBevestig(b.dataset.soort); return; }
+  if(a==='wisbevestig'){ wisQuest(b.dataset.soort); return; }
   if(a==='certificaat'){ toonCertificaat(); return; }
   if(a==='groot'){ toonGroot(+b.dataset.w); return; }
   if(a==='export'){ exporteerAlles(); return; }

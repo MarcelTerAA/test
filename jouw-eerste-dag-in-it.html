@@ -114,6 +114,10 @@ input[type=text]:focus{border-color:var(--cyan)}
 .stop.mijl .nr{width:32px;height:32px;font-size:1rem;margin:0 7px}
 .stop.bonus{border-color:rgba(197,247,106,.35)}
 .stop.bonus .nr{color:var(--lime);border-color:var(--lime)}
+.stop .tag.ex{color:var(--oranje);border-color:var(--oranje)}
+.exbanner{display:flex;gap:12px;align-items:flex-start;margin:16px 0 4px;padding:12px 14px;border-radius:14px;background:rgba(255,148,63,.1);border:1px solid rgba(255,148,63,.45)}
+.exbanner span{font-size:1.8rem;line-height:1}
+.exbanner b{color:var(--oranje)}
 .stop .tag{font-size:.7rem;font-weight:800;letter-spacing:.12em;color:var(--lime);border:1px solid var(--lime);border-radius:99px;padding:.15em .6em;margin-left:6px;vertical-align:middle}
 @keyframes puls{0%{box-shadow:0 0 0 0 rgba(255,148,63,.45)}70%{box-shadow:0 0 0 12px rgba(255,148,63,0)}100%{box-shadow:0 0 0 0 rgba(255,148,63,0)}}
 
@@ -147,24 +151,19 @@ input[type=text]:focus{border-color:var(--cyan)}
 /* pc bouwen */
 .bouw{display:grid;grid-template-columns:1fr 210px;gap:16px}
 @media (max-width:700px){.bouw{grid-template-columns:1fr}}
-.kast{position:relative;aspect-ratio:1/1.05;max-height:440px;width:100%;border-radius:18px;background:linear-gradient(145deg,#0b1626,#060d18);border:2px solid #24364f;padding:16px}
-.bord{position:absolute;left:8%;top:6%;width:84%;height:62%;border-radius:10px;background:
-  repeating-linear-gradient(90deg,rgba(85,229,226,.07) 0 1px,transparent 1px 26px),
-  repeating-linear-gradient(0deg,rgba(85,229,226,.07) 0 1px,transparent 1px 26px),#0f3b37;border:2px solid #1d6a62}
-.bord .naam{position:absolute;left:10px;top:6px;font-size:.7rem;letter-spacing:.15em;color:rgba(85,229,226,.6);font-weight:700}
-.slot{position:absolute;border:2px dashed rgba(255,255,255,.35);border-radius:8px;display:grid;place-items:center;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.55);text-align:center;transition:all .2s;padding:2px}
-.slot.doel{border-color:var(--oranje);color:var(--oranje);background:rgba(255,148,63,.1);animation:puls 1.4s infinite}
-.slot.vol{border:2px solid var(--groen);color:#fff;font-size:.78rem}
-.s-cpu{left:30%;top:16%;width:26%;height:30%}
-.s-ram{left:66%;top:10%;width:20%;height:54%}
-.s-ssd{left:22%;top:62%;width:40%;height:15%}
-.s-psu{left:8%;top:73%;width:42%;height:21%}
-.s-gpu{left:56%;top:73%;width:36%;height:21%}
-.slot.vol.s-cpu{background:linear-gradient(135deg,#c9ced6,#8d96a3);color:#111}
-.slot.vol.s-ram{background:repeating-linear-gradient(0deg,#1d2a3c 0 6px,#2d3f58 6px 12px);border-color:var(--cyan)}
-.slot.vol.s-ssd{background:#222;}
-.slot.vol.s-psu{background:radial-gradient(circle at 70% 50%,#333 0 30%,#1a1a1a 31%)}
-.slot.vol.s-gpu{background:linear-gradient(90deg,#1b1b1b,#2b2b2b);box-shadow:inset 0 -4px 0 var(--oranje)}
+.kast{position:relative;aspect-ratio:400/420;width:min(100%,495px);margin:0 auto;border-radius:16px;overflow:hidden;border:2px solid #24364f;background:#0c1118}
+.kast>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kast .deel{opacity:0;transition:opacity .35s, transform .35s;transform:translateY(-6px)}
+.kast .deel.aan{opacity:1;transform:none}
+.kast .deel.aan .waaier{animation:draai 1.4s linear infinite}
+.slot{position:absolute;border:2px dashed rgba(255,255,255,.28);border-radius:6px;transition:all .2s;background:transparent}
+.slot.doel{border-color:var(--oranje);background:rgba(255,148,63,.14);animation:puls 1.4s infinite}
+.slot.vol{border-color:transparent;background:transparent;pointer-events:none;animation:none}
+.s-cpu{left:27.5%;top:15.5%;width:20%;height:19%}
+.s-ram{left:55.5%;top:9%;width:12%;height:39.5%}
+.s-ssd{left:26.25%;top:38%;width:25%;height:5.7%}
+.s-gpu{left:16.25%;top:48.8%;width:45%;height:11%}
+.s-psu{left:7.5%;top:81%;width:37.5%;height:14.8%}
 .lade{display:grid;gap:8px;align-content:start}
 @media (max-width:700px){.lade{grid-template-columns:repeat(3,1fr)}}
 .onderdeel{padding:10px 12px;border-radius:12px;background:var(--navy2);border:2px solid rgba(255,255,255,.12);text-align:left;font-weight:700;display:flex;gap:8px;align-items:center;font-size:.92rem}
@@ -237,6 +236,23 @@ input[type=text]:focus{border-color:var(--cyan)}
 /* bpv klok */
 .dagklok{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--cyan);margin-bottom:6px}
 .dagklok .uur{font-family:Consolas,monospace;background:#000;border:1px solid var(--rand);border-radius:8px;padding:.1em .5em}
+
+/* kantine (BPV-pauze) */
+.kantine{position:relative;height:260px;border-radius:16px;overflow:hidden;margin:6px 0 12px;border:1px solid var(--rand);
+  background:linear-gradient(180deg,#2b2440 0%,#1d2638 62%,#3a2f28 62%,#2c241f 100%)}
+.kantine .tafel{position:absolute;left:12%;right:12%;top:43%;height:52px;border-radius:26px;background:linear-gradient(#b07a45,#86592f);box-shadow:0 8px 0 #5a3c22;display:flex;justify-content:space-around;align-items:center;font-size:1.3rem;z-index:2}
+.kantine .persoon{position:absolute;font-size:2.4rem;transform:translate(-50%,-50%);z-index:3}
+.kantine .persoon.jij{animation:in .5s}
+.kantine .persoon.leeg{opacity:.6}
+.kbub{position:absolute;bottom:100%;left:50%;background:#fff;color:#13223a;font-size:.72rem;font-weight:700;padding:4px 9px;border-radius:10px;white-space:nowrap;opacity:0;transform:translate(-50%,6px);animation:kbub 6s infinite;z-index:5}
+.kbub::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border:5px solid transparent;border-top-color:#fff}
+.kbub.vast{animation:none;opacity:1;transform:translate(-60%,0);background:var(--oranje)}
+.kbub.vast::after{border-top-color:var(--oranje)}
+@keyframes kbub{0%,4%{opacity:0;transform:translate(-50%,6px)}10%,38%{opacity:1;transform:translate(-50%,0)}46%,100%{opacity:0;transform:translate(-50%,0)}}
+.kantine .noot{position:absolute;bottom:8px;font-size:1.3rem;opacity:0;animation:noot 3.6s infinite;z-index:3}
+@keyframes noot{0%{opacity:0;transform:translateY(0)}20%{opacity:.9}100%{opacity:0;transform:translateY(-200px) rotate(20deg)}}
+.kantine .plant{position:absolute;bottom:6px;font-size:1.8rem}
+@media (max-width:620px){.kbub{font-size:.62rem;padding:3px 6px}.kantine .persoon{font-size:2rem}}
 
 /* pi */
 .code{background:#0b1626;border:1px solid var(--rand);border-radius:14px;padding:16px;font-size:1.1rem;font-weight:700;line-height:2.4}
@@ -434,17 +450,19 @@ const LEVELS=[
   kd:['B1-K1-W1 t/m W3 — hardware, software en netwerk samen','Doorstroom naar niveau 3'],
   echt:'<b>Green Pi Machine</b> is een verdiepingscursus (niet verplicht): je werkt met Raspberry Pi, Linux, Python, cloud en Internet of Things. Handig als je daarna wilt doorstromen naar niveau 3.',
   profiel:'maker', run:lvlPi},
- {id:'bootup', nr:'5', periode:'Periode 5', cursus:'BootUp', em:'🎓', titel:'Praktijkexamen B1-K1',
+ {id:'bootup', nr:'5', periode:'Periode 5', cursus:'BootUp', em:'🎓', titel:'Praktijkexamen B1-K1', examen:'B1-K1',
+  examenUitleg:'Praktijkexamen op school: je laat zien dat je devices, software en netwerkonderdelen zelfstandig kunt installeren en configureren.',
   opdrachtgever:'<b>Een klein kantoor</b> (SOHO) dat een nieuw netwerk nodig heeft. Een examinator kijkt mee.',
   opdracht:'Stel de wifi-router veilig in, maak een netwerktekening, regel de back-up en bereid je voor op je stage.',
   kd:['B1-K1-W1 Maakt devices gebruiksklaar','B1-K1-W2 Installeert en configureert software','B1-K1-W3 Monteert en configureert netwerkonderdelen'],
   echt:'In <b>BootUp</b> oefen je met dagtaken en oefenexamens: devices klaarmaken, Windows en Linux installeren, beveiliging en back-up, een wifi-router en SOHO-netwerk instellen, netwerktekeningen maken en kabels (ook glasvezel). Aan het eind doe je het <b>praktijkexamen B1-K1</b>. Met "Bagage voor je stage" bereid je je ook voor op solliciteren en op verantwoord AI-gebruik.',
   profiel:'netwerker', run:lvlBoot},
- {id:'first', nr:'6', periode:'Periode 6', cursus:'FirstLine', em:'😤', titel:'De boze klant',
+ {id:'first', nr:'6', periode:'Periode 6', cursus:'FirstLine', em:'😤', titel:'Examen B1-K2: de boze klant', examen:'B1-K2',
+  examenUitleg:'Examenproject servicedesk: je laat zien dat je ICT-meldingen zelfstandig aanneemt, afhandelt en afstemt met anderen.',
   opdrachtgever:'<b>Meneer De Vries</b> belt de servicedesk. Hij is boos en heeft over een uur een presentatie.',
   opdracht:'Houd de klant rustig, los zijn probleem op en weet wanneer je moet overleggen met je leidinggevende.',
   kd:['B1-K2-W1 Handelt ICT-meldingen af','B1-K2-W2 Overlegt en stemt af met derden'],
-  echt:'<b>FirstLine</b> is de generale repetitie voor het examen B1-K2: vijf dagen echte servicedesk draaien, professioneel mailen en bellen, en leren omgaan met boze klanten.',
+  echt:'<b>FirstLine</b> is je <b>examenproject B1-K2</b>: vijf dagen echte servicedesk draaien in TOPdesk, professioneel mailen en bellen, en omgaan met boze klanten. Je bouwt een examenportfolio op en sluit af met een examengesprek.',
   profiel:'helper', run:lvlFirst},
  {id:'bpv', nr:'7', periode:'Periode 7 + 8', cursus:'BPV (stage)', em:'🏢', titel:'Een dag op stage',
   opdrachtgever:'<b>Je stagebedrijf</b>. Je praktijkopleider geeft je vandaag een paar klussen.',
@@ -457,7 +475,7 @@ const speelbaar=LEVELS.filter(l=>l.run);
 
 /* ================= START ================= */
 function startScherm(){
-  nieuw();
+  nieuw(); muziek(false);
   const el=scherm(`<div class="hero" style="background-image:url('${IMG.hero}')"><div class="in">
      <img class="logo" src="${IMG.logo}" alt="ter AA">
      <div class="label">Ter AA ICT · Open dag</div>
@@ -505,8 +523,9 @@ function yfitScherm(){
     <div class="swipe-knoppen"><button class="knop cyaan" id="nee">👎 Nee joh</button><button class="knop" id="ja">👍 Leuk!</button></div>
     <p class="zacht" id="tel" style="margin-top:12px"></p></div>`,'Your Future in IT');
   const sw=el.querySelector('#sw');
+  let leuk=0;
   function teken(){
-    if(i>=kaarten.length){ S.klaar.push('yfit'); S.sterren.yfit=3; return kaartScherm(); }
+    if(i>=kaarten.length){ S.klaar.push('yfit'); S.sterren.yfit=3; S.geenMatch=(leuk===0); return leuk===0?geenMatchScherm():kaartScherm(); }
     const k=kaarten[i];
     sw.innerHTML=`<div class="swipekaart"><div class="em">${k.em}</div><div class="tk">${k.t}</div></div>`;
     el.querySelector('#tel').textContent=`${i+1} / ${kaarten.length}`;
@@ -517,12 +536,24 @@ function yfitScherm(){
   }
   function kies2(ja){
     const kd=sw.firstChild; if(!kd||kd.dataset.weg)return; kd.dataset.weg=1;
-    kd.classList.add(ja?'weg-r':'weg-l'); if(ja){S.profiel[kaarten[i].p]+=2; snd.goed();} else snd.klik();
+    kd.classList.add(ja?'weg-r':'weg-l'); if(ja){S.profiel[kaarten[i].p]+=2; leuk++; snd.goed();} else snd.klik();
     i++; setTimeout(teken,300);
   }
   el.querySelector('#ja').onclick=()=>kies2(true);
   el.querySelector('#nee').onclick=()=>kies2(false);
   teken();
+}
+
+/* Alles naar links geswipet: eerlijk zeggen, maar wel laten doorspelen */
+function geenMatchScherm(){
+  const el=scherm(`<div class="kaart midden" style="display:flex;flex-direction:column;max-width:640px;margin:0 auto;width:100%">
+    <div style="font-size:3.4rem">🤔</div>
+    <div class="label">Periode 1 · Your Future in IT</div>
+    <h2>Hmm… alles <span class="acc">Nee joh</span>?</h2>
+    ${noor('Eerlijk is eerlijk: misschien is de opleiding <b>Medewerker ICT</b> niet helemaal jouw ding. En dat is helemaal oké! Daar is deze eerste periode ook voor: ontdekken wat bij je past. Ter AA heeft nog veel meer opleidingen.')}
+    ${noor('Maar… speel toch even verder. Misschien verrast ICT je nog. 😉')}
+    <button class="knop" id="door">Toch verder spelen ▸</button></div>`,'Your Future in IT');
+  el.querySelector('#door').onclick=()=>{snd.klik();kaartScherm()};
 }
 
 /* ================= ROUTEKAART ================= */
@@ -537,12 +568,13 @@ function kaartScherm(){
     const st=klaar?'★'.repeat(S.sterren[l.id]||1)+'☆'.repeat(3-(S.sterren[l.id]||1)):'';
     return `<button class="stop ${klaar?'klaar':''} ${nu?'nu':''} ${!klaar&&!nu?'dicht':''} ${l.bonus?'bonus':''}" data-id="${l.id}">
       <div class="nr">${klaar?'✓':l.nr}</div>
-      <div class="tx"><b>${l.em||''} ${l.cursus}${l.bonus?'<span class="tag">BONUS</span>':''}</b><small>${l.periode} · ${overgeslagen?'overgeslagen':l.titel}</small></div>
+      <div class="tx"><b>${l.em||''} ${l.cursus}${l.bonus?'<span class="tag">BONUS</span>':''}${l.examen?'<span class="tag ex">🎓 EXAMEN</span>':''}</b><small>${l.periode} · ${overgeslagen?'overgeslagen':l.titel}</small></div>
       <div class="st">${st}${nu?'<span class="knop klein">Start ▸</span>':''}</div></button>`;
   }).join('');
   const isBonus=nxt.bonus;
   const el=scherm(`<div class="rij"><div><div class="label">Jouw leerroute · 2 jaar in 10 minuten</div><h2>${S.av} ${esc(S.naam)}</h2></div></div>
-    ${noor(S.klaar.length<=1?`Top! Volgens mij ben jij <b>${topType().naam}</b> ${topType().em}. Of dat aan het eind nog klopt? Dit is jouw route door de opleiding. Elke stop is een <b>echte cursus</b>. Start met de oranje stop!`
+    ${noor(S.klaar.length<=1&&S.geenMatch?`Dit is jouw route door de opleiding. Elke stop is een <b>echte cursus</b>. Kijken of één ervan je toch verrast? Start met de oranje stop!`
+      : S.klaar.length<=1?`Top! Volgens mij ben jij <b>${topType().naam}</b> ${topType().em}. Of dat aan het eind nog klopt? Dit is jouw route door de opleiding. Elke stop is een <b>echte cursus</b>. Start met de oranje stop!`
       : isBonus?'Je hebt nu de basis! Wil je nog een <b>bonuslevel</b> met Raspberry Pi? Dat is een verdieping voor wie meer wil. Je mag het ook overslaan.'
       : 'Lekker bezig! Op naar de volgende cursus.')}
     <div class="route">${html}</div>
@@ -553,7 +585,8 @@ function kaartScherm(){
 
 function levelIntro(l){
   const el=scherm(`<div class="kaart">
-    <div class="intro-kop"><div class="groot">${l.em}</div><div><div class="label">${l.periode} · Cursus</div><h2 style="margin:0">${l.cursus}</h2><div class="zacht">${l.titel}</div></div></div>
+    <div class="intro-kop"><div class="groot">${l.em}</div><div><div class="label">${l.periode} · ${l.examen?'Examenproject':'Cursus'}</div><h2 style="margin:0">${l.cursus}</h2><div class="zacht">${l.titel}</div></div></div>
+    ${l.examen?`<div class="exbanner"><span>🎓</span><div><b>Dit is een echt examen: ${l.examen}</b><br>${l.examenUitleg}</div></div>`:''}
     <p style="margin-top:16px"><span class="label or" style="font-size:.72rem">Opdrachtgever</span><br>${l.opdrachtgever}</p>
     <p><span class="label or" style="font-size:.72rem">Jouw opdracht</span><br>${l.opdracht}</p>
     <div class="label" style="font-size:.72rem;margin-top:12px">Uit het echte examenprogramma</div>
@@ -574,7 +607,7 @@ function resultaat(l){
   S.sterren[l.id]=sterren; S.klaar.push(l.id); if(l.profiel) S.profiel[l.profiel]+=sterren;
   const tekst=['','Goed geprobeerd! Daarvoor ga je juist naar school.','Mooi werk! Je hebt het echt in je.','Wauw, dat is vakwerk!'][sterren];
   const el=scherm(`<div class="kaart midden" style="display:flex;flex-direction:column">
-     <div class="label">${l.cursus} · afgerond</div>
+     <div class="label">${l.cursus} · ${l.examen?'examen '+l.examen+' afgerond 🎓':'afgerond'}</div>
      <h2>${tekst}</h2>
      <div class="sterren">${[1,2,3].map(i=>`<span>★</span>`).join('')}</div>
      <div class="echt"><div class="em">💡</div><div><b class="acc2">Zo gaat het écht in de opleiding</b><br>${l.echt}</div></div>
@@ -627,17 +660,17 @@ function pcBouwen(st){
       {id:'gpu',n:'Videokaart',k:'voor het beeld',ic:'🎞️'},
       {id:'psu',n:'Voeding',k:'stroom voor alles',ic:'⚡'},
     ];
-    const hint={cpu:'De CPU gaat in de vierkante socket midden op het moederbord.',ram:'RAM-latjes gaan in de lange sleuven naast de CPU.',ssd:'Een M.2-SSD ligt plat op het moederbord, onder de CPU.',gpu:'De videokaart gaat in het lange PCIe-slot, rechtsonder.',psu:'De voeding zit onderin de kast, linksonder.'};
+    const hint={cpu:'De CPU gaat in de vierkante socket met de goudkleurige pinnetjes, linksboven op het moederbord.',ram:'RAM-latjes klik je in de lange zwarte sleuven met witte klemmetjes, rechts naast de CPU.',ssd:'Een M.2-SSD ligt plat op het moederbord, in het kleine slot onder de CPU (met het schroefje).',gpu:'De videokaart gaat in het lange PCIe x16-slot met het metalen randje.',psu:'De voeding zit onderin de kast, onder de afscherming.'};
     let sel=null, fouten=0, geplaatst=0;
     st.innerHTML=`<div class="stap">Stap 2 van 4 · PC bouwen</div>
-      ${noor('Tik op een onderdeel en daarna op de plek waar het hoort. Weet je het niet? Gewoon proberen, ik help je!')}
+      ${noor('Kijk, een echt moederbord! Tik op een onderdeel en daarna op de plek waar het hoort. Weet je het niet? Gewoon proberen, ik help je!')}
       <div class="bouw"><div class="kast">
-        <div class="bord"><span class="naam">MOEDERBORD</span></div>
-        <button class="slot s-cpu" data-s="cpu">socket</button>
-        <button class="slot s-ram" data-s="ram">lange<br>sleuven</button>
-        <button class="slot s-ssd" data-s="ssd">M.2</button>
-        <button class="slot s-psu" data-s="psu">onderin</button>
-        <button class="slot s-gpu" data-s="gpu">PCIe</button>
+        ${moederbordSVG()}
+        <button class="slot s-cpu" data-s="cpu" aria-label="CPU-socket"></button>
+        <button class="slot s-ram" data-s="ram" aria-label="RAM-sleuven"></button>
+        <button class="slot s-ssd" data-s="ssd" aria-label="M.2-slot"></button>
+        <button class="slot s-psu" data-s="psu" aria-label="Voedingsruimte"></button>
+        <button class="slot s-gpu" data-s="gpu" aria-label="PCIe x16-slot"></button>
       </div>
       <div class="lade">${schud(delen).map(d=>`<button class="onderdeel" data-d="${d.id}"><span class="ic">${d.ic}</span><span>${d.n}<small>${d.k}</small></span></button>`).join('')}</div></div>
       <div class="na"></div>`;
@@ -648,7 +681,7 @@ function pcBouwen(st){
     slots.forEach(s=>s.onclick=()=>{
       if(!sel||s.classList.contains('vol')) return;
       if(s.dataset.s===sel){
-        const d=delen.find(x=>x.id===sel); s.classList.add('vol'); s.classList.remove('doel'); s.innerHTML=d.n.split(' ')[0];
+        s.classList.add('vol'); s.classList.remove('doel'); st.querySelector('#d-'+sel).classList.add('aan');
         st.querySelector(`.onderdeel[data-d="${sel}"]`).classList.add('weg'); sel=null; geplaatst++; snd.goed();
         slots.forEach(x=>x.classList.remove('doel'));
         st.querySelector('.na').innerHTML='';
@@ -663,6 +696,85 @@ function pcBouwen(st){
       }
     });
   });
+}
+
+/* Realistisch getekend ATX-moederbord in een pc-kast (viewBox 400x420).
+   De slot-knoppen in CSS (.s-cpu enz.) liggen op dezelfde coördinaten. */
+function moederbordSVG(){
+  const F='font-family="Consolas,monospace"';
+  const fan=(cx,cy,r,id)=>{ let b=''; for(let i=0;i<7;i++) b+=`<path d="M${cx} ${cy} q ${r*.45} ${-r*.2} ${r*.78} ${-r*.55}" stroke="#4a515c" stroke-width="${r*.32}" stroke-linecap="round" fill="none" transform="rotate(${i*51.4} ${cx} ${cy})"/>`;
+    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0b0d10" stroke="#3a3f47" stroke-width="2"/><g class="waaier" style="transform-origin:${cx}px ${cy}px">${b}</g><circle cx="${cx}" cy="${cy}" r="${r*.28}" fill="#262a31" stroke="#FF943F" stroke-width="1"/>`; };
+  const dimm=[226,238,250,262].map(x=>`<rect x="${x}" y="40" width="6" height="162" fill="#151515" stroke="#2c2c2c"/><rect x="${x-1}" y="34" width="8" height="7" rx="1" fill="#d9dde2"/><rect x="${x-1}" y="201" width="8" height="7" rx="1" fill="#d9dde2"/>`).join('');
+  const caps=[[104,62],[104,74],[104,86],[104,98],[120,156],[132,156],[168,156],[180,156],[214,70],[214,84]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="#1d1f22" stroke="#555"/><circle cx="${x}" cy="${y}" r="1.6" fill="#9aa3ad"/>`).join('');
+  const gaten=[[50,30],[330,30],[50,282],[330,282],[200,282],[200,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4.5" fill="#c7ccd2" stroke="#7d858f"/><circle cx="${x}" cy="${y}" r="2" fill="#2b2f36"/>`).join('');
+  const ram=[234,258].map(x=>`<rect x="${x}" y="38" width="12" height="166" rx="1.5" fill="#121417" stroke="#30353d"/><rect x="${x}" y="38" width="12" height="4" fill="#FF943F"/><rect x="${x+2}" y="60" width="8" height="120" fill="#1b1f25"/><text x="${x+8}" y="150" ${F} font-size="7" fill="#8b929c" transform="rotate(-90 ${x+8} 150)">DDR5 8GB</text>`).join('');
+  return `<svg viewBox="0 0 400 420" aria-hidden="true">
+  <defs>
+    <linearGradient id="mbWand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#151b24"/><stop offset="1" stop-color="#0a0e14"/></linearGradient>
+    <linearGradient id="mbMetaal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8ebef"/><stop offset=".5" stop-color="#a9b1bb"/><stop offset="1" stop-color="#d5dae0"/></linearGradient>
+    <linearGradient id="mbKoel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#454c57"/><stop offset="1" stop-color="#262b33"/></linearGradient>
+    <linearGradient id="mbGpu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c313a"/><stop offset="1" stop-color="#14171c"/></linearGradient>
+    <pattern id="mbPcb" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#16191e"/><path d="M0 6 H10 L14 10 H24 M4 24 V16 L8 12 M18 0 V4 L22 8" stroke="#22303a" stroke-width="1" fill="none"/><circle cx="14" cy="10" r="1" fill="#2e3f4b"/></pattern>
+    <pattern id="mbPins" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#3a2e17"/><circle cx="2" cy="2" r=".9" fill="#d4ad4a"/></pattern>
+    <pattern id="mbGaas" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#0d1117"/><circle cx="3" cy="3" r="1.6" fill="#1c232d"/></pattern>
+    <pattern id="mbVin" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#2e343d"/><rect width="2" height="5" fill="#4a525e"/></pattern>
+    <pattern id="mbVin2" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#2e343d"/><rect width="5" height="2" fill="#4a525e"/></pattern>
+  </defs>
+  <rect width="400" height="420" fill="url(#mbWand)"/>
+  <rect x="352" y="16" width="40" height="292" rx="4" fill="url(#mbGaas)" stroke="#232b36"/>
+  <circle cx="372" cy="90" r="16" fill="none" stroke="#2a3340" stroke-width="2"/><circle cx="372" cy="200" r="16" fill="none" stroke="#2a3340" stroke-width="2"/>
+  <!-- moederbord -->
+  <rect x="40" y="20" width="300" height="272" rx="5" fill="url(#mbPcb)" stroke="#2b333d" stroke-width="1.5"/>
+  ${gaten}
+  <rect x="42" y="22" width="32" height="122" rx="4" fill="url(#mbKoel)"/><path d="M48 30 H68 M48 38 H68 M48 46 H68 M48 54 H68 M48 62 H68" stroke="#5a626e" stroke-width="2"/><text x="58" y="120" ${F} font-size="7" fill="#FF943F" text-anchor="middle" transform="rotate(-90 58 120)">TER AA</text>
+  <rect x="84" y="26" width="128" height="26" rx="3" fill="url(#mbVin)" stroke="#20252c"/>
+  <rect x="76" y="58" width="24" height="96" rx="3" fill="url(#mbVin2)" stroke="#20252c"/>
+  ${caps}
+  <!-- CPU-socket -->
+  <rect x="110" y="65" width="80" height="80" rx="3" fill="url(#mbMetaal)" stroke="#6d757f"/>
+  <rect x="118" y="73" width="64" height="64" fill="url(#mbPins)"/>
+  <path d="M193 70 V142 H188" stroke="#c8ced5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <text x="150" y="153" ${F} font-size="6" fill="#7f8b97" text-anchor="middle">CPU_SOCKET</text>
+  <!-- DIMM -->
+  ${dimm}<text x="246" y="217" ${F} font-size="6" fill="#7f8b97" text-anchor="middle">DIMM A1 A2 B1 B2</text>
+  <!-- 24-pin ATX -->
+  <rect x="292" y="80" width="16" height="66" rx="2" fill="#e9eaec" stroke="#b8bcc2"/>
+  <path d="M296 84 V142 M304 84 V142" stroke="#2a2a2a" stroke-width="3.2" stroke-dasharray="3.2 2.3"/>
+  <text x="300" y="158" ${F} font-size="6" fill="#7f8b97" text-anchor="middle">ATX_PWR</text>
+  <!-- M.2 -->
+  <rect x="108" y="166" width="8" height="14" rx="1" fill="#202020" stroke="#444"/>
+  <rect x="116" y="168" width="82" height="10" fill="none" stroke="#3a4450" stroke-dasharray="3 2"/>
+  <circle cx="201" cy="173" r="3" fill="url(#mbMetaal)"/>
+  <text x="150" y="191" ${F} font-size="6" fill="#7f8b97" text-anchor="middle">M.2_1 (PCIe 4.0)</text>
+  <!-- SATA -->
+  <rect x="320" y="172" width="16" height="10" rx="1" fill="#1a1a1a" stroke="#4a4a4a"/><rect x="320" y="186" width="16" height="10" rx="1" fill="#1a1a1a" stroke="#4a4a4a"/>
+  <text x="328" y="206" ${F} font-size="5.5" fill="#7f8b97" text-anchor="middle">SATA</text>
+  <!-- PCIe -->
+  <rect x="70" y="222" width="170" height="10" rx="1" fill="#1a1a1a" stroke="#c3c9d0" stroke-width="1.6"/><rect x="236" y="220" width="6" height="14" rx="1" fill="#d9dde2"/>
+  <text x="80" y="242" ${F} font-size="6" fill="#7f8b97">PCIEX16_1</text>
+  <rect x="70" y="252" width="40" height="8" rx="1" fill="#1a1a1a" stroke="#3c3c3c"/>
+  <rect x="70" y="272" width="170" height="8" rx="1" fill="#1a1a1a" stroke="#3c3c3c"/>
+  <!-- chipset -->
+  <rect x="250" y="222" width="70" height="46" rx="6" fill="url(#mbKoel)" stroke="#1d2127"/><rect x="250" y="262" width="70" height="3" fill="#FF943F"/>
+  <text x="285" y="249" font-size="11" font-weight="800" fill="#FF943F" text-anchor="middle" font-family="Outfit,sans-serif">ter AA</text>
+  <circle cx="300" cy="284" r="7" fill="url(#mbMetaal)" stroke="#7d858f"/>
+  <!-- voedingsruimte -->
+  <rect x="8" y="316" width="384" height="100" rx="4" fill="#161b23" stroke="#28303b"/>
+  <rect x="24" y="334" width="164" height="72" rx="3" fill="#0b0e13" stroke="#232a34"/>
+  <text x="106" y="374" ${F} font-size="8" fill="#2e3742" text-anchor="middle">PSU</text>
+  <path d="M205 330 H380 M205 342 H380 M205 354 H380" stroke="#1f2630" stroke-width="5"/>
+  <!-- ====== onderdelen (verschijnen na plaatsen) ====== -->
+  <g class="deel" id="d-cpu"><rect x="113" y="68" width="74" height="74" rx="5" fill="url(#mbMetaal)" stroke="#8a929c"/><rect x="121" y="76" width="58" height="58" rx="4" fill="none" stroke="#bcc3cb"/>
+    <text x="150" y="102" font-size="9" font-weight="800" fill="#4b525c" text-anchor="middle" font-family="Outfit,sans-serif">ter AA</text><text x="150" y="114" ${F} font-size="7" fill="#5e6670" text-anchor="middle">CORE i5</text><path d="M116 139 h7 l-7 -7 z" fill="#c9a227"/></g>
+  <g class="deel" id="d-ram">${ram}</g>
+  <g class="deel" id="d-ssd"><rect x="112" y="165" width="90" height="16" rx="1.5" fill="#0d1622" stroke="#24364a"/><rect x="112" y="166" width="5" height="14" fill="#c9a227"/>
+    <rect x="122" y="167" width="44" height="12" fill="#eef1f4"/><text x="144" y="175.5" ${F} font-size="6" fill="#1b2633" text-anchor="middle">512GB NVMe</text><rect x="170" y="167" width="12" height="12" fill="#222"/><rect x="186" y="167" width="10" height="12" fill="#222"/><circle cx="201" cy="173" r="3.2" fill="url(#mbMetaal)"/></g>
+  <g class="deel" id="d-gpu"><rect x="54" y="200" width="9" height="62" fill="url(#mbMetaal)"/><rect x="62" y="203" width="262" height="56" rx="7" fill="url(#mbGpu)" stroke="#353b45"/>
+    ${fan(122,231,23)}${fan(226,231,23)}<rect x="62" y="253" width="262" height="3" fill="#FF943F"/><text x="290" y="228" font-size="8" font-weight="800" fill="#e6e9ee" text-anchor="middle" font-family="Outfit,sans-serif">TER AA</text><text x="290" y="239" ${F} font-size="6" fill="#8b929c" text-anchor="middle">RTX 8GB</text></g>
+  <g class="deel" id="d-psu"><path d="M176 338 C 210 300, 346 320, 346 220 C 346 160, 330 118, 308 113" stroke="#0a0a0a" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M176 338 C 210 300, 346 320, 346 220 C 346 160, 330 118, 308 113" stroke="#2a2a2a" stroke-width="5" fill="none" stroke-dasharray="2 3"/>
+    <rect x="27" y="337" width="158" height="66" rx="4" fill="#121314" stroke="#3a3d42"/><circle cx="70" cy="370" r="27" fill="#0a0a0b" stroke="#44484e" stroke-width="2"/><circle cx="70" cy="370" r="20" fill="none" stroke="#33373c"/><circle cx="70" cy="370" r="13" fill="none" stroke="#33373c"/><circle cx="70" cy="370" r="6" fill="#26292d"/><path d="M43 370 H97 M70 343 V397" stroke="#33373c"/>
+    <rect x="112" y="352" width="64" height="34" rx="2" fill="#1c1d1f"/><text x="144" y="368" font-size="12" font-weight="800" fill="#fff" text-anchor="middle" font-family="Outfit,sans-serif">650W</text><text x="144" y="380" ${F} font-size="7" fill="#d4ad4a" text-anchor="middle">80+ GOLD</text></g>
+</svg>`;
 }
 
 async function boot(st){
@@ -870,7 +982,7 @@ async function lvlFirst(st){
     const voor=`<div class="bellen">${kop()}<div class="chat"><div class="bub zij">${b.klant}</div></div></div>`;
     await new Promise(res=>{
       const lijst=schud(b.opties);
-      st.innerHTML=`${i===0?noor('Blijf rustig, ook als de klant boos is. Kijk naar de <b>klant-o-meter</b>!'):''}${voor}<div class="stap">Beurt ${i+1} van 4</div><div class="opties">${lijst.map((o,j)=>`<button class="optie" data-j="${j}">${o.t}</button>`).join('')}</div><div class="na"></div>`;
+      st.innerHTML=`${i===0?noor('Dit is je <b>examenproject B1-K2</b>! De examinator luistert mee 🎧. Blijf rustig, ook als de klant boos is. Kijk naar de <b>klant-o-meter</b>!'):''}${voor}<div class="stap">Beurt ${i+1} van 4</div><div class="opties">${lijst.map((o,j)=>`<button class="optie" data-j="${j}">${o.t}</button>`).join('')}</div><div class="na"></div>`;
       st.querySelectorAll('.optie').forEach(o=>o.onclick=()=>{
         const c=lijst[+o.dataset.j]; const best=Math.max(...b.opties.map(x=>x.d));
         st.querySelector('.opties').classList.add('op-slot'); o.classList.add(c.d===best?'goed':'fout');
@@ -966,23 +1078,72 @@ function netwerkTekening(st){
 /* ---------- BPV: stagedag ---------- */
 async function lvlBPV(st){
   const klussen=[
+    {uur:'08:25',meter:'klant',vraag:'Je komt binnen bij je stagebedrijf. Je collega\'s zitten al achter hun bureau. Wat doe je?',
+     opties:[{t:'"Goedemorgen allemaal!" zeggen, en even kijken wie er al is',ok:true,fb:'Zo begin je goed! Een vriendelijke groet laat zien dat je er zin in hebt, en collega\'s voelen zich gezien. Je hoort er meteen bij.'},
+             {t:'Oortjes in, niks zeggen en meteen naar je plek',ok:false,fb:'Dan denken je collega\'s dat je geen zin hebt. Een "goedemorgen" kost niks en maakt veel uit!'},
+             {t:'"Yo." mompelen en eerst koffie pakken',ok:.3,fb:'Beter dan niks, maar op je werk groet je netjes en duidelijk: "Goedemorgen!"'}]},
     {uur:'08:30',meter:'vak',vraag:'Je praktijkopleider: <i>"Wil jij de laptop voor nieuwe collega Lisa klaarmaken?"</i> Wat doe je vlak voordat je hem aan Lisa geeft?',
      opties:[{t:'Testen: kan ze inloggen, werkt mail, wifi en printer?',ok:true,fb:'Altijd testen vóór je oplevert. Dat staat ook in de examenrubric!'},{t:'Meteen in de doos en afgeven, ze ziet het vanzelf',ok:false,fb:'Als er iets niet werkt, staat Lisa op haar eerste dag met lege handen. Eerst testen!'},{t:'Jouw eigen account erop laten staan, dan kan ze makkelijk inloggen',ok:false,fb:'Nooit je eigen account delen. Lisa krijgt haar eigen account.'}]},
     {uur:'10:15',meter:'netjes',vraag:'Een collega: <i>"Hé, mag ik even jouw wachtwoord? Dan kan ik snel in het systeem."</i>',
      opties:[{t:'"Nee, wachtwoorden deel ik nooit. Ik help je wel om je eigen toegang te regelen."',ok:true,fb:'Sterk! Vriendelijk maar duidelijk. Informatiebeveiliging is een belangrijk onderdeel van je werk.'},{t:'"Tuurlijk, het is Welkom123!"',ok:false,fb:'Oei. Met jouw wachtwoord kan iemand alles doen uit jouw naam.'},{t:'Je laat hem achter jouw pc werken terwijl jij koffie haalt',ok:false,fb:'Altijd je pc vergrendelen (Windows + L) als je wegloopt.'}]},
-    {uur:'13:00',meter:'vak',vraag:'Er moeten updates op 20 pc\'s van de administratie. Hoe pak je dat aan?',
+    {uur:'12:30',pauze:true},
+    {uur:'13:15',meter:'vak',vraag:'Er moeten updates op 20 pc\'s van de administratie. Hoe pak je dat aan?',
      opties:[{t:'Overleggen wanneer het uitkomt, eerst op 1 pc testen, dan de rest',ok:true,fb:'Slim en professioneel. Zo leg je niet per ongeluk de hele afdeling plat.'},{t:'Nu meteen op alle 20 tegelijk, ook al zijn ze aan het werk',ok:false,fb:'Dan kan de hele administratie een uur niet werken. Overleg en plan!'},{t:'Gewoon niet doen, updates zijn toch niet belangrijk',ok:false,fb:'Updates dichten beveiligingslekken. Heel belangrijk dus!'}]},
     {uur:'15:30',meter:'klant',vraag:'Een klant vraagt je een netwerkswitch te vervangen. Dat heb je nog <b>nooit</b> gedaan.',
      opties:[{t:'Eerlijk zeggen dat je het nog niet kent, overleggen met een collega en meekijken',ok:true,fb:'Zo hoort het! Op stage mag je hulp vragen. Zo leer je het meest.'},{t:'Gewoon proberen, hoe moeilijk kan het zijn?',ok:false,fb:'Als het misgaat, ligt het netwerk eruit. Weet wanneer je hulp vraagt.'},{t:'Doen alsof je het niet gehoord hebt',ok:false,fb:'Dan blijft de klant zitten met zijn vraag. Communiceer altijd!'}]},
     {uur:'16:30',meter:'netjes',vraag:'Einde van de dag. Wat doe je nog voordat je naar huis gaat?',
      opties:[{t:'Je werk vastleggen in de tickets en je stagelogboek bijwerken',ok:true,fb:'Netjes! Zo weten je collega\'s wat er gedaan is, en heb je bewijs voor je portfolio.'},{t:'Niks, gewoon naar huis',ok:false,fb:'Als je niets vastlegt, weet niemand wat je gedaan hebt. Documenteren hoort erbij.'},{t:'Een appje sturen: "ff wat dingen gedaan"',ok:false,fb:'Te vaag. Leg precies vast wat je gedaan hebt.'}]},
+    {uur:'16:45',meter:'klant',vraag:'Je jas is aan, je gaat naar huis. Wat doe je?',
+     opties:[{t:'"Tot morgen allemaal, fijne avond!"',ok:true,fb:'Netjes! Zo weten je collega\'s dat je weg bent, en je sluit de dag vriendelijk af. Morgen begin je weer met een "goedemorgen".'},
+             {t:'Stilletjes weglopen, niemand merkt het toch',ok:false,fb:'Dan weet niemand of je er nog bent. Zeg altijd even gedag als je weggaat.'},
+             {t:'Om 16:00 al weg, zonder iets te zeggen',ok:false,fb:'Je werktijden spreek je af met je praktijkopleider. Eerder weg zonder te overleggen kan echt niet.'}]},
   ];
   for(let i=0;i<klussen.length;i++){
     const k=klussen[i];
-    await kies(st,{meter:k.meter,stap:`Klus ${i+1} van ${klussen.length}`,
-      voor:(i===0?noor('Je bent nu een echte stagiair! Dit is een dag bij je stagebedrijf.'):'')+`<div class="dagklok">🕒 <span class="uur">${k.uur}</span></div>`,
+    if(k.pauze){ await pauze(st); continue; }
+    await kies(st,{meter:k.meter,stap:`Stagedag · moment ${i+1} van ${klussen.length}`,
+      voor:(i===0?noor('Je bent nu een echte stagiair! Dit is een dag bij je stagebedrijf, van binnenkomst tot naar huis gaan.'):'')+`<div class="dagklok">🕒 <span class="uur">${k.uur}</span></div>`,
       vraag:k.vraag,opties:k.opties});
   }
+}
+
+/* Lunchpauze in de kantine: muziekje, collega's die eten en kletsen */
+let muziekTimer=null;
+function muziek(aan){
+  clearInterval(muziekTimer); muziekTimer=null; if(!aan) return;
+  const deun=[[523,0],[659,.25],[784,.5],[659,.75],[587,1],[698,1.25],[880,1.5],[698,1.75],[523,2],[659,2.25],[784,2.5],[1047,2.75],[784,3],[659,3.25],[587,3.5],[523,3.75]];
+  const speel=()=>{ deun.forEach(([f,t])=>toon(f,t,.22,'triangle',.045)); [131,131,175,175,196,196,131,131].forEach((f,i)=>toon(f,i*.5,.4,'sine',.05)); };
+  speel(); muziekTimer=setInterval(speel,4000);
+}
+async function pauze(st){
+  const mensen=[
+    {em:'👩‍💼',x:22,y:24,b:'Hoe was jouw weekend?'},
+    {em:'🧔',x:50,y:24,b:'Haha, die printer weer 😂'},
+    {em:'👨‍🔧',x:78,y:24,b:'Wie gaat er mee wandelen?'},
+    {em:'👩‍💻',x:30,y:72,b:'Lekker broodje!'},
+    {em:'🧑‍🦱',x:56,y:72,b:'Zin in de vakantie!'},
+  ];
+  const scene=(metJou)=>`<div class="kantine">
+      <span class="noot" style="left:6%;animation-delay:0s">🎵</span><span class="noot" style="left:90%;animation-delay:1.3s">🎶</span><span class="noot" style="left:48%;animation-delay:2.4s">🎵</span>
+      <span class="plant" style="left:2%">🪴</span><span class="plant" style="right:2%">☕</span>
+      <div class="tafel"><span>🥪</span><span>🍎</span><span>☕</span><span>🍕</span><span>🥤</span><span>🧃</span></div>
+      ${mensen.map((m,i)=>`<div class="persoon" style="left:${m.x}%;top:${m.y}%">${m.em}<div class="kbub" style="animation-delay:${i*1.2}s">${m.b}</div></div>`).join('')}
+      <div class="persoon ${metJou?'jij':'leeg'}" style="left:80%;top:72%">${metJou?S.av+'<div class="kbub vast">Hoi! Ik ben de nieuwe stagiair 👋</div>':'🪑'}</div>
+    </div>`;
+  st.innerHTML=`<div class="stap">Stagedag · lunchpauze</div><div class="dagklok">🕒 <span class="uur">12:30</span> <span style="font-size:1rem;color:var(--oranje)">PAUZE</span></div>
+    <div id="scene">${scene(false)}</div><div id="pk"></div>`;
+  muziek(true);
+  const w=await kies(st.querySelector('#pk'),{meter:'klant',
+    vraag:'Het is lunchpauze. Je collega\'s zitten samen te eten en te kletsen. Er is nog een stoel vrij. Wat doe je?',
+    opties:[
+      {t:'🥪 Aanschuiven, meeëten en een praatje maken',ok:true,fb:'Goed zo! <b>Praten in de pauze is echt belangrijk.</b> Je leert je collega\'s kennen, je hoort wat er speelt in het bedrijf, en daarna durf je makkelijker hulp te vragen. Zo word je onderdeel van het team.'},
+      {t:'📱 Alleen in een hoekje op je telefoon',ok:false,fb:'Even ontspannen mag, maar zo leer je niemand kennen. Juist in de pauze bouw je een band op met je collega\'s. Dat maakt samenwerken veel makkelijker!'},
+      {t:'💻 Doorwerken achter je bureau, pauze is voor watjes',ok:false,fb:'Pauze is nodig om op te laden. En je mist de gezelligheid en de kans om je collega\'s te leren kennen.'},
+    ]});
+  st.querySelector('#scene').innerHTML=scene(true);
+  st.querySelector('#pk').innerHTML=noor(w>=1?'Gezellig hè? Zo voelt stage al snel als een tweede thuis.':'Kom, ik heb toch maar een plekje voor je vrijgehouden. Gezellig!');
+  await knopWacht(st.querySelector('#pk'),'Pauze voorbij ▸');
+  muziek(false);
 }
 
 /* ================= DIPLOMA ================= */
@@ -1013,6 +1174,7 @@ function diplomaScherm(){
       <div class="em"><span class="zacht">😊 Klant blij</span><b class="acc">${pct('klant')}%</b></div>
       <div class="em"><span class="zacht">📋 Netjes & veilig</span><b style="color:var(--lime)">${pct('netjes')}%</b></div>
     </div>
+    ${S.geenMatch?`<div class="echt"><div class="em">🤔</div><div><b class="acc2">Aan het begin zei je overal "Nee joh"…</b><br>…en toch heb je nu ${tot} sterren gehaald! Twijfel je nog? Praat even met een student of docent aan tafel, of kijk welke andere opleidingen Ter AA heeft.</div></div>`:''}
     <div class="kaart type"><div class="em">${ty.em}</div><div><div class="label">Jouw ICT-type</div><h3 style="margin:.15em 0">${ty.naam}</h3><p>${ty.tekst}</p><p class="zacht">${ty.werk}</p></div></div>
     <div class="label" style="margin-top:20px">Zo ziet jouw route eruit</div>
     <div class="tijdlijn">

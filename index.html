@@ -35,7 +35,7 @@
     @keyframes zwaai{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%,40%{transform:rotate(-8deg)}}
     .hero-sub{position:relative;font-size:15px;color:#cfe9df;max-width:520px}
 
-    .stats{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:1.4rem}
+    .stats{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:1.4rem}
     .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.65rem .8rem;display:flex;gap:.6rem;align-items:center;min-width:0}
     .stat-ring{--p:0;flex-shrink:0;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:16px;
       background:radial-gradient(closest-side,#0b4436 78%,transparent 80% 100%),conic-gradient(var(--mint) calc(var(--p)*1%),rgba(255,255,255,.14) 0)}
@@ -58,6 +58,7 @@
     .sectie-kop h2{font-size:20px;font-weight:800;letter-spacing:-.01em}
     .sectie-kop span{font-size:13px;color:var(--tekst-licht)}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.grid>.kaart:last-child:nth-child(odd){grid-column:1/-1}
     .kaart{--accent:var(--groen);--accent-zacht:var(--groen-licht);position:relative;background:var(--wit);border:1px solid var(--rand);border-radius:var(--radius);
       padding:1.25rem 1.25rem 1.1rem;text-decoration:none;color:var(--tekst);display:flex;flex-direction:column;gap:.55rem;overflow:hidden;
       box-shadow:0 2px 6px rgba(15,40,30,.05);transition:transform .18s,box-shadow .18s,border-color .18s}
@@ -175,7 +176,7 @@
         <div class="speler-meta" id="speler-meta"></div>
       </div>
     </div>
-    <p class="hero-sub">Welkom in jouw ICT-werkplaats. Speel de missies op volgorde: van hardware tot stage.</p>
+    <p class="hero-sub">Welkom in jouw ICT-werkplaats. Speel de missies op volgorde.</p>
     <div class="stats" id="stats" aria-label="Jouw voortgang"></div>
   </header>
 
@@ -235,9 +236,8 @@ function avatarSvg(av){
    Beginpagina "Jouw ICT-werkplaats"
    - Leest de voortgang die de apps zelf in deze browser bewaren
      (alle apps staan op dezelfde website, dus delen ze de opslag).
-   - Het personage wordt bewaard als 'quest_speler', precies zoals
-     Quest: Stageplek het doet. Zo maak je het één keer en zie je het
-     in beide.
+   - Het personage wordt bewaard als 'quest_speler' (die naam komt nog
+     uit de vroegere Quest: Stageplek; zo blijven bestaande personages staan).
    - Missie van de week = de eerste missie in de volgorde die nog niet af is.
      (Veeg & Deel telt niet mee: dat start de docent live in de les.)
    ============================================================ */
@@ -246,19 +246,9 @@ function zet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e)
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
 var KLASSEN = {H:{emoji:'🔧', naam:'Hardware Hero'}, D:{emoji:'🎧', naam:'Helpdesk Held'}, N:{emoji:'🌐', naam:'Netwerk Ninja'}, S:{emoji:'🔐', naam:'Security Scout'}};
-var QUEST_GAMES = [['quiz'],['swipe'],['cvblik','tom'],['bellen','mail'],['baas'],['dilemma'],['eindquiz']];
-var QUEST_LEVELS = ['Wie ben ik?','Arbeidsmarkt','Jezelf presenteren','Contact leggen','Sollicitatie','Klaar voor de start','Eindlevel'];
 var STANDAARD_AV = {huid:1,haar:0,haarkleur:1,shirt:0,bril:false,baard:false,oorbel:false};
 
 /* ---------- voortgang per app ---------- */
-function rigInfo(){
-  var s = lees('rig-academy-v1', {}) || {};
-  var read = (s.read||[]).length, xp = s.xp||0;
-  var missies = [read >= 12, !!s.quizDone, !!s.buildDone], af = missies.filter(Boolean).length;
-  var volg = !missies[0] ? 'Ontdek alle 12 onderdelen in het Hardware lab' : !missies[1] ? 'Speel de Knowledge arena' : !missies[2] ? 'Doe de Build challenge' : '';
-  return { af:af, totaal:3, p:af/3, gestart: xp > 0 || read > 0, xp:xp, read:read, missies:missies, volg:volg,
-    rang: xp >= 300 ? 'Hardware specialist' : xp >= 100 ? 'PC builder' : 'Rookie builder' };
-}
 function iotInfo(){
   var mem = lees('iot_memory', 0) === 1, qz = lees('iot_quiz', null);
   var quizOk = !!(qz && qz.max && qz.beste / qz.max >= 0.6);
@@ -274,20 +264,9 @@ function dagtakenInfo(){
     detail: af >= 5 ? 'Alle dagen afgerond!' : 'Volgende: P6.0' + (af+1),
     volg: af >= 5 ? '' : 'Werk dag P6.0' + (af+1) + ' af op de servicedesk' };
 }
-function questInfo(){
-  var G = lees('quest_games', {}) || {}, S = lees('quest_speler', {}) || {};
-  var alle = [].concat.apply([], QUEST_GAMES), af = alle.filter(function(id){ return G[id] && G[id].klaar; }).length;
-  var lvl = QUEST_GAMES.findIndex(function(ids){ return !ids.every(function(id){ return G[id] && G[id].klaar; }); });
-  return { af:af, totaal:alle.length, p:af/alle.length, gestart: af > 0 || !!S.klasse,
-    detail: lvl === -1 ? 'Alle levels gehaald!' : 'Volgende: level ' + (lvl+1) + ' · ' + QUEST_LEVELS[lvl],
-    volg: lvl === -1 ? '' : 'Speel level ' + (lvl+1) + ': ' + QUEST_LEVELS[lvl] };
-}
 
 /* ---------- de missies, in de volgorde van de opleiding ---------- */
 var APPS = [
-  { id:'rig', href:'rig-academy/', nieuwTab:true, icoon:'🎮', soort:'Game · hardware', titel:'RIG Academy',
-    tekst:'Van gamer naar pc-expert. Ontdek wat er in een pc zit, versla de quiz en bouw je eigen rig. Opent in een nieuw tabblad.',
-    accent:'#d2fa69', zacht:'rgba(210,250,105,.12)', tekstkleur:'#5b7a00', info:rigInfo, eenheid:'missies', breed:true },
   { id:'veeg', href:'veeg-en-deel.html', icoon:'💬', soort:'Samen in de klas', titel:'Veeg & Deel',
     tekst:'Geef anoniem je mening en swipe door de antwoorden van je klas. Rechts = goed idee, links = niks voor mij.',
     accent:'#E07A1F', zacht:'#FDEBDB', tekstkleur:'#a8530c', info:null, live:true },
@@ -296,10 +275,7 @@ var APPS = [
     accent:'#0E8F9A', zacht:'#DDF3F4', tekstkleur:'#0b6f78', info:iotInfo, eenheid:'onderdelen' },
   { id:'dagtaken', href:'dagtaken-periode6.html', icoon:'🎧', soort:'Praktijk · periode 6', titel:'Dienst op de servicedesk',
     tekst:'De telefoon gaat, de mail stroomt binnen. Help gebruikers, kies de juiste prioriteit en registreer alles netjes.',
-    accent:'#2F7DD1', zacht:'#E3EEFB', tekstkleur:'#1d5ea8', info:dagtakenInfo, eenheid:'dagen' },
-  { id:'stage', href:'voorbereiding-stage.html', icoon:'🎒', soort:'Game · 7 levels', titel:'Quest: Stageplek',
-    tekst:'Ontdek wat voor ICT’er jij bent, bouw je cv en oefen bellen en mailen met bedrijven. Zo vind jij je stageplek.',
-    accent:'#1D9E75', zacht:'#E1F5EE', info:questInfo, eenheid:'minigames' }
+    accent:'#2F7DD1', zacht:'#E3EEFB', tekstkleur:'#1d5ea8', info:dagtakenInfo, eenheid:'dagen' }
 ];
 
 function status(a, i){
@@ -352,15 +328,13 @@ function renderMissies(){
   document.getElementById('grid').innerHTML = html;
 
   /* stats in de kop, in missievolgorde */
-  var r = infos.rig, io = infos.iot, d = infos.dagtaken, q = infos.stage;
+  var io = infos.iot, d = infos.dagtaken;
   function stat(icoon, p, groot, klein){
     return '<div class="stat"><div class="stat-ring" style="--p:' + Math.round(p*100) + '">' + icoon + '</div><div style="min-width:0"><b>' + groot + '</b><small>' + klein + '</small></div></div>';
   }
   document.getElementById('stats').innerHTML =
-    stat('🎮', r.p, r.xp + ' XP', r.rang) +
     stat('📡', io.p, io.af + '/2', 'Kaartspel IoT') +
-    stat('🎧', d.p, d.af + '/5 dagen', 'Servicedesk') +
-    stat('🎒', q.p, q.af + '/' + q.totaal, 'Quest-minigames');
+    stat('🎧', d.p, d.af + '/5 dagen', 'Servicedesk');
 
   var metVoortgang = APPS.filter(function(a){ return a.info; });
   var klaar = metVoortgang.filter(function(a){ return infos[a.id].p >= 1; }).length;
@@ -415,16 +389,16 @@ function tekenMaker(){
   function aanuit(veld, label){ return '<button class="stijl" data-veld="' + veld + '" data-v="toggle" aria-pressed="' + !!av[veld] + '">' + label + '</button>'; }
   document.getElementById('maker-body').innerHTML =
     '<div class="editor"><div class="editor-pre"><div class="pre-av" id="pre-av">' + avatarSvg(av) + '</div><b id="pre-naam">' + esc(W.naam || 'Nieuwe speler') + '</b>' +
-      '<small>' + (kl ? kl.emoji + ' ' + kl.naam : 'Wat voor ICT’er ben jij? Dat ontdek je met de personage-test in Quest: Stageplek.') + '</small></div><div>' +
+      '<small>' + (kl ? kl.emoji + ' ' + kl.naam : '') + '</small></div><div>' +
     '<div class="veld"><span>Je game-naam</span><input id="naamveld" maxlength="20" value="' + esc(W.naam) + '" placeholder="Bijv. PixelPro of ByteBoss" autocomplete="off" spellcheck="false">' +
-      '<div class="hint">🔒 Gebruik <b>niet</b> je echte naam, maar een nickname. Die zie je in de groet en in Quest: Stageplek.</div></div>' +
+      '<div class="hint">🔒 Gebruik <b>niet</b> je echte naam, maar een nickname. Die zie je in de groet.</div></div>' +
     '<div class="veld"><span>Huid</span>' + stalen('huid', HUID) + '</div>' +
     '<div class="veld"><span>Kapsel</span><div class="stalen">' + HAARSTIJL.map(function(n, i){ return '<button class="stijl" data-veld="haar" data-v="' + i + '" aria-pressed="' + ((av.haar||0) === i) + '">' + n + '</button>'; }).join('') + '</div></div>' +
     '<div class="veld"><span>Haarkleur</span>' + stalen('haarkleur', HAARKLEUR) + '</div>' +
     '<div class="veld"><span>Shirt</span>' + stalen('shirt', SHIRT) + '</div>' +
     '<div class="veld"><span>Extra’s</span><div class="stalen">' + aanuit('bril', '👓 Bril') + aanuit('baard', '🧔 Baard') + aanuit('oorbel', '✨ Oorbellen') + '</div></div>' +
     '</div></div>' +
-    '<div class="dlg-acties"><small>Je personage wordt alleen in deze browser bewaard en verschijnt ook in Quest: Stageplek.</small>' +
+    '<div class="dlg-acties"><small>Je personage wordt alleen in deze browser bewaard.</small>' +
       '<span><button class="knop" data-a="bewaar">✓ Opslaan</button></span></div>';
 }
 maker.addEventListener('click', function(e){
@@ -453,7 +427,7 @@ document.addEventListener('click', function(e){
 
 renderSpeler();
 renderMissies();
-/* terug van een app (bv. RIG in een ander tabblad)? dan voortgang verversen */
+/* terug van een app in een ander tabblad? dan voortgang verversen */
 document.addEventListener('visibilitychange', function(){ if (!document.hidden) { renderSpeler(); renderMissies(); } });
 </script>
 </body>

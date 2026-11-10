@@ -54,7 +54,7 @@
     .knop:focus-visible,.kaart:focus-visible{outline:3px solid #1b6fd0;outline-offset:3px}
 
     /* ---------- kaarten ---------- */
-    .sectie-kop{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.8rem}
+    .sectie-kop{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.8rem;margin-top:1.75rem}
     .sectie-kop h2{font-size:20px;font-weight:800;letter-spacing:-.01em}
     .sectie-kop span{font-size:13px;color:var(--tekst-licht)}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
@@ -176,7 +176,7 @@
         <div class="speler-meta" id="speler-meta"></div>
       </div>
     </div>
-    <p class="hero-sub">Welkom in jouw ICT-werkplaats. Speel de missies op volgorde.</p>
+    <p class="hero-sub">Welkom in jouw ICT-werkplaats.</p>
     <div class="stats" id="stats" aria-label="Jouw voortgang"></div>
   </header>
 
@@ -195,7 +195,7 @@
 
   <div class="tip">
     <div class="tip-icoon">💾</div>
-    <div><b>Je voortgang blijft bewaard</b>, maar alleen in de browser waarin je speelt. Werk daarom steeds op je eigen laptop en in dezelfde browser, en <b>niet in een privé- of incognitovenster</b>. Anders ben je je XP kwijt.</div>
+    <div><b>Je voortgang blijft bewaard</b>, maar alleen in de browser waarin je speelt. Werk daarom steeds op je eigen laptop en in dezelfde browser, en <b>niet in een privé- of incognitovenster</b>. Anders ben je je personage kwijt.</div>
   </div>
 
   <footer>
@@ -249,22 +249,12 @@ var KLASSEN = {H:{emoji:'🔧', naam:'Hardware Hero'}, D:{emoji:'🎧', naam:'He
 var STANDAARD_AV = {huid:1,haar:0,haarkleur:1,shirt:0,bril:false,baard:false,oorbel:false};
 
 /* ---------- voortgang per app ---------- */
-function dagtakenInfo(){
-  var done = lees('p6_done', []), reg = lees('p6_registraties', {});
-  var af = Math.min(Array.isArray(done) ? done.length : 0, 5);
-  return { af:af, totaal:5, p:af/5, gestart: af > 0 || Object.keys(reg||{}).length > 0,
-    detail: af >= 5 ? 'Alle dagen afgerond!' : 'Volgende: P6.0' + (af+1),
-    volg: af >= 5 ? '' : 'Werk dag P6.0' + (af+1) + ' af op de servicedesk' };
-}
 
 /* ---------- de missies, in de volgorde van de opleiding ---------- */
 var APPS = [
   { id:'veeg', href:'veeg-en-deel.html', icoon:'💬', soort:'Samen in de klas', titel:'Veeg & Deel',
     tekst:'Geef anoniem je mening en swipe door de antwoorden van je klas. Rechts = goed idee, links = niks voor mij.',
-    accent:'#E07A1F', zacht:'#FDEBDB', tekstkleur:'#a8530c', info:null, live:true },
-  { id:'dagtaken', href:'dagtaken-periode6.html', icoon:'🎧', soort:'Praktijk · periode 6', titel:'Dienst op de servicedesk',
-    tekst:'De telefoon gaat, de mail stroomt binnen. Help gebruikers, kies de juiste prioriteit en registreer alles netjes.',
-    accent:'#2F7DD1', zacht:'#E3EEFB', tekstkleur:'#1d5ea8', info:dagtakenInfo, eenheid:'dagen' }
+    accent:'#E07A1F', zacht:'#FDEBDB', tekstkleur:'#a8530c', info:null, live:true }
 ];
 
 function status(a, i){
@@ -317,19 +307,21 @@ function renderMissies(){
   document.getElementById('grid').innerHTML = html;
 
   /* stats in de kop, in missievolgorde */
-  var d = infos.dagtaken;
   function stat(icoon, p, groot, klein){
     return '<div class="stat"><div class="stat-ring" style="--p:' + Math.round(p*100) + '">' + icoon + '</div><div style="min-width:0"><b>' + groot + '</b><small>' + klein + '</small></div></div>';
   }
-  document.getElementById('stats').innerHTML =
-    stat('🎧', d.p, d.af + '/5 dagen', 'Servicedesk');
+  /* (de apps met voortgang zijn verhuisd naar teraasupportlab; zonder zo'n app blijven stats, telling en missie van de week verborgen) */
+  var statsEl = document.getElementById('stats');
+  statsEl.innerHTML = '';
+  statsEl.style.display = 'none';
 
   var metVoortgang = APPS.filter(function(a){ return a.info; });
   var klaar = metVoortgang.filter(function(a){ return infos[a.id].p >= 1; }).length;
-  document.getElementById('telling').textContent = klaar + ' van ' + metVoortgang.length + ' missies voltooid';
+  document.getElementById('telling').textContent = metVoortgang.length ? klaar + ' van ' + metVoortgang.length + ' missies voltooid' : '';
 
   /* missie van de week */
   var week = document.getElementById('week');
+  week.style.display = metVoortgang.length ? '' : 'none';
   if (volgende) {
     var vi = infos[volgende.id], nr = APPS.indexOf(volgende) + 1;
     week.innerHTML = '<div class="week-pin">' + volgende.icoon + '</div><div class="week-tekst"><div class="week-label">Missie van de week · missie ' + nr + ': ' + esc(volgende.titel) + '</div>' +

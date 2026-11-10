@@ -35,7 +35,7 @@
     @keyframes zwaai{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(14deg)}20%,40%{transform:rotate(-8deg)}}
     .hero-sub{position:relative;font-size:15px;color:#cfe9df;max-width:520px}
 
-    .stats{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:1.4rem}
+    .stats{position:relative;display:grid;grid-template-columns:1fr;gap:.6rem;margin-top:1.4rem}
     .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.65rem .8rem;display:flex;gap:.6rem;align-items:center;min-width:0}
     .stat-ring{--p:0;flex-shrink:0;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:16px;
       background:radial-gradient(closest-side,#0b4436 78%,transparent 80% 100%),conic-gradient(var(--mint) calc(var(--p)*1%),rgba(255,255,255,.14) 0)}
@@ -151,7 +151,7 @@
       .editor-pre{position:static}
       .speler-av{width:68px;height:68px}
       .hero{padding:1.25rem 1.1rem 1.25rem;border-radius:18px}
-      .stats{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:1fr}
       .grid{grid-template-columns:1fr}
       .week{flex-wrap:wrap}
       .week .knop{width:100%;justify-content:center}
@@ -249,14 +249,6 @@ var KLASSEN = {H:{emoji:'🔧', naam:'Hardware Hero'}, D:{emoji:'🎧', naam:'He
 var STANDAARD_AV = {huid:1,haar:0,haarkleur:1,shirt:0,bril:false,baard:false,oorbel:false};
 
 /* ---------- voortgang per app ---------- */
-function iotInfo(){
-  var mem = lees('iot_memory', 0) === 1, qz = lees('iot_quiz', null);
-  var quizOk = !!(qz && qz.max && qz.beste / qz.max >= 0.6);
-  var af = (mem ? 1 : 0) + (quizOk ? 1 : 0);
-  var detail = !mem ? 'Volgende: speel memory uit' : !quizOk ? (qz ? 'Quiz: ' + qz.beste + '/' + qz.max + ', haal 60%' : 'Volgende: de kennisquiz') : 'Allebei gehaald!';
-  return { af:af, totaal:2, p:af/2, gestart: mem || !!qz, detail:detail,
-    volg: !mem ? 'Speel een potje memory helemaal uit' : !quizOk ? 'Haal minimaal 60% in de kennisquiz' : '' };
-}
 function dagtakenInfo(){
   var done = lees('p6_done', []), reg = lees('p6_registraties', {});
   var af = Math.min(Array.isArray(done) ? done.length : 0, 5);
@@ -270,9 +262,6 @@ var APPS = [
   { id:'veeg', href:'veeg-en-deel.html', icoon:'💬', soort:'Samen in de klas', titel:'Veeg & Deel',
     tekst:'Geef anoniem je mening en swipe door de antwoorden van je klas. Rechts = goed idee, links = niks voor mij.',
     accent:'#E07A1F', zacht:'#FDEBDB', tekstkleur:'#a8530c', info:null, live:true },
-  { id:'iot', href:'iot-kaartspel.html', icoon:'📡', soort:'Memory & quiz', titel:'Kaartspel IoT',
-    tekst:'Wifi, Zigbee, LoRa… Leer de protocollen van het Internet of Things met memory en een quiz. Hoe snel ben jij?',
-    accent:'#0E8F9A', zacht:'#DDF3F4', tekstkleur:'#0b6f78', info:iotInfo, eenheid:'onderdelen' },
   { id:'dagtaken', href:'dagtaken-periode6.html', icoon:'🎧', soort:'Praktijk · periode 6', titel:'Dienst op de servicedesk',
     tekst:'De telefoon gaat, de mail stroomt binnen. Help gebruikers, kies de juiste prioriteit en registreer alles netjes.',
     accent:'#2F7DD1', zacht:'#E3EEFB', tekstkleur:'#1d5ea8', info:dagtakenInfo, eenheid:'dagen' }
@@ -328,12 +317,11 @@ function renderMissies(){
   document.getElementById('grid').innerHTML = html;
 
   /* stats in de kop, in missievolgorde */
-  var io = infos.iot, d = infos.dagtaken;
+  var d = infos.dagtaken;
   function stat(icoon, p, groot, klein){
     return '<div class="stat"><div class="stat-ring" style="--p:' + Math.round(p*100) + '">' + icoon + '</div><div style="min-width:0"><b>' + groot + '</b><small>' + klein + '</small></div></div>';
   }
   document.getElementById('stats').innerHTML =
-    stat('📡', io.p, io.af + '/2', 'Kaartspel IoT') +
     stat('🎧', d.p, d.af + '/5 dagen', 'Servicedesk');
 
   var metVoortgang = APPS.filter(function(a){ return a.info; });

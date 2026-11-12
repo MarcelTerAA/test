@@ -20,7 +20,9 @@
 html,body{height:100%}
 [hidden]{display:none!important}
 body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);overflow:hidden;-webkit-user-select:none;user-select:none}
-#scene{position:fixed;inset:0;display:block;width:100%;height:100%;touch-action:none;outline:none}
+#scene{position:fixed;inset:0;display:block;width:100%;height:100%;touch-action:none;outline:none;cursor:pointer}
+#scene.dragging{cursor:grabbing}
+.go-btn{pointer-events:auto;margin-top:8px;background:var(--route,var(--all));color:var(--ink);border:0;border-radius:3px;padding:7px 12px;font-family:var(--display);font-weight:700;letter-spacing:.06em;font-size:13px;cursor:pointer}
 button{font:inherit;color:inherit}
 button:focus-visible,a:focus-visible{outline:2px solid var(--route,var(--all));outline-offset:2px}
 .hud{position:fixed;pointer-events:none;z-index:5}
@@ -125,7 +127,7 @@ h1 span{color:var(--plein)}
 <div class="hud" id="prompt" hidden></div>
 <div class="hud" id="toast"><div class="t1"></div><div class="t2"></div></div>
 <div class="hud" id="stamps" hidden><div class="lbl">Stempelkaart</div><div class="row" id="stamprow"></div></div>
-<div class="hud keys" id="keyshint" hidden><span><kbd>WASD</kbd>lopen</span><br><span><kbd>Shift</kbd>rennen</span><br><span><kbd>E</kbd>gebruiken</span><br><span><kbd>Esc</kbd>muis vrij</span></div>
+<div class="hud keys" id="keyshint" hidden><span><kbd>Klik</kbd>loop erheen</span><br><span><kbd>Sleep</kbd>rondkijken</span><br><span><kbd>WASD</kbd>lopen</span><br><span><kbd>E</kbd>gebruiken</span></div>
 
 <div id="touch" hidden><div id="joy"><i></i></div><button id="tbtn" type="button" aria-label="Gebruiken">E</button></div>
 
@@ -135,7 +137,7 @@ h1 span{color:var(--plein)}
     <h1 id="ch-title">Virtuele open dag. Kies je richting bij <span>de ingang</span>.</h1>
     <p class="lede" id="ch-lede">Je staat buiten voor de dubbele deur van het ICT College. Kies waar je nieuwsgierig naar bent: een lijn op de vloer brengt je via het ICT-plein naar de lokalen die daarbij horen. Bij elke infozuil staat een korte opdracht. Goed antwoord? Dan krijg je een stempel.</p>
     <div class="routes" id="routes"></div>
-    <div class="keys"><span><kbd>WASD</kbd>of pijltjes om te lopen</span><span><kbd>Muis</kbd>rondkijken</span><span><kbd>E</kbd>infozuil of robot gebruiken</span><span>Telefoon: joystick links, veeg rechts om te kijken</span></div>
+    <div class="keys"><span><kbd>Klik of tik</kbd>op de vloer om erheen te lopen</span><span><kbd>Klik</kbd>op een infozuil of AAdje om die te openen</span><span><kbd>Sleep</kbd>om rond te kijken</span><span><kbd>WASD</kbd>of pijltjes kan ook</span></div>
   </div>
 </div>
 
@@ -358,7 +360,7 @@ function station(s){
  if(s.kind==="cyber"){const rl=new THREE.PointLight(0xff5a46,0.7,10);add(rl,sx,2.6,sz-dz*1.5)}
  if(s.kind==="game"){[-3.4,3.4].forEach(b=>{const [ax,az]=at(2.3,b);const g=new THREE.Group();const bb=box(0.9,1.9,0.8,lam(b>0?0x86d6f4:0xf0a487));bb.position.y=0.95;g.add(bb);const scr=plane(0.7,0.55,basic({map:SC.game}));scr.position.set(0,1.45,0.41);g.add(scr);const cp=box(0.9,0.12,0.4,lam(0x222222));cp.position.set(0,1.0,0.55);g.add(cp);add(g,ax,0,az,face);col(ax-0.55,ax+0.55,az-0.55,az+0.55)});[[-2,-2.2,0xf2a33a],[-2.3,2,0x4fa3cc],[-3.4,0.2,0xff7a6b]].forEach(([a,b,c])=>{const [bx,bz]=at(a,b);const m=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,12),lam(c));m.scale.y=0.6;add(m,bx,0.3,bz)})}
  const lt=new THREE.PointLight(s.color,0.5,13);add(lt,px,2.7,pz);
- interactables.push({pos:s.hot,label:"Infozuil "+s.name,act:()=>openStation(s)});
+ s.inter={pos:s.hot,label:"Infozuil "+s.name,act:()=>openStation(s)};interactables.push(s.inter);pl.userData.inter=s.inter;
 }
 // desk clusters in the big practice rooms; skip spots near stations and doors
 const deskZones=[{r:[1,1,14,13],t:["term","sec"]},{r:[7,15,16,25],t:["ticket","hw"]},{r:[59,1,65,10],t:["game","code"]},{r:[48,12,65,20],t:["code","web"]},{r:[47,1,57,6],t:["code","web"]}];
@@ -440,10 +442,10 @@ function buildPlein(){
  const ant=new THREE.Mesh(new THREE.SphereGeometry(0.05,8,6),basic({color:0xe7d9a8}));ant.position.y=1.66;g.add(ant);
  const base=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.42,0.22,20),dark);base.position.y=0.11;g.add(base);
  add(g,W(22),0,W(11));aadje=g;col(W(22)-0.5,W(22)+0.5,W(11)-0.5,W(11)+0.5);
- interactables.push({pos:new THREE.Vector3(W(22),0,W(11)),label:"Praat met AAdje",act:talkAadje});
+ g.userData.inter={pos:new THREE.Vector3(W(22),0,W(11)),label:"Praat met AAdje",act:talkAadje};interactables.push(g.userData.inter);
  kiosk(W(16.8),W(12.4),0.8);
 }
-function kiosk(x,z,rot){const g=new THREE.Group();const p=box(0.6,1.1,0.4,lam(0x263036));p.position.y=0.55;g.add(p);const s=box(0.8,0.6,0.08,lam(0x263036));s.position.set(0,1.35,0);s.rotation.x=-0.3;g.add(s);const t=plane(0.72,0.5,basic({map:signTex("ROUTE","kiezen","#e7edf0",512,356)}));t.position.set(0,1.36,0.045);t.rotation.x=-0.3;g.add(t);add(g,x,0,z,rot);col(x-0.45,x+0.45,z-0.45,z+0.45);interactables.push({pos:new THREE.Vector3(x,0,z),label:"Andere route kiezen",act:()=>openChooser(true)})}
+function kiosk(x,z,rot){const g=new THREE.Group();const p=box(0.6,1.1,0.4,lam(0x263036));p.position.y=0.55;g.add(p);const s=box(0.8,0.6,0.08,lam(0x263036));s.position.set(0,1.35,0);s.rotation.x=-0.3;g.add(s);const t=plane(0.72,0.5,basic({map:signTex("ROUTE","kiezen","#e7edf0",512,356)}));t.position.set(0,1.36,0.045);t.rotation.x=-0.3;g.add(t);add(g,x,0,z,rot);col(x-0.45,x+0.45,z-0.45,z+0.45);g.userData.inter={pos:new THREE.Vector3(x,0,z),label:"Andere route kiezen",act:()=>openChooser(true)};interactables.push(g.userData.inter)}
 function buildSmallRooms(){
  // werkruimtes: tables + shelves (brown furniture on the drawing)
  [[1,15,5,19],[1,21,5,25]].forEach(([x0,y0,x1,y1])=>{const cx=W((x0+x1)/2),cz=W((y0+y1)/2);const t=box(3.2,0.75,1.2,M.wood);add(t,cx+0.6,0.375,cz);col(cx-1,cx+2.2,cz-0.6,cz+0.6);for(let i=0;i<3;i++){const sh=box(0.45,1.9,1.6,M.wood);add(sh,W(x0)-0.6,0.95,W(y0)+i*2.6);col(W(x0)-0.85,W(x0)-0.35,W(y0)+i*2.6-0.8,W(y0)+i*2.6+0.8)}});
@@ -456,7 +458,7 @@ function buildEntrance(){
  // double swing door ("dubbele klapdeur") between ICT Support and the theory room
  const gm=lam(0xbfe3f2,{transparent:true,opacity:0.45,depthWrite:false});const fm=lam(0x2c3338);
  const leaf=(sign)=>{const pv=new THREE.Group();const g=new THREE.Group();const gl=box(0.95,2.3,0.05,gm);g.add(gl);[[0.95,0.06,0,1.15],[0.95,0.06,0,-1.15],[0.06,2.3,0.475,0],[0.06,2.3,-0.475,0]].forEach(([w,h,x,y])=>{const f=box(w,h,0.07,fm);f.position.set(x,y,0);g.add(f)});const bar=box(0.7,0.05,0.08,lam(0xd6dadc));bar.position.set(0,0,0.07);g.add(bar);g.position.set(sign*0.475,1.15,0);pv.add(g);return pv};
- doorL=leaf(1);add(doorL,W(19)-0.95,0,W(26));doorR=leaf(-1);add(doorR,W(19)+0.95,0,W(26));
+ doorL=leaf(1);add(doorL,W(19)-0.95,0,W(26));doorR=leaf(-1);add(doorR,W(19)+0.95,0,W(26));[doorL,doorR].forEach(d=>d.traverse(o=>{o.raycast=()=>{}}));
  // mat + sign outside
  const mat=plane(2.4,1.4,lam(0x2b2f31));mat.rotation.x=-Math.PI/2;add(mat,W(19),0.012,W(27.2));
 }
@@ -489,7 +491,8 @@ function bfs(sx,sy,tx,ty){const N=GW*GH,prev=new Int32Array(N).fill(-1),s=sy*GW+
 const chevShape=new THREE.Shape();chevShape.moveTo(0,0.3);chevShape.lineTo(0.38,-0.06);chevShape.lineTo(0.38,-0.26);chevShape.lineTo(0,0.08);chevShape.lineTo(-0.38,-0.26);chevShape.lineTo(-0.38,-0.06);chevShape.closePath();
 const chevGeo=new THREE.ShapeGeometry(chevShape);
 const chevs=[];for(let i=0;i<170;i++){const gq=new THREE.Group();const m=new THREE.Mesh(chevGeo,basic({color:0xffffff,transparent:true,opacity:0.85,depthWrite:false}));m.rotation.x=-Math.PI/2;gq.add(m);gq.position.y=0.03;gq.visible=false;scene.add(gq);chevs.push(gq)}
-const beacon=new THREE.Mesh(new THREE.CylinderGeometry(0.6,0.6,40,24,1,true),basic({color:0xffffff,transparent:true,opacity:0.18,depthWrite:false,side:THREE.DoubleSide}));beacon.visible=false;scene.add(beacon);
+const beacon=new THREE.Mesh(new THREE.CylinderGeometry(0.6,0.6,40,24,1,true),basic({color:0xffffff,transparent:true,opacity:0.18,depthWrite:false,side:THREE.DoubleSide}));beacon.visible=false;scene.add(beacon);beacon.raycast=()=>{};chevs.forEach(c=>c.children[0].raycast=()=>{});
+const marker=new THREE.Mesh(new THREE.RingGeometry(0.25,0.42,32),basic({color:0xffffff,transparent:true,opacity:0.9,depthWrite:false}));marker.rotation.x=-Math.PI/2;marker.visible=false;marker.raycast=()=>{};scene.add(marker);
 let pathCells=[],lastKey="";
 function target(){if(!state.route)return null;const id=ROUTE_ORDER[state.route].find(i=>!state.stamps.has(i));return id?stById(id):null}
 function updatePath(force){const t=target();const pc=[Math.round(pos.x/S),Math.round(pos.z/S)];const key=pc.join()+"|"+(t?t.id:"-");if(key===lastKey&&!force)return;lastKey=key;chevs.forEach(c=>c.visible=false);beacon.visible=false;pathCells=[];if(!t)return;
@@ -504,7 +507,8 @@ function toast(a,b,color){toastEl.querySelector(".t1").textContent=a;toastEl.que
 function setRouteVar(){document.documentElement.style.setProperty("--route",state.route?ROUTES[state.route].color:"#e7edf0")}
 function renderStamps(){const row=$("stamprow");row.innerHTML="";const inR=state.route?ROUTE_ORDER[state.route]:[];STAMP_ORDER.forEach(id=>{const s=stById(id);const d=document.createElement("div");d.className="stamp"+(inR.includes(id)?" inroute":"")+(state.stamps.has(id)?" got":"");d.style.setProperty("--c",s.color);d.textContent=id;d.title=s.name+(state.stamps.has(id)?" · stempel binnen":"");row.appendChild(d)})}
 function zoneOfStation(s){return ZONES.find(z=>s.cell[0]>=z.rect[0]&&s.cell[0]<=z.rect[2]&&s.cell[1]>=z.rect[1]&&s.cell[1]<=z.rect[3])}
-function renderObjective(){$("hud-route").textContent=ROUTES[state.route].name;const list=ROUTE_ORDER[state.route];const got=list.filter(i=>state.stamps.has(i)).length;const t=target();$("hud-obj").innerHTML=t?`Volg de lijn naar <b>${t.name}</b><br><span style="color:var(--muted);font-size:13px">${got} van ${list.length} stempels · lokaal ${zoneOfStation(t).name}</span>`:`<b>Route klaar.</b> Kijk vrij verder rond of kies bij een zuil een nieuwe route.`}
+function renderObjective(){$("hud-route").textContent=ROUTES[state.route].name;const list=ROUTE_ORDER[state.route];const got=list.filter(i=>state.stamps.has(i)).length;const t=target();$("hud-obj").innerHTML=t?`Volg de lijn naar <b>${t.name}</b><br><span style="color:var(--muted);font-size:13px">${got} van ${list.length} stempels · lokaal ${zoneOfStation(t).name}</span><br><button class="go-btn" id="go-btn" type="button">Loop erheen ▸</button>`:`<b>Route klaar.</b> Kijk vrij verder rond of kies bij een zuil een nieuwe route.`;
+ const gb=$("go-btn");if(gb)gb.addEventListener("click",()=>{const tt=target();if(tt&&!state.uiOpen)walkTo(tt.hot.x,tt.hot.z,tt.inter)})}
 const mm=$("minimap"),mg=mm.getContext("2d"),K=3;const base=document.createElement("canvas");base.width=GW*K;base.height=GH*K;
 function drawBase(){const g=base.getContext("2d");g.fillStyle="#0b1013";g.fillRect(0,0,base.width,base.height);for(let y=0;y<GH;y++)for(let x=0;x<GW;x++){const c=grid[y][x];g.fillStyle=c==="#"?"#0b1013":c==="g"?"#5aa7c7":c==="f"?"#3f6b3a":c==="D"?"#cf968b":c==="o"?"#2e3234":"#3a454a";g.fillRect(x*K,y*K,K,K)}ZONES.forEach(z=>{if(!z.c)return;const [x0,y0,x1,y1]=z.rect;g.fillStyle=z.c;g.globalAlpha=0.8;g.fillRect(x0*K,y0*K,(x1-x0+1)*K,(y1-y0+1)*K);g.globalAlpha=1})}
 function drawMini(){mg.drawImage(base,0,0);if(pathCells.length&&state.route){mg.fillStyle="#fff";pathCells.forEach(([x,y])=>mg.fillRect(x*K+1,y*K+1,1,1))}STATIONS.forEach(s=>{mg.fillStyle=state.stamps.has(s.id)?"#5fd38d":"#11181b";mg.fillRect(s.cell[0]*K,s.cell[1]*K,K,K)});const t=target();if(t){mg.strokeStyle="#fff";mg.lineWidth=1;mg.beginPath();mg.arc(t.cell[0]*K+1.5,t.cell[1]*K+1.5,4,0,7);mg.stroke()}const px=pos.x/S*K+1.5,py=pos.z/S*K+1.5;mg.save();mg.translate(px,py);mg.rotate(-yaw);mg.fillStyle="#ff4d4d";mg.beginPath();mg.moveTo(0,-4.5);mg.lineTo(3,3.5);mg.lineTo(-3,3.5);mg.closePath();mg.fill();mg.restore()}
@@ -513,7 +517,7 @@ function drawMini(){mg.drawImage(base,0,0);if(pathCells.length&&state.route){mg.
 function buildChooser(){const wrap=$("routes");wrap.innerHTML="";["support","systems","software","tto","all"].forEach(k=>{const r=ROUTES[k];const b=document.createElement("button");b.className="route";b.type="button";b.style.setProperty("--c",r.color);const n=ROUTE_ORDER[k].length;b.innerHTML=`<span class="name">${r.name}</span><p>${r.blurb}</p><ul>${r.opl.map(o=>`<li><b>${o[0]}</b> · ${o[1]}</li>`).join("")}</ul><span class="go">${n} ${n===1?"infozuil":"infozuilen"} · start →</span>`;b.addEventListener("click",()=>chooseRoute(k));wrap.appendChild(b)})}
 function openChooser(again){if(again){$("ch-title").textContent="Andere route kiezen";$("ch-lede").textContent="Je stempels blijven bewaard. Kies een nieuwe richting en volg de lijn.";}$("chooser").hidden=false;setUI(true)}
 function chooseRoute(k){state.route=k;$("chooser").hidden=true;setRouteVar();renderStamps();renderObjective();updatePath(true);
- if(!state.playing){state.playing=true;["hud-top","minimap-wrap","crosshair","stamps"].forEach(id=>$(id).hidden=false);if(isTouch)$("touch").hidden=false;else $("keyshint").hidden=false;toast("Welkom bij het ICT College","Loop naar de dubbele deur · "+ROUTES[k].name,ROUTES[k].color)}
+ if(!state.playing){state.playing=true;["hud-top","minimap-wrap","stamps"].forEach(id=>$(id).hidden=false);if(isTouch)$("touch").hidden=false;else $("keyshint").hidden=false;toast("Welkom bij het ICT College","Loop naar de dubbele deur · "+ROUTES[k].name,ROUTES[k].color)}
  else toast("Nieuwe route",ROUTES[k].name,ROUTES[k].color);
  setUI(false);requestLock()}
 function openStation(s){const p=$("panel");p.style.setProperty("--c",s.color);const got=state.stamps.has(s.id);const q=s.quiz;
@@ -540,15 +544,44 @@ function closeDialog(){$("dialog").hidden=true;setUI(false);requestLock()}
 
 // ================= INPUT =================
 function setUI(open){state.uiOpen=open;if(open){for(const k in keys)keys[k]=false;if(document.pointerLockElement)document.exitPointerLock();$("pause").hidden=true;$("prompt").hidden=true}}
-function requestLock(){if(isTouch||lockFailed||!state.playing)return;try{const r=canvas.requestPointerLock();if(r&&r.catch)r.catch(()=>{lockFailed=true})}catch(e){lockFailed=true}}
+function requestLock(){/* no pointer lock: the mouse stays free so you can click to walk */}
+// ---- click / tap to walk ----
+const ray=new THREE.Raycaster(),ndc=new THREE.Vector2();let walk=null;
+const freeCell=(cx,cy)=>{const ch=cellAt(cx,cy);return !(ch==="#"||ch==="g"||ch==="f")&&!blockedCells[cy*GW+cx]};
+function clearLine(x0,z0,x1,z1){const d=Math.hypot(x1-x0,z1-z0),n=Math.ceil(d/0.3);for(let i=1;i<=n;i++){if(blocked(x0+(x1-x0)*i/n,z0+(z1-z0)*i/n))return false}return true}
+function walkTo(x,z,inter){
+ const sc=[Math.round(pos.x/S),Math.round(pos.z/S)];let tc=[Math.round(x/S),Math.round(z/S)];
+ if(!inter&&!freeCell(tc[0],tc[1])){let best=null,bd=1e9;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const c=[tc[0]+dx,tc[1]+dy];if(freeCell(c[0],c[1])){const d=Math.hypot(W(c[0])-x,W(c[1])-z);if(d<bd){bd=d;best=c}}}if(!best)return;tc=best}
+ const path=bfs(sc[0],sc[1],tc[0],tc[1]);if(!path.length)return;
+ const pts=path.slice(1).map(([cx,cy])=>[W(cx),W(cy)]);
+ if(!inter&&!blocked(x,z))pts.push([x,z]);
+ if(!pts.length&&!inter)pts.push([x,z]);
+ walk={pts,i:0,inter,stuck:0};marker.position.set(inter?inter.pos.x:x,0.04,inter?inter.pos.z:z);marker.visible=true;
+}
+function stopWalk(){walk=null;marker.visible=false}
+function clickAt(cx,cy){const r=canvas.getBoundingClientRect();ndc.set(((cx-r.left)/r.width)*2-1,-((cy-r.top)/r.height)*2+1);ray.setFromCamera(ndc,camera);const hits=ray.intersectObjects(scene.children,true);if(!hits.length)return;const h=hits[0];
+ let o=h.object;while(o&&!o.userData.inter)o=o.parent;if(o){const it=o.userData.inter;if(Math.hypot(it.pos.x-pos.x,it.pos.z-pos.z)<2.4){it.act();return}walkTo(it.pos.x,it.pos.z,it);return}
+ let px=h.point.x,pz=h.point.z;if(h.point.y>0.1){const dx=camera.position.x-px,dz=camera.position.z-pz,l=Math.hypot(dx,dz)||1;px+=dx/l*0.6;pz+=dz/l*0.6}
+ if(Math.hypot(px-pos.x,pz-pos.z)>60)return;walkTo(px,pz,null)}
+function updateWalk(dt,manual){if(!walk)return false;if(manual){stopWalk();return false}
+ if(walk.inter&&Math.hypot(walk.inter.pos.x-pos.x,walk.inter.pos.z-pos.z)<2.3){const it=walk.inter;stopWalk();it.act();return false}
+ while(walk.i+1<walk.pts.length&&clearLine(pos.x,pos.z,walk.pts[walk.i+1][0],walk.pts[walk.i+1][1]))walk.i++;
+ const [tx,tz]=walk.pts[walk.i];const dx=tx-pos.x,dz=tz-pos.z,d=Math.hypot(dx,dz);
+ if(d<0.15){walk.i++;if(walk.i>=walk.pts.length)stopWalk();return true}
+ const sp=(keys.ShiftLeft||keys.ShiftRight)?7.2:4.6,st=Math.min(d,sp*dt),n=Math.ceil(st/0.15),ox=pos.x,oz=pos.z;
+ for(let i=0;i<n;i++)tryMove(dx/d*st/n,dz/d*st/n);
+ if(Math.hypot(pos.x-ox,pos.z-oz)<st*0.2){walk.stuck+=dt;if(walk.stuck>1.2){stopWalk();return false}}else walk.stuck=0;
+ if(!drag||!drag.moved){let dd=Math.atan2(-dx,-dz)-yaw;dd=Math.atan2(Math.sin(dd),Math.cos(dd));yaw+=dd*Math.min(1,dt*3.5)}
+ return true}
 document.addEventListener("pointerlockchange",()=>{locked=document.pointerLockElement===canvas;if(locked){wasLocked=true;$("pause").hidden=true}else if(state.playing&&!state.uiOpen&&wasLocked)$("pause").hidden=false});
 document.addEventListener("pointerlockerror",()=>{lockFailed=true});
 $("resume").addEventListener("click",()=>{$("pause").hidden=true;requestLock();if(lockFailed)canvas.focus()});
 document.addEventListener("mousemove",e=>{if(!locked||state.uiOpen)return;yaw-=e.movementX*0.0022;pitch=Math.max(-1.3,Math.min(1.3,pitch-e.movementY*0.0022))});
 let drag=null;
-canvas.addEventListener("pointerdown",e=>{if(!state.playing||state.uiOpen)return;if(e.pointerType==="mouse"&&!lockFailed&&!locked)requestLock();if(locked)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY};try{canvas.setPointerCapture(e.pointerId)}catch(_){}});
-canvas.addEventListener("pointermove",e=>{if(!drag||drag.id!==e.pointerId)return;const s=e.pointerType==="mouse"?0.004:0.006;yaw-=(e.clientX-drag.x)*s;pitch=Math.max(-1.3,Math.min(1.3,pitch-(e.clientY-drag.y)*s));drag.x=e.clientX;drag.y=e.clientY});
-const endDrag=e=>{if(drag&&drag.id===e.pointerId)drag=null};canvas.addEventListener("pointerup",endDrag);canvas.addEventListener("pointercancel",endDrag);
+canvas.addEventListener("pointerdown",e=>{if(!state.playing||state.uiOpen)return;if(e.button>0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:performance.now(),moved:false};try{canvas.setPointerCapture(e.pointerId)}catch(_){}});
+canvas.addEventListener("pointermove",e=>{if(!drag||drag.id!==e.pointerId)return;if(!drag.moved&&Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)>8){drag.moved=true;canvas.classList.add("dragging")}if(!drag.moved)return;const s=e.pointerType==="mouse"?0.004:0.006;yaw-=(e.clientX-drag.x)*s;pitch=Math.max(-1.3,Math.min(1.3,pitch-(e.clientY-drag.y)*s));drag.x=e.clientX;drag.y=e.clientY});
+canvas.addEventListener("pointerup",e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag;drag=null;canvas.classList.remove("dragging");if(!d.moved&&performance.now()-d.t<700&&state.playing&&!state.uiOpen)clickAt(e.clientX,e.clientY)});
+canvas.addEventListener("pointercancel",e=>{if(drag&&drag.id===e.pointerId){drag=null;canvas.classList.remove("dragging")}});
 window.addEventListener("keydown",e=>{if(e.code==="Escape"){if(!$("panel").hidden){closePanel();e.preventDefault()}else if(!$("dialog").hidden)closeDialog();return}
  if(state.uiOpen)return;keys[e.code]=true;if(e.code==="KeyE")interact();if(e.code==="KeyM")$("minimap-wrap").hidden=!$("minimap-wrap").hidden;
  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Space"].includes(e.code))e.preventDefault()});
@@ -565,7 +598,7 @@ let near=null;function interact(){if(near)near.act()}
 // ================= LOOP =================
 function resize(){const w=window.innerWidth,h=window.innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
 window.addEventListener("resize",resize);
-let last=performance.now(),tAcc=0;
+let last=performance.now(),tAcc=0,autoWalking=false;
 function frame(now){requestAnimationFrame(frame);const dt=Math.min(0.1,(now-last)/1000);last=now;tAcc+=dt;
  if(state.playing&&!state.uiOpen){
   let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f+=1;if(keys.KeyS||keys.ArrowDown)f-=1;if(keys.KeyD)s+=1;if(keys.KeyA)s-=1;
@@ -575,6 +608,7 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(0.1,(now-last
   const sp=(keys.ShiftLeft||keys.ShiftRight)?7.2:4.2;
   const fx=-Math.sin(yaw),fz=-Math.cos(yaw),rx=Math.cos(yaw),rz=-Math.sin(yaw);
   if(l>0.01){const mx=(fx*f+rx*s)*sp*dt,mz=(fz*f+rz*s)*sp*dt,n=Math.ceil(Math.hypot(mx,mz)/0.15);for(let i=0;i<n;i++)tryMove(mx/n,mz/n)}
+  autoWalking=updateWalk(dt,l>0.01||keys.ArrowLeft||keys.ArrowRight);
   const cx=Math.round(pos.x/S),cy=Math.round(pos.z/S);
   const zone=ZONES.find(z=>cx>=z.rect[0]&&cx<=z.rect[2]&&cy>=z.rect[1]&&cy<=z.rect[3])||null;
   if(zone!==state.zone){const prev=state.zone;state.zone=zone;if(zone&&!zone.quiet&&(!prev||prev.name!==zone.name)){const r=zone.route?ROUTES[zone.route]:null;toast(zone.name,zone.sub||(r?r.opl.map(o=>o[0]).join(" · "):""),zone.c?(r?r.color:zone.c):"var(--text)")}}
@@ -590,7 +624,8 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(0.1,(now-last
  if(beacon.visible)beacon.material.opacity=0.12+0.06*Math.sin(tAcc*3);
  if(aadje){aadje.position.y=Math.sin(tAcc*2)*0.03;const dx=pos.x-aadje.position.x,dz=pos.z-aadje.position.z;if(Math.hypot(dx,dz)<8){let d=Math.atan2(dx,dz)-aadje.rotation.y;d=Math.atan2(Math.sin(d),Math.cos(d));aadje.rotation.y+=d*0.06}}
  if(!state.playing)yaw=Math.sin(tAcc*0.15)*0.25;
- const moving=state.playing&&!state.uiOpen&&(keys.KeyW||keys.KeyS||keys.KeyA||keys.KeyD||keys.ArrowUp||keys.ArrowDown||jid!==null);
+ if(marker.visible)marker.scale.setScalar(1+0.15*Math.sin(tAcc*6));
+ const moving=state.playing&&!state.uiOpen&&(autoWalking||keys.KeyW||keys.KeyS||keys.KeyA||keys.KeyD||keys.ArrowUp||keys.ArrowDown||jid!==null);
  camera.position.set(pos.x,1.6+(moving?Math.sin(tAcc*9)*0.035:0),pos.z);camera.rotation.set(pitch,yaw,0);
  renderer.render(scene,camera);
  if(state.playing)drawMini();

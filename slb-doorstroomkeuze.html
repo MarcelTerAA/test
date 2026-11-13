@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mijn doorstroomkeuze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Ter AA huisstijl */
+  --basis:#EFA242;
+  --oranje:#FF5900; --groen:#90F87B; --paars:#9447F0; --geel:#FADE29;
+  --l-geel:#FFE398; --l-zalm:#F8CBAF; --l-mint:#A6EBC7; --l-lila:#E5C7FE; --l-blauw:#B2C6D3;
+  --m-zalm:#FF996E; --m-groen:#26C373; --m-lila:#D594FF; --m-blauw:#6698AD;
+  --d-oker:#CD963C; --d-oranje:#D2652A; --d-groen:#3D6B52; --d-paars:#5A4494; --d-grijs:#53666B;
+  --tekst:#1E2426; --zacht:#53666B; --lijn:#E4E1DA; --bg:#FFFFFF; --vlak:#FBF8F2;
+  --accent:var(--basis); --accent-l:var(--l-geel); --accent-d:var(--d-oker);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+[hidden]{display:none!important}
+body{font-family:Poppins,Arial,sans-serif;color:var(--tekst);background:var(--bg);font-size:16px;line-height:1.55;min-height:100vh}
+button,input,textarea,select{font:inherit;color:inherit}
+.app{max-width:760px;margin:0 auto;padding:0 16px 80px;position:relative}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0 10px;gap:12px}
+.logo{color:var(--basis);height:34px;display:block}
+.logo svg{height:100%;width:auto;display:block}
+.top-r{font-size:13px;color:var(--zacht);text-align:right}
+.voortgang{height:8px;background:var(--vlak);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.voortgang i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s ease,background .3s}
+.deelbalk{display:flex;gap:6px;font-size:12px;color:var(--zacht);margin-bottom:18px;flex-wrap:wrap}
+.deelbalk span{padding:2px 10px;border-radius:99px;background:var(--vlak)}
+.deelbalk span.nu{background:var(--accent-l);color:var(--tekst);font-weight:600}
+.deelbalk span.klaar{opacity:.55}
+
+.scherm{animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.label{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-d);margin-bottom:6px}
+h1{font-weight:600;font-size:clamp(28px,6vw,44px);line-height:1.08;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-weight:600;font-size:clamp(21px,4.4vw,27px);line-height:1.25;margin:0 0 10px}
+h3{font-weight:600;font-size:17px;margin:0 0 6px}
+p{margin:0 0 12px}
+.hint{color:var(--zacht);font-size:14px}
+.kaart{background:#fff;border:1.5px solid var(--lijn);border-radius:18px;padding:20px}
+
+/* hero */
+.hero{position:relative;background:var(--l-geel);border-radius:24px;padding:34px 26px 28px;overflow:hidden;margin-bottom:20px}
+.hero .grootA{position:absolute;right:-30px;bottom:-26px;width:250px;color:var(--basis);opacity:.9;pointer-events:none}
+.hero .grootA svg{width:100%;height:auto;display:block}
+.hero > *:not(.grootA){position:relative;z-index:1;max-width:470px}
+.hero p{font-size:16px}
+.stappen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.stap{background:var(--vlak);border-radius:14px;padding:12px 14px;font-size:14px}
+.stap b{display:block;font-size:13px;color:var(--d-oker)}
+.velden{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin:16px 0}
+@media (max-width:520px){.velden{grid-template-columns:1fr}.hero .grootA{width:170px;opacity:.55}}
+label.veld{display:block;font-size:13px;font-weight:500}
+input[type=text],textarea,select{width:100%;border:1.5px solid var(--lijn);border-radius:12px;padding:11px 13px;background:#fff;margin-top:4px;outline:none;transition:border-color .2s}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--accent)}
+textarea{min-height:96px;resize:vertical;line-height:1.5}
+
+/* knoppen */
+.knop{border:0;border-radius:99px;padding:13px 24px;font-weight:600;cursor:pointer;background:var(--tekst);color:#fff;display:inline-flex;align-items:center;gap:8px;transition:transform .1s,opacity .2s;text-decoration:none}
+.knop:hover{transform:translateY(-1px)}
+.knop:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.knop.oranje{background:var(--oranje);color:#fff}
+.knop.licht{background:var(--vlak);color:var(--tekst)}
+.knop.rand{background:#fff;border:1.5px solid var(--lijn);color:var(--tekst)}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px}
+.terug{background:none;border:0;cursor:pointer;color:var(--zacht);padding:8px 4px;font-size:15px}
+.terug:hover{color:var(--tekst)}
+
+/* opties */
+.opties{display:grid;gap:10px;margin-top:16px}
+.optie{display:flex;align-items:center;gap:14px;text-align:left;width:100%;border:2px solid var(--lijn);background:#fff;border-radius:16px;padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
+.optie:hover{border-color:var(--accent)}
+.optie.aan{border-color:var(--accent);background:var(--accent-l)}
+.optie .ico{font-size:26px;width:36px;text-align:center;flex:none}
+.optie .tx b{display:block;font-weight:600}
+.optie .tx small{color:var(--zacht);font-size:13.5px}
+.optie .vink{margin-left:auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--lijn);flex:none;display:grid;place-items:center;font-size:14px;color:#fff}
+.optie.aan .vink{background:var(--tekst);border-color:var(--tekst)}
+.opties.twee{grid-template-columns:1fr 1fr}
+@media (max-width:560px){.opties.twee{grid-template-columns:1fr}}
+
+.emoji{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px}
+.emoji button{border:2px solid var(--lijn);background:#fff;border-radius:16px;padding:14px 4px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12.5px;color:var(--zacht);transition:.15s}
+.emoji button span{font-size:clamp(28px,7vw,40px);line-height:1;filter:grayscale(.3)}
+.emoji button:hover{border-color:var(--accent)}
+.emoji button.aan{border-color:var(--accent);background:var(--accent-l);color:var(--tekst);font-weight:600}
+.emoji button.aan span{filter:none;transform:scale(1.12)}
+
+/* stelling */
+.stelling{background:var(--accent-l);border-radius:22px;padding:28px 24px;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;justify-content:center}
+.stelling .nr{font-size:12px;font-weight:600;color:var(--accent-d);letter-spacing:.05em;text-transform:uppercase}
+.stelling h2{margin:6px 0 0;max-width:600px}
+.schaal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.schaal button{border:2px solid var(--lijn);background:#fff;border-radius:14px;padding:14px 6px;cursor:pointer;font-size:14px;font-weight:500;line-height:1.25;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.schaal button i{font-style:normal;font-size:22px}
+.schaal button:hover{border-color:var(--accent)}
+.schaal button.aan{background:var(--tekst);color:#fff;border-color:var(--tekst)}
+@media (max-width:480px){.schaal{grid-template-columns:1fr 1fr}}
+
+/* tussenscherm */
+.tussen{border-radius:24px;padding:36px 26px;position:relative;overflow:hidden;background:var(--accent-l)}
+.tussen .grootA{position:absolute;right:-20px;top:-10px;width:200px;color:var(--accent);opacity:.5}
+.tussen .grootA svg{width:100%;height:auto}
+.tussen > *:not(.grootA){position:relative}
+.tussen .deelnr{font-size:64px;font-weight:700;line-height:1;color:var(--accent-d)}
+
+/* uitslag */
+.balken{display:grid;gap:10px;margin:16px 0 8px}
+.balk{display:grid;grid-template-columns:minmax(120px,190px) 1fr 46px;align-items:center;gap:10px;font-size:14px}
+.balk .bk{height:16px;background:var(--vlak);border-radius:99px;overflow:hidden}
+.balk .bk i{display:block;height:100%;border-radius:99px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.balk b{text-align:right;font-weight:600}
+@media (max-width:480px){.balk{grid-template-columns:1fr 46px}.balk .bk{grid-column:1/-1;grid-row:2}}
+.top1{border-radius:22px;padding:24px;position:relative;overflow:hidden;margin:18px 0}
+.top1 .grootA{position:absolute;right:-24px;bottom:-30px;width:180px;opacity:.35}
+.top1 .grootA svg{width:100%;height:auto}
+.top1 > *:not(.grootA){position:relative}
+.chip{display:inline-block;font-size:12.5px;font-weight:600;padding:3px 11px;border-radius:99px;background:#fff;margin:0 6px 6px 0}
+.top1 ul{margin:8px 0 12px;padding-left:20px}
+.top1 li{margin-bottom:3px}
+.redenen{background:var(--vlak);border-radius:16px;padding:16px 18px;margin:14px 0}
+.redenen ul{margin:6px 0 0;padding-left:20px}
+.route{border-left:5px solid var(--accent);background:#fff;padding:12px 16px;border-radius:0 14px 14px 0;margin:14px 0;box-shadow:0 0 0 1.5px var(--lijn) inset}
+.link{color:var(--tekst);font-weight:600;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
+.andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+@media (max-width:560px){.andere{grid-template-columns:1fr}}
+.andere .kaart{padding:14px 16px}
+.andere .kaart b{display:block}
+.andere .kaart small{color:var(--zacht)}
+
+/* eindscherm */
+.eind{background:var(--tekst);color:#fff;border-radius:24px;padding:26px 24px;position:relative;overflow:hidden}
+.eind .grootA{position:absolute;right:-30px;top:-20px;width:220px;color:var(--basis);opacity:.25}
+.eind .grootA svg{width:100%;height:auto}
+.eind > *:not(.grootA){position:relative}
+.eind .label{color:var(--l-geel)}
+.eind h2{color:#fff}
+.vak{margin:16px 0}
+.vak > label{font-weight:600;font-size:14.5px;display:block}
+.vak .hint{margin:2px 0 4px;font-size:13px}
+.checks{display:grid;gap:6px;margin-top:6px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:15px;cursor:pointer;padding:6px 2px}
+.checks input{width:19px;height:19px;accent-color:var(--oranje);margin-top:3px;flex:none}
+.acties{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.melding{font-size:14px;color:var(--d-groen);margin-top:10px;min-height:20px}
+.klein{font-size:13px;color:var(--zacht)}
+footer{margin-top:40px;font-size:12.5px;color:var(--zacht);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer button{background:none;border:0;color:var(--zacht);cursor:pointer;text-decoration:underline;padding:0;font-size:12.5px}
+@media print{header.top .top-r,.voortgang,.deelbalk,.nav,.acties,footer{display:none}.eind{background:#fff;color:#000;border:2px solid #000}.eind h2{color:#000}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo" aria-label="Ter AA"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136.12 60.18" fill="currentColor" fill-rule="evenodd"><path d="M136.02 41.34L131.17 29.63C131.03 29.30 130.65 29.17 130.34 29.35C128.32 30.49 126.26 31.55 124.14 32.54L113.75 0.68C113.62 0.27 113.23 0.00 112.80 0.00L98.95 0.00C98.52 0.00 98.14 0.27 98.00 0.68L82.62 47.82L82.62 47.83L67.23 0.68C67.10 0.27 66.71 0.00 66.29 0.00L52.43 0.00C52.00 0.00 51.62 0.27 51.48 0.68L38.39 40.81C38.39 40.81 38.39 40.81 38.38 40.81C36.39 40.79 33.69 40.67 30.72 40.34C30.42 40.31 30.14 40.51 30.08 40.81L27.72 53.23C27.66 53.52 27.86 53.79 28.15 53.82C30.07 54.04 32.02 54.21 33.97 54.33C33.97 54.33 33.98 54.33 33.97 54.33L32.06 60.18C32.06 60.18 32.06 60.18 32.06 60.18L48.12 60.18C48.12 60.18 48.12 60.18 48.12 60.18C48.97 57.18 49.86 54.04 49.86 54.04C55.95 53.47 62.00 52.34 67.90 50.68C67.89 50.68 69.33 55.79 70.57 60.18L70.58 60.18L94.65 60.18L94.66 60.18C95.42 57.47 96.39 54.04 96.39 54.04C102.49 53.47 108.53 52.34 114.43 50.68C114.43 50.68 115.90 55.91 117.11 60.18L133.17 60.18L128.42 45.63C130.94 44.51 133.40 43.28 135.80 41.96C136.03 41.84 136.12 41.57 136.02 41.34M53.88 39.75L59.35 20.33C59.35 20.32 59.35 20.32 59.35 20.33L64.18 37.50C64.19 37.51 64.18 37.51 64.18 37.51C62.34 38.09 57.83 39.15 53.88 39.75C53.88 39.75 53.88 39.75 53.88 39.75M100.41 39.75L105.88 20.32L110.72 37.51C108.88 38.09 104.36 39.15 100.41 39.75"/><path d="M4.20 29.70C3.54 29.15 3.13 28.55 2.98 27.89C2.82 27.24 2.74 26.51 2.74 25.72L2.74 22.39L2.74 19.14L1.36 19.14L0.00 19.14L0.00 16.23L1.38 16.23L2.74 16.23L2.74 14.41L2.74 12.62L2.74 12.27L5.95 12.27L5.95 12.81L5.95 14.55L5.95 16.23L7.88 16.23L9.76 16.23L9.76 19.14L7.85 19.14L5.95 19.14L5.95 20.75L5.95 22.33L5.95 23.47L5.95 24.59L5.95 24.64C5.95 25.24 5.99 25.74 6.05 26.14C6.12 26.54 6.29 26.88 6.56 27.17C6.84 27.46 7.26 27.61 7.85 27.61C8.41 27.61 9.02 27.45 9.66 27.14L9.76 27.09L9.76 29.97C9.43 30.16 9.04 30.29 8.60 30.39C8.16 30.48 7.70 30.52 7.20 30.52C5.85 30.52 4.85 30.25 4.20 29.70"/><path d="M13.91 29.61C12.81 29.01 11.96 28.15 11.35 27.05C10.73 25.95 10.42 24.67 10.42 23.23C10.42 21.82 10.72 20.55 11.32 19.43C11.92 18.31 12.74 17.43 13.80 16.79C14.85 16.15 16.04 15.83 17.37 15.83C18.53 15.83 19.62 16.09 20.62 16.61C21.63 17.14 22.44 17.95 23.08 19.05C23.71 20.16 24.02 21.53 24.02 23.18L24.02 24.07L13.69 24.07C13.77 24.82 13.99 25.46 14.36 25.99C14.72 26.52 15.18 26.92 15.73 27.20C16.28 27.47 16.89 27.61 17.57 27.61C18.35 27.61 19.05 27.40 19.66 26.99C20.28 26.57 20.73 25.98 21.03 25.22L24.10 26.41C23.60 27.64 22.78 28.64 21.63 29.39C20.49 30.15 19.14 30.52 17.60 30.52C16.23 30.52 15.01 30.22 13.91 29.61M20.14 19.95C19.82 19.49 19.42 19.17 18.93 18.97C18.44 18.77 17.91 18.67 17.35 18.67C16.72 18.67 16.16 18.79 15.68 19.04C15.20 19.29 14.80 19.65 14.49 20.11C14.19 20.58 13.98 21.10 13.86 21.68L20.71 21.68C20.64 20.98 20.45 20.41 20.14 19.95"/><path d="M26.11 16.23L29.27 16.23L29.27 16.65L29.27 17.58L29.27 18.49L29.37 18.49C29.75 17.70 30.29 17.05 30.98 16.56C31.67 16.07 32.46 15.83 33.36 15.83C33.84 15.83 34.33 15.92 34.76 16.09L34.14 19.64C33.83 19.56 33.31 19.51 33.05 19.51C32.08 19.51 31.31 19.74 30.75 20.24C30.20 20.75 29.82 21.34 29.62 22.06C29.42 22.78 29.32 23.52 29.32 24.42L29.32 24.52L29.32 30.10L26.11 30.10L26.11 16.23"/></svg></div>
+    <div class="top-r" id="wie"></div>
+  </header>
+  <div class="voortgang" id="vgWrap" hidden><i id="vg"></i></div>
+  <div class="deelbalk" id="deelbalk" hidden></div>
+  <main id="scherm"></main>
+  <footer>
+    <span>Studieloopbaan · Medewerker ICT · Ter AA · informatie van ter-aa.nl (nov. 2026)</span>
+    <button type="button" id="reset">↺ Opnieuw beginnen</button>
+  </footer>
+</div>
+
+<script>
+const A_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57.54 60.18" fill="currentColor" fill-rule="evenodd"><path d="M57.44 41.34L52.58 29.63C52.45 29.30 52.06 29.17 51.76 29.34C49.74 30.49 47.67 31.55 45.56 32.54L35.16 0.68C35.03 0.27 34.65 0.00 34.22 0.00L20.36 0.00C19.93 0.00 19.55 0.27 19.42 0.68L0.00 60.18L16.07 60.18C16.84 57.47 17.81 54.04 17.81 54.04C23.90 53.47 29.95 52.34 35.85 50.68C35.85 50.68 37.32 55.91 38.52 60.18L54.59 60.18L49.83 45.63C52.35 44.51 54.82 43.28 57.22 41.96C57.44 41.84 57.54 41.57 57.44 41.34M21.83 39.75L27.30 20.32L32.14 37.51C30.29 38.09 25.78 39.15 21.83 39.75"/></svg>`;
+const OPSLAG = 'slb_doorstroom_v1';
+const MAIL = 'm.beekmans@ter-aa.nl';
+
+/* ---------- Opleidingen (bron: ter-aa.nl/mbo-opleidingen/ict) ---------- */
+const TR = {
+  sup:{naam:'ICT support technician', kort:'Support technician', niveau:'Niveau 3', duur:'2 jaar', kleur:'#6698AD', licht:'#B2C6D3', donker:'#53666B',
+    url:'https://www.ter-aa.nl/opleiding/ict-support-technician',
+    wat:['Hoe computersystemen en netwerken werken','Hardware en software installeren en onderhouden','Microsoft client/server, Linux en cybersecurity','Werken op een servicedesk'],
+    werk:'ICT support technician bij een bedrijf, school, gemeente, winkelketen of ziekenhuis.',
+    past:'Je bent geduldig, helpt graag mensen, denkt analytisch en werkt georganiseerd.'},
+  sys:{naam:'ICT System Engineer', kort:'System engineer', niveau:'Niveau 4', duur:'3 jaar', kleur:'#26C373', licht:'#A6EBC7', donker:'#3D6B52',
+    url:'https://www.ter-aa.nl/opleiding/ict-system-engineer',
+    wat:['Netwerken, servers, hardware en back-ups','Certificaten van o.a. Microsoft, Cisco en Fortinet','Cybersecurity: vanaf jaar 2 werk je in "red" en "blue" teams','Specialiseren in Cloud, Cyber security of Netwerken'],
+    werk:'ICT system engineer, netwerkbeheerder of cybersecurity-specialist.',
+    past:'Je vindt computers én netwerken interessant, bent geduldig, kunt tegen stress en analyseert goed.'},
+  soft:{naam:'Software engineer', kort:'Software engineer', niveau:'Niveau 4', duur:'3 jaar', kleur:'#9447F0', licht:'#E5C7FE', donker:'#5A4494',
+    url:'https://www.ter-aa.nl/opleiding/software-engineer',
+    wat:['Programmeren: desktop, web (front-end en back-end) en embedded','Databases, testen en versiebeheer','Werken in Scrum-teams','AI in software'],
+    werk:'Software engineer bij een softwarebedrijf of bij een bedrijf dat eigen software maakt.',
+    past:'Je bent creatief, bouwt graag zelf applicaties en werkt georganiseerd.'},
+  game:{naam:'Game developer', kort:'Game developer', niveau:'Niveau 4', duur:'3 jaar', kleur:'#FF5900', licht:'#F8CBAF', donker:'#D2652A',
+    url:'https://www.ter-aa.nl/opleiding/game-developer',
+    wat:['Werken met game-engines','2D- en 3D-animatie, physics en botsingsdetectie','Storyboards, pixelart en game-programmeren','AR en VR'],
+    werk:'Game developer: games voor pc en mobiel, of "gamification" voor onderwijs en reclame.',
+    past:'Je bent creatief, houdt van games en virtuele werelden en bent nieuwsgierig naar AR/VR.'},
+  anders:{naam:'Een andere richting (geen ICT)', kort:'Andere richting', niveau:'', duur:'', kleur:'#EFA242', licht:'#FFE398', donker:'#CD963C',
+    url:'https://www.ter-aa.nl/mbo-opleidingen',
+    wat:[], werk:'', past:'Je energie zit misschien ergens anders dan in ICT. Dat is óók een goede uitkomst!'}
+};
+const SPEC = {
+  cloud:{naam:'Cloud specialist', url:'https://www.ter-aa.nl/opleiding/cloud-specialist', tx:'cloudomgevingen bouwen met AWS, Microsoft Azure en Google Cloud'},
+  cyber:{naam:'Cyber security specialist', url:'https://www.ter-aa.nl/opleiding/cyber-security-specialist', tx:'pentesten, ethical hacking en incidenten afhandelen'},
+  net:{naam:'Network specialist', url:'https://www.ter-aa.nl/opleiding/network-specialist', tx:'netwerken ontwerpen met routers, switches en firewalls (o.a. CCNA)'},
+  fs:{naam:'Full stack developer', url:'https://www.ter-aa.nl/opleiding/full-stack-developer', tx:'websites en mobiele apps bouwen met frameworks, van voorkant tot database'}
+};
+const TWEETALIG = {
+  soft:{naam:'Software engineer (tweetalig)', url:'https://www.ter-aa.nl/opleiding/software-engineer-tweetalig'},
+  fs:{naam:'Full stack developer (tweetalig)', url:'https://www.ter-aa.nl/opleiding/full-stack-developer-tweetalig'},
+  game:{naam:'Game developer (tweetalig)', url:'https://www.ter-aa.nl/opleiding/game-developer-tweetalig'}
+};
+const RICHTING = {
+  techniek:{ico:'🔧', b:'Techniek', s:'elektro, mechatronica, drones', tip:'Ter AA heeft o.a. Techlab (N2), Eerste monteur mechatronica (N3) en Drone Specialist (N4).', url:'https://www.ter-aa.nl/mbo-opleidingen'},
+  zorg:{ico:'💚', b:'Zorg en welzijn', s:'mensen helpen en verzorgen', tip:'Kijk bij de sector Zorg en welzijn op ter-aa.nl.', url:'https://www.ter-aa.nl/mbo-opleidingen'},
+  economie:{ico:'📦', b:'Economie, handel en logistiek', s:'verkoop, kantoor, magazijn', tip:'Kijk bij Economie en ondernemen op ter-aa.nl.', url:'https://www.ter-aa.nl/mbo-opleidingen'},
+  creatief:{ico:'🎨', b:'Creatief en design', s:'vormgeven, ontwerpen', tip:'Ter AA heeft o.a. Ruimtelijk vormgever (N4). Ook Game developer is heel creatief!', url:'https://www.ter-aa.nl/mbo-opleidingen'},
+  sport:{ico:'⚽', b:'Sport en bewegen', s:'trainen, begeleiden', tip:'Kijk op ter-aa.nl of een andere mbo-school in de buurt.', url:'https://www.ter-aa.nl/mbo-opleidingen'},
+  horeca:{ico:'🍳', b:'Horeca, toerisme, voeding', s:'koken, gastvrijheid', tip:'Kijk op ter-aa.nl of een andere mbo-school in de buurt.', url:'https://www.ter-aa.nl/mbo-opleidingen'},
+  weetniet:{ico:'🤷', b:'Geen idee nog', s:'ik moet nog gaan oriënteren', tip:'Plan een gesprek met je SLB\'er en ga naar open dagen.', url:'https://www.ter-aa.nl/mbo-opleidingen'}
+};
+
+/* ---------- Vragen ---------- */
+/* s = punten per richting, r = reden (zin die in je onderbouwing kan komen) */
+const DELEN = [
+  {nr:1, titel:'Terugblik', kleur:['#EFA242','#FFE398','#CD963C']},
+  {nr:2, titel:'Wat past bij jou?', kleur:['#9447F0','#E5C7FE','#5A4494']},
+  {nr:3, titel:'Jouw route', kleur:['#26C373','#A6EBC7','#3D6B52']},
+  {nr:4, titel:'Uitslag & keuze', kleur:['#FF5900','#F8CBAF','#D2652A']}
+];
+const SCHAAL = [{t:'Helemaal oneens',i:'👎',f:0},{t:'Oneens',i:'🙁',f:.25},{t:'Eens',i:'🙂',f:.7},{t:'Helemaal eens',i:'👍',f:1}];
+
+const VRAGEN = [
+  {id:'intro', type:'intro', deel:0},
+
+  {id:'d1', type:'tussen', deel:1, titel:'Terugblik', tekst:'Je bent bijna klaar met Medewerker ICT. Eerst kijken we even terug: hoe vond je het en wat wil je daarna? Er zijn geen foute antwoorden.'},
+  {id:'leuk', type:'emoji', deel:1, q:'Hoe leuk vind je ICT nu, aan het eind van je opleiding?',
+    opts:[{v:1,e:'😖',t:'Echt niet'},{v:2,e:'🙁',t:'Matig'},{v:3,e:'😐',t:'Gaat wel'},{v:4,e:'🙂',t:'Leuk'},{v:5,e:'🤩',t:'Super'}]},
+  {id:'hoogte', type:'multi', deel:1, max:3, q:'Wat vond je de afgelopen tijd het leukst?', sub:'Kies er maximaal 3.',
+    opts:[
+      {v:'hw', ico:'🖥️', b:'Hardware', s0:'pc\'s, laptops en printers installeren of repareren', s:{sup:2,sys:1}, r:'ik vond hardware installeren en repareren het leukst'},
+      {v:'help', ico:'🎧', b:'Servicedesk', s0:'mensen helpen met hun ICT-problemen', s:{sup:3}, r:'ik vond mensen helpen op de servicedesk het leukst'},
+      {v:'net', ico:'🌐', b:'Netwerken', s0:'kabels, switches, wifi, IP-adressen', s:{sys:3,net:2}, r:'ik vond netwerken het leukst'},
+      {v:'cyber', ico:'🔐', b:'Cybersecurity', s0:'beveiliging, wachtwoorden, hackers', s:{sys:2,cyber:3}, r:'ik vond cybersecurity het leukst'},
+      {v:'web', ico:'💻', b:'Web development', s0:'websites bouwen, HTML/CSS', s:{soft:3,fs:2}, r:'ik vond websites bouwen het leukst'},
+      {v:'game', ico:'🎮', b:'Game design', s0:'zelf een game of level maken', s:{game:3}, r:'ik vond game design het leukst'},
+      {v:'3d', ico:'🧊', b:'3D-printen of grafisch ontwerp', s0:'ontwerpen en maken', s:{game:2,anders:1}, r:'ik vond ontwerpen (3D/grafisch) het leukst'},
+      {v:'niks', ico:'😶', b:'Eigenlijk niets echt', s0:'het ICT-deel was niet mijn ding', s:{anders:3}, r:'het ICT-deel van mijn opleiding sprak me niet echt aan'}
+    ]},
+  {id:'stage', type:'single', deel:1, q:'Hoe beviel je stage (BPV)?',
+    opts:[
+      {v:'top', ico:'🚀', b:'Super, dit werk wil ik vaker doen', s:{sup:1,sys:1}, r:'mijn stage beviel heel goed'},
+      {v:'ok', ico:'👌', b:'Prima, maar het hoeft niet precies dit te zijn', s:{}},
+      {v:'tegen', ico:'😕', b:'Het viel tegen', s:{anders:2}, r:'mijn ICT-stage viel me tegen'},
+      {v:'geen', ico:'⏳', b:'Ik heb (nog) geen stage gelopen', s:{}}
+    ]},
+  {id:'plan', type:'single', deel:1, q:'Wat wil je na je diploma het liefst?',
+    opts:[
+      {v:'ict', ico:'📈', b:'Verder leren in de ICT', s0:'een vervolgopleiding op niveau 3 of 4', s:{sup:1,sys:1,soft:1,game:1}},
+      {v:'anders', ico:'🧭', b:'Verder leren, maar in iets anders', s0:'een opleiding buiten de ICT', s:{anders:5}, r:'ik wil verder leren, maar dan buiten de ICT'},
+      {v:'werk', ico:'💼', b:'Gaan werken', s0:'met mijn niveau 2-diploma aan de slag', s:{}},
+      {v:'twijfel', ico:'🤔', b:'Ik weet het nog niet', s0:'daarom doe ik deze app 😉', s:{}}
+    ]},
+
+  {id:'d2', type:'tussen', deel:2, titel:'Wat past bij jou?', tekst:'Nu volgen stellingen en een paar situaties. Ga op je eerste gevoel af: wat zou jij écht kiezen, niet wat je denkt dat goed is.'},
+  {id:'s1', type:'schaal', deel:2, q:'Ik help graag mensen die vastlopen met hun computer of telefoon.', s:{sup:3}, r:'ik help graag mensen met hun ICT-problemen'},
+  {id:'s2', type:'schaal', deel:2, q:'Een computer uit elkaar halen, onderdelen vervangen en weer aan de praat krijgen: vind ik leuk.', s:{sup:2,sys:1}, r:'ik sleutel graag aan hardware'},
+  {id:'s3', type:'schaal', deel:2, q:'Ik wil precies snappen hoe een netwerk werkt: routers, switches, wifi.', s:{sys:3,net:3}, r:'ik wil precies snappen hoe netwerken werken'},
+  {id:'s4', type:'schaal', deel:2, q:'Hackers en beveiliging vind ik spannend: hoe breek je in en hoe houd je ze buiten?', s:{sys:2,cyber:3}, r:'ik vind beveiliging en hacking spannend'},
+  {id:'s5', type:'schaal', deel:2, q:'Ik ben benieuwd hoe "de cloud" werkt, zoals de servers achter OneDrive, Netflix of Azure.', s:{sys:2,cloud:3}, r:'ik ben benieuwd hoe de cloud werkt'},
+  {id:'s6', type:'schaal', deel:2, q:'Ik vind het leuk om zelf iets te bouwen met code, ook als het lang duurt voordat het werkt.', s:{soft:3,game:2}, r:'ik bouw graag zelf iets met code en heb daar geduld voor'},
+  {id:'s7', type:'schaal', deel:2, q:'Ik heb al eens een website of app gemaakt (of zou dat graag willen).', s:{soft:2,fs:3}, r:'ik wil graag websites en apps maken'},
+  {id:'s8', type:'schaal', deel:2, q:'Ik speel veel games en wil weten hoe ze gemaakt worden.', s:{game:3}, r:'ik ben gek op games en wil weten hoe ze gemaakt worden'},
+  {id:'s9', type:'schaal', deel:2, q:'Ik ben creatief: tekenen, ontwerpen, verhalen bedenken of 3D-modellen maken.', s:{game:3,soft:1,anders:1}, r:'ik ben creatief'},
+  {id:'s10', type:'schaal', deel:2, q:'Puzzels oplossen en logisch nadenken vind ik leuk.', s:{soft:2,sys:2,game:1}, r:'ik houd van puzzelen en logisch nadenken'},
+  {id:'s11', type:'schaal', deel:2, q:'Ik kan goed rustig blijven als er iets dringend opgelost moet worden.', s:{sup:1,sys:2,cyber:1}, r:'ik blijf rustig als er iets dringends opgelost moet worden'},
+  {id:'s12', type:'schaal', deel:2, q:'Ik werk liever met mijn handen of met mensen dan de hele dag achter een scherm.', s:{anders:3,sup:1}, r:'ik werk liever met mijn handen of met mensen dan de hele dag achter een scherm'},
+  {id:'s13', type:'schaal', deel:2, q:'Eerlijk gezegd word ik niet zo blij van computers.', s:{anders:5}, r:'computers maken me eigenlijk niet zo blij'},
+  {id:'s14', type:'schaal', deel:2, q:'Ik vind Engels prima en zou best lessen in het Engels willen volgen.', s:{}, tag:'engels'},
+
+  {id:'c1', type:'single', deel:2, situatie:true, q:'Je loopt stage. Vandaag mag je zelf kiezen wat je doet:',
+    opts:[
+      {v:'a', ico:'☎️', b:'Telefoontjes aannemen en collega\'s helpen met hun laptop', s:{sup:3}, r:'op stage zou ik het liefst collega\'s helpen met hun ICT'},
+      {v:'b', ico:'🧱', b:'Een nieuwe server en firewall installeren', s:{sys:3,net:1,cyber:1}, r:'op stage zou ik het liefst servers en firewalls installeren'},
+      {v:'c', ico:'⌨️', b:'Een handige tool programmeren voor het bedrijf', s:{soft:3}, r:'op stage zou ik het liefst zelf software maken'},
+      {v:'d', ico:'🕹️', b:'Een interactieve game maken om nieuwe klanten iets uit te leggen', s:{game:3}, r:'op stage zou ik het liefst een game maken'},
+      {v:'e', ico:'🚪', b:'Liever iets heel anders, buiten de ICT', s:{anders:3}, r:'zelfs op een ICT-stage zou ik liever iets anders doen'}
+    ]},
+  {id:'c2', type:'single', deel:2, situatie:true, q:'Je hebt een vrije zaterdag en zin om iets te maken. Wat kies je?',
+    opts:[
+      {v:'a', ico:'🛠️', b:'Een gaming-pc bouwen of upgraden', s:{sys:2,sup:2}, r:'in mijn vrije tijd bouw ik graag pc\'s'},
+      {v:'b', ico:'📡', b:'Een eigen Minecraft-server of thuisnetwerk opzetten', s:{sys:3,net:1,cloud:2}, r:'in mijn vrije tijd zet ik graag servers of netwerken op'},
+      {v:'c', ico:'🤖', b:'Een website of Discord-bot programmeren', s:{soft:3,fs:2}, r:'in mijn vrije tijd programmeer ik graag'},
+      {v:'d', ico:'🧩', b:'Een eigen level, mod of game ontwerpen', s:{game:3}, r:'in mijn vrije tijd ontwerp ik graag games of levels'},
+      {v:'e', ico:'🏃', b:'Iets zonder computer: sporten, koken, sleutelen, tekenen…', s:{anders:3}, r:'in mijn vrije tijd doe ik liever dingen zonder computer'}
+    ]},
+  {id:'c3', type:'single', deel:2, situatie:true, q:'Welke baan over 5 jaar klinkt jou het best?',
+    opts:[
+      {v:'a', ico:'🏥', b:'ICT\'er op een school of in een ziekenhuis die zorgt dat alles werkt', s:{sup:3}, r:'ik zie mezelf later als ICT\'er die zorgt dat alles werkt'},
+      {v:'b', ico:'🕵️', b:'Ethical hacker die bedrijven beschermt', s:{sys:2,cyber:3}, r:'ik zie mezelf later als ethical hacker'},
+      {v:'c', ico:'☁️', b:'Cloud- of netwerkbeheerder bij een groot bedrijf', s:{sys:3,cloud:2,net:2}, r:'ik zie mezelf later als cloud- of netwerkbeheerder'},
+      {v:'d', ico:'📱', b:'Programmeur van apps en websites', s:{soft:3,fs:2}, r:'ik zie mezelf later als programmeur'},
+      {v:'e', ico:'👾', b:'Game developer', s:{game:3}, r:'ik zie mezelf later als game developer'},
+      {v:'f', ico:'🌱', b:'Iets buiten de ICT', s:{anders:3}, r:'ik zie mezelf later buiten de ICT werken'}
+    ]},
+  {id:'c4', type:'single', deel:2, situatie:true, q:'Een collega zegt: "Mijn programma crasht steeds." Wat denk jij als eerste?',
+    opts:[
+      {v:'a', ico:'💬', b:'"Ik loop even mee en help je het stap voor stap op te lossen."', s:{sup:3}, r:'bij een probleem wil ik vooral de persoon helpen'},
+      {v:'b', ico:'🔎', b:'"Ligt het aan de server of het netwerk? Ik duik in de logs."', s:{sys:3}, r:'bij een probleem zoek ik de oorzaak in systemen en netwerken'},
+      {v:'c', ico:'🐞', b:'"Er zit vast een bug in de code. Die wil ik vinden en fixen."', s:{soft:3,game:1}, r:'bij een probleem wil ik de bug in de code vinden'},
+      {v:'d', ico:'😅', b:'"Kan iemand anders dit oppakken?"', s:{anders:2}, r:'ICT-problemen oplossen geeft me weinig energie'}
+    ]},
+
+  {id:'d3', type:'tussen', deel:3, titel:'Jouw route', tekst:'Een paar vragen over hoe jij leert en werkt. Daarmee bepalen we of je beter eerst niveau 3 kunt doen, of misschien direct niveau 4 aankunt.'},
+  {id:'school', type:'single', deel:3, q:'Hoe gaat school op dit moment?',
+    opts:[
+      {v:2, ico:'🏆', b:'Goed, ik haal mijn opdrachten en toetsen vrij makkelijk'},
+      {v:1, ico:'💪', b:'Het gaat goed als ik er echt mijn best voor doe'},
+      {v:0, ico:'🧗', b:'Het is best lastig, ik moet veel moeite doen'}
+    ]},
+  {id:'zelf', type:'single', deel:3, q:'Hoe zelfstandig werk jij?',
+    opts:[
+      {v:2, ico:'🗓️', b:'Ik plan zelf en werk zonder hulp aan grote opdrachten'},
+      {v:1, ico:'🤝', b:'Ik werk zelfstandig, maar met af en toe wat hulp'},
+      {v:0, ico:'🧭', b:'Ik heb vaak iemand nodig die me op weg helpt'}
+    ]},
+  {id:'theorie', type:'single', deel:3, q:'Hoe leer jij het liefst?',
+    opts:[
+      {v:2, ico:'📚', b:'Ik vind theorie prima, ik wil snappen hoe het in elkaar zit'},
+      {v:1, ico:'⚖️', b:'Een mix van theorie en praktijk'},
+      {v:0, ico:'🔨', b:'Vooral door te doen, theorie vind ik saai'}
+    ]},
+  {id:'jaren', type:'single', deel:3, q:'Hoe lang wil je nog naar school?',
+    opts:[
+      {v:'kort', ico:'⏱️', b:'Zo kort mogelijk, ik wil snel werken en geld verdienen'},
+      {v:'mid', ico:'🎓', b:'Nog 2 à 3 jaar is prima'},
+      {v:'lang', ico:'🏫', b:'Maakt niet uit, misschien wil ik daarna zelfs naar het hbo'}
+    ]},
+
+  {id:'richting', type:'multi', deel:3, max:3, alleenAls:'anders', q:'Welke andere richting trekt je?', sub:'Je gaf aan dat ICT misschien niet (helemaal) jouw ding is. Kies maximaal 3 richtingen.',
+    opts:Object.entries(RICHTING).map(([v,o])=>({v, ico:o.ico, b:o.b, s0:o.s}))},
+
+  {id:'uitslag', type:'uitslag', deel:4},
+  {id:'reflectie', type:'reflectie', deel:4},
+  {id:'keuze', type:'keuze', deel:4}
+];
+
+/* ---------- Status ---------- */
+let st = laad();
+function zet(id,val){ if(JSON.stringify(st.a[id])!==JSON.stringify(val)) st.keuze=null; st.a[id]=val; bewaar(); }
+function laad(){
+  try{ const x = JSON.parse(localStorage.getItem(OPSLAG)); if(x && x.a) return x; }catch(e){}
+  return {stap:0, naam:'', klas:'', a:{}, refl:{}, keuze:null};
+}
+function bewaar(){ try{ localStorage.setItem(OPSLAG, JSON.stringify(st)); }catch(e){} }
+
+function zichtbaar(){
+  return VRAGEN.filter(v => {
+    if(v.alleenAls==='anders') return toonAnders();
+    return true;
+  });
+}
+function toonAnders(){
+  const a = st.a;
+  if(a.plan==='anders' || (a.leuk && a.leuk<=2) || (a.s13!==undefined && a.s13>=2) || (a.hoogte||[]).includes('niks')) return true;
+  const sc = scores(); return sc.rang[0].k==='anders' || sc.pct.anders >= 45;
+}
+
+/* ---------- Scores ---------- */
+const HOOFD = ['sup','sys','soft','game','anders'];
+function scores(){
+  const raw = {}, max = {}, bijdrage = {};
+  const add = (obj,f,reden,qid) => { for(const k in obj){ raw[k]=(raw[k]||0)+obj[k]*f; if(reden && obj[k]*f>0){ (bijdrage[k]=bijdrage[k]||[]).push({w:obj[k]*f, r:reden, q:qid}); } } };
+  const addMax = (objs) => { const m={}; objs.forEach(o=>{ for(const k in o) m[k]=Math.max(m[k]||0,o[k]); }); for(const k in m) max[k]=(max[k]||0)+m[k]; };
+  for(const v of VRAGEN){
+    const ant = st.a[v.id];
+    if(v.type==='schaal' && v.s){ addMax([v.s]); if(ant!==undefined) add(v.s, SCHAAL[ant].f, v.r, v.id); }
+    else if((v.type==='single'||v.type==='multi') && v.opts && v.opts.some(o=>o.s)){
+      if(v.type==='multi'){ // max = beste 'max' opties per richting, benaderd met 2 beste
+        const per={}; v.opts.forEach(o=>{ for(const k in (o.s||{})) (per[k]=per[k]||[]).push(o.s[k]); });
+        for(const k in per){ const t=per[k].sort((x,y)=>y-x).slice(0,2).reduce((x,y)=>x+y,0); max[k]=(max[k]||0)+t; }
+        (ant||[]).forEach(val=>{ const o=v.opts.find(o=>o.v===val); if(o&&o.s) add(o.s,1,o.r,v.id); });
+      } else {
+        addMax(v.opts.map(o=>o.s||{}));
+        const o = v.opts.find(o=>o.v===ant); if(o&&o.s) add(o.s,1,o.r,v.id);
+      }
+    }
+  }
+  // Hoe leuk is ICT?
+  if(st.a.leuk){ const l=st.a.leuk; const ictBonus=[0,-3,-1,0,1,2][l]; for(const k of ['sup','sys','soft','game']) raw[k]=(raw[k]||0)+ictBonus; raw.anders=(raw.anders||0)+[0,6,3,0,0,0][l];
+    if(l<=2) (bijdrage.anders=bijdrage.anders||[]).push({w:6-l*2, r:'ik vind ICT op dit moment '+(l===1?'echt niet':'maar matig')+' leuk', q:'leuk'}); }
+  max.anders=(max.anders||0)+6; for(const k of ['sup','sys','soft','game']) max[k]=(max[k]||0)+2;
+  const pct={}; for(const k of HOOFD){ pct[k]=Math.max(0,Math.min(100,Math.round(100*(raw[k]||0)/(max[k]||1)))); }
+  // anders iets afzwakken als ICT leuk is
+  const rang = HOOFD.map(k=>({k,p:pct[k]})).sort((x,y)=>y.p-x.p);
+  const sub = {cloud:raw.cloud||0, cyber:raw.cyber||0, net:raw.net||0, fs:raw.fs||0};
+  return {raw,max,pct,rang,bijdrage,sub};
+}
+function niveauScore(){ const a=st.a; return (a.school??1)+(a.zelf??1)+(a.theorie??1); } // 0..6
+function specialisatie(k, sc){
+  if(k==='sys'){
+    const s=[['cloud',sc.sub.cloud],['cyber',sc.sub.cyber],['net',sc.sub.net]].sort((x,y)=>y[1]-x[1]);
+    if(s[0][1]>=3 && s[0][1]>s[1][1]) return s[0][0];
+    return null;
+  }
+  if(k==='soft' && sc.sub.fs>=4) return 'fs';
+  return null;
+}
+function engels(){ return (st.a.s14??0)>=2; }
+
+function route(k, sc){
+  const n = niveauScore(), a=st.a;
+  const r = [];
+  if(k==='anders'){
+    r.push('Kijk welke opleiding buiten de ICT bij je past. Vaak kun je met je niveau 2-diploma instromen op niveau 3 in een andere richting. Check de toelatingseisen per opleiding.');
+  } else if(k==='sup'){
+    r.push('Met je niveau 2-diploma kun je instromen in <b>ICT support technician</b> (niveau 3, 2 jaar).');
+    r.push('Daarna kun je nog doorstromen naar niveau 4, bijvoorbeeld ICT System Engineer of Software engineer.');
+  } else {
+    if(n>=5){
+      r.push(`Je antwoorden laten zien dat je goed zelfstandig leert. Ter AA noemt <b>${TR[k].naam}</b> (niveau 4) als mogelijke vervolgstap. Bespreek met je SLB'er of je direct op niveau 4 kunt instromen.`);
+      r.push('Een veilige route blijft: eerst ICT support technician (niveau 3), daarna niveau 4.');
+    } else {
+      r.push(`De meest logische route is <b>eerst ICT support technician</b> (niveau 3, 2 jaar) en daarna doorstromen naar <b>${TR[k].naam}</b> (niveau 4).`);
+      r.push('Zo bouw je stap voor stap verder en heb je onderweg al een niveau 3-diploma op zak.');
+    }
+  }
+  if(a.jaren==='kort') r.push('Je wilt snel aan het werk. Niveau 3 duurt 2 jaar en je loopt veel stage. Je kunt ook eerst gaan werken met je niveau 2-diploma en later verder leren.');
+  if(a.plan==='werk') r.push('Je gaf aan dat je wilt gaan werken. Dat kan met je niveau 2-diploma! De ICT-opleidingen bij Ter AA zijn wel allemaal BOL (school + stage), niet BBL.');
+  if(a.jaren==='lang' && k!=='anders') r.push('Wil je later naar het hbo? Daarvoor heb je een niveau 4-diploma nodig.');
+  return r;
+}
+function redenen(k, sc){
+  const lijst = (sc.bijdrage[k]||[]).slice().sort((x,y)=>y.w-x.w);
+  const gezien=new Set(), uit=[];
+  for(const b of lijst){ if(!gezien.has(b.r)){ gezien.add(b.r); uit.push(b.r); } if(uit.length>=4) break; }
+  return uit;
+}
+
+/* ---------- Render ---------- */
+const $ = s => document.querySelector(s);
+const el = $('#scherm');
+function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function zetDeel(d){
+  const kl = d? DELEN[d-1].kleur : ['#EFA242','#FFE398','#CD963C'];
+  const r=document.documentElement.style; r.setProperty('--accent',kl[0]); r.setProperty('--accent-l',kl[1]); r.setProperty('--accent-d',kl[2]);
+}
+function render(){
+  const lijst = zichtbaar();
+  if(st.stap>=lijst.length) st.stap=lijst.length-1;
+  const v = lijst[st.stap];
+  zetDeel(v.deel);
+  $('#wie').innerHTML = st.naam ? esc(st.naam)+(st.klas?' · '+esc(st.klas):'') : '';
+  const vragenTot = lijst.filter(x=>!['intro','tussen'].includes(x.type));
+  const idx = vragenTot.indexOf(v);
+  $('#vgWrap').hidden = v.type==='intro';
+  $('#deelbalk').hidden = v.type==='intro';
+  const klaar = lijst.slice(0,st.stap).filter(x=>!['intro','tussen'].includes(x.type)).length;
+  $('#vg').style.width = Math.round(100*klaar/vragenTot.length)+'%';
+  $('#deelbalk').innerHTML = DELEN.map(d=>`<span class="${d.nr===v.deel?'nu':(d.nr<v.deel?'klaar':'')}">${d.nr<v.deel?'✓ ':''}${d.nr}. ${d.titel}</span>`).join('');
+  const f = {intro,tussen,emoji,multi,single,schaal,uitslag,reflectie,keuze}[v.type];
+  el.innerHTML = '';
+  const div = document.createElement('div'); div.className='scherm';
+  el.appendChild(div);
+  f(v, div);
+  window.scrollTo({top:0,behavior:'smooth'});
+  bewaar();
+}
+function volgende(){ st.stap++; render(); }
+function vorige(){ if(st.stap>0){ st.stap--; render(); } }
+function nav(div, kanVerder, tekst='Volgende →'){
+  const n = document.createElement('div'); n.className='nav';
+  n.innerHTML = `<button class="terug" type="button">← Terug</button><button class="knop" type="button" ${kanVerder?'':'disabled'}>${tekst}</button>`;
+  n.children[0].onclick = vorige; n.children[1].onclick = volgende;
+  div.appendChild(n); return n.children[1];
+}
+
+function intro(v, d){
+  d.innerHTML = `
+  <section class="hero">
+    <div class="grootA">${A_SVG}</div>
+    <span class="label">Studieloopbaan</span>
+    <h1>Wat ga jij<br>hierna doen?</h1>
+    <p>Je bent bijna klaar met <b>Medewerker ICT</b>. Tijd om na te denken over je volgende stap. Deze app helpt je om een <b>onderbouwde keuze</b> te maken: verder in de ICT, en zo ja welke opleiding, of juist iets anders?</p>
+  </section>
+  <div class="stappen">
+    <div class="stap"><b>1 · Terugblik</b>Hoe vond je ICT tot nu toe?</div>
+    <div class="stap"><b>2 · Wat past bij jou?</b>Stellingen en situaties</div>
+    <div class="stap"><b>3 · Jouw route</b>Niveau 3 of 4?</div>
+    <div class="stap"><b>4 · Uitslag & keuze</b>Reflecteren en mailen</div>
+  </div>
+  <p class="hint">Duurt ongeveer 10 minuten, plus wat tijd om na te denken over je keuze. Je antwoorden worden alleen op dit apparaat bewaard.</p>
+  <div class="velden">
+    <label class="veld">Je voornaam<input type="text" id="naam" maxlength="40" autocomplete="given-name" value="${esc(st.naam)}"></label>
+    <label class="veld">Klas<input type="text" id="klas" maxlength="20" value="${esc(st.klas)}"></label>
+  </div>`;
+  const b = nav(d, !!st.naam.trim(), st.stap===0 && Object.keys(st.a).length ? 'Verder waar ik was →' : 'Start →');
+  d.querySelector('.terug').style.visibility='hidden';
+  const upd=()=>{ st.naam=$('#naam').value; st.klas=$('#klas').value; b.disabled=!st.naam.trim(); bewaar(); };
+  $('#naam').oninput=upd; $('#klas').oninput=upd;
+  $('#naam').onkeydown=e=>{ if(e.key==='Enter' && !b.disabled) volgende(); };
+  if(Object.keys(st.a).length){ b.onclick=()=>{ const l=zichtbaar(); let i=l.findIndex(x=>!['intro','tussen'].includes(x.type) && st.a[x.id]===undefined && !['uitslag','reflectie','keuze'].includes(x.type)); st.stap = i<0 ? l.findIndex(x=>x.type==='uitslag') : i; render(); }; }
+}
+function tussen(v, d){
+  d.innerHTML = `<section class="tussen"><div class="grootA">${A_SVG}</div>
+    <div class="deelnr">${v.deel}</div><span class="label">Deel ${v.deel} van 4</span><h1>${v.titel}</h1><p style="max-width:520px">${v.tekst}</p></section>`;
+  const b = nav(d, true, 'Aan de slag →'); setTimeout(()=>b.focus(),50);
+}
+function kop(v){ return `<span class="label">${v.situatie?'Situatie':'Vraag'}</span><h2>${esc(v.q)}</h2>${v.sub?`<p class="hint">${esc(v.sub)}</p>`:''}`; }
+function emoji(v, d){
+  d.innerHTML = kop(v)+`<div class="emoji">${v.opts.map(o=>`<button type="button" data-v="${o.v}" class="${st.a[v.id]===o.v?'aan':''}"><span>${o.e}</span>${o.t}</button>`).join('')}</div>`;
+  const b = nav(d, st.a[v.id]!==undefined);
+  d.querySelectorAll('.emoji button').forEach(x=>x.onclick=()=>{ zet(v.id,+x.dataset.v); d.querySelectorAll('.emoji button').forEach(y=>y.classList.toggle('aan',y===x)); b.disabled=false; setTimeout(volgende,350); });
+}
+function optieHTML(o, aan, multi){
+  return `<button type="button" class="optie ${aan?'aan':''}" data-v="${o.v}"><span class="ico">${o.ico||''}</span><span class="tx"><b>${esc(o.b)}</b>${o.s0?`<small>${esc(o.s0)}</small>`:''}</span>${multi?'<span class="vink">✓</span>':''}</button>`;
+}
+function single(v, d){
+  d.innerHTML = kop(v)+`<div class="opties">${v.opts.map(o=>optieHTML(o, st.a[v.id]===o.v)).join('')}</div>`;
+  const b = nav(d, st.a[v.id]!==undefined);
+  d.querySelectorAll('.optie').forEach(x=>x.onclick=()=>{
+    const o = v.opts.find(o=>String(o.v)===x.dataset.v); zet(v.id,o.v);
+    d.querySelectorAll('.optie').forEach(y=>y.classList.toggle('aan',y===x)); b.disabled=false; setTimeout(volgende,350);
+  });
+}
+function multi(v, d){
+  const sel = new Set(st.a[v.id]||[]);
+  d.innerHTML = kop(v)+`<div class="opties twee">${v.opts.map(o=>optieHTML(o, sel.has(o.v), true)).join('')}</div>`;
+  const b = nav(d, sel.size>0);
+  d.querySelectorAll('.optie').forEach(x=>x.onclick=()=>{
+    const val=x.dataset.v;
+    if(sel.has(val)) sel.delete(val); else { if(sel.size>=v.max){ const eerste=[...sel][0]; sel.delete(eerste); d.querySelector(`.optie[data-v="${eerste}"]`).classList.remove('aan'); } sel.add(val); }
+    x.classList.toggle('aan', sel.has(val)); zet(v.id,[...sel]); b.disabled = sel.size===0;
+  });
+}
+function schaal(v, d){
+  const stell = VRAGEN.filter(x=>x.type==='schaal'); const nr = stell.indexOf(v)+1;
+  d.innerHTML = `<div class="stelling"><span class="nr">Stelling ${nr} van ${stell.length}</span><h2>${esc(v.q)}</h2></div>
+    <div class="schaal">${SCHAAL.map((s,i)=>`<button type="button" data-i="${i}" class="${st.a[v.id]===i?'aan':''}"><i>${s.i}</i>${s.t}</button>`).join('')}</div>`;
+  const b = nav(d, st.a[v.id]!==undefined);
+  d.querySelectorAll('.schaal button').forEach(x=>x.onclick=()=>{ zet(v.id,+x.dataset.i); d.querySelectorAll('.schaal button').forEach(y=>y.classList.toggle('aan',y===x)); b.disabled=false; setTimeout(volgende,300); });
+}
+
+function topKaart(k, sc, groot){
+  const t = TR[k]; const sp = specialisatie(k, sc);
+  let h = `<section class="top1" style="background:${t.licht}"><div class="grootA" style="color:${t.kleur}">${A_SVG}</div>
+    <span class="label" style="color:${t.donker}">${groot?'Jouw beste match':'Ook interessant'}</span>
+    <h2 style="margin-bottom:8px">${esc(t.naam)}</h2>
+    ${t.niveau?`<span class="chip">${t.niveau}</span><span class="chip">${t.duur}</span><span class="chip">BOL</span><span class="chip">${sc.pct[k]}% match</span>`:`<span class="chip">${sc.pct[k]}% match</span>`}`;
+  if(k!=='anders'){
+    h += `<p style="margin-top:10px"><b>Wat leer je?</b></p><ul>${t.wat.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>
+      <p><b>Werk daarna:</b> ${esc(t.werk)}</p><p><b>Past bij jou als:</b> ${esc(t.past)}</p>`;
+    if(sp) h += `<p>🎯 <b>Specialisatie-tip: ${SPEC[sp].naam}</b>. Daarin leer je ${SPEC[sp].tx}. <a class="link" href="${SPEC[sp].url}" target="_blank" rel="noopener">Bekijk</a></p>`;
+    else if(k==='sys') h += `<p class="hint">Binnen deze opleiding kun je je specialiseren in Cloud, Cyber security of Netwerken.</p>`;
+    const tw = TWEETALIG[sp==='fs'?'fs':k];
+    if(tw && engels()) h += `<p>🇬🇧 Je vindt Engels prima: deze opleiding bestaat ook <b>tweetalig</b>. <a class="link" href="${tw.url}" target="_blank" rel="noopener">${tw.naam}</a></p>`;
+    h += `<a class="link" href="${t.url}" target="_blank" rel="noopener">Meer op ter-aa.nl →</a>`;
+  } else {
+    h += `<p style="margin-top:10px">${esc(t.past)} Je kunt ook een andere vervolgopleiding kiezen.</p>`;
+    const r = st.a.richting||[];
+    if(r.length){ h += `<div class="andere">${r.map(x=>`<div class="kaart"><b>${RICHTING[x].ico} ${RICHTING[x].b}</b><small>${RICHTING[x].tip}</small></div>`).join('')}</div>`; }
+    h += `<p style="margin-top:12px"><a class="link" href="${t.url}" target="_blank" rel="noopener">Alle mbo-opleidingen van Ter AA →</a></p>`;
+  }
+  return h+'</section>';
+}
+function uitslag(v, d){
+  const sc = scores(); const top = sc.rang[0].k;
+  const red = redenen(top, sc);
+  d.innerHTML = `<span class="label">Uitslag</span><h1 style="font-size:clamp(26px,5vw,36px)">${esc(st.naam||'Jouw')}${st.naam?', dit':'Dit'} past bij jou</h1>
+    <p class="hint">Zo scoren de richtingen op basis van jouw antwoorden. Het is een advies, geen eindoordeel: jij beslist.</p>
+    <div class="balken">${sc.rang.map(r=>`<div class="balk"><span>${TR[r.k].kort}${TR[r.k].niveau?` <span class="klein">(${TR[r.k].niveau.replace('Niveau ','N')})</span>`:''}</span><div class="bk"><i style="background:${TR[r.k].kleur}" data-w="${r.p}"></i></div><b>${r.p}%</b></div>`).join('')}</div>
+    ${topKaart(top, sc, true)}
+    ${red.length?`<div class="redenen"><b>Waarom?</b> Wat je onder andere aangaf:<ul>${red.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>`:''}
+    <div class="route"><b>Jouw route</b>${route(top,sc).map(r=>`<p style="margin:6px 0 0">${r}</p>`).join('')}</div>
+    ${sc.rang[1].p>=Math.max(35, sc.rang[0].p-15) ? `<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:600">Bekijk ook nummer 2: ${TR[sc.rang[1].k].naam}</summary>${topKaart(sc.rang[1].k, sc, false)}</details>`:''}`;
+  setTimeout(()=>d.querySelectorAll('.bk i').forEach(i=>i.style.width=i.dataset.w+'%'),80);
+  nav(d, true, 'Naar reflectie →');
+}
+
+const REFL = [
+  {id:'klopt', l:'Klopt deze uitslag met hoe jij jezelf ziet? Waarom wel of niet?', h:'Denk aan je stage, lessen en wat je in je vrije tijd doet.'},
+  {id:'twijfel', l:'Waar twijfel je nog over? Wat heb je nog nodig om zeker te zijn?', h:'Bijvoorbeeld: meer informatie, een open dag, praten met een student of met je ouders.'},
+  {id:'sterk', l:'Welke eigenschap van jou helpt je straks in je vervolgopleiding of werk?', h:'Bijvoorbeeld: doorzetten, goed met mensen, nauwkeurig, creatief…'}
+];
+function reflectie(v, d){
+  d.innerHTML = `<span class="label">Reflectie</span><h2>Even nadenken…</h2><p class="hint">Neem hier rustig de tijd voor. Je antwoorden komen mee in je e-mail. Kort mag, maar wees eerlijk.</p>`+
+    REFL.map(r=>`<div class="vak"><label for="r_${r.id}">${r.l}</label><p class="hint">${r.h}</p><textarea id="r_${r.id}">${esc(st.refl[r.id]||'')}</textarea></div>`).join('');
+  REFL.forEach(r=>{ d.querySelector('#r_'+r.id).oninput=e=>{ st.refl[r.id]=e.target.value; bewaar(); }; });
+  nav(d, true, 'Naar mijn keuze →');
+}
+
+const KEUZES = [
+  ['ICT-opleidingen bij Ter AA', [
+    'ICT support technician (niveau 3)','ICT System Engineer (niveau 4)','Cloud specialist (niveau 4)','Cyber security specialist (niveau 4)','Network specialist (niveau 4)',
+    'Software engineer (niveau 4)','Software engineer tweetalig (niveau 4)','Full stack developer (niveau 4)','Full stack developer tweetalig (niveau 4)','Game developer (niveau 4)','Game developer tweetalig (niveau 4)']],
+  ['Iets anders', ['Een opleiding buiten de ICT','Gaan werken','Ik weet het nog niet']]
+];
+const STAPPEN = ['Open dag of meeloopdag bezoeken','De opleidingspagina op ter-aa.nl goed lezen','Praten met een student of docent van die opleiding','Thuis bespreken met ouders/verzorgers','Gesprek plannen met mijn SLB\'er','Aanmelden voor de vervolgopleiding'];
+function standaardKeuze(){
+  const sc=scores(); const k=sc.rang[0].k; const sp=specialisatie(k,sc);
+  let opl;
+  if(k==='sup') opl='ICT support technician (niveau 3)';
+  else if(k==='sys') opl = sp ? SPEC[sp].naam+' (niveau 4)' : 'ICT System Engineer (niveau 4)';
+  else if(k==='soft') opl = (sp==='fs'?'Full stack developer':'Software engineer')+(engels()?' tweetalig':'')+' (niveau 4)';
+  else if(k==='game') opl = 'Game developer'+(engels()?' tweetalig':'')+' (niveau 4)';
+  else opl = st.a.plan==='werk' ? 'Gaan werken' : 'Een opleiding buiten de ICT';
+  const n = niveauScore();
+  let rt = '';
+  if(['sys','soft','game'].includes(k)) rt = n>=5 ? 'Eerst bespreken of ik direct op niveau 4 kan instromen; anders eerst ICT support technician (niveau 3).' : 'Eerst ICT support technician (niveau 3), daarna doorstromen naar niveau 4.';
+  else if(k==='sup') rt = 'Na mijn niveau 2-diploma instromen op niveau 3. Daarna misschien door naar niveau 4.';
+  let anders = '';
+  if(k==='anders' && (st.a.richting||[]).length) anders = (st.a.richting||[]).filter(x=>x!=='weetniet').map(x=>RICHTING[x].b).join(', ');
+  const red = redenen(k, sc);
+  let w = red.length ? 'Ik kies hiervoor, want '+(red.length>1? red.slice(0,-1).join(', ')+' en '+red[red.length-1] : red[0])+'.' : '';
+  if(st.a.leuk) w += ` Ik vind ICT nu ${st.a.leuk} uit 5 leuk.`;
+  return {opl, anders, route:rt, waarom:w.trim(), stappen:[], extra:''};
+}
+function keuze(v, d){
+  if(!st.keuze) { st.keuze = standaardKeuze(); bewaar(); }
+  const k = st.keuze; const sc=scores();
+  const opties = KEUZES.map(([g,l])=>`<optgroup label="${g}">${l.map(o=>`<option ${o===k.opl?'selected':''}>${esc(o)}</option>`).join('')}</optgroup>`).join('');
+  d.innerHTML = `<section class="eind"><div class="grootA">${A_SVG}</div>
+      <span class="label">Mijn doorstroomkeuze</span>
+      <h2 style="font-size:clamp(24px,5vw,32px);margin-bottom:4px" id="kopKeuze">${esc(k.opl)}</h2>
+      <p style="opacity:.85;margin:0">${esc(st.naam)}${st.klas?' · '+esc(st.klas):''} · beste match uit de app: ${TR[sc.rang[0].k].naam} (${sc.rang[0].p}%)</p>
+    </section>
+    <p class="hint" style="margin-top:14px">Hieronder staat je keuze met een eerste onderbouwing die de app voor je heeft geschreven. <b>Pas alles aan</b> zodat het echt jouw verhaal is.</p>
+    <div class="vak"><label for="k_opl">Mijn keuze</label><select id="k_opl">${opties}</select></div>
+    <div class="vak" id="vakAnders"><label for="k_anders">Welke richting of opleiding precies?</label><p class="hint">Alleen invullen bij "buiten de ICT" of "gaan werken".</p><input type="text" id="k_anders" maxlength="120" value="${esc(k.anders)}"></div>
+    <div class="vak"><label for="k_route">Mijn route</label><p class="hint">Bijvoorbeeld: eerst niveau 3, daarna niveau 4.</p><textarea id="k_route" style="min-height:70px">${esc(k.route)}</textarea></div>
+    <div class="vak"><label for="k_waarom">Waarom kies ik dit? (onderbouwing)</label><p class="hint">Noem minstens 2 redenen. Gebruik voorbeelden uit je stage, lessen of hobby's.</p><textarea id="k_waarom" style="min-height:130px">${esc(k.waarom)}</textarea></div>
+    <div class="vak"><label>Mijn volgende stappen</label><div class="checks">${STAPPEN.map((s,i)=>`<label><input type="checkbox" data-i="${i}" ${k.stappen.includes(s)?'checked':''}> ${esc(s)}</label>`).join('')}</div></div>
+    <div class="vak"><label for="k_extra">Vraag of opmerking voor mijn SLB'er</label><textarea id="k_extra" style="min-height:70px">${esc(k.extra)}</textarea></div>
+    <div class="acties">
+      <button class="knop oranje" type="button" id="mail">✉️ E-mail opstellen</button>
+      <button class="knop rand" type="button" id="kopie">📋 Kopieer tekst</button>
+      <button class="knop rand" type="button" id="herstel">↺ Voorstel van de app terugzetten</button>
+    </div>
+    <p class="melding" id="melding"></p>
+    <p class="klein">De e-mail wordt geopend in je mailprogramma, gericht aan ${MAIL}. Controleer de tekst en druk zelf op Verzenden. Werkt de knop niet? Kopieer de tekst en plak hem in een nieuwe mail.</p>`;
+  const toonAnders=()=>{ $('#vakAnders').style.display = KEUZES[1][1].includes(k.opl) ? '' : 'none'; };
+  toonAnders();
+  $('#k_opl').onchange=e=>{ k.opl=e.target.value; $('#kopKeuze').textContent=k.opl; toonAnders(); bewaar(); };
+  ['anders','route','waarom','extra'].forEach(f=>{ $('#k_'+f).oninput=e=>{ k[f]=e.target.value; bewaar(); }; });
+  d.querySelectorAll('.checks input').forEach(c=>c.onchange=()=>{ k.stappen=[...d.querySelectorAll('.checks input:checked')].map(x=>STAPPEN[+x.dataset.i]); bewaar(); });
+  $('#mail').onclick=()=>{
+    const onderwerp = `Doorstroomkeuze ${st.naam}${st.klas?' ('+st.klas+')':''}`;
+    const href = `mailto:${MAIL}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(mailTekst().replace(/\n/g,'\r\n'))}`;
+    window.location.href = href;
+    $('#melding').textContent = 'Je mailprogramma wordt geopend… Niets gezien? Gebruik "Kopieer tekst".';
+  };
+  $('#kopie').onclick=async()=>{
+    const t = mailTekst();
+    try{ await navigator.clipboard.writeText(t); $('#melding').textContent='Gekopieerd! Plak het in een mail aan '+MAIL+'.'; }
+    catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); $('#melding').textContent='Gekopieerd! Plak het in een mail aan '+MAIL+'.'; }
+  };
+  $('#herstel').onclick=()=>{ if(confirm('Je eigen aanpassingen in dit scherm gaan verloren. Doorgaan?')){ st.keuze=standaardKeuze(); bewaar(); render(); } };
+  const n = document.createElement('div'); n.className='nav'; n.innerHTML='<button class="terug" type="button">← Terug</button>'; n.firstChild.onclick=vorige; d.appendChild(n);
+}
+function mailTekst(){
+  const k=st.keuze, sc=scores();
+  const L=[];
+  L.push('Beste SLB-docent,','');
+  L.push(`Hierbij mijn doorstroomkeuze uit de SLB-les.`,'');
+  L.push('MIJN KEUZE: '+k.opl+(k.anders && KEUZES[1][1].includes(k.opl)?' – '+k.anders:''));
+  if(k.route.trim()) L.push('ROUTE: '+k.route.trim());
+  L.push('','WAAROM:', k.waarom.trim()||'-');
+  if(k.stappen.length){ L.push('','VOLGENDE STAPPEN:'); k.stappen.forEach(s=>L.push('- '+s)); }
+  const rf = REFL.filter(r=>(st.refl[r.id]||'').trim());
+  if(rf.length){ L.push('','REFLECTIE:'); rf.forEach(r=>{ L.push(r.l, st.refl[r.id].trim(), ''); }); }
+  if(k.extra.trim()) L.push('VRAAG/OPMERKING:', k.extra.trim(), '');
+  L.push('Uitslag van de app: '+sc.rang.slice(0,3).map(r=>`${TR[r.k].kort} ${r.p}%`).join(', ')+`. ICT leuk: ${st.a.leuk??'-'}/5.`);
+  L.push('','Groeten,', st.naam+(st.klas?' ('+st.klas+')':''));
+  return L.join('\n');
+}
+
+$('#reset').onclick=()=>{ if(confirm('Alles wissen en opnieuw beginnen?')){ try{localStorage.removeItem(OPSLAG);}catch(e){} st={stap:0,naam:'',klas:'',a:{},refl:{},keuze:null}; render(); } };
+render();
+</script>
+</body>
+</html>

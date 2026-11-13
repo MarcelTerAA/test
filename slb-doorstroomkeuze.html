@@ -151,22 +151,113 @@ textarea{min-height:96px;resize:vertical;line-height:1.5}
 .klein{font-size:13px;color:var(--zacht)}
 footer{margin-top:40px;font-size:12.5px;color:var(--zacht);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 footer button{background:none;border:0;color:var(--zacht);cursor:pointer;text-decoration:underline;padding:0;font-size:12.5px}
-@media print{header.top .top-r,.voortgang,.deelbalk,.nav,.acties,footer{display:none}.eind{background:#fff;color:#000;border:2px solid #000}.eind h2{color:#000}}
+
+/* ===== Geen-scroll layout: alles past in het scherm, navigatie altijd zichtbaar ===== */
+html,body{height:100%}
+body{min-height:0;overflow:hidden}
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column;padding:0 16px;max-width:820px}
+header.top{padding:10px 0 4px;flex:none}
+.logo{height:28px}
+.top-r{display:flex;align-items:center;gap:14px}
+.top-r button{background:none;border:0;color:var(--zacht);cursor:pointer;text-decoration:underline;padding:0;font-size:12.5px}
+.voortgang{flex:none;margin:4px 0 4px}
+.deelbalk{flex:none;margin-bottom:10px}
+main#scherm{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:2px 2px 8px;display:flex;flex-direction:column}
+main#scherm > .scherm{margin:auto 0}
+#navbar{flex:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0 14px;border-top:1.5px solid var(--lijn)}
+#navbar .rechts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+#navbar .knop{padding:12px 22px}
+h1{font-size:clamp(26px,5vw,38px);margin-bottom:10px}
+h2{font-size:clamp(19px,3.6vw,24px);margin-bottom:6px}
+p{margin-bottom:8px}
+.hero{padding:22px 24px 18px;margin-bottom:12px}
+.hero .grootA{width:190px;bottom:-22px}
+.stappen{margin:10px 0;gap:8px}
+.stap{padding:9px 12px;font-size:13px}
+.velden{margin:10px 0 0}
+.opties{gap:8px;margin-top:12px}
+.optie{padding:10px 14px;gap:12px;border-radius:14px}
+.optie .ico{font-size:22px;width:30px}
+.optie .tx small{font-size:13px;line-height:1.35;display:block}
+@media (min-width:700px){.opties.veel{grid-template-columns:1fr 1fr}}
+.emoji{margin-top:14px}
+.stelling{padding:22px 22px;min-height:120px}
+.schaal{margin-top:12px}
+.schaal button{padding:12px 6px}
+.tussen{padding:28px 24px}
+.tussen .deelnr{font-size:54px}
+.balken{gap:8px;margin:10px 0 6px}
+.top1{padding:20px 22px;margin:4px 0 0}
+.top1 ul{margin:4px 0 8px}
+.kolommen{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px}
+@media (max-width:620px){.kolommen{grid-template-columns:1fr}}
+.redenen{margin:10px 0 0;padding:14px 18px}
+.route{margin:6px 0 0}
+.nr2{display:flex;gap:14px;align-items:center;border-radius:16px;padding:12px 16px;margin-top:12px}
+.nr2 b{display:block}
+.eind{padding:16px 20px;border-radius:18px}
+.eind .grootA{width:140px;top:-14px}
+.vak{margin:10px 0}
+.checks{gap:2px}
+.checks label{padding:4px 2px}
+textarea{min-height:80px}
+textarea.groot{min-height:170px;height:30vh}
+.melding{margin-top:6px;min-height:0}
+.melding:empty{display:none}
+@media (max-height:700px){.stappen{display:none}.hero p{font-size:15px}}
+@media (max-width:520px){.top-r #wie{display:none}}
+@media (min-width:621px){.checks{grid-template-columns:1fr 1fr}}
+.eind{padding:12px 18px}
+.top1{padding:16px 20px}
+.top1 li{margin-bottom:1px}
+.top1 p{margin-bottom:6px}
+/* compacte modus voor lage schermen (kleine laptops, ingezoomd) */
+@media (max-height:640px){
+  header.top{padding:6px 0 2px}.logo{height:24px}
+  .deelbalk{display:none!important}.voortgang{margin:2px 0 8px;height:6px}
+  h1{font-size:clamp(24px,4vw,30px);margin-bottom:6px}
+  h2{font-size:clamp(18px,3vw,21px)}
+  .label{margin-bottom:2px}
+  .hint{font-size:13px}
+  .optie{padding:7px 12px}.opties{gap:6px;margin-top:8px}
+  .balken{gap:5px;margin:6px 0 4px}.balk .bk{height:13px}
+  .redenen{padding:10px 16px;margin-top:8px}.redenen ul{margin-top:2px}
+  .top1{padding:12px 18px}.top1 .chip{margin-bottom:2px}
+  .kolommen p,.top1 p{margin-bottom:4px;font-size:15px}.top1 li{font-size:15px}
+  .checks label{padding:2px}.vak{margin:6px 0}
+  #navbar{padding:7px 0 9px}#navbar .knop{padding:10px 20px}
+  .stelling{min-height:100px;padding:18px 20px}
+  .hero{padding:16px 22px 14px}
+}
+/* telefoon: compacte keuzetegels */
+@media (max-width:560px){
+  .deelbalk{display:none!important}.voortgang{margin:2px 0 10px}
+  h2{font-size:19px}
+  .optie{position:relative;padding:8px 12px;gap:10px}
+  .optie .tx b{font-size:14.5px;line-height:1.3}
+  .optie .tx small{display:none}
+  .optie .ico{font-size:20px;width:26px}
+  .opties.twee{grid-template-columns:1fr 1fr;gap:6px}
+  .opties.twee .optie{flex-direction:column;text-align:center;padding:8px 6px;gap:2px;justify-content:center}
+  .opties.twee .optie .vink{position:absolute;top:5px;right:5px;width:18px;height:18px;font-size:11px;border-radius:5px}
+  .opties.twee .optie .tx b{font-size:13.5px}
+  .schaal button{padding:9px 4px;font-size:13px}
+  .stelling{min-height:0;padding:18px}
+  .hero .grootA{width:120px;opacity:.4}
+}
+@media print{header.top .top-r,.voortgang,.deelbalk,#navbar{display:none}body{overflow:visible}.app{height:auto}.eind{background:#fff;color:#000;border:2px solid #000}.eind h2{color:#000}}
 </style>
 </head>
 <body>
 <div class="app">
   <header class="top">
     <div class="logo" aria-label="Ter AA"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136.12 60.18" fill="currentColor" fill-rule="evenodd"><path d="M136.02 41.34L131.17 29.63C131.03 29.30 130.65 29.17 130.34 29.35C128.32 30.49 126.26 31.55 124.14 32.54L113.75 0.68C113.62 0.27 113.23 0.00 112.80 0.00L98.95 0.00C98.52 0.00 98.14 0.27 98.00 0.68L82.62 47.82L82.62 47.83L67.23 0.68C67.10 0.27 66.71 0.00 66.29 0.00L52.43 0.00C52.00 0.00 51.62 0.27 51.48 0.68L38.39 40.81C38.39 40.81 38.39 40.81 38.38 40.81C36.39 40.79 33.69 40.67 30.72 40.34C30.42 40.31 30.14 40.51 30.08 40.81L27.72 53.23C27.66 53.52 27.86 53.79 28.15 53.82C30.07 54.04 32.02 54.21 33.97 54.33C33.97 54.33 33.98 54.33 33.97 54.33L32.06 60.18C32.06 60.18 32.06 60.18 32.06 60.18L48.12 60.18C48.12 60.18 48.12 60.18 48.12 60.18C48.97 57.18 49.86 54.04 49.86 54.04C55.95 53.47 62.00 52.34 67.90 50.68C67.89 50.68 69.33 55.79 70.57 60.18L70.58 60.18L94.65 60.18L94.66 60.18C95.42 57.47 96.39 54.04 96.39 54.04C102.49 53.47 108.53 52.34 114.43 50.68C114.43 50.68 115.90 55.91 117.11 60.18L133.17 60.18L128.42 45.63C130.94 44.51 133.40 43.28 135.80 41.96C136.03 41.84 136.12 41.57 136.02 41.34M53.88 39.75L59.35 20.33C59.35 20.32 59.35 20.32 59.35 20.33L64.18 37.50C64.19 37.51 64.18 37.51 64.18 37.51C62.34 38.09 57.83 39.15 53.88 39.75C53.88 39.75 53.88 39.75 53.88 39.75M100.41 39.75L105.88 20.32L110.72 37.51C108.88 38.09 104.36 39.15 100.41 39.75"/><path d="M4.20 29.70C3.54 29.15 3.13 28.55 2.98 27.89C2.82 27.24 2.74 26.51 2.74 25.72L2.74 22.39L2.74 19.14L1.36 19.14L0.00 19.14L0.00 16.23L1.38 16.23L2.74 16.23L2.74 14.41L2.74 12.62L2.74 12.27L5.95 12.27L5.95 12.81L5.95 14.55L5.95 16.23L7.88 16.23L9.76 16.23L9.76 19.14L7.85 19.14L5.95 19.14L5.95 20.75L5.95 22.33L5.95 23.47L5.95 24.59L5.95 24.64C5.95 25.24 5.99 25.74 6.05 26.14C6.12 26.54 6.29 26.88 6.56 27.17C6.84 27.46 7.26 27.61 7.85 27.61C8.41 27.61 9.02 27.45 9.66 27.14L9.76 27.09L9.76 29.97C9.43 30.16 9.04 30.29 8.60 30.39C8.16 30.48 7.70 30.52 7.20 30.52C5.85 30.52 4.85 30.25 4.20 29.70"/><path d="M13.91 29.61C12.81 29.01 11.96 28.15 11.35 27.05C10.73 25.95 10.42 24.67 10.42 23.23C10.42 21.82 10.72 20.55 11.32 19.43C11.92 18.31 12.74 17.43 13.80 16.79C14.85 16.15 16.04 15.83 17.37 15.83C18.53 15.83 19.62 16.09 20.62 16.61C21.63 17.14 22.44 17.95 23.08 19.05C23.71 20.16 24.02 21.53 24.02 23.18L24.02 24.07L13.69 24.07C13.77 24.82 13.99 25.46 14.36 25.99C14.72 26.52 15.18 26.92 15.73 27.20C16.28 27.47 16.89 27.61 17.57 27.61C18.35 27.61 19.05 27.40 19.66 26.99C20.28 26.57 20.73 25.98 21.03 25.22L24.10 26.41C23.60 27.64 22.78 28.64 21.63 29.39C20.49 30.15 19.14 30.52 17.60 30.52C16.23 30.52 15.01 30.22 13.91 29.61M20.14 19.95C19.82 19.49 19.42 19.17 18.93 18.97C18.44 18.77 17.91 18.67 17.35 18.67C16.72 18.67 16.16 18.79 15.68 19.04C15.20 19.29 14.80 19.65 14.49 20.11C14.19 20.58 13.98 21.10 13.86 21.68L20.71 21.68C20.64 20.98 20.45 20.41 20.14 19.95"/><path d="M26.11 16.23L29.27 16.23L29.27 16.65L29.27 17.58L29.27 18.49L29.37 18.49C29.75 17.70 30.29 17.05 30.98 16.56C31.67 16.07 32.46 15.83 33.36 15.83C33.84 15.83 34.33 15.92 34.76 16.09L34.14 19.64C33.83 19.56 33.31 19.51 33.05 19.51C32.08 19.51 31.31 19.74 30.75 20.24C30.20 20.75 29.82 21.34 29.62 22.06C29.42 22.78 29.32 23.52 29.32 24.42L29.32 24.52L29.32 30.10L26.11 30.10L26.11 16.23"/></svg></div>
-    <div class="top-r" id="wie"></div>
+    <div class="top-r"><span id="wie"></span><button type="button" id="reset">↺ Opnieuw beginnen</button></div>
   </header>
   <div class="voortgang" id="vgWrap" hidden><i id="vg"></i></div>
   <div class="deelbalk" id="deelbalk" hidden></div>
   <main id="scherm"></main>
-  <footer>
-    <span>Studieloopbaan · Medewerker ICT · Ter AA · informatie van ter-aa.nl (nov. 2026)</span>
-    <button type="button" id="reset">↺ Opnieuw beginnen</button>
-  </footer>
+  <nav id="navbar"></nav>
 </div>
 
 <script>
@@ -342,8 +433,14 @@ const VRAGEN = [
     opts:Object.entries(RICHTING).map(([v,o])=>({v, ico:o.ico, b:o.b, s0:o.s}))},
 
   {id:'uitslag', type:'uitslag', deel:4},
-  {id:'reflectie', type:'reflectie', deel:4},
-  {id:'keuze', type:'keuze', deel:4}
+  {id:'advies', type:'advies', deel:4},
+  {id:'route', type:'routeScherm', deel:4},
+  {id:'r1', type:'refl', deel:4, ri:0},
+  {id:'r2', type:'refl', deel:4, ri:1},
+  {id:'r3', type:'refl', deel:4, ri:2},
+  {id:'keuze', type:'keuze', deel:4},
+  {id:'waarom', type:'waarom', deel:4},
+  {id:'afronden', type:'afronden', deel:4}
 ];
 
 /* ---------- Status ---------- */
@@ -441,6 +538,8 @@ function redenen(k, sc){
 /* ---------- Render ---------- */
 const $ = s => document.querySelector(s);
 const el = $('#scherm');
+const NIET_VRAAG = ['intro','tussen'];
+const EIND_TYPES = ['uitslag','advies','routeScherm','refl','keuze','waarom','afronden'];
 function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function zetDeel(d){
   const kl = d? DELEN[d-1].kleur : ['#EFA242','#FFE398','#CD963C'];
@@ -452,28 +551,28 @@ function render(){
   const v = lijst[st.stap];
   zetDeel(v.deel);
   $('#wie').innerHTML = st.naam ? esc(st.naam)+(st.klas?' · '+esc(st.klas):'') : '';
-  const vragenTot = lijst.filter(x=>!['intro','tussen'].includes(x.type));
-  const idx = vragenTot.indexOf(v);
+  const vragenTot = lijst.filter(x=>!NIET_VRAAG.includes(x.type));
   $('#vgWrap').hidden = v.type==='intro';
   $('#deelbalk').hidden = v.type==='intro';
-  const klaar = lijst.slice(0,st.stap).filter(x=>!['intro','tussen'].includes(x.type)).length;
+  const klaar = lijst.slice(0,st.stap).filter(x=>!NIET_VRAAG.includes(x.type)).length;
   $('#vg').style.width = Math.round(100*klaar/vragenTot.length)+'%';
   $('#deelbalk').innerHTML = DELEN.map(d=>`<span class="${d.nr===v.deel?'nu':(d.nr<v.deel?'klaar':'')}">${d.nr<v.deel?'✓ ':''}${d.nr}. ${d.titel}</span>`).join('');
-  const f = {intro,tussen,emoji,multi,single,schaal,uitslag,reflectie,keuze}[v.type];
-  el.innerHTML = '';
+  const f = {intro,tussen,emoji,multi,single,schaal,uitslag,advies,routeScherm,refl,keuze,waarom,afronden}[v.type];
+  el.innerHTML = ''; $('#navbar').innerHTML = '';
   const div = document.createElement('div'); div.className='scherm';
   el.appendChild(div);
   f(v, div);
-  window.scrollTo({top:0,behavior:'smooth'});
+  el.scrollTop = 0;
   bewaar();
 }
 function volgende(){ st.stap++; render(); }
 function vorige(){ if(st.stap>0){ st.stap--; render(); } }
-function nav(div, kanVerder, tekst='Volgende →'){
-  const n = document.createElement('div'); n.className='nav';
-  n.innerHTML = `<button class="terug" type="button">← Terug</button><button class="knop" type="button" ${kanVerder?'':'disabled'}>${tekst}</button>`;
-  n.children[0].onclick = vorige; n.children[1].onclick = volgende;
-  div.appendChild(n); return n.children[1];
+/* De navigatie staat altijd onderaan in beeld (#navbar), los van de inhoud */
+function nav(div, kanVerder, tekst='Volgende →', extra=''){
+  const n = $('#navbar');
+  n.innerHTML = `<button class="terug" type="button">← Terug</button><div class="rechts">${extra}<button class="knop" type="button" id="verder" ${kanVerder?'':'disabled'}>${tekst}</button></div>`;
+  n.querySelector('.terug').onclick = vorige; n.querySelector('#verder').onclick = volgende;
+  return n.querySelector('#verder');
 }
 
 function intro(v, d){
@@ -481,8 +580,8 @@ function intro(v, d){
   <section class="hero">
     <div class="grootA">${A_SVG}</div>
     <span class="label">Studieloopbaan</span>
-    <h1>Wat ga jij<br>hierna doen?</h1>
-    <p>Je bent bijna klaar met <b>Medewerker ICT</b>. Tijd om na te denken over je volgende stap. Deze app helpt je om een <b>onderbouwde keuze</b> te maken: verder in de ICT, en zo ja welke opleiding, of juist iets anders?</p>
+    <h1>Wat ga jij hierna doen?</h1>
+    <p>Je bent bijna klaar met <b>Medewerker ICT</b>. Deze app helpt je om een <b>onderbouwde keuze</b> te maken: verder in de ICT, en zo ja welke opleiding, of juist iets anders?</p>
   </section>
   <div class="stappen">
     <div class="stap"><b>1 · Terugblik</b>Hoe vond je ICT tot nu toe?</div>
@@ -490,17 +589,17 @@ function intro(v, d){
     <div class="stap"><b>3 · Jouw route</b>Niveau 3 of 4?</div>
     <div class="stap"><b>4 · Uitslag & keuze</b>Reflecteren en mailen</div>
   </div>
-  <p class="hint">Duurt ongeveer 10 minuten, plus wat tijd om na te denken over je keuze. Je antwoorden worden alleen op dit apparaat bewaard.</p>
+  <p class="hint">Duurt ongeveer 10 minuten, plus tijd om na te denken. Je antwoorden blijven alleen op dit apparaat.</p>
   <div class="velden">
     <label class="veld">Je voornaam<input type="text" id="naam" maxlength="40" autocomplete="given-name" value="${esc(st.naam)}"></label>
     <label class="veld">Klas<input type="text" id="klas" maxlength="20" value="${esc(st.klas)}"></label>
   </div>`;
   const b = nav(d, !!st.naam.trim(), st.stap===0 && Object.keys(st.a).length ? 'Verder waar ik was →' : 'Start →');
-  d.querySelector('.terug').style.visibility='hidden';
+  $('#navbar .terug').style.visibility='hidden';
   const upd=()=>{ st.naam=$('#naam').value; st.klas=$('#klas').value; b.disabled=!st.naam.trim(); bewaar(); };
   $('#naam').oninput=upd; $('#klas').oninput=upd;
-  $('#naam').onkeydown=e=>{ if(e.key==='Enter' && !b.disabled) volgende(); };
-  if(Object.keys(st.a).length){ b.onclick=()=>{ const l=zichtbaar(); let i=l.findIndex(x=>!['intro','tussen'].includes(x.type) && st.a[x.id]===undefined && !['uitslag','reflectie','keuze'].includes(x.type)); st.stap = i<0 ? l.findIndex(x=>x.type==='uitslag') : i; render(); }; }
+  $('#naam').onkeydown=e=>{ if(e.key==='Enter' && !b.disabled) b.click(); };
+  if(Object.keys(st.a).length){ b.onclick=()=>{ const l=zichtbaar(); let i=l.findIndex(x=>!NIET_VRAAG.includes(x.type) && !EIND_TYPES.includes(x.type) && st.a[x.id]===undefined); st.stap = i<0 ? l.findIndex(x=>x.type==='uitslag') : i; render(); }; }
 }
 function tussen(v, d){
   d.innerHTML = `<section class="tussen"><div class="grootA">${A_SVG}</div>
@@ -517,7 +616,7 @@ function optieHTML(o, aan, multi){
   return `<button type="button" class="optie ${aan?'aan':''}" data-v="${o.v}"><span class="ico">${o.ico||''}</span><span class="tx"><b>${esc(o.b)}</b>${o.s0?`<small>${esc(o.s0)}</small>`:''}</span>${multi?'<span class="vink">✓</span>':''}</button>`;
 }
 function single(v, d){
-  d.innerHTML = kop(v)+`<div class="opties">${v.opts.map(o=>optieHTML(o, st.a[v.id]===o.v)).join('')}</div>`;
+  d.innerHTML = kop(v)+`<div class="opties ${v.opts.length>4?'veel':''}">${v.opts.map(o=>optieHTML(o, st.a[v.id]===o.v)).join('')}</div>`;
   const b = nav(d, st.a[v.id]!==undefined);
   d.querySelectorAll('.optie').forEach(x=>x.onclick=()=>{
     const o = v.opts.find(o=>String(o.v)===x.dataset.v); zet(v.id,o.v);
@@ -542,15 +641,31 @@ function schaal(v, d){
   d.querySelectorAll('.schaal button').forEach(x=>x.onclick=()=>{ zet(v.id,+x.dataset.i); d.querySelectorAll('.schaal button').forEach(y=>y.classList.toggle('aan',y===x)); b.disabled=false; setTimeout(volgende,300); });
 }
 
-function topKaart(k, sc, groot){
-  const t = TR[k]; const sp = specialisatie(k, sc);
-  let h = `<section class="top1" style="background:${t.licht}"><div class="grootA" style="color:${t.kleur}">${A_SVG}</div>
-    <span class="label" style="color:${t.donker}">${groot?'Jouw beste match':'Ook interessant'}</span>
-    <h2 style="margin-bottom:8px">${esc(t.naam)}</h2>
-    ${t.niveau?`<span class="chip">${t.niveau}</span><span class="chip">${t.duur}</span><span class="chip">BOL</span><span class="chip">${sc.pct[k]}% match</span>`:`<span class="chip">${sc.pct[k]}% match</span>`}`;
+/* ---------- Uitslag (verdeeld over 3 schermen) ---------- */
+function chips(k, sc){
+  const t=TR[k];
+  return t.niveau?`<span class="chip">${t.niveau}</span><span class="chip">${t.duur}</span><span class="chip">BOL</span><span class="chip">${sc.pct[k]}% match</span>`:`<span class="chip">${sc.pct[k]}% match</span>`;
+}
+function uitslag(v, d){
+  const sc = scores(); const top = sc.rang[0].k;
+  const red = redenen(top, sc);
+  d.innerHTML = `<span class="label">Uitslag 1 van 3</span><h1>${esc(st.naam||'Jouw')}${st.naam?', dit':'Dit'} past bij jou</h1>
+    <p class="hint">Zo scoren de richtingen op basis van jouw antwoorden. Het is een advies, geen eindoordeel: jij beslist.</p>
+    <div class="balken">${sc.rang.map(r=>`<div class="balk"><span>${TR[r.k].kort}${TR[r.k].niveau?` <span class="klein">(${TR[r.k].niveau.replace('Niveau ','N')})</span>`:''}</span><div class="bk"><i style="background:${TR[r.k].kleur}" data-w="${r.p}"></i></div><b>${r.p}%</b></div>`).join('')}</div>
+    ${red.length?`<div class="redenen" style="border-left:5px solid ${TR[top].kleur}"><b>Waarom ${esc(TR[top].kort)}?</b> Je gaf onder andere aan:<ul>${red.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>`:''}`;
+  setTimeout(()=>d.querySelectorAll('.bk i').forEach(i=>i.style.width=i.dataset.w+'%'),80);
+  nav(d, true, 'Bekijk je beste match →');
+}
+function advies(v, d){
+  const sc = scores(); const k = sc.rang[0].k; const t = TR[k]; const sp = specialisatie(k, sc);
+  let h = `<span class="label">Uitslag 2 van 3 · jouw beste match</span>
+    <section class="top1" style="background:${t.licht}"><div class="grootA" style="color:${t.kleur}">${A_SVG}</div>
+    <h2 style="margin-bottom:6px">${esc(t.naam)}</h2>${chips(k, sc)}`;
   if(k!=='anders'){
-    h += `<p style="margin-top:10px"><b>Wat leer je?</b></p><ul>${t.wat.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>
-      <p><b>Werk daarna:</b> ${esc(t.werk)}</p><p><b>Past bij jou als:</b> ${esc(t.past)}</p>`;
+    h += `<div class="kolommen" style="margin-top:6px">
+        <div><b>Wat leer je?</b><ul>${t.wat.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></div>
+        <div><p><b>Werk daarna:</b> ${esc(t.werk)}</p><p><b>Past bij jou als:</b> ${esc(t.past)}</p></div>
+      </div>`;
     if(sp) h += `<p>🎯 <b>Specialisatie-tip: ${SPEC[sp].naam}</b>. Daarin leer je ${SPEC[sp].tx}. <a class="link" href="${SPEC[sp].url}" target="_blank" rel="noopener">Bekijk</a></p>`;
     else if(k==='sys') h += `<p class="hint">Binnen deze opleiding kun je je specialiseren in Cloud, Cyber security of Netwerken.</p>`;
     const tw = TWEETALIG[sp==='fs'?'fs':k];
@@ -560,21 +675,19 @@ function topKaart(k, sc, groot){
     h += `<p style="margin-top:10px">${esc(t.past)} Je kunt ook een andere vervolgopleiding kiezen.</p>`;
     const r = st.a.richting||[];
     if(r.length){ h += `<div class="andere">${r.map(x=>`<div class="kaart"><b>${RICHTING[x].ico} ${RICHTING[x].b}</b><small>${RICHTING[x].tip}</small></div>`).join('')}</div>`; }
-    h += `<p style="margin-top:12px"><a class="link" href="${t.url}" target="_blank" rel="noopener">Alle mbo-opleidingen van Ter AA →</a></p>`;
+    h += `<p style="margin-top:10px"><a class="link" href="${t.url}" target="_blank" rel="noopener">Alle mbo-opleidingen van Ter AA →</a></p>`;
   }
-  return h+'</section>';
+  d.innerHTML = h+'</section>';
+  nav(d, true, 'Jouw route →');
 }
-function uitslag(v, d){
-  const sc = scores(); const top = sc.rang[0].k;
-  const red = redenen(top, sc);
-  d.innerHTML = `<span class="label">Uitslag</span><h1 style="font-size:clamp(26px,5vw,36px)">${esc(st.naam||'Jouw')}${st.naam?', dit':'Dit'} past bij jou</h1>
-    <p class="hint">Zo scoren de richtingen op basis van jouw antwoorden. Het is een advies, geen eindoordeel: jij beslist.</p>
-    <div class="balken">${sc.rang.map(r=>`<div class="balk"><span>${TR[r.k].kort}${TR[r.k].niveau?` <span class="klein">(${TR[r.k].niveau.replace('Niveau ','N')})</span>`:''}</span><div class="bk"><i style="background:${TR[r.k].kleur}" data-w="${r.p}"></i></div><b>${r.p}%</b></div>`).join('')}</div>
-    ${topKaart(top, sc, true)}
-    ${red.length?`<div class="redenen"><b>Waarom?</b> Wat je onder andere aangaf:<ul>${red.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>`:''}
-    <div class="route"><b>Jouw route</b>${route(top,sc).map(r=>`<p style="margin:6px 0 0">${r}</p>`).join('')}</div>
-    ${sc.rang[1].p>=Math.max(35, sc.rang[0].p-15) ? `<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:600">Bekijk ook nummer 2: ${TR[sc.rang[1].k].naam}</summary>${topKaart(sc.rang[1].k, sc, false)}</details>`:''}`;
-  setTimeout(()=>d.querySelectorAll('.bk i').forEach(i=>i.style.width=i.dataset.w+'%'),80);
+function routeScherm(v, d){
+  const sc = scores(); const k = sc.rang[0].k; const t=TR[k];
+  const k2 = sc.rang[1].k, t2 = TR[k2];
+  const toon2 = sc.rang[1].p>=Math.max(35, sc.rang[0].p-15);
+  d.innerHTML = `<span class="label">Uitslag 3 van 3</span>
+    <h2>${k==='anders'?'Hoe ga je verder?':`Hoe kom je bij ${esc(t.naam)}?`}</h2>
+    <div class="route" style="border-left-color:${t.kleur}">${route(k,sc).map(r=>`<p style="margin:4px 0">${r}</p>`).join('')}</div>
+    ${toon2?`<div class="nr2" style="background:${t2.licht}"><span style="font-size:28px">🥈</span><div><span class="klein">Ook dichtbij: nummer 2 (${sc.rang[1].p}%)</span><b>${esc(t2.naam)}${t2.niveau?' · '+t2.niveau:''}</b><span class="klein">${esc(k2==='anders'?t2.past:t2.werk)}</span> <a class="link" href="${t2.url}" target="_blank" rel="noopener">Bekijk →</a></div></div>`:''}`;
   nav(d, true, 'Naar reflectie →');
 }
 
@@ -583,13 +696,16 @@ const REFL = [
   {id:'twijfel', l:'Waar twijfel je nog over? Wat heb je nog nodig om zeker te zijn?', h:'Bijvoorbeeld: meer informatie, een open dag, praten met een student of met je ouders.'},
   {id:'sterk', l:'Welke eigenschap van jou helpt je straks in je vervolgopleiding of werk?', h:'Bijvoorbeeld: doorzetten, goed met mensen, nauwkeurig, creatief…'}
 ];
-function reflectie(v, d){
-  d.innerHTML = `<span class="label">Reflectie</span><h2>Even nadenken…</h2><p class="hint">Neem hier rustig de tijd voor. Je antwoorden komen mee in je e-mail. Kort mag, maar wees eerlijk.</p>`+
-    REFL.map(r=>`<div class="vak"><label for="r_${r.id}">${r.l}</label><p class="hint">${r.h}</p><textarea id="r_${r.id}">${esc(st.refl[r.id]||'')}</textarea></div>`).join('');
-  REFL.forEach(r=>{ d.querySelector('#r_'+r.id).oninput=e=>{ st.refl[r.id]=e.target.value; bewaar(); }; });
-  nav(d, true, 'Naar mijn keuze →');
+function refl(v, d){
+  const r = REFL[v.ri];
+  d.innerHTML = `<span class="label">Reflectie ${v.ri+1} van ${REFL.length}</span><h2>${r.l}</h2><p class="hint">${r.h} Je antwoord komt mee in je e-mail. Kort mag, maar wees eerlijk.</p>
+    <textarea id="r_${r.id}" class="groot" aria-label="${esc(r.l)}">${esc(st.refl[r.id]||'')}</textarea>`;
+  const ta = d.querySelector('textarea'); ta.oninput=e=>{ st.refl[r.id]=e.target.value; bewaar(); };
+  setTimeout(()=>ta.focus(),60);
+  nav(d, true, v.ri<REFL.length-1 ? 'Volgende vraag →' : 'Naar mijn keuze →');
 }
 
+/* ---------- Keuze (verdeeld over 3 schermen) ---------- */
 const KEUZES = [
   ['ICT-opleidingen bij Ter AA', [
     'ICT support technician (niveau 3)','ICT System Engineer (niveau 4)','Cloud specialist (niveau 4)','Cyber security specialist (niveau 4)','Network specialist (niveau 4)',
@@ -616,47 +732,57 @@ function standaardKeuze(){
   if(st.a.leuk) w += ` Ik vind ICT nu ${st.a.leuk} uit 5 leuk.`;
   return {opl, anders, route:rt, waarom:w.trim(), stappen:[], extra:''};
 }
+function zorgKeuze(){ if(!st.keuze){ st.keuze = standaardKeuze(); bewaar(); } return st.keuze; }
+function keuzeBanner(k){
+  return `<section class="eind"><div class="grootA">${A_SVG}</div><span class="label">Mijn doorstroomkeuze</span>
+    <h2 style="font-size:clamp(20px,4vw,26px);margin:0" id="kopKeuze">${esc(k.opl)}</h2></section>`;
+}
 function keuze(v, d){
-  if(!st.keuze) { st.keuze = standaardKeuze(); bewaar(); }
-  const k = st.keuze; const sc=scores();
+  const k = zorgKeuze(); const sc=scores();
   const opties = KEUZES.map(([g,l])=>`<optgroup label="${g}">${l.map(o=>`<option ${o===k.opl?'selected':''}>${esc(o)}</option>`).join('')}</optgroup>`).join('');
-  d.innerHTML = `<section class="eind"><div class="grootA">${A_SVG}</div>
-      <span class="label">Mijn doorstroomkeuze</span>
-      <h2 style="font-size:clamp(24px,5vw,32px);margin-bottom:4px" id="kopKeuze">${esc(k.opl)}</h2>
-      <p style="opacity:.85;margin:0">${esc(st.naam)}${st.klas?' · '+esc(st.klas):''} · beste match uit de app: ${TR[sc.rang[0].k].naam} (${sc.rang[0].p}%)</p>
-    </section>
-    <p class="hint" style="margin-top:14px">Hieronder staat je keuze met een eerste onderbouwing die de app voor je heeft geschreven. <b>Pas alles aan</b> zodat het echt jouw verhaal is.</p>
-    <div class="vak"><label for="k_opl">Mijn keuze</label><select id="k_opl">${opties}</select></div>
-    <div class="vak" id="vakAnders"><label for="k_anders">Welke richting of opleiding precies?</label><p class="hint">Alleen invullen bij "buiten de ICT" of "gaan werken".</p><input type="text" id="k_anders" maxlength="120" value="${esc(k.anders)}"></div>
-    <div class="vak"><label for="k_route">Mijn route</label><p class="hint">Bijvoorbeeld: eerst niveau 3, daarna niveau 4.</p><textarea id="k_route" style="min-height:70px">${esc(k.route)}</textarea></div>
-    <div class="vak"><label for="k_waarom">Waarom kies ik dit? (onderbouwing)</label><p class="hint">Noem minstens 2 redenen. Gebruik voorbeelden uit je stage, lessen of hobby's.</p><textarea id="k_waarom" style="min-height:130px">${esc(k.waarom)}</textarea></div>
-    <div class="vak"><label>Mijn volgende stappen</label><div class="checks">${STAPPEN.map((s,i)=>`<label><input type="checkbox" data-i="${i}" ${k.stappen.includes(s)?'checked':''}> ${esc(s)}</label>`).join('')}</div></div>
-    <div class="vak"><label for="k_extra">Vraag of opmerking voor mijn SLB'er</label><textarea id="k_extra" style="min-height:70px">${esc(k.extra)}</textarea></div>
-    <div class="acties">
-      <button class="knop oranje" type="button" id="mail">✉️ E-mail opstellen</button>
-      <button class="knop rand" type="button" id="kopie">📋 Kopieer tekst</button>
-      <button class="knop rand" type="button" id="herstel">↺ Voorstel van de app terugzetten</button>
-    </div>
-    <p class="melding" id="melding"></p>
-    <p class="klein">De e-mail wordt geopend in je mailprogramma, gericht aan ${MAIL}. Controleer de tekst en druk zelf op Verzenden. Werkt de knop niet? Kopieer de tekst en plak hem in een nieuwe mail.</p>`;
+  d.innerHTML = `<span class="label">Keuze 1 van 3</span>${keuzeBanner(k)}
+    <p class="hint" style="margin-top:10px">De app heeft alvast een voorstel ingevuld (beste match: ${TR[sc.rang[0].k].naam}, ${sc.rang[0].p}%). <b>Pas alles aan</b> zodat het echt jouw keuze is.</p>
+    <div class="kolommen"><div class="vak" style="margin-bottom:0"><label for="k_opl">Mijn keuze</label><select id="k_opl">${opties}</select></div>
+    <div class="vak" id="vakAnders" style="margin-bottom:0"><label for="k_anders">Welke richting precies?</label><input type="text" id="k_anders" maxlength="120" value="${esc(k.anders)}"></div></div>
+    <div class="vak"><label for="k_route">Mijn route <span class="klein" style="font-weight:400">(bijv. eerst niveau 3, daarna niveau 4)</span></label><textarea id="k_route" style="min-height:64px">${esc(k.route)}</textarea></div>`;
   const toonAnders=()=>{ $('#vakAnders').style.display = KEUZES[1][1].includes(k.opl) ? '' : 'none'; };
   toonAnders();
   $('#k_opl').onchange=e=>{ k.opl=e.target.value; $('#kopKeuze').textContent=k.opl; toonAnders(); bewaar(); };
-  ['anders','route','waarom','extra'].forEach(f=>{ $('#k_'+f).oninput=e=>{ k[f]=e.target.value; bewaar(); }; });
+  ['anders','route'].forEach(f=>{ $('#k_'+f).oninput=e=>{ k[f]=e.target.value; bewaar(); }; });
+  nav(d, true, 'Onderbouwing →');
+}
+function waarom(v, d){
+  const k = zorgKeuze();
+  d.innerHTML = `<span class="label">Keuze 2 van 3</span><h2>Waarom kies je voor ${esc(k.opl.replace(/ \(niveau \d\)/,''))}?</h2>
+    <p class="hint">Noem minstens 2 redenen en gebruik voorbeelden uit je stage, lessen of hobby's. De app heeft een begin gemaakt: maak er jouw eigen verhaal van.</p>
+    <textarea id="k_waarom" class="groot" aria-label="Onderbouwing">${esc(k.waarom)}</textarea>
+    <p style="margin-top:6px"><button type="button" class="terug" id="herstel" style="font-size:13px;padding:0">↺ Voorstel van de app terugzetten</button></p>`;
+  $('#k_waarom').oninput=e=>{ k.waarom=e.target.value; bewaar(); };
+  $('#herstel').onclick=()=>{ if(confirm('Je eigen aanpassingen aan je keuze en onderbouwing gaan verloren. Doorgaan?')){ st.keuze=standaardKeuze(); bewaar(); render(); } };
+  nav(d, true, 'Laatste stap →');
+}
+function afronden(v, d){
+  const k = zorgKeuze();
+  d.innerHTML = `<span class="label">Keuze 3 van 3</span><h2>Wat ga je nu doen?</h2>
+    <div class="vak" style="margin-top:4px"><label>Mijn volgende stappen</label><div class="checks">${STAPPEN.map((s,i)=>`<label><input type="checkbox" data-i="${i}" ${k.stappen.includes(s)?'checked':''}> ${esc(s)}</label>`).join('')}</div></div>
+    <div class="vak"><label for="k_extra">Vraag of opmerking voor mijn SLB'er</label><textarea id="k_extra" style="min-height:64px">${esc(k.extra)}</textarea></div>
+    <p class="melding" id="melding"></p>
+    <p class="klein">Klik op <b>E-mail opstellen</b>: je mailprogramma opent met alles erin, gericht aan ${MAIL}. Controleer de tekst en druk zelf op Verzenden. Werkt dat niet? Kopieer de tekst en plak hem in een nieuwe mail.</p>`;
+  $('#k_extra').oninput=e=>{ k.extra=e.target.value; bewaar(); };
   d.querySelectorAll('.checks input').forEach(c=>c.onchange=()=>{ k.stappen=[...d.querySelectorAll('.checks input:checked')].map(x=>STAPPEN[+x.dataset.i]); bewaar(); });
-  $('#mail').onclick=()=>{
+  const b = nav(d, true, '✉️ E-mail opstellen', '<button class="knop rand" type="button" id="kopie">📋 Kopieer</button>');
+  b.classList.add('oranje');
+  b.onclick=()=>{
     const onderwerp = `Doorstroomkeuze ${st.naam}${st.klas?' ('+st.klas+')':''}`;
-    const href = `mailto:${MAIL}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(mailTekst().replace(/\n/g,'\r\n'))}`;
-    window.location.href = href;
-    $('#melding').textContent = 'Je mailprogramma wordt geopend… Niets gezien? Gebruik "Kopieer tekst".';
+    window.location.href = `mailto:${MAIL}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(mailTekst().replace(/\n/g,'\r\n'))}`;
+    $('#melding').textContent = 'Je mailprogramma wordt geopend… Niets gezien? Gebruik "Kopieer".';
   };
   $('#kopie').onclick=async()=>{
     const t = mailTekst();
-    try{ await navigator.clipboard.writeText(t); $('#melding').textContent='Gekopieerd! Plak het in een mail aan '+MAIL+'.'; }
-    catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); $('#melding').textContent='Gekopieerd! Plak het in een mail aan '+MAIL+'.'; }
+    try{ await navigator.clipboard.writeText(t); }
+    catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+    $('#melding').textContent='Gekopieerd! Plak het in een mail aan '+MAIL+'.';
   };
-  $('#herstel').onclick=()=>{ if(confirm('Je eigen aanpassingen in dit scherm gaan verloren. Doorgaan?')){ st.keuze=standaardKeuze(); bewaar(); render(); } };
-  const n = document.createElement('div'); n.className='nav'; n.innerHTML='<button class="terug" type="button">← Terug</button>'; n.firstChild.onclick=vorige; d.appendChild(n);
 }
 function mailTekst(){
   const k=st.keuze, sc=scores();

@@ -22,7 +22,7 @@
   --r:16px;
   color-scheme:dark;
 }
-*{-webkit-tap-highlight-color:transparent}
+*,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 [hidden]{display:none!important}
 body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);overflow:hidden;-webkit-user-select:none;user-select:none}
@@ -87,6 +87,21 @@ h1 span{color:var(--oranje)}
 @media (max-width:1000px){.routes{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:700px){.routes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.concept,#keyshint{display:none}}
+@media (max-width:600px){
+  .overlay{background:linear-gradient(180deg,rgba(3,16,32,.84),rgba(3,16,32,.95))}
+  #toast{top:42%}
+  #toast .t1{font-size:28px}
+  .sheet{gap:12px}
+  .sheet-logo{height:30px}
+  h1{font-size:32px}
+  .lede{font-size:15.5px}
+  .eyebrow{font-size:11px;letter-spacing:.16em}
+  .route{gap:6px}
+  .route p{font-size:13.5px}
+  .route ul{font-size:13px}
+  #chooser .keys{display:none}
+  #panel h2{font-size:28px}
+}
 @media (max-width:480px){.routes{grid-template-columns:1fr}.route{padding:14px}#keyshint{display:none}#hud-top{max-width:calc(100% - 180px)}.hud-logo{display:none}#minimap{width:150px;height:83px}#stamps .row{grid-template-columns:repeat(9,20px);gap:4px}.stamp{width:20px;height:20px;font-size:9px}}
 
 #panel{position:fixed;z-index:15;top:0;right:0;bottom:0;width:min(460px,100%);background:linear-gradient(180deg,var(--navy2),var(--ink));border-left:1px solid var(--line);overflow-y:auto;padding-block:calc(20px + env(safe-area-inset-top,0px)) calc(24px + env(safe-area-inset-bottom,0px));padding-left:22px;padding-right:max(22px,env(safe-area-inset-right,0px));box-shadow:-20px 0 60px rgba(0,0,0,.5)}
@@ -560,7 +575,7 @@ function chooseRoute(k){state.route=k;$("chooser").hidden=true;setRouteVar();ren
  else toast("Nieuwe route",ROUTES[k].name,ROUTES[k].color);
  setUI(false);requestLock()}
 function openStation(s){const p=$("panel");p.style.setProperty("--c",s.color);const got=state.stamps.has(s.id);const q=s.quiz;
- p.innerHTML=`<button class="close" id="pclose" type="button">Sluiten · Esc</button>
+ p.innerHTML=`<button class="close" id="pclose" type="button">${isTouch?"Sluiten":"Sluiten · Esc"}</button>
  <div class="room-code">${zoneOfStation(s).name}</div><h2>${s.name}</h2>
  <p>${s.doen}</p>
  <h3>Opleidingen</h3><div class="opl">${s.opl.map(o=>`<a href="${o[2]}" target="_blank" rel="noopener"><span class="on">${o[0]}</span><span class="om">${o[1]}</span></a>`).join("")}</div>

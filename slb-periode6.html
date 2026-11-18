@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLB periode 6 · Van student naar ICT-professional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Ter AA huisstijl */
+  --basis:#EFA242;
+  --oranje:#FF5900; --groen:#90F87B; --paars:#9447F0; --geel:#FADE29;
+  --l-geel:#FFE398; --l-zalm:#F8CBAF; --l-mint:#A6EBC7; --l-lila:#E5C7FE; --l-blauw:#B2C6D3;
+  --m-zalm:#FF996E; --m-groen:#26C373; --m-lila:#D594FF; --m-blauw:#6698AD;
+  --d-oker:#CD963C; --d-oranje:#D2652A; --d-groen:#3D6B52; --d-paars:#5A4494; --d-grijs:#53666B;
+  --tekst:#1E2426; --zacht:#53666B; --lijn:#E4E1DA; --bg:#FFFFFF; --vlak:#FBF8F2;
+  --accent:var(--basis); --accent-l:var(--l-geel); --accent-d:var(--d-oker);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+[hidden]{display:none!important}
+body{font-family:Poppins,Arial,sans-serif;color:var(--tekst);background:var(--bg);font-size:16px;line-height:1.55;min-height:100vh}
+button,input,textarea,select{font:inherit;color:inherit}
+.app{max-width:760px;margin:0 auto;padding:0 16px 80px;position:relative}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0 10px;gap:12px}
+.logo{color:var(--basis);height:34px;display:block}
+.logo svg{height:100%;width:auto;display:block}
+.top-r{font-size:13px;color:var(--zacht);text-align:right}
+.voortgang{height:8px;background:var(--vlak);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.voortgang i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s ease,background .3s}
+.deelbalk{display:flex;gap:6px;font-size:12px;color:var(--zacht);margin-bottom:18px;flex-wrap:wrap}
+.deelbalk span{padding:2px 10px;border-radius:99px;background:var(--vlak)}
+.deelbalk span.nu{background:var(--accent-l);color:var(--tekst);font-weight:600}
+.deelbalk span.klaar{opacity:.55}
+
+.scherm{animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.label{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-d);margin-bottom:6px}
+h1{font-weight:600;font-size:clamp(28px,6vw,44px);line-height:1.08;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-weight:600;font-size:clamp(21px,4.4vw,27px);line-height:1.25;margin:0 0 10px}
+h3{font-weight:600;font-size:17px;margin:0 0 6px}
+p{margin:0 0 12px}
+.hint{color:var(--zacht);font-size:14px}
+.kaart{background:#fff;border:1.5px solid var(--lijn);border-radius:18px;padding:20px}
+
+/* hero */
+.hero{position:relative;background:var(--l-geel);border-radius:24px;padding:34px 26px 28px;overflow:hidden;margin-bottom:20px}
+.hero .grootA{position:absolute;right:-30px;bottom:-26px;width:250px;color:var(--basis);opacity:.9;pointer-events:none}
+.hero .grootA svg{width:100%;height:auto;display:block}
+.hero > *:not(.grootA){position:relative;z-index:1;max-width:470px}
+.hero p{font-size:16px}
+.stappen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.stap{background:var(--vlak);border-radius:14px;padding:12px 14px;font-size:14px}
+.stap b{display:block;font-size:13px;color:var(--d-oker)}
+.velden{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin:16px 0}
+@media (max-width:520px){.velden{grid-template-columns:1fr}.hero .grootA{width:170px;opacity:.55}}
+label.veld{display:block;font-size:13px;font-weight:500}
+input[type=text],textarea,select{width:100%;border:1.5px solid var(--lijn);border-radius:12px;padding:11px 13px;background:#fff;margin-top:4px;outline:none;transition:border-color .2s}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--accent)}
+textarea{min-height:96px;resize:vertical;line-height:1.5}
+
+/* knoppen */
+.knop{border:0;border-radius:99px;padding:13px 24px;font-weight:600;cursor:pointer;background:var(--tekst);color:#fff;display:inline-flex;align-items:center;gap:8px;transition:transform .1s,opacity .2s;text-decoration:none}
+.knop:hover{transform:translateY(-1px)}
+.knop:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.knop.oranje{background:var(--oranje);color:#fff}
+.knop.licht{background:var(--vlak);color:var(--tekst)}
+.knop.rand{background:#fff;border:1.5px solid var(--lijn);color:var(--tekst)}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px}
+.terug{background:none;border:0;cursor:pointer;color:var(--zacht);padding:8px 4px;font-size:15px}
+.terug:hover{color:var(--tekst)}
+
+/* opties */
+.opties{display:grid;gap:10px;margin-top:16px}
+.optie{display:flex;align-items:center;gap:14px;text-align:left;width:100%;border:2px solid var(--lijn);background:#fff;border-radius:16px;padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
+.optie:hover{border-color:var(--accent)}
+.optie.aan{border-color:var(--accent);background:var(--accent-l)}
+.optie .ico{font-size:26px;width:36px;text-align:center;flex:none}
+.optie .tx b{display:block;font-weight:600}
+.optie .tx small{color:var(--zacht);font-size:13.5px}
+.optie .vink{margin-left:auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--lijn);flex:none;display:grid;place-items:center;font-size:14px;color:#fff}
+.optie.aan .vink{background:var(--tekst);border-color:var(--tekst)}
+.opties.twee{grid-template-columns:1fr 1fr}
+@media (max-width:560px){.opties.twee{grid-template-columns:1fr}}
+
+.emoji{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px}
+.emoji button{border:2px solid var(--lijn);background:#fff;border-radius:16px;padding:14px 4px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12.5px;color:var(--zacht);transition:.15s}
+.emoji button span{font-size:clamp(28px,7vw,40px);line-height:1;filter:grayscale(.3)}
+.emoji button:hover{border-color:var(--accent)}
+.emoji button.aan{border-color:var(--accent);background:var(--accent-l);color:var(--tekst);font-weight:600}
+.emoji button.aan span{filter:none;transform:scale(1.12)}
+
+/* stelling */
+.stelling{background:var(--accent-l);border-radius:22px;padding:28px 24px;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;justify-content:center}
+.stelling .nr{font-size:12px;font-weight:600;color:var(--accent-d);letter-spacing:.05em;text-transform:uppercase}
+.stelling h2{margin:6px 0 0;max-width:600px}
+.schaal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.schaal button{border:2px solid var(--lijn);background:#fff;border-radius:14px;padding:14px 6px;cursor:pointer;font-size:14px;font-weight:500;line-height:1.25;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.schaal button i{font-style:normal;font-size:22px}
+.schaal button:hover{border-color:var(--accent)}
+.schaal button.aan{background:var(--tekst);color:#fff;border-color:var(--tekst)}
+@media (max-width:480px){.schaal{grid-template-columns:1fr 1fr}}
+
+/* tussenscherm */
+.tussen{border-radius:24px;padding:36px 26px;position:relative;overflow:hidden;background:var(--accent-l)}
+.tussen .grootA{position:absolute;right:-20px;top:-10px;width:200px;color:var(--accent);opacity:.5}
+.tussen .grootA svg{width:100%;height:auto}
+.tussen > *:not(.grootA){position:relative}
+.tussen .deelnr{font-size:64px;font-weight:700;line-height:1;color:var(--accent-d)}
+
+/* uitslag */
+.balken{display:grid;gap:10px;margin:16px 0 8px}
+.balk{display:grid;grid-template-columns:minmax(120px,190px) 1fr 46px;align-items:center;gap:10px;font-size:14px}
+.balk .bk{height:16px;background:var(--vlak);border-radius:99px;overflow:hidden}
+.balk .bk i{display:block;height:100%;border-radius:99px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.balk b{text-align:right;font-weight:600}
+@media (max-width:480px){.balk{grid-template-columns:1fr 46px}.balk .bk{grid-column:1/-1;grid-row:2}}
+.top1{border-radius:22px;padding:24px;position:relative;overflow:hidden;margin:18px 0}
+.top1 .grootA{position:absolute;right:-24px;bottom:-30px;width:180px;opacity:.35}
+.top1 .grootA svg{width:100%;height:auto}
+.top1 > *:not(.grootA){position:relative}
+.chip{display:inline-block;font-size:12.5px;font-weight:600;padding:3px 11px;border-radius:99px;background:#fff;margin:0 6px 6px 0}
+.top1 ul{margin:8px 0 12px;padding-left:20px}
+.top1 li{margin-bottom:3px}
+.redenen{background:var(--vlak);border-radius:16px;padding:16px 18px;margin:14px 0}
+.redenen ul{margin:6px 0 0;padding-left:20px}
+.route{border-left:5px solid var(--accent);background:#fff;padding:12px 16px;border-radius:0 14px 14px 0;margin:14px 0;box-shadow:0 0 0 1.5px var(--lijn) inset}
+.link{color:var(--tekst);font-weight:600;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
+.andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+@media (max-width:560px){.andere{grid-template-columns:1fr}}
+.andere .kaart{padding:14px 16px}
+.andere .kaart b{display:block}
+.andere .kaart small{color:var(--zacht)}
+
+/* eindscherm */
+.eind{background:var(--tekst);color:#fff;border-radius:24px;padding:26px 24px;position:relative;overflow:hidden}
+.eind .grootA{position:absolute;right:-30px;top:-20px;width:220px;color:var(--basis);opacity:.25}
+.eind .grootA svg{width:100%;height:auto}
+.eind > *:not(.grootA){position:relative}
+.eind .label{color:var(--l-geel)}
+.eind h2{color:#fff}
+.vak{margin:16px 0}
+.vak > label{font-weight:600;font-size:14.5px;display:block}
+.vak .hint{margin:2px 0 4px;font-size:13px}
+.checks{display:grid;gap:6px;margin-top:6px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:15px;cursor:pointer;padding:6px 2px}
+.checks input{width:19px;height:19px;accent-color:var(--oranje);margin-top:3px;flex:none}
+.acties{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.melding{font-size:14px;color:var(--d-groen);margin-top:10px;min-height:20px}
+.klein{font-size:13px;color:var(--zacht)}
+footer{margin-top:40px;font-size:12.5px;color:var(--zacht);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer button{background:none;border:0;color:var(--zacht);cursor:pointer;text-decoration:underline;padding:0;font-size:12.5px}
+
+/* ===== Geen-scroll layout: alles past in het scherm, navigatie altijd zichtbaar ===== */
+html,body{height:100%}
+body{min-height:0;overflow:hidden}
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column;padding:0 16px;max-width:820px}
+header.top{padding:10px 0 4px;flex:none}
+.logo{height:28px}
+.top-r{display:flex;align-items:center;gap:14px}
+.top-r button{background:none;border:0;color:var(--zacht);cursor:pointer;text-decoration:underline;padding:0;font-size:12.5px}
+.voortgang{flex:none;margin:4px 0 4px}
+.deelbalk{flex:none;margin-bottom:10px}
+main#scherm{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:2px 2px 8px;display:flex;flex-direction:column}
+main#scherm > .scherm{margin:auto 0}
+#navbar{flex:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0 14px;border-top:1.5px solid var(--lijn)}
+#navbar .rechts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+#navbar .knop{padding:12px 22px}
+h1{font-size:clamp(26px,5vw,38px);margin-bottom:10px}
+h2{font-size:clamp(19px,3.6vw,24px);margin-bottom:6px}
+p{margin-bottom:8px}
+.hero{padding:22px 24px 18px;margin-bottom:12px}
+.hero .grootA{width:190px;bottom:-22px}
+.stappen{margin:10px 0;gap:8px}
+.stap{padding:9px 12px;font-size:13px}
+.velden{margin:10px 0 0}
+.opties{gap:8px;margin-top:12px}
+.optie{padding:10px 14px;gap:12px;border-radius:14px}
+.optie .ico{font-size:22px;width:30px}
+.optie .tx small{font-size:13px;line-height:1.35;display:block}
+@media (min-width:700px){.opties.veel{grid-template-columns:1fr 1fr}}
+.emoji{margin-top:14px}
+.stelling{padding:22px 22px;min-height:120px}
+.schaal{margin-top:12px}
+.schaal button{padding:12px 6px}
+.tussen{padding:28px 24px}
+.tussen .deelnr{font-size:54px}
+.balken{gap:8px;margin:10px 0 6px}
+.top1{padding:20px 22px;margin:4px 0 0}
+.top1 ul{margin:4px 0 8px}
+.kolommen{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px}
+@media (max-width:620px){.kolommen{grid-template-columns:1fr}}
+.redenen{margin:10px 0 0;padding:14px 18px}
+.route{margin:6px 0 0}
+.nr2{display:flex;gap:14px;align-items:center;border-radius:16px;padding:12px 16px;margin-top:12px}
+.nr2 b{display:block}
+.eind{padding:16px 20px;border-radius:18px}
+.eind .grootA{width:140px;top:-14px}
+.vak{margin:10px 0}
+.checks{gap:2px}
+.checks label{padding:4px 2px}
+textarea{min-height:80px}
+textarea.groot{min-height:170px;height:30vh}
+.melding{margin-top:6px;min-height:0}
+.melding:empty{display:none}
+@media (max-height:700px){.stappen{display:none}.hero p{font-size:15px}}
+@media (max-width:520px){.top-r #wie{display:none}}
+@media (min-width:621px){.checks{grid-template-columns:1fr 1fr}}
+.eind{padding:12px 18px}
+.top1{padding:16px 20px}
+.top1 li{margin-bottom:1px}
+.top1 p{margin-bottom:6px}
+/* compacte modus voor lage schermen (kleine laptops, ingezoomd) */
+@media (max-height:640px){
+  header.top{padding:6px 0 2px}.logo{height:24px}
+  .deelbalk{display:none!important}.voortgang{margin:2px 0 8px;height:6px}
+  h1{font-size:clamp(24px,4vw,30px);margin-bottom:6px}
+  h2{font-size:clamp(18px,3vw,21px)}
+  .label{margin-bottom:2px}
+  .hint{font-size:13px}
+  .optie{padding:7px 12px}.opties{gap:6px;margin-top:8px}
+  .balken{gap:5px;margin:6px 0 4px}.balk .bk{height:13px}
+  .redenen{padding:10px 16px;margin-top:8px}.redenen ul{margin-top:2px}
+  .top1{padding:12px 18px}.top1 .chip{margin-bottom:2px}
+  .kolommen p,.top1 p{margin-bottom:4px;font-size:15px}.top1 li{font-size:15px}
+  .checks label{padding:2px}.vak{margin:6px 0}
+  #navbar{padding:7px 0 9px}#navbar .knop{padding:10px 20px}
+  .stelling{min-height:100px;padding:18px 20px}
+  .hero{padding:16px 22px 14px}
+}
+/* telefoon: compacte keuzetegels */
+@media (max-width:560px){
+  .deelbalk{display:none!important}.voortgang{margin:2px 0 10px}
+  h2{font-size:19px}
+  .optie{position:relative;padding:8px 12px;gap:10px}
+  .optie .tx b{font-size:14.5px;line-height:1.3}
+  .optie .tx small{display:none}
+  .optie .ico{font-size:20px;width:26px}
+  .opties.twee{grid-template-columns:1fr 1fr;gap:6px}
+  .opties.twee .optie{flex-direction:column;text-align:center;padding:8px 6px;gap:2px;justify-content:center}
+  .opties.twee .optie .vink{position:absolute;top:5px;right:5px;width:18px;height:18px;font-size:11px;border-radius:5px}
+  .opties.twee .optie .tx b{font-size:13.5px}
+  .schaal button{padding:9px 4px;font-size:13px}
+  .stelling{min-height:0;padding:18px}
+  .hero .grootA{width:120px;opacity:.4}
+}
+@media print{header.top .top-r,.voortgang,.deelbalk,#navbar{display:none}body{overflow:visible}.app{height:auto}.eind{background:#fff;color:#000;border:2px solid #000}.eind h2{color:#000}}
+
+/* ===================== Module SLB periode 6 ===================== */
+.scherm.stil{animation:none}
+.top-r a.toplink,.top-r a.toplink:visited{color:var(--zacht);font-size:12.5px;text-decoration:underline}
+.top-r a.toplink:hover{color:var(--tekst)}
+a.terug{text-decoration:none}
+.fase{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:none;padding:2px 9px;border-radius:99px;background:var(--accent-l);color:var(--tekst);margin-left:6px;vertical-align:1px}
+.fase.k{background:var(--tekst);color:#fff}
+.hero .fase,.tussen .fase{background:#fff}.hero .fase.k,.tussen .fase.k{background:var(--tekst)}
+.deelbalk .lesnaam{background:var(--tekst);color:#fff;font-weight:600}
+.hero.klein{padding:18px 22px 14px}
+.voortgangtekst{font-size:14px;margin:4px 0 0!important}
+.lesgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:760px){.lesgrid{grid-template-columns:1fr 1fr}}
+.les-tegel{position:relative;display:flex;flex-direction:column;gap:1px;text-decoration:none;color:var(--tekst);background:var(--kl);border-radius:18px;padding:12px 14px;min-height:122px;border:2px solid transparent;transition:transform .12s,border-color .15s}
+.les-tegel:hover{transform:translateY(-2px);border-color:var(--k)}
+.les-tegel .lnr{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--kd)}
+.les-tegel .lico{font-size:24px;line-height:1.2}
+.les-tegel b{font-size:15px;line-height:1.25}
+.les-tegel small{font-size:12.5px;color:var(--zacht);line-height:1.3}
+.les-tegel .st{position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#fff}
+.les-tegel .st.klaar{background:var(--tekst);color:#fff}
+.les-tegel.volgende{border-color:var(--tekst);box-shadow:0 6px 18px rgba(30,36,38,.12)}
+.doel{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:620px){.doel{grid-template-columns:1fr}}
+.doel .kaart{padding:12px 16px;border-radius:16px}
+.doel ul{margin:2px 0 0;padding-left:18px;font-size:14.5px}
+ul.prog{list-style:none;padding:0}
+.prog li{display:flex;gap:10px;font-size:14px;margin-bottom:2px;line-height:1.35}
+.prog li b{min-width:52px;color:var(--accent-d);flex:none}
+.situatie{background:var(--vlak);border-left:5px solid var(--accent);border-radius:0 14px 14px 0;padding:10px 14px;margin:2px 0 10px;font-size:15.5px;line-height:1.45}
+.fb{border-radius:14px;padding:10px 14px;margin-top:10px;font-size:14.5px;line-height:1.45;display:flex;gap:10px;align-items:flex-start;animation:in .3s ease}
+.fb:empty{display:none}
+.fb .fi{font-size:22px;line-height:1.1}
+.fb.goed{background:#DDF7E9}.fb.kan{background:#FFF3CC}.fb.fout{background:#FDE3D6}
+.optie.goed{border-color:var(--m-groen);background:#EAFBF2}
+.optie.kan{border-color:var(--basis);background:#FFF6DC}
+.optie.fout{border-color:var(--m-zalm);background:#FFF0E8}
+.optie.beste{border-style:dashed;border-color:var(--m-groen)}
+.optie:disabled{cursor:default;color:var(--tekst)}
+.optie .oi{margin-left:auto;font-size:18px;flex:none}
+.optie .bedrag{margin-left:auto;font-weight:700;white-space:nowrap;padding-left:10px}
+.schaal.drie{grid-template-columns:repeat(3,1fr)}
+@media (max-width:480px){.schaal.drie{grid-template-columns:repeat(3,1fr)}}
+.punten{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.punt{background:var(--accent-l);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.4}
+.punt .pi{font-size:22px;display:block}
+.punt b{display:block;font-size:14.5px}
+.rkaart{background:var(--accent-l);border-radius:20px;padding:20px 22px;font-size:clamp(17px,2.6vw,21px);font-weight:500;line-height:1.35;min-height:92px;display:flex;align-items:center;margin:8px 0 10px}
+.bakken{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:8px}
+.bakken button{border:2px solid var(--lijn);background:#fff;border-radius:14px;padding:10px 8px;cursor:pointer;font-weight:600;font-size:14.5px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s}
+.bakken button i{font-style:normal;font-size:24px}
+.bakken button:hover:not(:disabled){border-color:var(--accent)}
+.bakken button.goed{border-color:var(--m-groen);background:#EAFBF2}
+.bakken button.fout{border-color:var(--m-zalm);background:#FFF0E8}
+.bakken button:disabled{cursor:default;color:var(--tekst)}
+.bakken button:disabled:not(.goed):not(.fout){opacity:.5}
+.stippen{display:flex;gap:5px;align-items:center;margin:2px 0 0}
+.stippen i{width:10px;height:10px;border-radius:50%;background:var(--lijn)}
+.stippen i.g{background:var(--m-groen)}.stippen i.f{background:var(--m-zalm)}.stippen i.nu{background:var(--tekst)}
+.stippen .klein{margin-left:6px}
+.score{font-size:58px;font-weight:700;line-height:1;color:var(--accent-d)}
+.volg{display:grid;gap:6px;margin-top:8px}
+.vrij{display:flex;align-items:center;gap:10px;border:2px solid var(--lijn);border-radius:14px;padding:6px 8px 6px 10px;background:#fff;font-size:14.5px;line-height:1.3}
+.vrij .vn{width:26px;height:26px;border-radius:50%;background:var(--accent-l);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.vrij .vt{flex:1}
+.vrij button{border:1.5px solid var(--lijn);background:var(--vlak);border-radius:9px;width:34px;height:30px;cursor:pointer;font-size:15px;flex:none}
+.vrij button:hover:not(:disabled){border-color:var(--accent)}
+.vrij button:disabled{opacity:.3;cursor:default}
+.vrij.goed{border-color:var(--m-groen);background:#EAFBF2}.vrij.fout{border-color:var(--m-zalm);background:#FFF0E8}
+.linkknop{background:none;border:0;padding:0;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;font-size:14px}
+.starters{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.starters button{border:1.5px dashed var(--accent-d);background:#fff;border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer}
+.starters button:hover{background:var(--accent-l)}
+.saldo{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.saldo span{background:var(--vlak);border-radius:12px;padding:6px 12px;font-size:12.5px;line-height:1.25}
+.saldo span b{display:block;font-size:17px}
+.saldo .over{background:#DDF7E9}.saldo .over.min{background:#FDE3D6}
+.tabel{width:100%;border-collapse:collapse;font-size:14px}
+.tabel td{padding:4px 6px;border-bottom:1px solid var(--lijn)}
+.tabel td:last-child{text-align:right;font-weight:600;white-space:nowrap}
+.tabel tr.tot td{border-bottom:0;font-weight:700;font-size:15.5px;padding-top:8px}
+.mijn{margin:4px 0 6px;line-height:2}
+.chip.v{background:var(--vlak);margin:0 4px 0 0}
+.vragen{display:grid;gap:8px;margin-top:8px;counter-reset:v}
+.vraag{display:flex;gap:12px;align-items:center;background:var(--accent-l);border-radius:16px;padding:11px 16px;font-size:clamp(15.5px,2.2vw,18px);font-weight:500;line-height:1.35}
+.vraag::before{counter-increment:v;content:counter(v);width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:700;flex:none;font-size:15px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px}
+.tabs button{border:2px solid var(--lijn);background:#fff;border-radius:99px;padding:5px 14px;cursor:pointer;font-weight:600;font-size:13.5px}
+.tabs button:hover{border-color:var(--accent)}
+.tabs button.aan{background:var(--tekst);color:#fff;border-color:var(--tekst)}
+.rol{border-radius:18px;padding:14px 18px;background:var(--accent-l);font-size:15.5px;animation:in .3s ease}
+.rol .rl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-d)}
+.verborgen{border:2px dashed var(--lijn);border-radius:18px;padding:18px;text-align:center;color:var(--zacht);font-size:14.5px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:6px}
+@media (max-width:560px){.formgrid{grid-template-columns:1fr}}
+.formgrid label{font-size:13px;font-weight:500}
+.formgrid input{padding:8px 11px;margin-top:2px}
+.spiek{border:2.5px solid var(--tekst);border-radius:18px;padding:12px 18px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;font-size:14px}
+.spiek h3{grid-column:1/-1;margin:0 0 2px;display:flex;justify-content:space-between;align-items:center}
+.spiek .mini-logo{height:18px;color:var(--basis)}.spiek .mini-logo svg{height:100%;width:auto;display:block}
+.spiek .r{display:flex;flex-direction:column;border-bottom:1px dashed var(--lijn);padding:3px 0;line-height:1.35}
+.spiek .r small{font-size:11px;color:var(--zacht)}
+.spiek .breed{grid-column:1/-1}
+.spiek .leeg{color:var(--lijn)}
+@media (max-width:560px){.spiek{grid-template-columns:1fr}}
+.tb{display:grid;gap:5px;margin-top:6px}
+.tb > div{display:flex;gap:10px;align-items:flex-start;background:var(--vlak);border-radius:12px;padding:6px 12px;font-size:14px;line-height:1.35}
+.tb > div > span{font-size:20px}
+.tb b{display:block;font-size:12.5px;color:var(--zacht);font-weight:600}
+.docent details{border:1.5px solid var(--lijn);border-radius:16px;padding:10px 16px;margin-bottom:8px;background:#fff}
+.docent summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.docent summary::-webkit-details-marker{display:none}
+.docent summary .dot{width:12px;height:12px;border-radius:50%;flex:none}
+.docent details[open] summary{margin-bottom:6px}
+.docent h4{margin:10px 0 2px;font-size:14px}
+.docent ul,.docent ol{margin:2px 0 6px;padding-left:20px;font-size:14.5px}
+.docent li{margin-bottom:2px}
+.docent p{font-size:14.5px}
+.cert{text-align:center;padding:26px 22px!important}
+.cert .lvl{font-size:clamp(40px,8vw,64px);font-weight:700;line-height:1;color:var(--basis);letter-spacing:-.02em;margin-top:6px}
+.cert .grootA{opacity:.18}
+@media (max-height:720px){
+  .les-tegel{min-height:0;padding:10px 12px}
+  .les-tegel .lico{font-size:20px}
+  .hero.klein{padding:14px 20px 10px}
+  .hero.klein h1{font-size:clamp(24px,4vw,32px)}
+}
+@media (max-height:640px){
+  .situatie{padding:8px 12px;margin-bottom:6px;font-size:14.5px}
+  .rkaart{min-height:70px;padding:14px 18px;margin:6px 0 8px}
+  .fb{padding:8px 12px;margin-top:6px;font-size:14px}
+  .vraag{padding:8px 14px}
+  .vrij{padding:4px 8px}
+  .doel ul,.prog li{font-size:13.5px}
+}
+@media print{
+  body *{visibility:hidden}
+  .print,.print *{visibility:visible}
+  .print{position:absolute;left:0;top:0;width:100%}
+  .docent,.docent *{visibility:visible}
+  .docent{position:absolute;left:0;top:0;width:100%}
+  .docent details{break-inside:avoid}
+}
+
+.hero{background:var(--accent-l)}.hero .grootA{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="logo" href="#" aria-label="Ter AA · alle lessen"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136.12 60.18" fill="currentColor" fill-rule="evenodd"><path d="M136.02 41.34L131.17 29.63C131.03 29.30 130.65 29.17 130.34 29.35C128.32 30.49 126.26 31.55 124.14 32.54L113.75 0.68C113.62 0.27 113.23 0.00 112.80 0.00L98.95 0.00C98.52 0.00 98.14 0.27 98.00 0.68L82.62 47.82L82.62 47.83L67.23 0.68C67.10 0.27 66.71 0.00 66.29 0.00L52.43 0.00C52.00 0.00 51.62 0.27 51.48 0.68L38.39 40.81C38.39 40.81 38.39 40.81 38.38 40.81C36.39 40.79 33.69 40.67 30.72 40.34C30.42 40.31 30.14 40.51 30.08 40.81L27.72 53.23C27.66 53.52 27.86 53.79 28.15 53.82C30.07 54.04 32.02 54.21 33.97 54.33C33.97 54.33 33.98 54.33 33.97 54.33L32.06 60.18C32.06 60.18 32.06 60.18 32.06 60.18L48.12 60.18C48.12 60.18 48.12 60.18 48.12 60.18C48.97 57.18 49.86 54.04 49.86 54.04C55.95 53.47 62.00 52.34 67.90 50.68C67.89 50.68 69.33 55.79 70.57 60.18L70.58 60.18L94.65 60.18L94.66 60.18C95.42 57.47 96.39 54.04 96.39 54.04C102.49 53.47 108.53 52.34 114.43 50.68C114.43 50.68 115.90 55.91 117.11 60.18L133.17 60.18L128.42 45.63C130.94 44.51 133.40 43.28 135.80 41.96C136.03 41.84 136.12 41.57 136.02 41.34M53.88 39.75L59.35 20.33C59.35 20.32 59.35 20.32 59.35 20.33L64.18 37.50C64.19 37.51 64.18 37.51 64.18 37.51C62.34 38.09 57.83 39.15 53.88 39.75C53.88 39.75 53.88 39.75 53.88 39.75M100.41 39.75L105.88 20.32L110.72 37.51C108.88 38.09 104.36 39.15 100.41 39.75"/><path d="M4.20 29.70C3.54 29.15 3.13 28.55 2.98 27.89C2.82 27.24 2.74 26.51 2.74 25.72L2.74 22.39L2.74 19.14L1.36 19.14L0.00 19.14L0.00 16.23L1.38 16.23L2.74 16.23L2.74 14.41L2.74 12.62L2.74 12.27L5.95 12.27L5.95 12.81L5.95 14.55L5.95 16.23L7.88 16.23L9.76 16.23L9.76 19.14L7.85 19.14L5.95 19.14L5.95 20.75L5.95 22.33L5.95 23.47L5.95 24.59L5.95 24.64C5.95 25.24 5.99 25.74 6.05 26.14C6.12 26.54 6.29 26.88 6.56 27.17C6.84 27.46 7.26 27.61 7.85 27.61C8.41 27.61 9.02 27.45 9.66 27.14L9.76 27.09L9.76 29.97C9.43 30.16 9.04 30.29 8.60 30.39C8.16 30.48 7.70 30.52 7.20 30.52C5.85 30.52 4.85 30.25 4.20 29.70"/><path d="M13.91 29.61C12.81 29.01 11.96 28.15 11.35 27.05C10.73 25.95 10.42 24.67 10.42 23.23C10.42 21.82 10.72 20.55 11.32 19.43C11.92 18.31 12.74 17.43 13.80 16.79C14.85 16.15 16.04 15.83 17.37 15.83C18.53 15.83 19.62 16.09 20.62 16.61C21.63 17.14 22.44 17.95 23.08 19.05C23.71 20.16 24.02 21.53 24.02 23.18L24.02 24.07L13.69 24.07C13.77 24.82 13.99 25.46 14.36 25.99C14.72 26.52 15.18 26.92 15.73 27.20C16.28 27.47 16.89 27.61 17.57 27.61C18.35 27.61 19.05 27.40 19.66 26.99C20.28 26.57 20.73 25.98 21.03 25.22L24.10 26.41C23.60 27.64 22.78 28.64 21.63 29.39C20.49 30.15 19.14 30.52 17.60 30.52C16.23 30.52 15.01 30.22 13.91 29.61M20.14 19.95C19.82 19.49 19.42 19.17 18.93 18.97C18.44 18.77 17.91 18.67 17.35 18.67C16.72 18.67 16.16 18.79 15.68 19.04C15.20 19.29 14.80 19.65 14.49 20.11C14.19 20.58 13.98 21.10 13.86 21.68L20.71 21.68C20.64 20.98 20.45 20.41 20.14 19.95"/><path d="M26.11 16.23L29.27 16.23L29.27 16.65L29.27 17.58L29.27 18.49L29.37 18.49C29.75 17.70 30.29 17.05 30.98 16.56C31.67 16.07 32.46 15.83 33.36 15.83C33.84 15.83 34.33 15.92 34.76 16.09L34.14 19.64C33.83 19.56 33.31 19.51 33.05 19.51C32.08 19.51 31.31 19.74 30.75 20.24C30.20 20.75 29.82 21.34 29.62 22.06C29.42 22.78 29.32 23.52 29.32 24.42L29.32 24.52L29.32 30.10L26.11 30.10L26.11 16.23"/></svg></a>
+    <div class="top-r"><span id="wie"></span><span id="toplinks" style="display:flex;gap:14px;align-items:center"></span></div>
+  </header>
+  <div class="voortgang" id="vgWrap" hidden><i id="vg"></i></div>
+  <div class="deelbalk" id="deelbalk" hidden></div>
+  <main id="scherm"></main>
+  <nav id="navbar"></nav>
+</div>
+<script>
+const A_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57.54 60.18" fill="currentColor" fill-rule="evenodd"><path d="M57.44 41.34L52.58 29.63C52.45 29.30 52.06 29.17 51.76 29.34C49.74 30.49 47.67 31.55 45.56 32.54L35.16 0.68C35.03 0.27 34.65 0.00 34.22 0.00L20.36 0.00C19.93 0.00 19.55 0.27 19.42 0.68L0.00 60.18L16.07 60.18C16.84 57.47 17.81 54.04 17.81 54.04C23.90 53.47 29.95 52.34 35.85 50.68C35.85 50.68 37.32 55.91 38.52 60.18L54.59 60.18L49.83 45.63C52.35 44.51 54.82 43.28 57.22 41.96C57.44 41.84 57.54 41.57 57.44 41.34M21.83 39.75L27.30 20.32L32.14 37.51C30.29 38.09 25.78 39.15 21.83 39.75"/></svg>`;
+const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136.12 60.18" fill="currentColor" fill-rule="evenodd"><path d="M136.02 41.34L131.17 29.63C131.03 29.30 130.65 29.17 130.34 29.35C128.32 30.49 126.26 31.55 124.14 32.54L113.75 0.68C113.62 0.27 113.23 0.00 112.80 0.00L98.95 0.00C98.52 0.00 98.14 0.27 98.00 0.68L82.62 47.82L82.62 47.83L67.23 0.68C67.10 0.27 66.71 0.00 66.29 0.00L52.43 0.00C52.00 0.00 51.62 0.27 51.48 0.68L38.39 40.81C38.39 40.81 38.39 40.81 38.38 40.81C36.39 40.79 33.69 40.67 30.72 40.34C30.42 40.31 30.14 40.51 30.08 40.81L27.72 53.23C27.66 53.52 27.86 53.79 28.15 53.82C30.07 54.04 32.02 54.21 33.97 54.33C33.97 54.33 33.98 54.33 33.97 54.33L32.06 60.18C32.06 60.18 32.06 60.18 32.06 60.18L48.12 60.18C48.12 60.18 48.12 60.18 48.12 60.18C48.97 57.18 49.86 54.04 49.86 54.04C55.95 53.47 62.00 52.34 67.90 50.68C67.89 50.68 69.33 55.79 70.57 60.18L70.58 60.18L94.65 60.18L94.66 60.18C95.42 57.47 96.39 54.04 96.39 54.04C102.49 53.47 108.53 52.34 114.43 50.68C114.43 50.68 115.90 55.91 117.11 60.18L133.17 60.18L128.42 45.63C130.94 44.51 133.40 43.28 135.80 41.96C136.03 41.84 136.12 41.57 136.02 41.34M53.88 39.75L59.35 20.33C59.35 20.32 59.35 20.32 59.35 20.33L64.18 37.50C64.19 37.51 64.18 37.51 64.18 37.51C62.34 38.09 57.83 39.15 53.88 39.75C53.88 39.75 53.88 39.75 53.88 39.75M100.41 39.75L105.88 20.32L110.72 37.51C108.88 38.09 104.36 39.15 100.41 39.75"/><path d="M4.20 29.70C3.54 29.15 3.13 28.55 2.98 27.89C2.82 27.24 2.74 26.51 2.74 25.72L2.74 22.39L2.74 19.14L1.36 19.14L0.00 19.14L0.00 16.23L1.38 16.23L2.74 16.23L2.74 14.41L2.74 12.62L2.74 12.27L5.95 12.27L5.95 12.81L5.95 14.55L5.95 16.23L7.88 16.23L9.76 16.23L9.76 19.14L7.85 19.14L5.95 19.14L5.95 20.75L5.95 22.33L5.95 23.47L5.95 24.59L5.95 24.64C5.95 25.24 5.99 25.74 6.05 26.14C6.12 26.54 6.29 26.88 6.56 27.17C6.84 27.46 7.26 27.61 7.85 27.61C8.41 27.61 9.02 27.45 9.66 27.14L9.76 27.09L9.76 29.97C9.43 30.16 9.04 30.29 8.60 30.39C8.16 30.48 7.70 30.52 7.20 30.52C5.85 30.52 4.85 30.25 4.20 29.70"/><path d="M13.91 29.61C12.81 29.01 11.96 28.15 11.35 27.05C10.73 25.95 10.42 24.67 10.42 23.23C10.42 21.82 10.72 20.55 11.32 19.43C11.92 18.31 12.74 17.43 13.80 16.79C14.85 16.15 16.04 15.83 17.37 15.83C18.53 15.83 19.62 16.09 20.62 16.61C21.63 17.14 22.44 17.95 23.08 19.05C23.71 20.16 24.02 21.53 24.02 23.18L24.02 24.07L13.69 24.07C13.77 24.82 13.99 25.46 14.36 25.99C14.72 26.52 15.18 26.92 15.73 27.20C16.28 27.47 16.89 27.61 17.57 27.61C18.35 27.61 19.05 27.40 19.66 26.99C20.28 26.57 20.73 25.98 21.03 25.22L24.10 26.41C23.60 27.64 22.78 28.64 21.63 29.39C20.49 30.15 19.14 30.52 17.60 30.52C16.23 30.52 15.01 30.22 13.91 29.61M20.14 19.95C19.82 19.49 19.42 19.17 18.93 18.97C18.44 18.77 17.91 18.67 17.35 18.67C16.72 18.67 16.16 18.79 15.68 19.04C15.20 19.29 14.80 19.65 14.49 20.11C14.19 20.58 13.98 21.10 13.86 21.68L20.71 21.68C20.64 20.98 20.45 20.41 20.14 19.95"/><path d="M26.11 16.23L29.27 16.23L29.27 16.65L29.27 17.58L29.27 18.49L29.37 18.49C29.75 17.70 30.29 17.05 30.98 16.56C31.67 16.07 32.46 15.83 33.36 15.83C33.84 15.83 34.33 15.92 34.76 16.09L34.14 19.64C33.83 19.56 33.31 19.51 33.05 19.51C32.08 19.51 31.31 19.74 30.75 20.24C30.20 20.75 29.82 21.34 29.62 22.06C29.42 22.78 29.32 23.52 29.32 24.42L29.32 24.52L29.32 30.10L26.11 30.10L26.11 16.23"/></svg>`;
+/* ================== INHOUD VAN DE LESSEN ==================
+   Schermtypes: intro, stelling, tussen, info, kies, multi, ronde, volgorde, tekst,
+   uitdaging, baan, post, overzicht, verrassing, rollen, spiekform, spiekkaart, terugblik, cert.
+   Na het laatste scherm voegt de app automatisch toe: tussen (fase 3), nabespreking, feedback, klaar.
+   kies-opties: [icoon, tekst, 'goed'|'kan'|'fout', toelichting]
+   ronde-items: [kaarttekst, juiste bak, toelichting]
+*/
+const PROG = (midden) => [['15', 'Intro en binnenkomer · klassikaal'], ['45', midden + ' · zelfstandig'], ['25', 'Nabespreking · klassikaal'], ['5', 'Feedback en afsluiten']];
+
+const UITDAGINGEN = [
+  ['🙋', 'Ik stel elke dag minstens één vraag'],
+  ['🔎', 'Ik vraag zelf om werk als ik klaar ben'],
+  ['⏰', 'Ik ben elke dag op tijd, en ik bel als dat niet lukt'],
+  ['💬', 'Ik vraag elke week om feedback'],
+  ['📵', 'Mijn telefoon blijft in mijn tas tijdens het werk'],
+  ['🤝', 'Ik stel me voor aan iedereen op de afdeling']
+];
+
+/* ---------- Les 3: budget ---------- */
+const BANEN = [
+  ['🎧', 'Servicedesk-medewerker, 32 uur per week', 1650],
+  ['🖥️', 'ICT-medewerker, 40 uur per week', 1950],
+  ['🚀', 'Systeembeheerder, later met niveau 4', 2450]
+];
+const POSTEN = [
+  {k: 'wonen', titel: 'Waar ga je wonen?', hint: 'Bij een kamer, studio en appartement zitten energie, water en internet erbij.', opts: [
+    ['🏡', 'Thuis wonen en kostgeld betalen', 250], ['🛏️', 'Een kamer in een studentenhuis', 600], ['🏢', 'Een studio voor jezelf', 950], ['🏙️', 'Een eigen appartement', 1300]]},
+  {k: 'vervoer', titel: 'Hoe ga je naar je werk?', hint: 'Bij de auto horen ook benzine, verzekering en wegenbelasting.', opts: [
+    ['🚲', 'Fiets', 20], ['🚌', 'Openbaar vervoer', 120], ['🛵', 'Scooter', 90], ['🚗', 'Auto', 375]]},
+  {k: 'eten', titel: 'Eten en boodschappen', hint: 'Woon je thuis? Dan betaal je met je kostgeld al een deel van het eten. Kies dan liefst "zuinig".', opts: [
+    ['🥕', 'Zelf koken en zuinig doen', 225], ['🍝', 'Normaal boodschappen doen', 325], ['🍔', 'Vaak eten laten bezorgen', 550]]},
+  {k: 'tel', titel: 'Je telefoon', hint: '', opts: [
+    ['📶', 'Sim-only (je houdt je oude telefoon)', 15], ['📱', 'Abonnement met een nieuwe telefoon', 55]]},
+  {k: 'abo', titel: 'Abonnementen', hint: 'Denk aan Netflix, Spotify, Game Pass of de sportschool.', opts: [
+    ['🚫', 'Geen abonnementen', 0], ['📺', 'Eén of twee streamingdiensten', 25], ['🎮', 'Streaming, games én sportschool', 80]]},
+  {k: 'uit', titel: 'Uitgaan, kleding en hobby\'s', hint: '', opts: [
+    ['☕', 'Weinig', 75], ['🎟️', 'Gemiddeld', 175], ['🥳', 'Veel', 350]]}
+];
+const VAST = [['🩺', 'Zorgverzekering (verplicht vanaf je 18e)', 160], ['🧴', 'Verzorging, kapper en overig', 60]];
+const VERRASSINGEN = [
+  ['💻', 'Je laptop valt van tafel. De reparatie kost', 450],
+  ['🚦', 'Je rijdt door rood en krijgt een boete van', 290],
+  ['🦷', 'Je moet naar de tandarts. Niet alles wordt vergoed. Je betaalt', 180],
+  ['🚲', 'Je fiets is gestolen. Een tweedehands fiets kost', 250],
+  ['📱', 'Je telefoonscherm is gebarsten. Een nieuw scherm kost', 160]
+];
+const VERR_OPTS = [
+  ['🛍️', 'Achteraf betalen of in termijnen (bijvoorbeeld met Klarna)', 'fout', 'Dat voelt makkelijk, maar je schuift het probleem alleen voor je uit. Betaal je te laat? Dan komen er kosten bij en kun je een BKR-registratie krijgen. Dan krijg je later moeilijker een lening of een telefoonabonnement.'],
+  ['💳', 'Rood staan op mijn bankrekening', 'fout', 'Rood staan kost rente. En je begint volgende maand al met min.'],
+  ['✂️', 'Volgende maand minder uitgeven, bijvoorbeeld minder uitgaan en bezorgen', 'goed', 'Slim: je past je eigen uitgaven aan. Nog beter: spaar elke maand een buffer voor pech.'],
+  ['👨‍👩‍👧', 'Geld lenen van mijn ouders of familie', 'kan', 'Dat kan, als je duidelijke afspraken maakt over het terugbetalen.'],
+  ['🐷', 'Betalen van mijn spaargeld (buffer)', 'goed', 'Daar is een buffer voor! Vul hem daarna wel weer aan.']
+];
+
+/* ---------- Les 7: spiekbrief ---------- */
+const SPIEK = [['bedrijf', '🏢 Stagebedrijf'], ['adres', '📍 Adres'], ['tijd', '⏰ Begintijd'], ['po', '👔 Praktijkopleider'], ['potel', '📞 Telefoon praktijkopleider'], ['bpv', '🏫 BPV-docent'], ['bpvtel', '📞 Telefoon of mail BPV-docent'], ['vp', '🤝 Vertrouwenspersoon van school']];
+
+const LESSEN = [
+/* ===================================================== LES 1 */
+{nr: 1, extern: 'slb-doorstroomkeuze.html', ico: '🧭', titel: 'Mijn doorstroomkeuze', sub: 'Wat ga jij na je diploma doen?', kleur: ['#EFA242', '#FFE398', '#CD963C'],
+ doelen: ['Je weet welke vervolgopleiding bij je past', 'Je maakt een onderbouwde keuze', 'Je mailt je keuze naar je SLB\'er'],
+ programma: [['15', 'Intro: wie weet al wat hij gaat doen? · klassikaal'], ['50', 'App "Mijn doorstroomkeuze" · zelfstandig'], ['20', 'Nabespreking · klassikaal'], ['5', 'Mail versturen']],
+ docent: {voor: 'Zorg dat studenten de app kunnen openen. Plan tijd in om de mail met hun keuze te versturen.',
+   intro: ['Vraag: wie weet al wat hij of zij na de zomer gaat doen? En wie twijfelt nog?', 'Leg uit: de app geeft advies, maar de student kiest zelf.', 'Laat aan het eind zien hoe ze de mail versturen (of kopiëren en zelf mailen).'],
+   zelf: 'Studenten doorlopen de app in 4 delen: terugblik, wat past bij jou, jouw route en uitslag met keuze. Ze sluiten af met een mail aan jou.',
+   tip: 'Gebruik de mails voor de SLB-gesprekken. Wie twijfelt, plant een gesprek of gaat naar een open dag. De keuze komt terug in les 5 en les 8.'},
+ nabespreking: ['Wie had een uitslag die je niet had verwacht?', 'Wie twijfelt nog? Wat heb je nodig om te kiezen?', 'Welke volgende stap zet je deze maand?']},
+
+/* ===================================================== LES 2 */
+{nr: 2, ico: '🤔', titel: 'Wat zou jij doen?', sub: 'Dilemma\'s op je stage', kleur: ['#9447F0', '#E5C7FE', '#5A4494'],
+ doelen: ['Je weet wat een praktijkopleider van een stagiair verwacht', 'Je kunt uitleggen waarom je iets kiest', 'Je kiest een persoonlijke stage-uitdaging'],
+ programma: PROG('8 dilemma\'s en je eigen dilemma'),
+ docent: {voor: 'Optioneel: hang A, B, C en D in de vier hoeken van het lokaal.',
+   intro: ['Vraag: wat ergert een baas het meest aan een stagiair? Verzamel 3 antwoorden op het bord.', 'Laat de stelling kiezen op de laptop. Vraag daarna 2 of 3 studenten: waarom?', 'Leg uit: bij een dilemma gaat het om je reden, niet om één goed antwoord.', 'Studenten mogen in duo\'s werken en overleggen.'],
+   zelf: 'Acht situaties: kiezen, feedback lezen, verder. Daarna bedenken ze zelf een dilemma uit hun stage of bijbaan en kiezen ze een stage-uitdaging. Die komt terug in les 7 en 8.',
+   tip: 'Kies in de nabespreking een dilemma waarover de klas verdeeld is. Laat studenten in de hoek van hun antwoord gaan staan. Laat ook een paar eigen dilemma\'s voorlezen, of verzamel ze met Veeg & Deel.'},
+ nabespreking: ['Welk dilemma vond je het moeilijkst? Waarom?', 'Bij welk dilemma koos jij anders dan de praktijkopleider? Verdedig je keuze.', 'Lees je eigen dilemma voor. Wat zou de klas doen?', 'Welke stage-uitdaging heb je gekozen?'],
+ schermen: [
+  {type: 'intro', tekst: 'Op stage kom je situaties tegen waar geen handboek voor is. Vandaag oefen je met keuzes maken. Er is niet altijd één goed antwoord: het gaat om je <b>reden</b>.'},
+  {type: 'stelling', q: 'Als je klaar bent met je werk, mag je op je telefoon.'},
+  {type: 'tussen', fase: 2, titel: 'Aan de slag', tekst: 'Je krijgt 8 situaties. Kies wat jij zou doen. Daarna zie je wat een praktijkopleider ervan vindt. Tip: werk in duo\'s en overleg.'},
+  {type: 'kies', id: 'd1', label: 'Dilemma 1 van 8', situatie: 'Je praktijkopleider vraagt je om 10 laptops klaar te maken. Na een uur ben je klaar. Je praktijkopleider zit in een overleg.', q: 'Wat doe je?', opts: [
+    ['📱', 'Ik ga even op mijn telefoon', 'fout', 'Dit lijkt alsof je geen zin hebt. Praktijkopleiders noemen dit vaak als grootste ergernis.'],
+    ['🔎', 'Ik kijk zelf of ik nog iets nuttigs kan doen', 'goed', 'Goed: je laat zien dat je meedenkt. Doe alleen dingen waarvan je zeker weet dat het mag.'],
+    ['⏳', 'Ik wacht rustig tot mijn praktijkopleider terug is', 'kan', 'Netjes, maar je laat een kans liggen om te laten zien wat je kunt.'],
+    ['🙋', 'Ik vraag een andere collega of ik kan helpen', 'goed', 'Je toont initiatief. Laat je praktijkopleider straks wel even weten wat je hebt gedaan.']]},
+  {type: 'kies', id: 'd2', label: 'Dilemma 2 van 8', situatie: 'Een collega zegt: "Ik ben mijn wachtwoord kwijt. Mag ik even inloggen met jouw account?"', q: 'Wat doe je?', opts: [
+    ['👍', 'Ja hoor, dat is snel geregeld', 'fout', 'Nooit doen. Alles wat met jouw account gebeurt, is jouw verantwoordelijkheid. Het is ook een beveiligingsrisico.'],
+    ['🔐', 'Nee, en ik help hem zijn wachtwoord te resetten of de servicedesk te bellen', 'goed', 'Precies: je zegt vriendelijk nee én je helpt hem verder.'],
+    ['🤏', 'Ja, maar alleen deze ene keer', 'fout', 'Eén keer is ook een keer te veel. Een account is persoonlijk.'],
+    ['👔', 'Ik vraag eerst aan mijn praktijkopleider wat ik moet doen', 'kan', 'Niet fout, maar het antwoord is eigenlijk altijd: nee. Help hem met een reset.']]},
+  {type: 'kies', id: 'd3', label: 'Dilemma 3 van 8', situatie: 'Je stage begint om 8.30 uur. Het is 8.10 uur en je bus heeft een flinke vertraging. Je bent er pas om 8.50 uur.', q: 'Wat doe je?', opts: [
+    ['🤐', 'Niks. Ik zeg sorry als ik binnenkom', 'fout', 'Je praktijkopleider weet dan niet waar je bent. Laat het altijd vóór je begintijd weten.'],
+    ['📞', 'Ik bel nu meteen mijn praktijkopleider', 'goed', 'Goed. Bellen is het duidelijkst. Appen mag alleen als dat zo is afgesproken.'],
+    ['🏃', 'Ik ren vanaf de bushalte en hoop dat niemand het merkt', 'fout', 'Mensen merken het wel. En je hebt het probleem niet gemeld.'],
+    ['💬', 'Ik stuur een berichtje in de groepsapp van de afdeling', 'kan', 'Beter dan niks, maar het is onzeker of je praktijkopleider het leest. Bel liever.']]},
+  {type: 'kies', id: 'd4', label: 'Dilemma 4 van 8', situatie: 'Je praktijkopleider legt snel een opdracht uit en loopt weg. Je snapt maar de helft.', q: 'Wat doe je?', opts: [
+    ['🎲', 'Ik begin gewoon en zie wel', 'fout', 'Grote kans dat je het verkeerd doet. Dan ben je meer tijd kwijt.'],
+    ['🙋', 'Ik loop erachteraan: "Mag ik even checken of ik het goed begrijp?"', 'goed', 'Sterk. Doorvragen is professioneel, niet dom. Herhaal in je eigen woorden wat je moet doen.'],
+    ['🤖', 'Ik zoek alles zelf uit met Google of ChatGPT', 'kan', 'Zelf zoeken is goed, maar je weet niet wat je praktijkopleider precies bedoelt. Vraag het.'],
+    ['⏳', 'Ik wacht tot hij of zij terugkomt', 'kan', 'Je verliest tijd. Vraag het meteen, of vraag een collega.']]},
+  {type: 'kies', id: 'd5', label: 'Dilemma 5 van 8', situatie: 'In de groepsapp van je afdeling maken collega\'s grapjes over een klant die steeds belt.', q: 'Wat doe je?', opts: [
+    ['😂', 'Ik doe mee, dan hoor ik erbij', 'fout', 'Wat je in een app zet, kan altijd uitlekken. Over klanten maak je geen grappen.'],
+    ['🤐', 'Ik reageer niet', 'kan', 'Je doet niet mee, dat is goed. Je mag ook zeggen dat je het niet oké vindt.'],
+    ['🙅', 'Ik doe niet mee en zeg: "Dit vind ik niet zo netjes"', 'goed', 'Moedig en professioneel. Zeg het rustig en zonder iemand aan te vallen.'],
+    ['📸', 'Ik stuur een screenshot naar mijn vrienden', 'fout', 'Dan deel je bedrijfsinformatie met buitenstaanders. Dat kan je je stage kosten.']]},
+  {type: 'kies', id: 'd6', label: 'Dilemma 6 van 8', situatie: 'Je installeert een laptop van de afdeling HR. Op het scherm staat een lijst met de salarissen van alle medewerkers.', q: 'Wat doe je?', opts: [
+    ['👀', 'Even kijken wat mijn collega\'s verdienen', 'fout', 'Als ICT\'er zie je veel. Daarom moeten mensen je kunnen vertrouwen: je kijkt niet en je vertelt niets door.'],
+    ['🙈', 'Ik sluit het venster en vertel het aan niemand', 'goed', 'Goed. Dit heet geheimhouding. Het hoort bij je beroep.'],
+    ['🗣️', 'Ik vertel het aan mijn stagemaatje', 'fout', 'Ook aan je stagemaatje vertel je dit niet. Het is vertrouwelijke informatie.'],
+    ['👔', 'Ik sluit het venster en meld dat dit bestand open stond', 'goed', 'Ook goed. Je meldt het risico zonder iets door te vertellen.']]},
+  {type: 'kies', id: 'd7', label: 'Dilemma 7 van 8', situatie: 'Je moet een mail aan een klant schrijven. Je twijfelt over je spelling.', q: 'Gebruik je ChatGPT?', opts: [
+    ['📋', 'Ja, ik plak de hele mail erin, met naam en adres van de klant', 'fout', 'Klantgegevens horen niet in een AI-tool. Dat kan zelfs een datalek zijn.'],
+    ['✂️', 'Ja, maar zonder namen en gegevens. En ik check zelf het resultaat', 'goed', 'Slim gebruik van AI. Vraag wel op je stage welke AI-tools je mag gebruiken.'],
+    ['❓', 'Ik vraag eerst wat de regels zijn op het bedrijf', 'goed', 'Heel professioneel. Elk bedrijf heeft andere regels.'],
+    ['🚫', 'Nee, AI gebruik ik nooit', 'kan', 'Veilig, maar veel bedrijven gebruiken AI juist wel. Vraag naar de regels.']]},
+  {type: 'kies', id: 'd8', label: 'Dilemma 8 van 8', situatie: 'Je ziet dat een collega zijn wachtwoord op een geeltje op zijn beeldscherm heeft geplakt.', q: 'Wat doe je?', opts: [
+    ['🤷', 'Niks, het is niet mijn probleem', 'fout', 'Als ICT\'er is beveiliging juist wél jouw probleem.'],
+    ['💬', 'Ik zeg het vriendelijk tegen mijn collega en geef een tip', 'goed', 'Goed! Bijvoorbeeld: "Handig hoor, maar zo kan iedereen inloggen. Zal ik je helpen met een wachtwoordmanager?"'],
+    ['👔', 'Ik meld het meteen bij de baas', 'kan', 'Kan, maar een vriendelijke tip aan je collega werkt meestal beter. Gebeurt het vaker? Meld het dan wel.'],
+    ['😂', 'Ik maak er een grap over waar iedereen bij is', 'fout', 'Dan zet je je collega voor schut. Zeg het liever onder vier ogen.']]},
+  {type: 'tekst', id: 'eigen', label: 'Jouw dilemma', q: 'Bedenk zelf een lastige situatie', hint: 'Iets wat jij meemaakte op je stage, bijbaan of school. Of iets wat je verwacht. In de nabespreking lees je het misschien voor.', starters: ['Ik moest…', 'Mijn collega vroeg…', 'Ik wist niet of…', 'Wat doe je als…']},
+  {type: 'uitdaging'}
+ ]},
+
+/* ===================================================== LES 3 */
+{nr: 3, ico: '💶', titel: 'Op eigen benen', sub: 'Wat kost jouw leven?', kleur: ['#FADE29', '#FFF1A8', '#9A7A12'],
+ doelen: ['Je weet het verschil tussen bruto en netto', 'Je maakt een maandbudget en ziet of je rondkomt', 'Je weet waarom achteraf betalen gevaarlijk kan zijn'],
+ programma: PROG('Budgetchallenge en waar-of-niet-waar'),
+ docent: {voor: 'Geen. Heb je een (geanonimiseerde) loonstrook? Neem hem mee.',
+   intro: ['Vraag: hoeveel denk je dat je verdient na je diploma? En hoeveel kost een kamer?', 'Leg bruto en netto uit, liefst met een echte loonstrook.', 'Zeg erbij: de bedragen zijn ongeveer en fictief, voor iemand van 21+. Tot je 21e krijg je jeugdloon.'],
+   zelf: 'Studenten kiezen een baan, daarna per onderdeel (wonen, vervoer, eten…) een keuze. Ze zien steeds hoeveel ze overhouden. Dan krijgen ze een willekeurige pechmeevaller en moeten ze die oplossen. Ze sluiten af met 8 kaarten waar of niet waar.',
+   tip: 'Maak op het bord een top 3 van "meeste over". Vraag bij de verrassing: wie koos achteraf betalen? Bespreek wat een BKR-registratie betekent. Bedragen zijn afgeronde lesbedragen (indicatie 2026).'},
+ nabespreking: ['Wie hield het meeste over? Welke keuzes maakte jij?', 'Welke pech kreeg je? Hoe loste je het op?', 'Wie koos achteraf betalen? Waarom is dat riskant?', 'Wat ga jij doen met je eerste salaris?'],
+ schermen: [
+  {type: 'intro', tekst: 'Over een paar maanden krijg je misschien je eerste echte salaris. Hoeveel houd je over als je zelf je huur, eten en telefoon betaalt? Vandaag maak je een maandbudget.'},
+  {type: 'stelling', q: 'Met € 2.000 per maand ben je rijk.'},
+  {type: 'tussen', fase: 2, titel: 'De budgetchallenge', tekst: 'Je kiest een baan en daarna wat je uitgeeft. Kom jij rond? Pas op: halverwege krijg je een verrassing…'},
+  {type: 'info', label: 'Even uitleg', titel: 'Bruto en netto', tekst: 'Op je loonstrook staan twee bedragen. Let op: alleen netto komt op je rekening.', punten: [
+    ['💰', 'Bruto', 'Wat je verdient volgens je contract.'],
+    ['🏛️', 'Loonheffing', 'Belasting en premies. Die gaan eraf.'],
+    ['🏦', 'Netto', 'Wat er echt op je bankrekening komt.'],
+    ['🏖️', 'Vakantiegeld', '8% extra. Meestal krijg je het in mei of juni.']], na: 'Tot je 21e krijg je minimaal het minimumjeugdloon. Dat is lager dan het gewone minimumloon.'},
+  {type: 'baan'},
+  {type: 'post', post: 'wonen'}, {type: 'post', post: 'vervoer'}, {type: 'post', post: 'eten'}, {type: 'post', post: 'tel'}, {type: 'post', post: 'abo'}, {type: 'post', post: 'uit'},
+  {type: 'overzicht'},
+  {type: 'verrassing', id: 'verrkeuze', q: 'Hoe los je dit op?'},
+  {type: 'ronde', id: 'wnw', label: 'Waar of niet waar?', q: 'Klopt dit?', bakken: [['w', '✅', 'Waar'], ['n', '❌', 'Niet waar']], items: [
+    ['Achteraf betalen is altijd gratis.', 'n', 'Alleen als je op tijd betaalt. Te laat? Dan betaal je extra kosten en kun je een BKR-registratie krijgen.'],
+    ['Vanaf je 18e moet je zelf een zorgverzekering afsluiten en betalen.', 'w', 'Ook als je nog thuis woont.'],
+    ['Netto is meer dan bruto.', 'n', 'Andersom: bruto is meer. Van bruto gaat belasting af, dan houd je netto over.'],
+    ['Met een laag inkomen kun je zorgtoeslag krijgen.', 'w', 'Dat vraag je aan bij Dienst Toeslagen. Je hebt er je DigiD voor nodig.'],
+    ['Zorgtoeslag krijg je vanzelf, je hoeft niks te doen.', 'n', 'Je moet het zelf aanvragen. En je moet wijzigingen in je inkomen doorgeven.'],
+    ['Met DigiD regel je zaken met de overheid, zoals belasting en toeslagen.', 'w', 'Geef je DigiD-code nooit aan iemand anders.'],
+    ['Als je een rekening niet betaalt, gebeurt er niks.', 'n', 'Je krijgt herinneringen, daarna extra kosten en uiteindelijk een incassobureau of deurwaarder.'],
+    ['Het is slim om elke maand een buffer te sparen voor pech.', 'w', 'Een vuistregel: spaar 10% van je inkomen.']]}
+ ]},
+
+/* ===================================================== LES 4 */
+{nr: 4, ico: '😬', titel: 'Oeps!', sub: 'Fouten maken op het werk', kleur: ['#FF5900', '#F8CBAF', '#D2652A'],
+ doelen: ['Je weet waarom melden beter is dan verbergen', 'Je kent de stappen na een fout', 'Je weet hoe je fouten voorkomt'],
+ programma: PROG('ICT-crisis oplossen'),
+ docent: {voor: 'Bedenk een fout die je zelf ooit maakte als ICT\'er of docent.',
+   intro: ['Vertel je eigen fout. Dat maakt het veilig om over fouten te praten.', 'Laat de stelling kiezen. Vraag vooral door bij wie "eens" kiest.', 'Introduceer het scenario met Sandra. Studenten werken in duo\'s.'],
+   zelf: 'Een scenario met een vergeten back-up: eerste reactie, wat zeg je tegen Sandra, stappen in de goede volgorde en hoe voorkom je het. Daarna 7 kaarten: meteen melden of zelf oplossen? Ze sluiten af met een eigen fout.',
+   tip: 'Speel in de nabespreking zelf Sandra. Laat een duo hun excuus hardop tegen jou zeggen. Koppel de kaart over de verkeerd verstuurde mail aan security uit periode 6: dat is een datalek.'},
+ nabespreking: ['Waarom is een fout verbergen gevaarlijker dan de fout zelf?', 'Bij welke kaart twijfelde je: melden of zelf oplossen?', 'Wie durft een eigen fout te delen? Wat heb je ervan geleerd?'],
+ schermen: [
+  {type: 'intro', tekst: 'Iedereen maakt fouten, ook ervaren ICT\'ers. Het verschil zit in wat je <b>daarna</b> doet. Vandaag los je een ICT-crisis op.'},
+  {type: 'stelling', q: 'Als niemand het merkt, hoef je een fout niet te melden.'},
+  {type: 'tussen', fase: 2, titel: 'De ICT-crisis', tekst: 'Je krijgt een situatie die echt kan gebeuren. Jij moet beslissen wat je doet. Niet alleen technisch, vooral professioneel. Werk in duo\'s.'},
+  {type: 'info', label: 'De situatie', titel: 'Oeps, de facturen zijn weg', situatie: 'Je loopt stage. Je installeert de laptop van <b>Sandra</b> van de administratie opnieuw. Je vergeet een back-up te maken. Na de installatie zie je het: haar map met facturen is <b>weg</b>. Sandra komt over 10 minuten terug.', punten: [['😰', 'Paniek?', 'Heel normaal. Haal even adem.'], ['🧠', 'Denk na', 'Wat is nu het belangrijkste?']]},
+  {type: 'kies', id: 'o1', label: 'Stap 1', q: 'Wat doe je als eerste?', opts: [
+    ['🙊', 'Ik zet de laptop terug en zeg niks', 'fout', 'Sandra merkt het toch. Dan ben je je fout én het vertrouwen kwijt.'],
+    ['👔', 'Ik stop en vertel het meteen aan mijn praktijkopleider', 'goed', 'Goed. Je praktijkopleider weet vaak waar nog een kopie staat. Hoe sneller, hoe meer je kunt redden.'],
+    ['💾', 'Ik download zelf snel een programma om de bestanden terug te halen', 'fout', 'Riskant: je kunt de oude bestanden overschrijven. Eerst stoppen en melden.'],
+    ['📧', 'Ik mail Sandra dat haar laptop nog niet klaar is', 'kan', 'Je koopt tijd, maar het probleem blijft. Meld het eerst aan je praktijkopleider.']]},
+  {type: 'kies', id: 'o2', label: 'Stap 2', q: 'Sandra komt terug. Wat zeg je?', opts: [
+    ['💻', '"Er ging iets mis met Windows. Niet mijn schuld."', 'fout', 'Niet eerlijk. Als het uitkomt, vertrouwt niemand je meer.'],
+    ['🙏', '"Sorry, ik heb een fout gemaakt: ik ben vergeten een back-up te maken. We zoeken nu uit of we je bestanden kunnen terughalen."', 'goed', 'Sterk: je bent eerlijk, je neemt verantwoordelijkheid en je vertelt wat je eraan doet.'],
+    ['👉', '"Je had zelf ook een back-up moeten maken."', 'fout', 'Misschien waar, maar nu niet handig. Jij hebt de fout gemaakt.'],
+    ['😃', '"Hoi! Je laptop is klaar."', 'fout', 'Dan ontdekt ze het zelf. Dat is veel erger.']]},
+  {type: 'volgorde', id: 'ostap', label: 'Stap 3', q: 'Zet de stappen na een fout in de goede volgorde', items: [
+    'Stoppen: niks meer doen op de laptop', 'Melden aan je praktijkopleider', 'Eerlijk vertellen aan Sandra', 'Samen zoeken: OneDrive, prullenbak, server, oude back-up', 'Afspreken hoe Sandra vandaag verder kan werken', 'Leren: back-up maken op je checklist zetten'],
+   uitleg: 'Eerst stoppen, dan melden en eerlijk zijn. Daarna schade beperken en ervan leren.'},
+  {type: 'multi', id: 'voorkom', label: 'Stap 4', q: 'Hoe voorkom je dit de volgende keer?', max: 3, opts: [
+    ['📋', 'Een checklist gebruiken', true], ['💾', 'Vóór je begint een back-up maken én controleren', true], ['❓', 'Vragen waar de gebruiker zijn bestanden bewaart', true],
+    ['🚫', 'Nooit meer een laptop opnieuw installeren', false], ['⚡', 'Sneller werken', false], ['🤞', 'Gewoon beter opletten', false]],
+   uitleg: 'Een checklist, een back-up en goede vragen voorkomen de meeste fouten. "Beter opletten" klinkt goed, maar werkt in de praktijk niet.'},
+  {type: 'ronde', id: 'meld', label: 'Melden of zelf oplossen?', q: 'Wat doe je?', bakken: [['meld', '🚨', 'Meteen melden'], ['zelf', '🔧', 'Zelf oplossen']], items: [
+    ['Je klikt op een link in een phishingmail op je stagelaptop.', 'meld', 'Altijd meteen melden. Dan kan het bedrijf schade beperken. Wachten maakt het erger.'],
+    ['Je ziet een typfout in een mail die je naar een collega stuurde.', 'zelf', 'Geen probleem. Stuur eventueel een kort verbeterd berichtje.'],
+    ['Je stuurt per ongeluk een mail met klantgegevens naar de verkeerde persoon.', 'meld', 'Dit is een datalek. Het bedrijf moet dit soms binnen 72 uur melden. Dus meteen vertellen!'],
+    ['Je installeerde de verkeerde printer bij een medewerker.', 'zelf', 'Los het op en laat de medewerker even weten dat het nu goed staat.'],
+    ['Je trekt een kabel los en nu heeft een hele afdeling geen internet.', 'meld', 'Veel mensen hebben er last van. Meld het meteen, ook als je denkt dat je het zelf kunt fixen.'],
+    ['Je vergat een melding in TOPdesk af te sluiten.', 'zelf', 'Sluit hem alsnog af en zet er een duidelijke notitie bij.'],
+    ['Je laat een laptop van de zaak in de trein liggen.', 'meld', 'Meteen melden. Dan kan ICT de laptop op afstand blokkeren.']]},
+  {type: 'tekst', id: 'mijnfout', label: 'Jouw fout', q: 'Welke fout maakte jij ooit?', hint: 'Op je stage, bijbaan, op school of thuis. Wat deed je toen? Wat heb je ervan geleerd?', starters: ['Ik vergat een keer…', 'Toen heb ik…', 'Ik heb geleerd dat…']}
+ ]},
+
+/* ===================================================== LES 5 */
+{nr: 5, ico: '🤖', titel: 'Mijn toekomst en AI', sub: 'Wat verandert er in de ICT?', kleur: ['#6698AD', '#B2C6D3', '#3E6A7D'],
+ doelen: ['Je weet welke ICT-taken AI wel en niet kan', 'Je kent de regels voor AI met bedrijfsgegevens', 'Je weet welke vaardigheden belangrijk blijven'],
+ programma: PROG('AI of mens? en Mag dit in ChatGPT?'),
+ docent: {voor: 'Zorg dat je ChatGPT of Copilot kunt laten zien op het bord.',
+   intro: ['Vraag: wie gebruikt AI? Waarvoor?', 'Stel live een ICT-vraag aan een AI-tool. Laat zien dat het antwoord soms (een beetje) fout is.', 'Leg uit: op stage gelden regels voor AI. Die zijn per bedrijf anders.'],
+   zelf: 'Twee rondes met kaarten: "AI of mens?" en "Mag dit in ChatGPT?". Daarna kiezen ze 3 vaardigheden die belangrijk blijven en schrijven ze hoe ze zichzelf over 5 jaar zien (met hun keuze uit les 1).',
+   tip: 'Koppel aan security uit periode 6: klantgegevens in een AI-tool kan een datalek zijn. Laat iedereen de vraag "Welke AI-tools mag ik hier gebruiken?" opschrijven voor de eerste stagedag.'},
+ nabespreking: ['Bij welke kaart bij "AI of mens?" was je het niet eens met het antwoord?', 'Gebruik jij AI al? Waarvoor wel en waarvoor niet?', 'Wat moet jij nog leren om over 5 jaar nodig te zijn?'],
+ schermen: [
+  {type: 'intro', tekst: 'AI verandert het werk in de ICT. Welke taken neemt AI over? Wat blijft mensenwerk? En wat mag je wel en niet in een AI-tool zetten?'},
+  {type: 'stelling', q: 'Over 10 jaar zijn er geen ICT-helpdesks meer.'},
+  {type: 'tussen', fase: 2, titel: 'AI en jij', tekst: 'Twee rondes met kaarten. Kies steeds het antwoord dat volgens jou klopt. Je ziet meteen of je gelijk had.'},
+  {type: 'ronde', id: 'aimens', label: 'AI of mens?', q: 'Wie doet deze taak straks?', bakken: [['ai', '🤖', 'Vooral AI'], ['samen', '🤝', 'Samen'], ['mens', '🧑', 'Mensenwerk']], items: [
+    ['Een wachtwoord resetten via een chatbot', 'ai', 'Dit gebeurt nu al vaak automatisch.'],
+    ['Een netwerkkabel aanleggen in een kantoor', 'mens', 'Handwerk op locatie: dat doet AI niet.'],
+    ['Een boze klant geruststellen aan de telefoon', 'mens', 'Empathie en vertrouwen blijven mensenwerk.'],
+    ['Een script schrijven dat 50 accounts aanmaakt', 'samen', 'AI schrijft snel een script. Jij controleert of het klopt en veilig is.'],
+    ['Een foutmelding uitzoeken', 'samen', 'AI geeft ideeën, jij test wat echt werkt.'],
+    ['Een laptop uitpakken en bij een nieuwe medewerker installeren', 'mens', 'Fysiek werk en de medewerker op weg helpen.'],
+    ['Een samenvatting maken van een lange handleiding', 'ai', 'Daar is AI goed in. Check wel de belangrijkste punten.']]},
+  {type: 'ronde', id: 'magdit', label: 'Mag dit in ChatGPT?', q: 'Je bent op stage. Mag je dit in een AI-tool zetten?', bakken: [['mag', '✅', 'Mag'], ['vraag', '❓', 'Eerst vragen'], ['niet', '⛔', 'Mag niet']], items: [
+    ['Een algemene foutmelding: "Error 0x80070005"', 'mag', 'Hier staan geen gegevens van mensen of het bedrijf in.'],
+    ['Een logbestand met namen en IP-adressen van medewerkers', 'niet', 'Persoonsgegevens en bedrijfsinformatie horen niet in een AI-tool.'],
+    ['Een mail van een klant, met naam en adres', 'niet', 'Klantgegevens nooit. Haal ze weg als je hulp wilt bij de tekst.'],
+    ['Je eigen sollicitatiebrief', 'mag', 'Dit zijn je eigen gegevens. Jij beslist.'],
+    ['Het wachtwoord van de wifi van het bedrijf', 'niet', 'Wachtwoorden nooit, waar dan ook.'],
+    ['De vraag: "Hoe deel ik een printer in Windows 11?"', 'mag', 'Een algemene vraag. Prima.'],
+    ['Een screenshot van het TOPdesk-overzicht', 'vraag', 'Daar staan vaak namen en meldingen op. Vraag eerst of het mag, of maak het onherkenbaar.']]},
+  {type: 'info', label: 'Onthoud', titel: 'De gouden regels voor AI op je stage', punten: [
+    ['🚫', 'Geen gegevens', 'Geen namen, wachtwoorden, klantgegevens of bedrijfsgeheimen.'],
+    ['❓', 'Vraag de regels', '"Welke AI-tools mag ik hier gebruiken?"'],
+    ['🔍', 'Check alles', 'AI klinkt zeker, maar zit er soms naast.'],
+    ['🙋', 'Wees eerlijk', 'Zeg het als je AI hebt gebruikt.']]},
+  {type: 'multi', id: 'skills', label: 'Vaardigheden', q: 'Welke 3 vaardigheden blijven belangrijk, ook met AI?', max: 3, opts: [
+    ['💬', 'Goed communiceren met mensen', true], ['🧩', 'Problemen stap voor stap oplossen', true], ['🔍', 'Kritisch checken of iets klopt', true],
+    ['⌨️', 'Heel snel kunnen typen', false], ['🧠', 'Alles uit je hoofd weten', false], ['📚', 'Steeds nieuwe dingen blijven leren', true]],
+   uitleg: 'Snel typen en alles uit je hoofd weten worden minder belangrijk: dat kan AI. Communiceren, problemen oplossen, kritisch checken en blijven leren worden juist belangrijker.'},
+  {type: 'tekst', id: 'toekomst', doorstroom: true, label: 'Jij over 5 jaar', q: 'Hoe zie jij jezelf over 5 jaar?', hint: 'Welk werk doe je? Wat heb je geleerd? En hoe gebruik je AI daarbij?', starters: ['Over 5 jaar werk ik…', 'Ik heb dan geleerd…', 'AI gebruik ik voor…']}
+ ]},
+
+/* ===================================================== LES 6 */
+{nr: 6, ico: '👔', titel: 'De baas is niet altijd makkelijk', sub: 'Kritiek, vage opdrachten en je grens', kleur: ['#FF996E', '#FFE0D2', '#C2541F'],
+ doelen: ['Je kunt kritiek ontvangen zonder boos te worden', 'Je durft door te vragen bij een vage opdracht', 'Je weet waar je grens ligt en wie je kan helpen'],
+ programma: PROG('Situaties en rollenspel in duo\'s'),
+ docent: {voor: 'Zoek de naam van de vertrouwenspersoon van school op. Die noemen studenten op hun spiekbrief in les 7.',
+   intro: ['Vraag: wat is het verschil tussen kritiek en zeuren?', 'Bespreek de 4 stappen: luisteren, vragen, bedanken, doen.', 'Leg uit: aan het eind doen ze rollenspellen in duo\'s. Ze lezen alleen hun eigen rol.'],
+   zelf: 'Vijf situaties met feedback (kritiek, vage opdracht, saaie klusjes, appje in het weekend, grens). Daarna een overzicht van wie je kan helpen, en drie rollenspelkaarten voor duo\'s.',
+   tip: 'Speel rollenspel 1 eerst zelf voor met een vrijwilliger. Noem de vertrouwenspersoon van school bij naam. Maak duidelijk: grapjes over afkomst zijn geen "kritiek" maar ongewenst gedrag.'},
+ nabespreking: ['Wat vond je het moeilijkst in het rollenspel?', 'Wat is het verschil tussen kritiek en ongewenst gedrag?', 'Wanneer schakel jij je BPV-docent of de vertrouwenspersoon in?'],
+ schermen: [
+  {type: 'intro', tekst: 'Op je werk krijg je te maken met kritiek, vage opdrachten en collega\'s met wie het niet vanzelf klikt. Hoe ga je daar professioneel mee om? En waar ligt jouw grens?'},
+  {type: 'stelling', q: 'Als je baas iets zegt, moet je het gewoon doen.'},
+  {type: 'info', label: 'Even uitleg', titel: 'Kritiek ontvangen in 4 stappen', tekst: 'Kritiek voelt vervelend. Toch helpt het je verder. Zo pak je het aan:', punten: [
+    ['👂', '1. Luisteren', 'Laat de ander uitpraten. Niet meteen verdedigen.'],
+    ['❓', '2. Vragen', '"Wat bedoel je precies? Heb je een voorbeeld?"'],
+    ['🙏', '3. Bedanken', '"Fijn dat je het zegt."'],
+    ['🔧', '4. Doen', 'Laat zien dat je er iets mee doet.']]},
+  {type: 'tussen', fase: 2, titel: 'Lastige situaties', tekst: 'Vijf situaties op je stage. Kies wat jij zou doen. Daarna oefen je in duo\'s met een rollenspel.'},
+  {type: 'kies', id: 'b1', label: 'Situatie 1 van 5', situatie: 'Je praktijkopleider zegt: "Je bent te stil. Ik weet nooit of je iets snapt."', q: 'Hoe reageer je?', opts: [
+    ['😠', '"Zo ben ik nou eenmaal."', 'fout', 'Je gaat in de verdediging. Je praktijkopleider probeert je juist te helpen.'],
+    ['🙏', '"Bedankt dat je het zegt. Wil je dat ik vaker laat weten hoe het gaat?"', 'goed', 'Je luistert, vraagt door en bedankt. Precies de 4 stappen.'],
+    ['😶', 'Ik zeg niks en knik', 'fout', 'Dan bevestig je wat je praktijkopleider zegt: je bent te stil.'],
+    ['😟', '"Sorry, sorry, ik zal het nooit meer doen."', 'kan', 'Je bedoelt het goed, maar vraag liever door: wat wil je praktijkopleider concreet zien?']]},
+  {type: 'kies', id: 'b2', label: 'Situatie 2 van 5', situatie: 'Je praktijkopleider zegt: "Zet jij even die nieuwe medewerker in het systeem?" en loopt weg.', q: 'Wat doe je?', opts: [
+    ['🎲', '"Oké!" en ik ga het proberen', 'fout', 'Welk systeem? Welke rechten? Je gokt, en dat kan misgaan.'],
+    ['❓', '"Welk systeem bedoel je, en welke rechten moet hij krijgen?"', 'goed', 'Doorvragen bij een vage opdracht is professioneel.'],
+    ['🙅', '"Dat heb ik nog nooit geleerd."', 'kan', 'Eerlijk, maar vraag er meteen bij: "Kun je het me één keer voordoen?"'],
+    ['👥', 'Ik vraag een collega wat er bedoeld wordt', 'kan', 'Kan, maar je collega weet ook niet precies wat je praktijkopleider wil.']]},
+  {type: 'kies', id: 'b3', label: 'Situatie 3 van 5', situatie: 'Je loopt al drie weken stage. Je krijgt alleen saaie klusjes: kabels opruimen en dozen uitpakken.', q: 'Wat doe je?', opts: [
+    ['🗣️', 'Ik klaag erover bij de andere stagiairs', 'fout', 'Klagen lost niets op en het komt vaak toch bij je praktijkopleider terecht.'],
+    ['😴', 'Ik doe niet meer zo mijn best', 'fout', 'Dan krijg je zeker geen leukere taken.'],
+    ['💬', 'Ik vraag mijn praktijkopleider: "Ik wil ook graag meldingen leren oppakken. Kan dat?"', 'goed', 'Je zegt rustig wat je wilt leren. Daar kan je praktijkopleider iets mee.'],
+    ['🏫', 'Ik mail meteen mijn BPV-docent dat mijn stage slecht is', 'kan', 'Praat eerst met je praktijkopleider. Helpt dat niet? Dan schakel je je BPV-docent in.']]},
+  {type: 'kies', id: 'b4', label: 'Situatie 4 van 5', situatie: 'Zaterdagavond appt je praktijkopleider: "Kun je morgen even komen helpen met een verhuizing van servers?" Je hebt al plannen.', q: 'Wat doe je?', opts: [
+    ['✅', 'Ik zeg ja en zeg mijn plannen af', 'kan', 'Mag, maar het hoeft niet. Als stagiair werk je niet in het weekend, tenzij dat zo is afgesproken.'],
+    ['👻', 'Ik reageer niet', 'fout', 'Niet netjes. Geef altijd antwoord, ook als het nee is.'],
+    ['🙂', '"Sorry, morgen kan ik niet. Maandag ben ik er weer!"', 'goed', 'Vriendelijk en duidelijk nee zeggen is professioneel.'],
+    ['🏫', 'Ik vraag mijn BPV-docent wat ik moet doen', 'kan', 'Gebeurt dit vaker? Dan is het slim om je BPV-docent in te schakelen.']]},
+  {type: 'kies', id: 'b5', label: 'Situatie 5 van 5', situatie: 'Een collega maakt steeds grapjes over je accent en je afkomst. Je vindt het niet leuk.', q: 'Wat doe je?', opts: [
+    ['😅', 'Ik lach mee, dan houdt het vanzelf op', 'fout', 'Heel begrijpelijk, maar het houdt vaak niet op. De ander denkt dat je het leuk vindt.'],
+    ['✋', 'Ik zeg rustig: "Ik vind die grapjes niet leuk. Wil je ermee stoppen?"', 'goed', 'Je geeft duidelijk je grens aan. Dat is moedig.'],
+    ['😤', 'Ik maak gemene grappen terug', 'fout', 'Dan word je zelf deel van het probleem.'],
+    ['🤝', 'Ik meld het bij mijn praktijkopleider, BPV-docent of de vertrouwenspersoon', 'goed', 'Dit is geen kritiek meer, maar ongewenst gedrag. Je hoeft dit niet alleen op te lossen.']]},
+  {type: 'info', label: 'Hulp nodig?', titel: 'Wie kan je helpen?', punten: [
+    ['👔', 'Praktijkopleider', 'Je werk, je taken, je planning.'],
+    ['🏫', 'BPV-docent', 'Als het met je praktijkopleider niet lukt.'],
+    ['🧭', 'SLB\'er', 'Persoonlijke zaken en twijfels.'],
+    ['🤝', 'Vertrouwenspersoon', 'Pesten, discriminatie, intimidatie. Vertrouwelijk.']], na: 'Ongewenst gedrag is nooit jouw schuld. Je mag altijd hulp vragen.'},
+  {type: 'rollen', id: 'rol', tip: 'Speel het rollenspel 2 à 3 minuten. Bespreek daarna: wat ging goed? Wissel dan van rol of neem de volgende kaart.', kaarten: [
+    {titel: 'De kritische praktijkopleider', sit: 'Gisteren heeft de stagiair een melding in TOPdesk gezet. De melding was onduidelijk.',
+     a: ['Stagiair', 'Je praktijkopleider spreekt je aan over je melding. Gebruik de 4 stappen: luisteren, vragen, bedanken, doen.'],
+     b: ['Praktijkopleider', 'Je bent ontevreden. Begin met: "Ik moet je even iets zeggen over die melding van gisteren…" Wees eerst een beetje kortaf. Word vriendelijker als de stagiair goed reageert.']},
+    {titel: 'De vage opdracht', sit: 'De praktijkopleider geeft een opdracht, maar zegt er weinig bij.',
+     a: ['Stagiair', 'Je krijgt een vage opdracht. Stel minstens 3 vragen voordat je begint.'],
+     b: ['Praktijkopleider', 'Zeg: "Wil jij de vergaderruimte even regelen voor morgen?" Geef alleen antwoord op wat er precies gevraagd wordt. (Je bedoelt: beamer en laptop klaarzetten voor 12 mensen, om 9.00 uur.)']},
+    {titel: 'Nee zeggen', sit: 'Het is 15.30 uur. De stagiair heeft zelf een klus die vandaag af moet.',
+     a: ['Stagiair', 'Je collega wil dat jij zijn werk afmaakt. Jij hebt je eigen deadline. Zeg vriendelijk maar duidelijk nee.'],
+     b: ['Collega', 'Je wilt dat de stagiair jouw werk afmaakt. Blijf aandringen: "Ach, kom op, het is maar even. Ik heb het zó druk."']}]}
+ ]},
+
+/* ===================================================== LES 7 */
+{nr: 7, ico: '🚀', titel: 'Help, mijn eerste stagedag!', sub: 'En wat als het misgaat?', kleur: ['#26C373', '#A6EBC7', '#3D6B52'],
+ doelen: ['Je weet hoe je jezelf voorstelt', 'Je weet welke vragen je op dag 1 stelt', 'Je weet wat je doet als je ziek bent of als het misgaat'],
+ programma: PROG('Dag 1 voorbereiden en spiekbrief maken'),
+ docent: {voor: 'Studenten hebben de gegevens van hun stagebedrijf nodig (BPV-overeenkomst). Geef de naam van de vertrouwenspersoon van school.',
+   intro: ['Doe het fout voor: stel je slecht voor ("Hoi.") en vraag wat er misging.', 'Vraag: wat doe je als je ziek bent? Bellen of appen?', 'Leg uit: ze maken een spiekbrief met alle belangrijke nummers voor in hun telefoon of tas.'],
+   zelf: 'Wat neem je mee, hoe stel je je voor, welke vragen stel je op dag 1, ziekmelden in de goede volgorde, wie bel je bij welk probleem. Ze sluiten af met een spiekbrief (print of foto) met hun stage-uitdaging uit les 2.',
+   tip: 'Laat iedereen zich één keer hardop voorstellen alsof het dag 1 is. Loop rond en check of de spiekbrieven compleet zijn.'},
+ nabespreking: ['Stel je één keer hardop voor, alsof het je eerste stagedag is.', 'Welke vraag ga jij zeker stellen op dag 1?', 'Waar zie je het meest tegenop bij je stage?'],
+ schermen: [
+  {type: 'intro', tekst: 'Over een paar weken begin je aan je stage. De eerste dag bepaalt veel. Vandaag bereid je die dag voor. Je maakt ook een spiekbrief voor als het misgaat.'},
+  {type: 'stelling', q: 'Op je eerste stagedag kun je beter niet te veel vragen stellen.'},
+  {type: 'tussen', fase: 2, titel: 'Dag 1', tekst: 'Je bereidt je eerste stagedag voor: van je tas inpakken tot je ziek melden. Aan het eind heb je een spiekbrief.'},
+  {type: 'multi', id: 'tas', label: 'Je tas', q: 'Wat neem je mee op je eerste dag?', max: 4, opts: [
+    ['🪪', 'Je ID-kaart', true], ['📞', 'Telefoon met het nummer van je praktijkopleider', true], ['🥪', 'Lunch en drinken', true],
+    ['📝', 'Iets om aantekeningen te maken', true], ['🎮', 'Je gamecontroller voor de pauze', false], ['🎧', 'Koptelefoon om muziek te luisteren tijdens het werk', false]],
+   uitleg: 'ID, telefoon met het juiste nummer, lunch en iets om aantekeningen te maken. Vraag vooraf of je een eigen laptop nodig hebt.'},
+  {type: 'kies', id: 'voorstel', label: 'Je voorstellen', q: 'Je komt binnen. Hoe stel je je voor?', opts: [
+    ['👋', '"Hoi."', 'fout', 'Te kort. Ze weten niet wie je bent of waarom je er bent.'],
+    ['🤝', '"Goedemorgen, ik ben Sam, de nieuwe stagiair ICT. Ik ben hier tot de zomer. Leuk om kennis te maken!"', 'goed', 'Je naam, wat je komt doen en hoe lang. Kijk de ander aan en lach erbij.'],
+    ['😎', '"Yo, ik ben de stagiair."', 'fout', 'Te los voor een eerste kennismaking. Begin netjes, daarna zie je hoe het er op de afdeling aan toegaat.'],
+    ['🤐', 'Ik wacht tot iemand mij aanspreekt', 'fout', 'Mensen zijn druk. Neem zelf de eerste stap.']]},
+  {type: 'multi', id: 'dag1vragen', label: 'Je vragen', q: 'Welke 3 vragen stel je op dag 1 aan je praktijkopleider?', max: 3, opts: [
+    ['⏰', 'Hoe laat begin en stop ik?', true], ['🤒', 'Bij wie meld ik me ziek, en hoe?', true], ['🤖', 'Wat zijn de regels voor telefoon en AI?', true],
+    ['🗓️', 'Wat ga ik deze week doen?', true], ['💶', 'Hoeveel verdienen jullie eigenlijk?', false], ['🏖️', 'Wanneer mag ik op vakantie?', false]],
+   uitleg: 'Werktijden, ziekmelden, de regels en je planning: dat moet je op dag 1 weten. Over salaris en vakantie praat je niet op je eerste dag.'},
+  {type: 'volgorde', id: 'ziek', label: 'Ziek', q: 'Je wordt ziek wakker. Zet in de goede volgorde', items: [
+    'Vóór je begintijd je praktijkopleider bellen (niet alleen appen)', 'Je ziekmelding doorgeven aan school, zoals afgesproken', 'Uitrusten en beter worden', 'Laten weten wanneer je weer komt', 'Je gemiste uren noteren in je urenlijst'],
+   uitleg: 'Altijd eerst je praktijkopleider bellen, vóór je begintijd. Daarna school.'},
+  {type: 'ronde', id: 'wiebel', label: 'Wie bel je?', q: 'Wie schakel je als eerste in?', bakken: [['po', '👔', 'Praktijkopleider'], ['bpv', '🏫', 'BPV-docent'], ['vp', '🤝', 'Vertrouwenspersoon']], items: [
+    ['Je bent te laat, want je fiets is kapot.', 'po', 'Je praktijkopleider moet weten dat je later komt.'],
+    ['Je weet niet hoe je een taak moet doen.', 'po', 'Dat bespreek je met je praktijkopleider.'],
+    ['Je krijgt al weken geen ICT-taken. Praten met je praktijkopleider hielp niet.', 'bpv', 'Je BPV-docent kan een gesprek met het bedrijf voeren.'],
+    ['Je praktijkopleider is al een week ziek. Niemand begeleidt je.', 'bpv', 'Je BPV-docent zoekt samen met het bedrijf een oplossing.'],
+    ['Een collega raakt je steeds aan, terwijl je dat niet wilt.', 'vp', 'Dit is ongewenst gedrag. De vertrouwenspersoon helpt je, vertrouwelijk. Je BPV-docent mag je ook altijd inschakelen.'],
+    ['Je voelt je onveilig door wat iemand op je stage tegen je zegt.', 'vp', 'Je hoeft dit niet alleen op te lossen. Praat erover met de vertrouwenspersoon.']]},
+  {type: 'spiekform'},
+  {type: 'spiekkaart'}
+ ]},
+
+/* ===================================================== LES 8 */
+{nr: 8, ico: '🏆', titel: 'Level Up!', sub: 'Klaar voor de echte wereld', kleur: ['#D594FF', '#F0DDFF', '#5A4494'],
+ doelen: ['Je weet wat je hebt geleerd in deze lessen', 'Je weet waar je trots op bent en waar je tegenop ziet', 'Je neemt je stage-uitdaging mee naar je stage'],
+ programma: PROG('Teamquiz en terugblik'),
+ docent: {voor: 'Optioneel: iets lekkers voor het winnende quiz-duo.',
+   intro: ['Vraag: welke SLB-les vond je het nuttigst? En waarom?', 'Leg de teamquiz uit: in duo\'s, 8 vragen, één per les. Wie heeft de meeste goed?'],
+   zelf: 'Een quiz met 8 vragen, een terugblik op wat ze per les meenamen, hoe klaar ze zich voelen, trots en tegenop, hun stage-uitdaging en een Level Up-certificaat.',
+   tip: 'Vraag in de nabespreking de quizscores op en maak er een afsluiter van. Neem de "tegenop"-punten mee naar het eerste BPV-gesprek.'},
+ nabespreking: ['Hoeveel had jij goed in de quiz?', 'Deel waar je tegenop ziet. Welke tip geeft de klas?', 'Wat was voor jou de nuttigste SLB-les?', 'Wat neem jij mee naar je stage?'],
+ schermen: [
+  {type: 'intro', tekst: 'De laatste SLB-les voor je stage. We kijken terug: wat heb je geleerd, waar ben je trots op en wat neem je mee?'},
+  {type: 'stelling', q: 'Ik ben klaar voor mijn stage.'},
+  {type: 'tussen', fase: 2, titel: 'Teamquiz', tekst: 'Speel de quiz in duo\'s. 8 vragen, één over elke les. Je kunt je antwoord niet meer veranderen, dus overleg goed!'},
+  {type: 'kies', quiz: true, id: 'q1', label: 'Quiz 1 van 8 · les 2', q: 'Je bent klaar met je werk. Je praktijkopleider zit in een overleg. Wat is het beste?', opts: [
+    ['📱', 'Op je telefoon wachten', 'fout'], ['🙋', 'Een collega vragen of je kunt helpen', 'goed'], ['🏠', 'Vast naar huis gaan', 'fout']], uitleg: 'Initiatief tonen! Laat je praktijkopleider daarna weten wat je deed.'},
+  {type: 'kies', quiz: true, id: 'q2', label: 'Quiz 2 van 8 · les 3', q: 'Wat is netto?', opts: [
+    ['💰', 'Wat je verdient volgens je contract', 'fout'], ['🏦', 'Wat er echt op je rekening komt', 'goed'], ['🏖️', 'Je vakantiegeld', 'fout']], uitleg: 'Bruto min loonheffing is netto.'},
+  {type: 'kies', quiz: true, id: 'q3', label: 'Quiz 3 van 8 · les 3', q: 'Wat is het risico van achteraf betalen?', opts: [
+    ['🤷', 'Er is geen risico', 'fout'], ['📈', 'Te laat betalen kost extra geld en kan een BKR-registratie geven', 'goed'], ['🚫', 'Je mag daarna nooit meer online kopen', 'fout']], uitleg: 'Met een BKR-registratie krijg je later moeilijker een lening of abonnement.'},
+  {type: 'kies', quiz: true, id: 'q4', label: 'Quiz 4 van 8 · les 4', q: 'Je verwijdert per ongeluk bestanden van een gebruiker. Wat doe je eerst?', opts: [
+    ['🙊', 'Niks zeggen en hopen dat niemand het merkt', 'fout'], ['💾', 'Snel zelf een herstelprogramma downloaden', 'fout'], ['✋', 'Stoppen en het meteen melden', 'goed']], uitleg: 'Stoppen, melden, eerlijk zijn. Dan schade beperken.'},
+  {type: 'kies', quiz: true, id: 'q5', label: 'Quiz 5 van 8 · les 5', q: 'Mag je een logbestand met namen van medewerkers in ChatGPT plakken?', opts: [
+    ['✅', 'Ja, dat is handig', 'fout'], ['⛔', 'Nee, daar staan persoonsgegevens in', 'goed'], ['🤷', 'Ja, als het snel moet', 'fout']], uitleg: 'Geen namen, wachtwoorden of klantgegevens in een AI-tool.'},
+  {type: 'kies', quiz: true, id: 'q6', label: 'Quiz 6 van 8 · les 6', q: 'Wat zijn de 4 stappen bij kritiek?', opts: [
+    ['🛡️', 'Verdedigen, uitleggen, sorry zeggen, vergeten', 'fout'], ['👂', 'Luisteren, vragen, bedanken, doen', 'goed'], ['🤐', 'Knikken, zwijgen, weglopen, klagen', 'fout']], uitleg: 'Luisteren, vragen, bedanken, doen.'},
+  {type: 'kies', quiz: true, id: 'q7', label: 'Quiz 7 van 8 · les 7', q: 'Je bent ziek. Wat doe je?', opts: [
+    ['💬', 'Een appje sturen als je wakker bent', 'fout'], ['📞', 'Vóór je begintijd je praktijkopleider bellen', 'goed'], ['🛌', 'Morgen laten weten dat je ziek was', 'fout']], uitleg: 'Bellen, en wel vóór je begintijd. Daarna school.'},
+  {type: 'kies', quiz: true, id: 'q8', label: 'Quiz 8 van 8 · les 6 en 7', q: 'Een collega maakt steeds vervelende opmerkingen over je afkomst. Wie kan je helpen?', opts: [
+    ['🤝', 'De vertrouwenspersoon of je BPV-docent', 'goed'], ['🙅', 'Niemand, dit moet je zelf oplossen', 'fout'], ['📱', 'Je volgers op social media', 'fout']], uitleg: 'Ongewenst gedrag hoef je niet alleen op te lossen.'},
+  {type: 'terugblik'},
+  {type: 'kies', id: 'klaarvoor', label: 'Eerlijk zijn', q: 'Hoe klaar voel jij je voor je stage?', opts: [
+    ['🚀', 'Helemaal klaar, laat maar komen!', 'goed', 'Top! Neem die energie mee. Vergeet niet: vragen stellen blijft belangrijk.'],
+    ['🙂', 'Best klaar, een beetje zenuwachtig', 'goed', 'Heel normaal. Een beetje spanning houdt je scherp.'],
+    ['😬', 'Ik zie er best tegenop', 'kan', 'Goed dat je dat eerlijk zegt. Bespreek het met je SLB\'er of BPV-docent. Je staat er niet alleen voor.'],
+    ['😰', 'Ik ben er nog helemaal niet klaar voor', 'kan', 'Plan snel een gesprek met je SLB\'er. Samen kijken jullie wat je nodig hebt.']]},
+  {type: 'tekst', id: 'trots', label: 'Trots', q: 'Waar ben je trots op?', hint: 'In deze opleiding, op je vorige stage, of op jezelf.', starters: ['Ik ben trots op…', 'Ik heb geleerd om…', 'Het is me gelukt om…']},
+  {type: 'tekst', id: 'tegenop', label: 'Tegenop', q: 'Waar zie je tegenop? En wat helpt je daarbij?', hint: 'In de nabespreking geeft de klas tips. Je hoeft niet alles te delen.', starters: ['Ik zie tegenop tegen…', 'Wat mij helpt is…', 'Ik ga hulp vragen aan…']},
+  {type: 'uitdaging', terug: true},
+  {type: 'cert'}
+ ]}
+];
+
+/* ================== MOTOR ================== */
+const OPSLAG = 'slb_p6_v1', DOOR = 'slb_doorstroom_v1';
+const $ = s => document.querySelector(s);
+const el = $('#scherm'), navbar = $('#navbar');
+function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function eur(n){ return (n < 0 ? '− ' : '') + '€ ' + Math.abs(Math.round(n)).toLocaleString('nl-NL'); }
+
+let S = laad();
+function laad(){ try{ const x = JSON.parse(localStorage.getItem(OPSLAG)); if(x && x.les) return x; }catch(e){} return {les:{}, uitdaging:'', spiek:{}}; }
+function bewaar(){ try{ localStorage.setItem(OPSLAG, JSON.stringify(S)); }catch(e){} }
+function door(){ try{ return JSON.parse(localStorage.getItem(DOOR)); }catch(e){ return null; } }
+function naam(){ const d = door(); return (d && d.naam || '').trim(); }
+function LS(nr){ return S.les[nr] || (S.les[nr] = {stap:0, a:{}, klaar:false}); }
+
+const FASEN = ['Intro', 'Aan de slag', 'Nabespreking'];
+const PILL = ['', '🧑‍🏫 Klassikaal', '🧑‍💻 Zelfstandig', '🧑‍🏫 Klassikaal'];
+function pill(f){ return `<span class="fase ${f !== 2 ? 'k' : ''}">${PILL[f]}</span>`; }
+function zetKleur(k){ const r = document.documentElement.style; r.setProperty('--accent', k[0]); r.setProperty('--accent-l', k[1]); r.setProperty('--accent-d', k[2]); }
+
+function schermen(les){
+  if(les._s) return les._s;
+  const l = [...les.schermen,
+    {type:'tussen', fase:3, titel:'Nabespreking', tekst:'Klaar met de opdrachten? Mooi! Wacht nu op je docent. Jullie bespreken samen wat je hebt gekozen.'},
+    {type:'nabespreking', vragen:les.nabespreking},
+    {type:'feedback'},
+    {type:'klaar'}];
+  let fase = 1;
+  l.forEach((s, i) => { if(s.type === 'tussen') fase = s.fase; s.fase = fase; if(!s.id) s.id = s.type + i; });
+  return les._s = l;
+}
+function status(les){
+  if(les.extern){ const d = door(); if(!d) return 'nieuw'; if(d.keuze) return 'klaar'; return Object.keys(d.a || {}).length ? 'bezig' : 'nieuw'; }
+  const L = S.les[les.nr]; if(!L) return 'nieuw'; if(L.klaar) return 'klaar'; return (L.stap > 0 || Object.keys(L.a).length) ? 'bezig' : 'nieuw';
+}
+function lesLink(l){ return l.extern || '#les' + l.nr; }
+
+/* ---------- Router ---------- */
+let CUR = null, LAATST = '';
+function render(){
+  const h = location.hash.replace('#', '');
+  const m = h.match(/^les(\d)$/);
+  if(m){ const les = LESSEN.find(l => l.nr === +m[1] && !l.extern); if(les) return renderLes(les); }
+  if(h === 'docent') return renderDocent();
+  renderOverzicht();
+}
+window.addEventListener('hashchange', render);
+
+function mount(key){
+  el.innerHTML = ''; navbar.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'scherm' + (key === LAATST ? ' stil' : '');
+  LAATST = key; el.appendChild(div); el.scrollTop = 0;
+  return div;
+}
+function kader(metVoortgang){
+  $('#vgWrap').hidden = !metVoortgang; $('#deelbalk').hidden = !metVoortgang;
+  $('#wie').textContent = naam();
+}
+
+/* ---------- Overzicht ---------- */
+function renderOverzicht(){
+  CUR = null; zetKleur(['#EFA242', '#FFE398', '#CD963C']); kader(false);
+  $('#toplinks').innerHTML = `<button type="button" id="resetAlles">↺ Alles wissen</button>`;
+  $('#resetAlles').onclick = () => { if(confirm('Al je antwoorden van les 2 t/m 8 wissen? (Les 1, je doorstroomkeuze, blijft bewaard.)')){ try{ localStorage.removeItem(OPSLAG); }catch(e){} S = laad(); render(); } };
+  const d = mount('overzicht');
+  const st = LESSEN.map(status); const klaar = st.filter(x => x === 'klaar').length;
+  const volgende = LESSEN.find((l, i) => st[i] !== 'klaar');
+  const n = naam();
+  d.innerHTML = `
+  <section class="hero klein"><div class="grootA">${A_SVG}</div>
+    <span class="label">Studieloopbaan · periode 6</span>
+    <h1>Van student naar ICT-professional</h1>
+    <p>${n ? 'Hoi ' + esc(n) + '! ' : ''}8 lessen over je keuze na je diploma, je stage en op eigen benen staan. Je docent start elke les klassikaal. Daarna werk je zelf, en je sluit samen af.</p>
+    <p class="voortgangtekst"><b>${klaar} van 8</b> lessen afgerond</p>
+  </section>
+  <div class="lesgrid">${LESSEN.map((l, i) => `
+    <a class="les-tegel ${volgende === l ? 'volgende' : ''}" href="${lesLink(l)}" style="--k:${l.kleur[0]};--kl:${l.kleur[1]};--kd:${l.kleur[2]}">
+      ${st[i] === 'klaar' ? '<span class="st klaar">✓ Klaar</span>' : st[i] === 'bezig' ? '<span class="st">Bezig</span>' : ''}
+      <span class="lnr">Les ${l.nr}</span><span class="lico">${l.ico}</span><b>${esc(l.titel)}</b><small>${esc(l.sub)}</small>
+    </a>`).join('')}
+  </div>`;
+  navbar.innerHTML = `<a class="terug" href="#docent">🧑‍🏫 Voor de docent</a><div class="rechts">${volgende ? `<a class="knop" href="${lesLink(volgende)}">${st[LESSEN.indexOf(volgende)] === 'bezig' ? 'Verder met' : 'Start'} les ${volgende.nr} →</a>` : '<span class="klein">Alles afgerond! 🎉</span>'}</div>`;
+}
+
+/* ---------- Docentenhandleiding ---------- */
+function renderDocent(){
+  CUR = null; zetKleur(['#EFA242', '#FFE398', '#CD963C']); kader(false);
+  $('#toplinks').innerHTML = `<a class="toplink" href="#">← Alle lessen</a>`;
+  const d = mount('docent');
+  const lst = a => a.map(x => `<li>${x}</li>`).join('');
+  d.innerHTML = `
+  <section class="hero klein"><div class="grootA">${A_SVG}</div><span class="label">Voor de docent</span><h1>Docentenhandleiding</h1>
+    <p>Module <b>Van student naar ICT-professional</b>: 8 SLB-lessen van 90 minuten voor periode 6.</p></section>
+  <div class="docent">
+    <details open><summary><span class="dot" style="background:var(--tekst)"></span>Zo werkt de module</summary>
+      <h4>Opbouw van elke les</h4>
+      <ol><li><b>Intro, klassikaal (± 15 min).</b> Open de les op het digibord. Bespreek de doelen en het programma. De binnenkomer is een stelling: studenten kiezen op hun laptop, jij vraagt een paar studenten: waarom?</li>
+      <li><b>Aan de slag, zelfstandig (± 45 min).</b> Studenten werken op hun eigen laptop, alleen of in duo's. Elke keuze krijgt meteen feedback, dus ze kunnen zonder jou verder. Jij loopt rond.</li>
+      <li><b>Nabespreking, klassikaal (± 25 min).</b> De gespreksvragen staan in de app. Studenten zien hun eigen keuzes en scores als gespreksstof.</li>
+      <li><b>Feedback (5 min).</b> Studenten geven de les een emoji en schrijven één ding op dat ze meenemen. Vraag er mondeling een paar op.</li></ol>
+      <h4>Goed om te weten</h4>
+      <ul><li>De lessen staan los van elkaar. Gemist? Een student kan de les zelfstandig inhalen. De nabespreking doet hij of zij dan met jou of een klasgenoot.</li>
+      <li>Antwoorden en voortgang blijven alleen in de browser van de student. Geen account, er gaat niets naar een server. Op een andere laptop of in een privévenster begint de student opnieuw.</li>
+      <li>Weinig lezen en schrijven: studenten kiezen vooral. Schrijfopdrachten zijn kort en hebben zinsstarters.</li>
+      <li><b>Rode draad:</b> in les 2 kiezen studenten een stage-uitdaging. Die komt terug op de spiekbrief (les 7) en in les 8. De doorstroomkeuze uit les 1 komt terug in les 5 en 8.</li>
+      <li>Tip: gebruik <a class="link" href="veeg-en-deel.html#beheer">Veeg & Deel</a> om stellingen of eigen dilemma's van studenten te verzamelen.</li>
+      <li>De bedragen in les 3 zijn afgeronde, fictieve lesbedragen (indicatie 2026, voor 21+).</li></ul>
+    </details>
+    ${LESSEN.map(l => `<details><summary><span class="dot" style="background:${l.kleur[0]}"></span>Les ${l.nr} · ${l.ico} ${esc(l.titel)} <span class="klein" style="font-weight:400">· ${esc(l.sub)}</span></summary>
+      <h4>Doelen</h4><ul>${lst(l.doelen)}</ul>
+      <h4>Programma (90 min)</h4><ul>${l.programma.map(([m, t]) => `<li><b>${m} min</b> · ${t}</li>`).join('')}</ul>
+      ${l.docent.voor ? `<h4>Voorbereiding</h4><p>${l.docent.voor}</p>` : ''}
+      <h4>Klassikale intro</h4><ol>${lst(l.docent.intro)}</ol>
+      ${l.schermen ? `<p><b>Stelling:</b> “${esc((l.schermen.find(s => s.type === 'stelling') || {}).q || '')}”</p>` : ''}
+      <h4>Zelfstandig</h4><p>${l.docent.zelf}</p>
+      <h4>Nabespreking</h4><ol>${lst(l.nabespreking)}</ol>
+      <h4>Tip</h4><p>${l.docent.tip}</p>
+      <p><a class="link" href="${lesLink(l)}">Open les ${l.nr} →</a></p>
+    </details>`).join('')}
+  </div>`;
+  navbar.innerHTML = `<a class="terug" href="#">← Alle lessen</a><div class="rechts"><button class="knop rand" type="button" onclick="window.print()">🖨️ Print</button></div>`;
+}
+
+/* ---------- Les ---------- */
+function renderLes(les){
+  const L = LS(les.nr), lijst = schermen(les);
+  if(L.stap >= lijst.length) L.stap = lijst.length - 1;
+  L.verst = Math.max(L.verst || 0, L.stap); // voor "Verder waar ik was"
+  const s = lijst[L.stap]; CUR = {les, L, s};
+  zetKleur(les.kleur); kader(true);
+  $('#toplinks').innerHTML = `<a class="toplink" href="#">← Alle lessen</a><button type="button" id="resetLes">↺ Les opnieuw</button>`;
+  $('#resetLes').onclick = () => { if(confirm('Deze les opnieuw beginnen? Je antwoorden van deze les worden gewist.')){ delete S.les[les.nr]; bewaar(); LAATST = ''; render(); } };
+  $('#vg').style.width = Math.round(100 * L.stap / (lijst.length - 1)) + '%';
+  $('#deelbalk').innerHTML = `<span class="lesnaam">${les.ico} Les ${les.nr}</span>` + FASEN.map((f, i) => `<span class="${i + 1 === s.fase ? 'nu' : i + 1 < s.fase ? 'klaar' : ''}">${i + 1 < s.fase ? '✓ ' : ''}${i + 1}. ${f}</span>`).join('');
+  const d = mount('les' + les.nr + '|' + L.stap);
+  T[s.type](s, d, les, L);
+  bewaar();
+}
+function volgende(){ CUR.L.stap++; bewaar(); render(); }
+function vorige(){ if(CUR.L.stap > 0){ CUR.L.stap--; bewaar(); render(); } }
+function nav(kanVerder, tekst = 'Volgende →', extra = ''){
+  navbar.innerHTML = `<button class="terug" type="button">← Terug</button><div class="rechts">${extra}<button class="knop" type="button" id="verder" ${kanVerder ? '' : 'disabled'}>${tekst}</button></div>`;
+  navbar.querySelector('.terug').onclick = vorige;
+  if(CUR && CUR.L.stap === 0) navbar.querySelector('.terug').style.visibility = 'hidden';
+  const b = navbar.querySelector('#verder'); b.onclick = volgende; return b;
+}
+function lab(s, standaard){ return `<span class="label">${s.label || standaard} ${pill(s.fase)}</span>`; }
+
+const OORDEEL = {goed:['👍', 'Sterke keuze'], kan:['🤔', 'Kan, maar…'], fout:['⚠️', 'Niet handig']};
+const QUIZ = {goed:['✅', 'Goed!'], fout:['❌', 'Helaas']};
+
+const T = {};
+
+T.intro = (s, d, les, L) => {
+  d.innerHTML = `<section class="hero"><div class="grootA">${A_SVG}</div><span class="label">Les ${les.nr} van 8 ${pill(1)}</span>
+    <h1>${les.ico} ${esc(les.titel)}</h1><p>${s.tekst}</p></section>
+    <div class="doel"><div class="kaart"><h3>🎯 Na deze les…</h3><ul>${les.doelen.map(x => `<li>${x}</li>`).join('')}</ul></div>
+    <div class="kaart"><h3>⏱️ Programma</h3><ul class="prog">${les.programma.map(([m, t]) => `<li><b>${m} min</b><span>${t}</span></li>`).join('')}</ul></div></div>`;
+  const nieuw = !Object.keys(L.a).length && !L.klaar;
+  const b = nav(true, nieuw ? 'Start →' : 'Verder →');
+  if(!nieuw && L.verst > 1){ b.textContent = 'Verder waar ik was →'; b.onclick = () => { L.stap = L.verst; bewaar(); render(); }; }
+};
+
+T.stelling = (s, d, les, L) => {
+  d.innerHTML = `${lab(s, 'Binnenkomer')}<div class="stelling"><span class="nr">Stelling</span><h2>${esc(s.q)}</h2></div>
+    <div class="schaal drie">${[['eens', '👍', 'Eens'], ['twijfel', '🤷', 'Twijfel'], ['oneens', '👎', 'Oneens']].map(([v, i, t]) => `<button type="button" data-v="${v}" class="${L.a[s.id] === v ? 'aan' : ''}"><i>${i}</i>${t}</button>`).join('')}</div>
+    <p class="hint" style="margin-top:10px">Kies wat jij vindt. Je docent vraagt daarna een paar mensen: <b>waarom?</b></p>`;
+  nav(true);
+  d.querySelectorAll('.schaal button').forEach(x => x.onclick = () => { L.a[s.id] = x.dataset.v; bewaar(); d.querySelectorAll('.schaal button').forEach(y => y.classList.toggle('aan', y === x)); });
+};
+
+T.tussen = (s, d) => {
+  d.innerHTML = `<section class="tussen"><div class="grootA">${A_SVG}</div><div class="deelnr">${s.fase}</div>
+    <span class="label">Deel ${s.fase} van 3 ${pill(s.fase)}</span><h1>${esc(s.titel)}</h1><p style="max-width:540px">${s.tekst}</p></section>`;
+  const b = nav(true, s.fase === 3 ? 'Naar de nabespreking →' : 'Aan de slag →'); setTimeout(() => b.focus(), 50);
+};
+
+T.info = (s, d) => {
+  d.innerHTML = `${lab(s, 'Even uitleg')}<h2>${s.titel}</h2>${s.tekst ? `<p>${s.tekst}</p>` : ''}
+    ${s.situatie ? `<div class="situatie">${s.situatie}</div>` : ''}
+    ${s.punten ? `<div class="punten">${s.punten.map(([i, b, t]) => `<div class="punt"><span class="pi">${i}</span><b>${b}</b>${t}</div>`).join('')}</div>` : ''}
+    ${s.na ? `<p class="hint" style="margin-top:10px">${s.na}</p>` : ''}`;
+  nav(true);
+};
+
+function kiesRender(s, d, L, opts, situatie){
+  const lb = s.quiz ? QUIZ : OORDEEL;
+  d.innerHTML = `${lab(s, s.quiz ? 'Quizvraag' : 'Wat doe jij?')}${situatie ? `<div class="situatie">${situatie}</div>` : ''}<h2>${esc(s.q)}</h2>
+    <div class="opties">${opts.map((o, i) => `<button type="button" class="optie" data-i="${i}"><span class="ico">${o[0]}</span><span class="tx"><b>${esc(o[1])}</b></span><span class="oi"></span></button>`).join('')}</div>
+    <div class="fb" id="fb"></div>`;
+  const b = nav(L.a[s.id] !== undefined);
+  const knoppen = [...d.querySelectorAll('.optie')];
+  const toon = (i, scroll) => {
+    const o = opts[i];
+    knoppen.forEach((x, j) => {
+      x.className = 'optie'; x.querySelector('.oi').textContent = '';
+      if(j === i){ x.classList.add(o[2]); x.querySelector('.oi').textContent = lb[o[2]][0]; }
+      else if(opts[j][2] === 'goed') x.classList.add('beste');
+      if(s.quiz) x.disabled = true;
+    });
+    const f = $('#fb'); f.className = 'fb ' + o[2];
+    f.innerHTML = `<span class="fi">${lb[o[2]][0]}</span><div><b>${lb[o[2]][1]}</b> ${o[3] || ''} ${s.uitleg || ''}</div>`;
+    if(scroll) f.scrollIntoView({block:'nearest', behavior:'smooth'});
+  };
+  if(L.a[s.id] !== undefined) toon(L.a[s.id]);
+  knoppen.forEach(x => x.onclick = () => { const i = +x.dataset.i; L.a[s.id] = i; bewaar(); toon(i, true); b.disabled = false; });
+}
+T.kies = (s, d, les, L) => kiesRender(s, d, L, s.opts, s.situatie);
+
+T.multi = (s, d, les, L) => {
+  const sel = new Set(L.a[s.id] || []);
+  const metCheck = s.opts.some(o => o.length > 2);
+  d.innerHTML = `${lab(s, 'Kies')}<h2>${esc(s.q)}</h2><p class="hint">Kies er ${s.max}.${metCheck ? ' Klik daarna op <b>Check</b>.' : ''}</p>
+    <div class="opties twee">${s.opts.map((o, i) => `<button type="button" class="optie ${sel.has(i) ? 'aan' : ''}" data-i="${i}"><span class="ico">${o[0]}</span><span class="tx"><b>${esc(o[1])}</b></span><span class="vink">✓</span></button>`).join('')}</div>
+    <div class="fb" id="fb"></div>`;
+  const gecheckt = () => !!L.a[s.id + '_c'];
+  const b = nav(sel.size > 0 && (!metCheck || gecheckt()), 'Volgende →', metCheck ? '<button class="knop rand" type="button" id="check">Check</button>' : '');
+  const chk = $('#check');
+  const check = (scroll) => {
+    L.a[s.id + '_c'] = true; bewaar(); let goed = 0;
+    d.querySelectorAll('.optie').forEach((x, i) => {
+      const ok = s.opts[i][2]; x.classList.remove('goed', 'fout', 'beste');
+      if(sel.has(i)){ x.classList.add(ok ? 'goed' : 'fout'); if(ok) goed++; } else if(ok) x.classList.add('beste');
+    });
+    const f = $('#fb'), alles = goed === sel.size; f.className = 'fb ' + (alles ? 'goed' : 'kan');
+    f.innerHTML = `<span class="fi">${alles ? '👍' : '🤔'}</span><div><b>${goed} van ${sel.size} goed.</b> ${s.uitleg}</div>`;
+    if(scroll) f.scrollIntoView({block:'nearest', behavior:'smooth'});
+    b.disabled = false; chk.disabled = true;
+  };
+  d.querySelectorAll('.optie').forEach(x => x.onclick = () => {
+    if(metCheck && gecheckt()) return;
+    const i = +x.dataset.i;
+    if(sel.has(i)) sel.delete(i);
+    else { if(sel.size >= s.max){ const e = [...sel][0]; sel.delete(e); d.querySelector(`.optie[data-i="${e}"]`).classList.remove('aan'); } sel.add(i); }
+    x.classList.toggle('aan', sel.has(i)); L.a[s.id] = [...sel]; bewaar();
+    if(metCheck) chk.disabled = sel.size < s.max; else b.disabled = sel.size === 0;
+  });
+  if(chk){ chk.disabled = sel.size < s.max; chk.onclick = () => check(true); if(gecheckt()) check(false); }
+};
+
+T.ronde = (s, d, les, L) => {
+  const n = s.items.length;
+  const ant = L.a[s.id] || (L.a[s.id] = Array(n).fill(null));
+  const ci = L.a[s.id + '_i'] || 0;
+  if(ci >= n){
+    const g = ant.filter((x, i) => x === s.items[i][1]).length;
+    d.innerHTML = `${lab(s, 'Score')}<section class="tussen"><div class="grootA">${A_SVG}</div><div class="score">${g}/${n}</div>
+      <h2 style="margin-top:8px">${g === n ? 'Alles goed! 🏆' : g >= n * .6 ? 'Goed gedaan! 💪' : 'Een paar lastige ertussen. 🤔'}</h2>
+      <p>Twijfelde je bij een kaart? Onthoud hem voor de nabespreking.</p></section>`;
+    nav(true, 'Volgende →', '<button class="knop rand" type="button" id="opn">↺ Nog een keer</button>');
+    $('#opn').onclick = () => { L.a[s.id] = Array(n).fill(null); L.a[s.id + '_i'] = 0; bewaar(); render(); };
+    navbar.querySelector('.terug').onclick = () => { L.a[s.id + '_i'] = n - 1; bewaar(); render(); };
+    return;
+  }
+  const it = s.items[ci], gekozen = ant[ci];
+  d.innerHTML = `${lab(s, 'Kaarten')}<h2>${esc(s.q)}</h2>
+    <div class="stippen">${s.items.map((x, i) => `<i class="${i === ci ? 'nu' : ant[i] == null ? '' : ant[i] === x[1] ? 'g' : 'f'}"></i>`).join('')}<span class="klein">kaart ${ci + 1} van ${n}</span></div>
+    <div class="rkaart">${esc(it[0])}</div>
+    <div class="bakken">${s.bakken.map(([v, i, t]) => `<button type="button" data-v="${v}"><i>${i}</i>${t}</button>`).join('')}</div>
+    <div class="fb" id="fb"></div>`;
+  const b = nav(gekozen != null, ci < n - 1 ? 'Volgende kaart →' : 'Bekijk je score →');
+  b.onclick = () => { L.a[s.id + '_i'] = ci + 1; bewaar(); render(); };
+  navbar.querySelector('.terug').style.visibility = 'visible';
+  navbar.querySelector('.terug').onclick = () => { if(ci > 0){ L.a[s.id + '_i'] = ci - 1; bewaar(); render(); } else vorige(); };
+  const toon = (v, scroll) => {
+    const ok = v === it[1];
+    d.querySelectorAll('.bakken button').forEach(x => { x.disabled = true; if(x.dataset.v === it[1]) x.classList.add('goed'); else if(x.dataset.v === v) x.classList.add('fout'); });
+    const juist = s.bakken.find(x => x[0] === it[1]);
+    const f = $('#fb'); f.className = 'fb ' + (ok ? 'goed' : 'fout');
+    f.innerHTML = `<span class="fi">${ok ? '✅' : '❌'}</span><div><b>${ok ? 'Goed!' : 'Het antwoord is: ' + juist[2] + '.'}</b> ${it[2] || ''}</div>`;
+    if(scroll) f.scrollIntoView({block:'nearest', behavior:'smooth'});
+  };
+  if(gekozen != null) toon(gekozen);
+  d.querySelectorAll('.bakken button').forEach(x => x.onclick = () => { ant[ci] = x.dataset.v; bewaar(); toon(x.dataset.v, true); b.disabled = false; setTimeout(() => b.focus(), 50); });
+};
+
+T.volgorde = (s, d, les, L) => {
+  const n = s.items.length;
+  if(!L.a[s.id]){ let o; do{ o = [...Array(n).keys()].sort(() => Math.random() - .5); } while(o.every((x, i) => x === i)); L.a[s.id] = o; bewaar(); }
+  const o = L.a[s.id], ck = !!L.a[s.id + '_c'];
+  d.innerHTML = `${lab(s, 'Zet in volgorde')}<h2>${esc(s.q)}</h2><p class="hint">${ck ? 'Groen staat goed, oranje niet.' : 'Verschuif met ↑ en ↓. Klaar? Klik op <b>Controleer</b>.'}</p>
+    <div class="volg">${o.map((x, p) => `<div class="vrij ${ck ? (x === p ? 'goed' : 'fout') : ''}"><span class="vn">${p + 1}</span><span class="vt">${esc(s.items[x])}</span>
+      <button type="button" data-p="${p}" data-r="-1" ${p === 0 || ck ? 'disabled' : ''} aria-label="Omhoog">↑</button><button type="button" data-p="${p}" data-r="1" ${p === n - 1 || ck ? 'disabled' : ''} aria-label="Omlaag">↓</button></div>`).join('')}</div>
+    <div class="fb" id="fb"></div>`;
+  nav(ck, 'Volgende →', ck ? '<button class="knop rand" type="button" id="opn">↺ Opnieuw</button>' : '<button class="knop rand" type="button" id="check">Controleer</button>');
+  d.querySelectorAll('.vrij button').forEach(x => x.onclick = () => { const p = +x.dataset.p, q = p + (+x.dataset.r); [o[p], o[q]] = [o[q], o[p]]; bewaar(); render(); });
+  if(ck){
+    const g = o.filter((x, i) => x === i).length;
+    const f = $('#fb'); f.className = 'fb ' + (g === n ? 'goed' : 'kan');
+    f.innerHTML = `<span class="fi">${g === n ? '🏆' : '🤔'}</span><div><b>${g} van ${n} op de goede plek.</b> ${s.uitleg || ''} ${g < n ? '<button type="button" class="linkknop" id="toon">Toon de goede volgorde</button>' : ''}</div>`;
+    $('#opn').onclick = () => { delete L.a[s.id + '_c']; delete L.a[s.id]; bewaar(); render(); };
+    const t = $('#toon'); if(t) t.onclick = () => { L.a[s.id] = [...Array(n).keys()]; bewaar(); render(); };
+  } else $('#check').onclick = () => { L.a[s.id + '_c'] = true; bewaar(); render(); };
+};
+
+function startersHTML(lijst){ return lijst ? `<div class="starters">${lijst.map(x => `<button type="button">${esc(x)}</button>`).join('')}</div>` : ''; }
+function koppelStarters(d, ta){ d.querySelectorAll('.starters button').forEach(x => x.onclick = () => { ta.value = (ta.value.trim() ? ta.value.trimEnd() + '\n' : '') + x.textContent + ' '; ta.focus(); ta.dispatchEvent(new Event('input')); }); }
+
+T.tekst = (s, d, les, L) => {
+  let extra = '';
+  if(s.doorstroom){ const k = (door() || {}).keuze; extra = k ? `<div class="situatie">🧭 In les 1 koos je: <b>${esc(k.opl)}</b></div>` : ''; }
+  d.innerHTML = `${lab(s, 'Schrijf kort')}${extra}<h2>${esc(s.q)}</h2>${s.hint ? `<p class="hint">${s.hint}</p>` : ''}${startersHTML(s.starters)}
+    <textarea class="groot" aria-label="${esc(s.q)}">${esc(L.a[s.id] || '')}</textarea>`;
+  const ta = d.querySelector('textarea'); ta.oninput = () => { L.a[s.id] = ta.value; bewaar(); };
+  koppelStarters(d, ta);
+  nav(true);
+};
+
+T.uitdaging = (s, d) => {
+  const eigen = S.uitdaging && !UITDAGINGEN.some(u => u[1] === S.uitdaging);
+  const terug = s.terug && S.uitdaging;
+  d.innerHTML = `${lab(s, 'Rode draad')}${terug ? `<div class="situatie">🎯 In les 2 koos je: <b>${esc(S.uitdaging)}</b></div>` : ''}
+    <h2>${terug ? 'Houd je deze uitdaging, of kies je een nieuwe?' : 'Kies jouw stage-uitdaging'}</h2>
+    <p class="hint">${terug ? 'Laat hem staan, of kies een andere. Hij komt op je certificaat.' : 'Hier let je op je stage elke dag op. Hij komt op je spiekbrief (les 7) en in les 8 kijken we terug.'}</p>
+    <div class="opties twee">${UITDAGINGEN.map(([i, t]) => `<button type="button" class="optie ${S.uitdaging === t ? 'aan' : ''}" data-t="${esc(t)}"><span class="ico">${i}</span><span class="tx"><b>${esc(t)}</b></span></button>`).join('')}</div>
+    <label class="veld" style="margin-top:8px">Of schrijf je eigen uitdaging<input type="text" id="eigen" maxlength="90" value="${eigen ? esc(S.uitdaging) : ''}"></label>`;
+  const b = nav(!!S.uitdaging);
+  const inp = $('#eigen');
+  d.querySelectorAll('.optie').forEach(x => x.onclick = () => { S.uitdaging = x.dataset.t; inp.value = ''; bewaar(); d.querySelectorAll('.optie').forEach(y => y.classList.toggle('aan', y === x)); b.disabled = false; });
+  inp.oninput = () => { S.uitdaging = inp.value.trim(); d.querySelectorAll('.optie').forEach(y => y.classList.remove('aan')); bewaar(); b.disabled = !S.uitdaging; };
+};
+
+/* ---------- Les 3: budget ---------- */
+function budget(){
+  const a = LS(3).a; const ink = a.baan != null ? BANEN[a.baan][2] : 0;
+  let uit = VAST.reduce((x, v) => x + v[2], 0);
+  POSTEN.forEach(p => { if(a['b_' + p.k] != null) uit += p.opts[a['b_' + p.k]][2]; });
+  return {ink, uit, over: ink - uit};
+}
+function saldoHTML(){
+  const b = budget();
+  return `<span>Inkomen netto<b>${eur(b.ink)}</b></span><span>Uitgaven<b>${eur(b.uit)}</b></span><span class="over ${b.over < 0 ? 'min' : ''}">Over per maand<b>${eur(b.over)}</b></span>`;
+}
+function bedragOptie(o, aan, i){ return `<button type="button" class="optie ${aan ? 'aan' : ''}" data-i="${i}"><span class="ico">${o[0]}</span><span class="tx"><b>${esc(o[1])}</b></span><span class="bedrag">${eur(o[2])}</span></button>`; }
+T.baan = (s, d, les, L) => {
+  d.innerHTML = `${lab(s, 'Budget · je baan')}<h2>Welke baan heb je na je opleiding?</h2>
+    <p class="hint">Netto per maand. Fictieve, afgeronde lesbedragen voor iemand van 21 jaar of ouder.</p>
+    <div class="opties">${BANEN.map((o, i) => bedragOptie(o, L.a.baan === i, i)).join('')}</div>
+    <p class="hint" style="margin-top:10px">Vaste lasten die iedereen heeft: ${VAST.map(v => `${v[0]} ${v[1].toLowerCase()}: ${eur(v[2])}`).join(' · ')}</p>`;
+  const b = nav(L.a.baan != null);
+  d.querySelectorAll('.optie').forEach(x => x.onclick = () => { L.a.baan = +x.dataset.i; bewaar(); d.querySelectorAll('.optie').forEach(y => y.classList.toggle('aan', y === x)); b.disabled = false; setTimeout(volgende, 350); });
+};
+T.post = (s, d, les, L) => {
+  const p = POSTEN.find(x => x.k === s.post), nr = POSTEN.indexOf(p) + 1, key = 'b_' + p.k;
+  d.innerHTML = `${lab(s, `Budget · ${nr} van ${POSTEN.length}`)}<div class="saldo" id="saldo">${saldoHTML()}</div>
+    <h2>${esc(p.titel)}</h2>${p.hint ? `<p class="hint">${p.hint}</p>` : ''}
+    <div class="opties">${p.opts.map((o, i) => bedragOptie(o, L.a[key] === i, i)).join('')}</div>`;
+  const b = nav(L.a[key] != null);
+  d.querySelectorAll('.optie').forEach(x => x.onclick = () => { L.a[key] = +x.dataset.i; bewaar(); $('#saldo').innerHTML = saldoHTML(); d.querySelectorAll('.optie').forEach(y => y.classList.toggle('aan', y === x)); b.disabled = false; });
+};
+T.overzicht = (s, d, les, L) => {
+  const b = budget();
+  const rij = (t, n) => `<tr><td>${t}</td><td>${eur(n)}</td></tr>`;
+  const rows = POSTEN.filter(p => L.a['b_' + p.k] != null).map(p => { const o = p.opts[L.a['b_' + p.k]]; return rij(o[0] + ' ' + esc(o[1]), o[2]); }).join('') + VAST.map(v => rij(v[0] + ' ' + v[1], v[2])).join('');
+  const spaar = Math.round(b.ink * .1 / 10) * 10;
+  const [cl, ic, tx] = b.over < 0 ? ['fout', '😬', `Je komt ${eur(-b.over)} per maand tekort. Ga terug en pas je keuzes aan.`]
+    : b.over < spaar ? ['kan', '🤏', `Je komt rond, maar sparen lukt bijna niet. Tip: zet elke maand ${eur(spaar)} (10%) apart voor pech.`]
+    : ['goed', '💪', `Je houdt genoeg over. Zet elke maand minstens ${eur(spaar)} (10%) op een spaarrekening.`];
+  d.innerHTML = `${lab(s, 'Jouw maandbudget')}<h2>Kom je rond?</h2>
+    <div class="kolommen"><table class="tabel">${rows}<tr class="tot"><td>Totaal uitgaven</td><td>${eur(b.uit)}</td></tr></table>
+    <div><div class="saldo">${saldoHTML()}</div><div class="fb ${cl}"><span class="fi">${ic}</span><div>${tx}</div></div></div></div>`;
+  nav(true, 'Volgende →');
+};
+T.verrassing = (s, d, les, L) => {
+  if(L.a.verr == null){ L.a.verr = Math.floor(Math.random() * VERRASSINGEN.length); bewaar(); }
+  const v = VERRASSINGEN[L.a.verr], b = budget();
+  const sit = `<span style="font-size:24px">${v[0]}</span> <b>Pech!</b> ${v[1]} <b>${eur(v[2])}</b>.<br>Je hebt deze maand ${eur(b.over)} over. ${b.over >= v[2] ? 'Je kunt het betalen, maar dan is je geld op.' : `Dat is niet genoeg: je komt ${eur(v[2] - Math.max(0, b.over))} tekort.`}`;
+  kiesRender({...s, label: s.label || 'Verrassing!'}, d, L, VERR_OPTS, sit);
+};
+
+/* ---------- Les 6: rollenspel ---------- */
+T.rollen = (s, d, les, L) => {
+  const ki = L.a[s.id + '_k'] || 0, rol = L.a[s.id + '_r'] || '', k = s.kaarten[ki];
+  d.innerHTML = `${lab(s, 'Rollenspel in duo\'s')}
+    <div class="tabs">${s.kaarten.map((x, i) => `<button type="button" data-k="${i}" class="${i === ki ? 'aan' : ''}">Kaart ${i + 1}</button>`).join('')}</div>
+    <h2>${esc(k.titel)}</h2><div class="situatie">${k.sit}</div>
+    <p class="hint" style="margin:0">Kies je rol. <b>Lees alleen je eigen rol!</b></p>
+    <div class="tabs">${['a', 'b'].map(r => `<button type="button" data-r="${r}" class="${rol === r ? 'aan' : ''}">Rol ${r.toUpperCase()}: ${esc(k[r][0])}</button>`).join('')}</div>
+    ${rol ? `<div class="rol"><span class="rl">Jouw rol: ${esc(k[rol][0])}</span><p style="margin:4px 0 0">${k[rol][1]}</p></div>` : `<div class="verborgen">👆 Kies eerst je rol</div>`}
+    <p class="hint" style="margin-top:8px">${s.tip}</p>`;
+  nav(true);
+  d.querySelectorAll('[data-k]').forEach(x => x.onclick = () => { L.a[s.id + '_k'] = +x.dataset.k; L.a[s.id + '_r'] = ''; bewaar(); render(); });
+  d.querySelectorAll('[data-r]').forEach(x => x.onclick = () => { L.a[s.id + '_r'] = x.dataset.r; bewaar(); render(); });
+};
+
+/* ---------- Les 7: spiekbrief ---------- */
+T.spiekform = (s, d) => {
+  const sp = S.spiek || (S.spiek = {});
+  d.innerHTML = `${lab(s, 'Spiekbrief · stap 1')}<h2>Vul je stagegegevens in</h2>
+    <p class="hint">Weet je iets nog niet? Laat het leeg en vul het later aan. Je gegevens blijven alleen op deze laptop.</p>
+    <div class="formgrid">${SPIEK.map(([k, l]) => `<label>${l}<input type="text" data-k="${k}" maxlength="80" value="${esc(sp[k] || '')}"></label>`).join('')}</div>`;
+  d.querySelectorAll('.formgrid input').forEach(x => x.oninput = () => { sp[x.dataset.k] = x.value; bewaar(); });
+  nav(true, 'Bekijk je spiekbrief →');
+};
+T.spiekkaart = (s, d) => {
+  const sp = S.spiek || {};
+  const scherm = schermen(LESSEN[6]).find(x => x.id === 'dag1vragen');
+  const vragen = (LS(7).a.dag1vragen || []).map(i => scherm.opts[i][1]);
+  const r = (l, v, breed) => `<div class="r ${breed ? 'breed' : ''}"><small>${l}</small>${v ? esc(v) : '<span class="leeg">…</span>'}</div>`;
+  d.innerHTML = `${lab(s, 'Spiekbrief · stap 2')}
+    <div class="spiek print"><h3><span>📌 Mijn stage-spiekbrief</span><span class="mini-logo">${LOGO}</span></h3>
+      ${SPIEK.map(([k, l]) => r(l, sp[k])).join('')}
+      ${r('🎯 Mijn stage-uitdaging', S.uitdaging, true)}
+      ${vragen.length ? r('❓ Mijn vragen voor dag 1', vragen.join(' · '), true) : ''}
+      <div class="r breed"><small>🤒 Ziek of te laat?</small><span>Vóór ${esc(sp.tijd || 'je begintijd')} <b>bellen</b> met ${esc(sp.po || 'je praktijkopleider')}. Daarna school laten weten.</span></div>
+      <div class="r breed"><small>🆘 Gaat het mis?</small><span>1. Praktijkopleider → 2. BPV-docent → 3. Vertrouwenspersoon</span></div>
+    </div>
+    <p class="hint" style="margin-top:8px">📸 Maak er een foto van met je telefoon, of print hem. Wil je iets aanpassen? Klik op ← Terug.</p>`;
+  nav(true, 'Volgende →', '<button class="knop rand" type="button" id="pr">🖨️ Print</button>');
+  $('#pr').onclick = () => window.print();
+};
+
+/* ---------- Les 8 ---------- */
+T.terugblik = (s, d) => {
+  const dk = (door() || {}).keuze;
+  const rows = LESSEN.filter(l => l.nr < 8).map(l => {
+    let t;
+    if(l.extern) t = dk ? 'Mijn keuze: ' + dk.opl : 'Nog niet gedaan';
+    else { const L = S.les[l.nr]; t = (L && L.a._inzicht || '').trim() || (L && L.klaar ? '(geen inzicht opgeschreven)' : 'Nog niet afgerond'); }
+    return `<div><span>${l.ico}</span><p style="margin:0"><b>Les ${l.nr} · ${esc(l.titel)}</b>${esc(t)}</p></div>`;
+  }).join('');
+  d.innerHTML = `${lab(s, 'Terugblik')}<h2>Dit nam je mee uit de lessen</h2><div class="tb">${rows}</div>`;
+  nav(true);
+};
+T.cert = (s, d) => {
+  const n = LESSEN.filter(l => l.nr < 8 && status(l) === 'klaar').length + 1;
+  const nm = naam();
+  d.innerHTML = `<section class="eind cert print"><div class="grootA">${A_SVG}</div><span class="label">Studieloopbaan · periode 6</span>
+    <div class="lvl">LEVEL UP!</div>
+    <h2 style="margin-top:8px">${nm ? esc(nm) + ' is' : 'Je bent'} klaar voor de echte wereld</h2>
+    <p>Module <b>Van student naar ICT-professional</b>: ${n} van 8 lessen afgerond.</p>
+    ${S.uitdaging ? `<p>🎯 Stage-uitdaging: <b>${esc(S.uitdaging)}</b></p>` : ''}</section>`;
+  nav(true, 'Volgende →', '<button class="knop rand" type="button" id="pr">🖨️ Print</button>');
+  $('#pr').onclick = () => window.print();
+};
+
+/* ---------- Vaste afsluiting ---------- */
+T.nabespreking = (s, d, les, L) => {
+  let g = 0, k = 0, f = 0, qg = 0, qn = 0; const extra = [];
+  schermen(les).forEach(x => {
+    const a = L.a[x.id];
+    if(x.type === 'kies' && x.quiz && a != null){ qn++; if(x.opts[a][2] === 'goed') qg++; }
+    else if((x.type === 'kies' || x.type === 'verrassing') && a != null){ const o = (x.type === 'verrassing' ? VERR_OPTS : x.opts)[a][2]; o === 'goed' ? g++ : o === 'kan' ? k++ : f++; }
+    if(x.type === 'ronde' && a){ extra.push(`${esc(x.label)}: ${a.filter((v, i) => v === x.items[i][1]).length}/${x.items.length}`); }
+    if(x.type === 'volgorde' && a && L.a[x.id + '_c']){ extra.push(`Volgorde: ${a.filter((v, i) => v === i).length}/${a.length}`); }
+    if(x.type === 'stelling' && a){ extra.push(`Stelling: ${a}`); }
+  });
+  if(les.nr === 3){ const b = budget(); extra.push(`Over per maand: ${eur(b.over)}`); }
+  const chips = [];
+  if(g + k + f) chips.push(`👍 ${g} sterk`, `🤔 ${k} kan`, `⚠️ ${f} niet handig`);
+  if(qn) chips.push(`🏆 Quiz: ${qg}/${qn}`);
+  d.innerHTML = `${lab(s, 'Nabespreking')}<h2>Bespreek samen</h2>
+    ${chips.length || extra.length ? `<p class="mijn"><span class="klein">Jouw resultaten:</span> ${[...chips, ...extra].map(c => `<span class="chip v">${c}</span>`).join('')}</p>` : ''}
+    <div class="vragen">${s.vragen.map(v => `<div class="vraag">${v}</div>`).join('')}</div>`;
+  nav(true, 'Naar feedback →');
+};
+T.feedback = (s, d, les, L) => {
+  const E = [[1, '😖', 'Saai'], [2, '🙁', 'Matig'], [3, '😐', 'Oké'], [4, '🙂', 'Goed'], [5, '🤩', 'Top']];
+  d.innerHTML = `${lab(s, 'Jouw feedback')}<h2>Hoe vond je deze les?</h2>
+    <div class="emoji">${E.map(([v, e, t]) => `<button type="button" data-v="${v}" class="${L.a._fb === v ? 'aan' : ''}"><span>${e}</span>${t}</button>`).join('')}</div>
+    <div class="vak"><label for="inz">Eén ding dat ik meeneem uit deze les</label>${startersHTML(['Ik ga voortaan…', 'Ik wist niet dat…', 'Ik vond lastig dat…'])}
+    <textarea id="inz" style="min-height:72px">${esc(L.a._inzicht || '')}</textarea></div>`;
+  d.querySelectorAll('.emoji button').forEach(x => x.onclick = () => { L.a._fb = +x.dataset.v; bewaar(); d.querySelectorAll('.emoji button').forEach(y => y.classList.toggle('aan', y === x)); });
+  const ta = $('#inz'); ta.oninput = () => { L.a._inzicht = ta.value; bewaar(); }; koppelStarters(d, ta);
+  nav(true, 'Les afronden ✓');
+};
+T.klaar = (s, d, les, L) => {
+  L.klaar = true; bewaar();
+  const vol = LESSEN.find(l => l.nr === les.nr + 1), nm = naam();
+  d.innerHTML = `<section class="eind"><div class="grootA">${A_SVG}</div><span class="label">Les ${les.nr} afgerond</span>
+    <h1 style="color:#fff">Goed gedaan${nm ? ', ' + esc(nm) : ''}! 🎉</h1>
+    ${L.a._inzicht ? `<p>Wat je meeneemt: <i>${esc(L.a._inzicht)}</i></p>` : ''}
+    <p style="margin:0">${vol ? `Volgende keer: <b>Les ${vol.nr} · ${esc(vol.titel)}</b>.` : 'Je hebt de hele module afgerond. Heel veel succes op je stage!'}</p></section>`;
+  navbar.innerHTML = `<button class="terug" type="button">← Terug</button><div class="rechts"><a class="knop" href="#">Naar alle lessen →</a></div>`;
+  navbar.querySelector('.terug').onclick = vorige;
+};
+
+render();
+
+</script>
+</body>
+</html>
